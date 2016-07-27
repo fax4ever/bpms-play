@@ -11,29 +11,63 @@
 
     <modules>
         <module>bpms-simple</module>
+        <module>bpms-simple-war</module>
     </modules>
 
     <properties>
 
         <!-- JAVA -->
-        <maven.compiler.target>1.7</maven.compiler.target>
-        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+
+        <!-- BPMS 6.3.1 -->
+        <version.org.brms-bpmsuite>6.3.1.GA-redhat-2</version.org.brms-bpmsuite>
 
         <!-- JEE 7 EAP Definition -->
-        <version.org.jbpm>6.4.0.Final-redhat-6</version.org.jbpm>
+        <version.org.jboss.spec.jboss.javaee7>1.0.3.Final-redhat-2</version.org.jboss.spec.jboss.javaee7>
+
+        <!-- JEE 7 EAP Implementation -->
+        <version.jboss.bom.eap>7.0.1.GA</version.jboss.bom.eap>
 
     </properties>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.jbpm</groupId>
-            <artifactId>jbpm-bom</artifactId>
-            <version>${version.org.jbpm}</version>
-            <type>pom</type>
-        </dependency>
-    </dependencies>
+    <dependencyManagement>
+        <dependencies>
+
+            <dependency>
+                <groupId>org.jboss.bom.brms</groupId>
+                <artifactId>jboss-brms-bpmsuite-platform-bom</artifactId>
+                <type>pom</type>
+                <version>${version.org.brms-bpmsuite}</version>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jboss.spec</groupId>
+                <artifactId>jboss-javaee-7.0</artifactId>
+                <version>${version.org.jboss.spec.jboss.javaee7}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jboss.bom</groupId>
+                <artifactId>jboss-eap-javaee7-with-tools</artifactId>
+                <version>${version.jboss.bom.eap}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>it.redhat.demo</groupId>
+                <artifactId>bpms-simple</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
+        <finalName>${project.artifactId}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.kie</groupId>
@@ -41,6 +75,23 @@
                 <extensions>true</extensions>
             </plugin>
         </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.19.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>2.6</version>
+                    <configuration>
+                        <failOnMissingWebXml>false</failOnMissingWebXml>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 
     <distributionManagement>
