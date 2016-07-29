@@ -1,0 +1,14 @@
+package it.redhat.demo
+
+dialect "java"
+
+rule "Wage"
+
+    when
+        Person(hourlyRate*wage > 100)
+		Person(name : firstName, surname : lastName)
+    then
+        System.out.println( "Hello" + " " + name + " " + surname + "!");
+		System.out.println( "You are rich!" );
+
+end
