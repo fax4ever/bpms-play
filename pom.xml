@@ -14,6 +14,7 @@
         <module>bpms-simple-war</module>
         <module>brms-simple</module>
         <module>brms-simple-war</module>
+        <module>bpmrule</module>
     </modules>
 
     <properties>

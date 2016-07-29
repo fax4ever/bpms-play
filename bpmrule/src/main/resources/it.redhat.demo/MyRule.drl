@@ -1,0 +1,16 @@
+package it.redhat.demo;
+
+rule "MyRule"
+ruleflow-group "MyProjectGroup"
+    when
+    
+        Person(hourlyRate*wage > 100)
+        Person(name : firstName, surname : lastName)
+        
+    then
+    
+        System.out.println( "Hello" + " " + name + " " + surname + "!" );
+        System.out.println( "You are rich!" );
+        
+end
+
