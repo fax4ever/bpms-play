@@ -13,6 +13,7 @@
         <module>bpms-simple</module>
         <module>bpms-simple-war</module>
         <module>brms-simple</module>
+        <module>brms-simple-war</module>
     </modules>
 
     <properties>
@@ -62,6 +63,12 @@
             <dependency>
                 <groupId>it.redhat.demo</groupId>
                 <artifactId>bpms-simple</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>it.redhat.demo</groupId>
+                <artifactId>brms-simple</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>
