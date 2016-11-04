@@ -10,7 +10,7 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
     <artifactId>bpmrule</artifactId>
-    <packaging>kjar</packaging>
+    <packaging>jar</packaging>
 
 
 </project>
