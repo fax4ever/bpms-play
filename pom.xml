@@ -15,6 +15,7 @@
         <module>brms-simple</module>
         <module>brms-simple-war</module>
         <module>bpmrule</module>
+        <module>bpms-process</module>
     </modules>
 
     <properties>
