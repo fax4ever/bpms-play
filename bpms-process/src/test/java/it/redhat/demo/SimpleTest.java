@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.jbpm.test.JbpmJUnitBaseTestCase;
+import org.junit.Assert;
 import org.junit.Test;
 import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.manager.RuntimeEngine;
@@ -16,8 +17,10 @@ import org.kie.api.task.model.TaskSummary;
 
 public class SimpleTest extends JbpmJUnitBaseTestCase {
 	
+	private static final String MARY = "john";
+
 	public SimpleTest() {
-		super(true, false);
+		super(true, true);
 	}
 	
 	@Test
@@ -29,7 +32,7 @@ public class SimpleTest extends JbpmJUnitBaseTestCase {
 		KieSession kieSession = runtimeEngine.getKieSession();
 		
 		Person person = new Person();
-		person.setUsername("mary");
+		person.setUsername(MARY);
 		
 		HashMap<String,Object> hashMap = new HashMap<>();
 		hashMap.put("person", person);
@@ -40,16 +43,16 @@ public class SimpleTest extends JbpmJUnitBaseTestCase {
 		Task taskById = taskService.getTaskById(taskId);
 		
 		PeopleAssignments peopleAssignments = taskById.getPeopleAssignments();
-		System.out.println(peopleAssignments);
-		
+	
 		List<OrganizationalEntity> potentialOwners = peopleAssignments.getPotentialOwners();
-		System.out.println(potentialOwners);
+		Assert.assertEquals(1, potentialOwners.size());
 		
-		List<TaskSummary> tasksAssignedAsPotentialOwner = taskService.getTasksAssignedAsPotentialOwner("mary", "en-UK");
+		List<TaskSummary> tasksAssignedAsPotentialOwner = taskService.getTasksAssignedAsPotentialOwner(MARY, "en-UK");
 		System.out.println(tasksAssignedAsPotentialOwner);
+		Assert.assertEquals(1, tasksAssignedAsPotentialOwner.size());
 		
-		taskService.start(taskId, "mary");
-		taskService.complete(taskId, "mary", new HashMap<>());
+		taskService.start(taskId, MARY);
+		taskService.complete(taskId, MARY, new HashMap<>());
 		
 		
 	}
