@@ -17,7 +17,7 @@ import org.kie.api.task.model.TaskSummary;
 
 public class SimpleTest extends JbpmJUnitBaseTestCase {
 	
-	private static final String MARY = "john";
+	private static final String MARY = "scardaz";
 
 	public SimpleTest() {
 		super(true, true);
