@@ -16,6 +16,7 @@
         <module>brms-simple-war</module>
         <module>bpmrule</module>
         <module>bpms-process</module>
+        <module>bpms-kie-process</module>
     </modules>
 
     <properties>
