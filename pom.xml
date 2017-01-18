@@ -6,7 +6,7 @@
 
     <groupId>it.redhat.demo</groupId>
     <artifactId>bpms-play</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -16,6 +16,7 @@
         <module>brms-simple-war</module>
         <module>bpmrule</module>
         <module>bpms-process</module>
+        <module>bpms-kie-process</module>
     </modules>
 
     <properties>
