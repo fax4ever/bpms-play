@@ -6,7 +6,7 @@
 
     <groupId>it.redhat.demo</groupId>
     <artifactId>bpms-play</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -17,6 +17,8 @@
         <module>bpmrule</module>
         <module>bpms-process</module>
         <module>bpms-kie-process</module>
+        <module>unified-managed-deploy</module>
+        <module>bpms-rest-task</module>
     </modules>
 
     <properties>
