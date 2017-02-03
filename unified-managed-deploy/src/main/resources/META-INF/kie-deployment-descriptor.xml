@@ -13,7 +13,7 @@
             <resolver>mvel</resolver>
             <identifier></identifier>
             <parameters/>
-            <name>test.rest.api</name>
+            <name>unified-managed-deploy</name>
         </global>
     </globals>
     <work-item-handlers>

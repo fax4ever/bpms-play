@@ -35,6 +35,11 @@
 			<groupId>org.kie</groupId>
 			<artifactId>kie-api</artifactId>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.kie.server</groupId>
+			<artifactId>kie-server-controller-api</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>org.jbpm</groupId>
