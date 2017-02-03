@@ -2,10 +2,10 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>it.redhat.demo</groupId>
-	<artifactId>unified-managed-deploy</artifactId>
+	<artifactId>bpms-jndi-lookup</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 
-	<name>Unified Managed Deploy</name>
+	<name>BPMS JNDI Sample</name>
 
 	<properties>
 
@@ -37,25 +37,15 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.kie.server</groupId>
-			<artifactId>kie-server-api</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.kie.server</groupId>
-			<artifactId>kie-server-controller-api</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-			<version>3.5</version>
-		</dependency>
-
-		<dependency>
 			<groupId>org.jbpm</groupId>
 			<artifactId>jbpm-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 

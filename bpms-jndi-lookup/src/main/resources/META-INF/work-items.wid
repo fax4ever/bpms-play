@@ -1,0 +1,14 @@
+import org.drools.core.process.core.datatype.impl.type.StringDataType;
+import org.drools.core.process.core.datatype.impl.type.BooleanDataType;
+
+[
+  [
+    "name" : "JndiLookupHandler",
+  	"parameters" : [],
+  	"results" : [
+        "value" : new StringDataType(),
+        "status" : new BooleanDataType()
+     ],
+    "displayName" : "JndiLookupHandler"
+  ]
+]

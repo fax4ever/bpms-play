@@ -1,0 +1,42 @@
+import org.drools.core.process.core.datatype.impl.type.StringDataType;
+import org.drools.core.process.core.datatype.impl.type.IntegerDataType;
+import org.drools.core.process.core.datatype.impl.type.ObjectDataType;
+import org.drools.core.process.core.datatype.impl.type.BooleanDataType;
+
+[
+  [
+    "name" : "Rest",
+  	 "parameters" : [
+         "Url" : new StringDataType(),
+         "Method" : new StringDataType(),
+         "HandleResponseErrors" : new StringDataType(),
+         "ResultClass" : new StringDataType(),
+         "ContentType" : new StringDataType(),
+         "Content" : new ObjectDataType(),
+         "AuthType" : new StringDataType(),
+         "ConnectTimeout" : new StringDataType(),
+         "ReadTimeout" : new StringDataType()
+      ],
+  	"results" : [
+        "Result" : new ObjectDataType(),
+        "StatusMsg" : new StringDataType(),
+        "Status" : new StringDataType()
+     ],
+    "displayName" : "Rest"
+  ],
+  [
+    "name" : "ChooseDeployStrategy",
+  	 "parameters" : [
+         "serverTemplate" : new ObjectDataType(),
+         "groupId" : new StringDataType(),
+         "artifactId" : new StringDataType(),
+         "version" : new StringDataType()
+      ],
+  	"results" : [
+        "update" : new BooleanDataType(),
+        "migration" : new BooleanDataType(),
+        "miniMigration" : new StringDataType()
+     ],
+    "displayName" : "ChooseDeployStrategy"
+  ]
+]
