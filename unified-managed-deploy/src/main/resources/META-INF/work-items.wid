@@ -38,5 +38,18 @@ import org.drools.core.process.core.datatype.impl.type.ObjectDataType;
         "miniMigration" : new ObjectDataType()
      ],
     "displayName" : "ChooseDeployStrategy"
+  ],
+  [
+    "name" : "CreateContainerSpec",
+  	 "parameters" : [
+         "serverId" : new StringDataType(),
+         "groupId" : new StringDataType(),
+         "artifactId" : new StringDataType(),
+         "version" : new StringDataType()
+      ],
+  	"results" : [
+        "psDeployRequest" : new ObjectDataType()
+     ],
+    "displayName" : "CreateContainerSpec"
   ]
 ]
