@@ -13,16 +13,10 @@
             <resolver>mvel</resolver>
             <identifier></identifier>
             <parameters/>
-            <name>unified-managed-deploy</name>
+            <name>test.rest.api</name>
         </global>
     </globals>
     <work-item-handlers>
-    	<work-item-handler>
-            <resolver>mvel</resolver>
-            <identifier>new it.redhat.demo.customtask.ChooseDeployStrategy()</identifier>
-            <parameters/>
-            <name>ChooseDeployStrategy</name>
-        </work-item-handler>
         <work-item-handler>
             <resolver>mvel</resolver>
             <identifier>new org.jbpm.process.instance.impl.demo.SystemOutWorkItemHandler()</identifier>
