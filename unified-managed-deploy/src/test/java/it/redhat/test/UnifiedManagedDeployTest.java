@@ -22,7 +22,7 @@ public class UnifiedManagedDeployTest extends JbpmJUnitBaseTestCase {
 	@Before
 	public void before() {
 		
-		createRuntimeManager("it/redhat/test/deploy.bpmn2", "it/redhat/test/update-container.bpmn2", "it/redhat/test/migration.bpmn2", "it/redhat/test/unified-managed-deploy.bpmn2");
+		createRuntimeManager("it/redhat/test/create-container.bpmn2", "it/redhat/test/update-container.bpmn2", "it/redhat/test/migration.bpmn2", "it/redhat/test/unified-managed-deploy.bpmn2");
 		
 		RuntimeEngine runtimeEngine = getRuntimeEngine();
 		kieSession = runtimeEngine.getKieSession();
@@ -41,7 +41,7 @@ public class UnifiedManagedDeployTest extends JbpmJUnitBaseTestCase {
 		params.put("serverId", "process-server");
 		params.put("groupId", "it.redhat.demo");
 		params.put("artifactId", "bpms-rest-task");
-		params.put("version", "1.0.0-SNAPSHOT");
+		params.put("version", "1.1.0-SNAPSHOT");
 		
 		kieSession.startProcess("it.redhat.test.unified-managed-deploy", params);
 		
