@@ -43,6 +43,7 @@ public class EchoTaskProcessTest extends JbpmJUnitBaseTestCase {
 		
 		HashMap<String,Object> params = new HashMap<>();
 		params.put("input", "Ciao");
+		params.put("external", "Ext");
 		
 		ProcessInstance instance = kieSession.startProcess("it.redhat.demo.echo-task", params);
 		

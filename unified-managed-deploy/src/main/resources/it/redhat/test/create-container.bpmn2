@@ -39,6 +39,7 @@
     <bpmn2:property id="psDeployRequest" itemSubjectRef="ItemDefinition_131" name="psDeployRequest"/>
     <bpmn2:property id="processServerUrls" itemSubjectRef="ItemDefinition_175" name="processServerUrls"/>
     <bpmn2:property id="httpResponseBody" itemSubjectRef="ItemDefinition_2" name="httpResponseBody"/>
+    <bpmn2:property id="uri" itemSubjectRef="ItemDefinition_1" name="uri"/>
     <bpmn2:startEvent id="StartEvent_1" name="StartProcess">
       <bpmn2:extensionElements>
         <tns:metaData name="elementname">
