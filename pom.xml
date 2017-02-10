@@ -20,6 +20,7 @@
         <module>unified-managed-deploy</module>
         <module>bpms-rest-task</module>
         <module>bpms-jndi-lookup</module>
+        <module>bpms-domain-specific-task</module>
     </modules>
 
     <properties>

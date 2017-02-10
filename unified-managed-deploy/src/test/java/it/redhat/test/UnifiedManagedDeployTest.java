@@ -45,7 +45,7 @@ public class UnifiedManagedDeployTest extends JbpmJUnitBaseTestCase {
 		params.put("artifactId", "bpms-rest-task");
 		params.put("version", "1.1.0-SNAPSHOT");
 		
-		kieSession.startProcess("it.redhat.test.unified-managed-deploy", params);
+		//kieSession.startProcess("it.redhat.test.unified-managed-deploy", params);
 		
 	}
 
