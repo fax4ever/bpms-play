@@ -1,0 +1,15 @@
+import org.drools.core.process.core.datatype.impl.type.StringDataType;
+import org.drools.core.process.core.datatype.impl.type.BooleanDataType;
+
+[
+  [
+    "name" : "EchoDomainSpecificTask",
+  	"parameters" : [
+  		"input" : new StringDataType()
+  	],
+  	"results" : [
+        "output" : new StringDataType()
+     ],
+    "displayName" : "EchoDomainSpecificTask"
+  ]
+]
