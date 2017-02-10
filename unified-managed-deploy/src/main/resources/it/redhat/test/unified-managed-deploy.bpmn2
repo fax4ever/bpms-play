@@ -14,7 +14,7 @@
       <tns:import name="it.redhat.demo.model.MavenGavInfo"/>
       <tns:import name="it.redhat.demo.model.MavenGavInfo.Affinity"/>
     </bpmn2:extensionElements>
-    <bpmn2:property id="serverTemplate" itemSubjectRef="ItemDefinition_2" name="serverTemplate"/>
+    <bpmn2:property id="serverTemplate" itemSubjectRef="ItemDefinition_12" name="serverTemplate"/>
     <bpmn2:property id="serverId" itemSubjectRef="ItemDefinition_1" name="serverId"/>
     <bpmn2:property id="bcHost" itemSubjectRef="ItemDefinition_1" name="bcHost"/>
     <bpmn2:property id="groupId" itemSubjectRef="ItemDefinition_1" name="groupId"/>
@@ -43,7 +43,7 @@
           <tns:metaValue><![CDATA[Read Server Template]]></tns:metaValue>
         </tns:metaData>
         <tns:onEntry-script scriptFormat="http://www.java.com/java">
-          <tns:script>kcontext.setVariable(&quot;url&quot;, &quot;http://&quot;+bcHost+&quot;:&quot;+bcPort+&quot;/business-central/rest/controller/management/servers/&quot;+serverId);</tns:script>
+          <tns:script>kcontext.setVariable(&quot;uri&quot;, &quot;http://&quot;+bcHost+&quot;:&quot;+bcPort+&quot;/business-central/rest/controller/management/servers/&quot;+serverId);</tns:script>
         </tns:onEntry-script>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_1</bpmn2:incoming>

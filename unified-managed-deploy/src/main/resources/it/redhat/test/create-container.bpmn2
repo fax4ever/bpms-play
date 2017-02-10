@@ -53,7 +53,9 @@
         <tns:metaData name="elementname">
           <tns:metaValue><![CDATA[Bc-Deploy]]></tns:metaValue>
         </tns:metaData>
-        <tns:onEntry-script scriptFormat="http://www.java.com/java"/>
+        <tns:onEntry-script scriptFormat="http://www.java.com/java">
+          <tns:script>kcontext.setVariable(&quot;uri&quot;, &quot;http://&quot;+bcHost+&quot;:&quot;+bcPort+&quot;/business-central/rest/deployment/&quot;+groupId+&quot;:&quot;+artifactId+&quot;:&quot;+version+&quot;/deploy?strategy=PER_PROCESS_INSTANCE&quot;);</tns:script>
+        </tns:onEntry-script>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_17</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_21</bpmn2:outgoing>
@@ -88,11 +90,8 @@
         </bpmn2:outputSet>
       </bpmn2:ioSpecification>
       <bpmn2:dataInputAssociation id="_DataInputAssociation_11">
+        <bpmn2:sourceRef>uri</bpmn2:sourceRef>
         <bpmn2:targetRef>DataInput_1</bpmn2:targetRef>
-        <bpmn2:assignment id="Assignment_1">
-          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_3">http://${bcHost}:${bpPort}/business-central/rest/deployment/${groupId}:${artifactId}:${version}/deploy?strategy=PER_PROCESS_INSTANCE</bpmn2:from>
-          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_1">DataInput_1</bpmn2:to>
-        </bpmn2:assignment>
       </bpmn2:dataInputAssociation>
       <bpmn2:dataInputAssociation id="_DataInputAssociation_12">
         <bpmn2:targetRef>DataInput_2</bpmn2:targetRef>
@@ -144,6 +143,9 @@
         <tns:metaData name="elementname">
           <tns:metaValue><![CDATA[Ps-Deploy]]></tns:metaValue>
         </tns:metaData>
+        <tns:onEntry-script scriptFormat="http://www.java.com/java">
+          <tns:script>kcontext.setVariable(&quot;url&quot;, &quot;http://&quot;+bcHost+&quot;:&quot;+bcPort+&quot;/business-central/rest/controller/management/servers/process-server/containers/&quot;+groupId+&quot;:&quot;+artifactId+&quot;:&quot;+version);</tns:script>
+        </tns:onEntry-script>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_2</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_4</bpmn2:outgoing>
@@ -178,11 +180,8 @@
         </bpmn2:outputSet>
       </bpmn2:ioSpecification>
       <bpmn2:dataInputAssociation id="_DataInputAssociation_20">
+        <bpmn2:sourceRef>uri</bpmn2:sourceRef>
         <bpmn2:targetRef>DataInput_10</bpmn2:targetRef>
-        <bpmn2:assignment id="Assignment_3">
-          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_7">http://${bcHost}:${bpPort}/business-central/rest/controller/management/servers/process-server/containers/${groupId}:${artifactId}:${version}</bpmn2:from>
-          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_2">DataInput_10</bpmn2:to>
-        </bpmn2:assignment>
       </bpmn2:dataInputAssociation>
       <bpmn2:dataInputAssociation id="_DataInputAssociation_21">
         <bpmn2:targetRef>DataInput_11</bpmn2:targetRef>
@@ -291,6 +290,9 @@
           <tns:metaData name="elementname">
             <tns:metaValue><![CDATA[VerifyServer]]></tns:metaValue>
           </tns:metaData>
+          <tns:onEntry-script scriptFormat="http://www.java.com/java">
+            <tns:script>kcontext.setVariable(&quot;uri&quot;, processServerUrl + &quot;/containers/&quot; + groupId + &quot;:&quot; + artifactId + &quot;:&quot; + version);</tns:script>
+          </tns:onEntry-script>
         </bpmn2:extensionElements>
         <bpmn2:incoming>SequenceFlow_10</bpmn2:incoming>
         <bpmn2:outgoing>SequenceFlow_11</bpmn2:outgoing>
@@ -325,11 +327,8 @@
           </bpmn2:outputSet>
         </bpmn2:ioSpecification>
         <bpmn2:dataInputAssociation id="_DataInputAssociation_47">
+          <bpmn2:sourceRef>uri</bpmn2:sourceRef>
           <bpmn2:targetRef>DataInput_37</bpmn2:targetRef>
-          <bpmn2:assignment id="Assignment_12">
-            <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_21">processServerUrl + &quot;/containers/&quot; + groupId + &quot;:&quot; + artifactId + &quot;:&quot; + &quot;version&quot;</bpmn2:from>
-            <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_19">DataInput_37</bpmn2:to>
-          </bpmn2:assignment>
         </bpmn2:dataInputAssociation>
         <bpmn2:dataInputAssociation id="_DataInputAssociation_48">
           <bpmn2:targetRef>DataInput_38</bpmn2:targetRef>
@@ -396,6 +395,9 @@
         <tns:metaData name="elementname">
           <tns:metaValue><![CDATA[Ps-Container-Start]]></tns:metaValue>
         </tns:metaData>
+        <tns:onEntry-script scriptFormat="http://www.java.com/java">
+          <tns:script>kcontext.setVariable(&quot;uri&quot;, uri+&quot;/status/started&quot;);</tns:script>
+        </tns:onEntry-script>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_4</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_3</bpmn2:outgoing>
@@ -430,11 +432,8 @@
         </bpmn2:outputSet>
       </bpmn2:ioSpecification>
       <bpmn2:dataInputAssociation id="_DataInputAssociation_29">
+        <bpmn2:sourceRef>uri</bpmn2:sourceRef>
         <bpmn2:targetRef>DataInput_19</bpmn2:targetRef>
-        <bpmn2:assignment id="Assignment_9">
-          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_24">http://${bcHost}:${bpPort}/business-central/rest/controller/management/servers/process-server/containers/${groupId}:${artifactId}:${version}/status/started</bpmn2:from>
-          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_22">DataInput_19</bpmn2:to>
-        </bpmn2:assignment>
       </bpmn2:dataInputAssociation>
       <bpmn2:dataInputAssociation id="_DataInputAssociation_30">
         <bpmn2:targetRef>DataInput_20</bpmn2:targetRef>
