@@ -144,7 +144,7 @@
           <tns:metaValue><![CDATA[Ps-Deploy]]></tns:metaValue>
         </tns:metaData>
         <tns:onEntry-script scriptFormat="http://www.java.com/java">
-          <tns:script>kcontext.setVariable(&quot;url&quot;, &quot;http://&quot;+bcHost+&quot;:&quot;+bcPort+&quot;/business-central/rest/controller/management/servers/process-server/containers/&quot;+groupId+&quot;:&quot;+artifactId+&quot;:&quot;+version);</tns:script>
+          <tns:script>kcontext.setVariable(&quot;uri&quot;, &quot;http://&quot;+bcHost+&quot;:&quot;+bcPort+&quot;/business-central/rest/controller/management/servers/&quot;+serverId+&quot;/containers/&quot;+groupId+&quot;:&quot;+artifactId+&quot;:&quot;+version);</tns:script>
         </tns:onEntry-script>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_2</bpmn2:incoming>
