@@ -10,7 +10,7 @@ import org.kie.api.runtime.manager.RuntimeEngine;
 
 import it.redhat.demo.customtask.ChooseDeployStrategy;
 import it.redhat.demo.customtask.CreateContainerSpec;
-import it.redhat.test.stub.GetServerTemplateStub;
+import it.redhat.test.stub.RestStub;
 
 public class UnifiedManagedDeployTest extends JbpmJUnitBaseTestCase {
 	
@@ -27,7 +27,7 @@ public class UnifiedManagedDeployTest extends JbpmJUnitBaseTestCase {
 		
 		RuntimeEngine runtimeEngine = getRuntimeEngine();
 		kieSession = runtimeEngine.getKieSession();
-		kieSession.getWorkItemManager().registerWorkItemHandler("Rest", new GetServerTemplateStub());
+		kieSession.getWorkItemManager().registerWorkItemHandler("Rest", new RestStub());
 		kieSession.getWorkItemManager().registerWorkItemHandler("ChooseDeployStrategy", new ChooseDeployStrategy());
 		kieSession.getWorkItemManager().registerWorkItemHandler("CreateContainerSpec", new CreateContainerSpec());
 		
