@@ -25,7 +25,7 @@
       <tns:import name="it.redhat.demo.dto.ProcessConfigDto"/>
     </bpmn2:extensionElements>
     <bpmn2:property id="bcHost" itemSubjectRef="ItemDefinition_1" name="bcHost"/>
-    <bpmn2:property id="bcPort" itemSubjectRef="ItemDefinition_343" name="bcPort"/>
+    <bpmn2:property id="bcPort" itemSubjectRef="ItemDefinition_1" name="bcPort"/>
     <bpmn2:property id="strategy" itemSubjectRef="ItemDefinition_1" name="strategy"/>
     <bpmn2:property id="serverId" itemSubjectRef="ItemDefinition_1" name="serverId"/>
     <bpmn2:property id="artifactId" itemSubjectRef="ItemDefinition_1" name="artifactId"/>

@@ -23,7 +23,7 @@
     <bpmn2:property id="update" itemSubjectRef="ItemDefinition_3" name="update"/>
     <bpmn2:property id="migration" itemSubjectRef="ItemDefinition_3" name="migration"/>
     <bpmn2:property id="miniMigration" itemSubjectRef="ItemDefinition_15" name="miniMigration"/>
-    <bpmn2:property id="bcPort" itemSubjectRef="ItemDefinition_7" name="bcPort"/>
+    <bpmn2:property id="bcPort" itemSubjectRef="ItemDefinition_1" name="bcPort"/>
     <bpmn2:property id="strategy" itemSubjectRef="ItemDefinition_1" name="strategy"/>
     <bpmn2:property id="mergeMode" itemSubjectRef="ItemDefinition_1" name="mergeMode"/>
     <bpmn2:property id="httpResponseStatus" itemSubjectRef="ItemDefinition_1" name="httpResponseStatus"/>
