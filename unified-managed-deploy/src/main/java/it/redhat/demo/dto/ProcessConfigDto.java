@@ -4,12 +4,19 @@ import java.io.Serializable;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "processConfig")
 public class ProcessConfigDto extends ContainerConfigDto implements Serializable {
+	
+	@XmlAttribute(name="xmlns:xsi")
+	private String xsi = "http://www.w3.org/2001/XMLSchema-instance";
+	
+	@XmlAttribute(name="xsi:type")
+	private String type = "processConfig";
 	
 	@XmlElement(name = "runtimeStrategy")
     private String runtimeStrategy;
