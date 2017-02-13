@@ -41,6 +41,12 @@
             <parameters/>
             <name>Rest</name>
         </work-item-handler>
+        <work-item-handler>
+            <resolver>mvel</resolver>
+            <identifier>new org.jbpm.process.workitem.rest.RESTWorkItemHandler("fabio", "fabio$739", classLoader)</identifier>
+            <parameters/>
+            <name>AuthRest</name>
+        </work-item-handler>
     </work-item-handlers>
     <environment-entries/>
     <configurations/>
