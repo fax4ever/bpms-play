@@ -2,24 +2,22 @@ package it.redhat.demo.dto;
 
 import java.io.Serializable;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
-
-import com.thoughtworks.xstream.annotations.XStreamAlias;
-
+@XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name="release-id")
-@XStreamAlias( "release-id" )
-@JsonIgnoreProperties({"snapshot"})
 public class ReleaseIdDto implements Serializable {
 	
-	@XStreamAlias( "group-id" )
+	@XmlElement(name = "group-id")
     private String groupId;
 
-    @XStreamAlias( "artifact-id" )
+	@XmlElement(name = "artifact-id")
     private String artifactId;
 
-    @XStreamAlias( "version" )
+	@XmlElement(name ="version")
     private String version;
     
     public ReleaseIdDto() {
