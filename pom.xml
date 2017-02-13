@@ -21,6 +21,7 @@
         <module>bpms-rest-task</module>
         <module>bpms-jndi-lookup</module>
         <module>bpms-domain-specific-task</module>
+        <module>bpms-domain-advanced-task</module>
     </modules>
 
     <properties>
