@@ -5,9 +5,6 @@
   <bpmn2:itemDefinition id="ItemDefinition_2" isCollection="false" structureRef="java.lang.Object"/>
   <bpmn2:itemDefinition id="ItemDefinition_343" isCollection="false" structureRef="java.lang.Integer"/>
   <bpmn2:itemDefinition id="ItemDefinition_175" isCollection="false" structureRef="java.util.List"/>
-  <bpmn2:itemDefinition id="ItemDefinition_395" isCollection="false" structureRef="org.kie.server.controller.api.model.runtime.ServerInstanceKey"/>
-  <bpmn2:itemDefinition id="ItemDefinition_116" isCollection="false" structureRef="org.kie.server.api.model.KieContainerResource"/>
-  <bpmn2:itemDefinition id="ItemDefinition_131" isCollection="false" structureRef="org.kie.server.controller.api.model.spec.ContainerSpec"/>
   <bpmn2:itemDefinition id="ItemDefinition_695" isCollection="false" structureRef="org.kie.services.client.serialization.jaxb.impl.deploy.JaxbDeploymentJobResult"/>
   <bpmn2:itemDefinition id="ItemDefinition_3" isCollection="false" structureRef="Object"/>
   <bpmn2:itemDefinition id="ItemDefinition_132" isCollection="false" structureRef="Object"/>
@@ -19,9 +16,6 @@
   <bpmn2:process id="it.redhat.test.create-container" tns:packageName="it.redhat.test" name="create-container" isExecutable="true" processType="Private">
     <bpmn2:extensionElements>
       <tns:import name="java.util.List"/>
-      <tns:import name="org.kie.server.controller.api.model.runtime.ServerInstanceKey"/>
-      <tns:import name="org.kie.server.api.model.KieContainerResource"/>
-      <tns:import name="org.kie.server.controller.api.model.spec.ContainerSpec"/>
       <tns:import name="org.kie.services.client.serialization.jaxb.impl.deploy.JaxbDeploymentJobResult"/>
       <tns:import name="org.kie.server.api.model.ServiceResponse"/>
       <tns:import name="org.kie.server.api.model.ServiceResponse.ResponseType"/>
@@ -159,7 +153,7 @@
         <bpmn2:dataInput id="DataInput_12" itemSubjectRef="ItemDefinition_1" name="HandleResponseErrors"/>
         <bpmn2:dataInput id="DataInput_13" itemSubjectRef="ItemDefinition_1" name="ResultClass"/>
         <bpmn2:dataInput id="DataInput_14" itemSubjectRef="ItemDefinition_1" name="ContentType"/>
-        <bpmn2:dataInput id="DataInput_15" itemSubjectRef="ItemDefinition_131" name="Content"/>
+        <bpmn2:dataInput id="DataInput_15" name="Content"/>
         <bpmn2:dataInput id="DataInput_16" itemSubjectRef="ItemDefinition_1" name="AuthType"/>
         <bpmn2:dataInput id="DataInput_17" itemSubjectRef="ItemDefinition_1" name="ConnectTimeout"/>
         <bpmn2:dataInput id="DataInput_18" itemSubjectRef="ItemDefinition_1" name="ReadTimeout"/>
@@ -515,7 +509,7 @@
         <bpmn2:dataInput id="DataInput_50" itemSubjectRef="ItemDefinition_1" name="version"/>
         <bpmn2:dataInput id="DataInput_51" itemSubjectRef="ItemDefinition_1" name="serverId"/>
         <bpmn2:dataInput id="DataInput_28" itemSubjectRef="ItemDefinition_2" name="serverTemplate"/>
-        <bpmn2:dataOutput id="DataOutput_16" itemSubjectRef="ItemDefinition_131" name="psDeployRequest"/>
+        <bpmn2:dataOutput id="DataOutput_16" itemSubjectRef="ItemDefinition_27" name="psDeployRequest"/>
         <bpmn2:dataOutput id="DataOutput_10" itemSubjectRef="ItemDefinition_175" name="processServerUrls"/>
         <bpmn2:inputSet id="_InputSet_14">
           <bpmn2:dataInputRefs>DataInput_47</bpmn2:dataInputRefs>

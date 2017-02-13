@@ -1,5 +1,7 @@
 package it.redhat.demo.dto;
 
+import java.io.Serializable;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -7,7 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "process-config")
-public class ProcessConfigDto extends ContainerConfigDto {
+public class ProcessConfigDto extends ContainerConfigDto implements Serializable {
 	
 	@XmlElement(name = "runtimeStrategy")
     private String runtimeStrategy;
