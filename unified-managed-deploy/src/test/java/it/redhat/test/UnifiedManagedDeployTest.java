@@ -59,7 +59,7 @@ public class UnifiedManagedDeployTest extends JbpmJUnitBaseTestCase {
 		
 		ProcessInstance instance = kieSession.startProcess("it.redhat.test.unified-managed-deploy", params);
 		assertProcessInstanceCompleted(instance.getId());
-		assertNodeTriggered(instance.getId(), "StartProcess", "Read Server Template", "ChooseDeployStrategy", "Create / Update", "Create Container");
+		assertNodeTriggered(instance.getId(), "StartProcess", "Read Server Template", "ChooseDeployStrategy", "Create / Update", "Create Container", "Migration / Not", "NEW Release");
 		
 		List<? extends ProcessInstanceLog> subProcessInstances = auditService.findSubProcessInstances(instance.getId());
 		assertEquals(1, subProcessInstances.size());
