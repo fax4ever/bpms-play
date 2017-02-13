@@ -43,7 +43,7 @@
         </work-item-handler>
         <work-item-handler>
             <resolver>mvel</resolver>
-            <identifier>new org.jbpm.process.workitem.rest.RESTWorkItemHandler("fabio", "fabio$739", classLoader)</identifier>
+            <identifier>new org.jbpm.process.workitem.rest.RESTWorkItemHandler(System.getProperty("org.kie.server.user"), System.getProperty("org.kie.server.pwd"), classLoader)</identifier>
             <parameters/>
             <name>AuthRest</name>
         </work-item-handler>
