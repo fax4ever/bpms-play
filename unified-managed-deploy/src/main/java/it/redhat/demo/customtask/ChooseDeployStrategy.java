@@ -5,10 +5,10 @@ import java.util.HashMap;
 import org.kie.api.runtime.process.WorkItem;
 import org.kie.api.runtime.process.WorkItemHandler;
 import org.kie.api.runtime.process.WorkItemManager;
-import org.kie.server.api.model.ReleaseId;
-import org.kie.server.controller.api.model.spec.ContainerSpec;
-import org.kie.server.controller.api.model.spec.ServerTemplate;
 
+import it.redhat.demo.dto.ContainerSpecDto;
+import it.redhat.demo.dto.ReleaseIdDto;
+import it.redhat.demo.dto.ServerTemplateDto;
 import it.redhat.demo.model.MavenGavInfo;
 import it.redhat.demo.model.MavenGavInfo.Affinity;
 
@@ -16,7 +16,7 @@ public class ChooseDeployStrategy implements WorkItemHandler {
 
 	@Override
 	public void executeWorkItem(WorkItem workItem, WorkItemManager manager) {
-		ServerTemplate serverTemplate = (ServerTemplate) workItem.getParameter("serverTemplate");
+		ServerTemplateDto serverTemplate = (ServerTemplateDto) workItem.getParameter("serverTemplate");
 		String groupId = (String) workItem.getParameter("groupId");
 		String artifactId = (String) workItem.getParameter("artifactId");
 		String version = (String) workItem.getParameter("version");
@@ -26,8 +26,8 @@ public class ChooseDeployStrategy implements WorkItemHandler {
 		Affinity maxAffinity = Affinity.DIFFERENT_ARTIFACT;
 		MavenGavInfo miniMigration = null;
 		
-		for (ContainerSpec container : serverTemplate.getContainersSpec()) {
-			ReleaseId releasedId = container.getReleasedId();
+		for (ContainerSpecDto container : serverTemplate.getContainersSpec()) {
+			ReleaseIdDto releasedId = container.getReleasedId();
 			
 			MavenGavInfo deployGav = new MavenGavInfo(releasedId.getGroupId(), releasedId.getArtifactId(), releasedId.getVersion());
 			Affinity affinity = gav.affinity(deployGav);

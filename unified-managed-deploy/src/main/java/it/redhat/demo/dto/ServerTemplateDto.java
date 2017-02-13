@@ -44,4 +44,36 @@ public class ServerTemplateDto extends ServerTemplateKeyDto implements Serializa
 		containersSpec.add(containerSpec);
 	}
 
+	public Collection<ContainerSpecDto> getContainersSpec() {
+		return containersSpec;
+	}
+
+	public void setContainersSpec(Collection<ContainerSpecDto> containersSpec) {
+		this.containersSpec = containersSpec;
+	}
+
+	public Map<Capability, ServerConfigDto> getConfigs() {
+		return configs;
+	}
+
+	public void setConfigs(Map<Capability, ServerConfigDto> configs) {
+		this.configs = configs;
+	}
+
+	public Collection<ServerInstanceKeyDto> getServerInstances() {
+		return serverInstances;
+	}
+
+	public void setServerInstances(Collection<ServerInstanceKeyDto> serverInstances) {
+		this.serverInstances = serverInstances;
+	}
+
+	public List<String> getCapabilities() {
+		return capabilities;
+	}
+
+	public void setCapabilities(List<String> capabilities) {
+		this.capabilities = capabilities;
+	}
+
 }

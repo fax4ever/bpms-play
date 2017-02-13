@@ -30,8 +30,37 @@ public class ServerInstanceKeyDto implements Serializable {
 		this.serverTemplateId = serverTemplateId;
 		this.url = url;
 	}
-    
-    
-   
+
+	public String getServerInstanceId() {
+		return serverInstanceId;
+	}
+
+	public void setServerInstanceId(String serverInstanceId) {
+		this.serverInstanceId = serverInstanceId;
+	}
+
+	public String getServerName() {
+		return serverName;
+	}
+
+	public void setServerName(String serverName) {
+		this.serverName = serverName;
+	}
+
+	public String getServerTemplateId() {
+		return serverTemplateId;
+	}
+
+	public void setServerTemplateId(String serverTemplateId) {
+		this.serverTemplateId = serverTemplateId;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
 
 }

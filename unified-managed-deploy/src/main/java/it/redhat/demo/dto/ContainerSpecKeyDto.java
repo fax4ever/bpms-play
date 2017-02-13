@@ -27,7 +27,29 @@ public class ContainerSpecKeyDto implements Serializable {
 		this.containerName = containerName;
 		this.serverTemplateKey = serverTemplateKey;
 	}
-    
-    
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getContainerName() {
+		return containerName;
+	}
+
+	public void setContainerName(String containerName) {
+		this.containerName = containerName;
+	}
+
+	public ServerTemplateKeyDto getServerTemplateKey() {
+		return serverTemplateKey;
+	}
+
+	public void setServerTemplateKey(ServerTemplateKeyDto serverTemplateKey) {
+		this.serverTemplateKey = serverTemplateKey;
+	}
 
 }

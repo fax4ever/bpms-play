@@ -34,6 +34,29 @@ public class ContainerSpecDto extends ContainerSpecKeyDto implements Serializabl
     	this.status = status;
     	this.configs = (Map<Capability, Object>)configs;
 	}
-	
+
+	public ReleaseIdDto getReleasedId() {
+		return releasedId;
+	}
+
+	public void setReleasedId(ReleaseIdDto releasedId) {
+		this.releasedId = releasedId;
+	}
+
+	public Map<Capability, Object> getConfigs() {
+		return configs;
+	}
+
+	public void setConfigs(Map<Capability, Object> configs) {
+		this.configs = configs;
+	}
+
+	public KieContainerStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(KieContainerStatus status) {
+		this.status = status;
+	}
 
 }
