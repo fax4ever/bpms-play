@@ -6,7 +6,6 @@ import org.kie.api.runtime.process.WorkItemManager;
 
 public class RestStub implements WorkItemHandler {
 	
-	private static final String KIE_SERVER_SERVICES_REST_SERVER_CONTAINERS = "/kie-server/services/rest/server/containers/";
 	private static final String BUSINESS_CENTRAL_REST_DEPLOYMENT = "/business-central/rest/deployment/";
 	private static final String BUSINESS_CENTRAL_REST_CONTROLLER_MANAGEMENT_SERVERS = "/business-central/rest/controller/management/servers/";
 	
@@ -14,7 +13,6 @@ public class RestStub implements WorkItemHandler {
 	private BusinessCentralDeployStub businessCentralDeployStub = new BusinessCentralDeployStub();
 	private ProcessServerDeployStub processServerDeployStub = new ProcessServerDeployStub();
 	private ProcessServerContainerStartStub processServerContainerStartStub = new ProcessServerContainerStartStub();
-	private VerifyServerStub verifyServerStub = new VerifyServerStub();
 
 	@Override
 	public void executeWorkItem(WorkItem workItem, WorkItemManager manager) {
@@ -30,8 +28,6 @@ public class RestStub implements WorkItemHandler {
 			processServerDeployStub.executeWorkItem(workItem, manager);
 		} else if ("POST".equals(method) && url.contains(BUSINESS_CENTRAL_REST_CONTROLLER_MANAGEMENT_SERVERS)) {
 			processServerContainerStartStub.executeWorkItem(workItem, manager);
-		} else if ("GET".equals(method) && url.contains(KIE_SERVER_SERVICES_REST_SERVER_CONTAINERS)) {
-			verifyServerStub.executeWorkItem(workItem, manager);
 		} else {
 			throw new RuntimeException("No Rest Stub for method " + method + " and url " + url );
 		}
