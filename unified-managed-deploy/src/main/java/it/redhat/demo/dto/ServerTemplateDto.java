@@ -76,4 +76,8 @@ public class ServerTemplateDto extends ServerTemplateKeyDto implements Serializa
 		this.capabilities = capabilities;
 	}
 
+	public Collection<ServerInstanceKeyDto> getServerInstanceKeys() {
+		 return serverInstances;
+	}
+
 }

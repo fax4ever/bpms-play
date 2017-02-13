@@ -34,6 +34,10 @@ public class ContainerSpecDto extends ContainerSpecKeyDto implements Serializabl
     	this.status = status;
     	this.configs = (Map<Capability, Object>)configs;
 	}
+	
+	public void addConfig(Capability capability, ContainerConfigDto config) {
+        this.configs.put(capability, config);
+    }
 
 	public ReleaseIdDto getReleasedId() {
 		return releasedId;

@@ -8,31 +8,32 @@ import org.kie.api.runtime.process.WorkItem;
 import org.kie.api.runtime.process.WorkItemHandler;
 import org.kie.api.runtime.process.WorkItemManager;
 import org.kie.server.api.model.KieContainerStatus;
-import org.kie.server.api.model.ReleaseId;
 import org.kie.server.controller.api.model.spec.Capability;
-import org.kie.server.controller.api.model.spec.ContainerSpec;
-import org.kie.server.controller.api.model.spec.ProcessConfig;
-import org.kie.server.controller.api.model.spec.ServerTemplate;
-import org.kie.server.controller.api.model.spec.ServerTemplateKey;
+
+import it.redhat.demo.dto.ContainerSpecDto;
+import it.redhat.demo.dto.ProcessConfigDto;
+import it.redhat.demo.dto.ReleaseIdDto;
+import it.redhat.demo.dto.ServerTemplateDto;
+import it.redhat.demo.dto.ServerTemplateKeyDto;
 
 public class CreateContainerSpec implements WorkItemHandler {
 
 	@Override
 	public void executeWorkItem(WorkItem workItem, WorkItemManager manager) {
-		ServerTemplate serverTemplate = (ServerTemplate) workItem.getParameter("serverTemplate");
+		ServerTemplateDto serverTemplate = (ServerTemplateDto) workItem.getParameter("serverTemplate");
 		String groupId = (String) workItem.getParameter("groupId");
 		String artifactId = (String) workItem.getParameter("artifactId");
 		String version = (String) workItem.getParameter("version");
 		String serverId = (String) workItem.getParameter("serverId");
 		String gav = groupId + ":" + artifactId + ":" + version;
 		
-		ServerTemplateKey serverTemplateKey = new ServerTemplateKey(serverId, serverId);
-		ReleaseId releaseId = new ReleaseId(groupId, artifactId, version);
-		ProcessConfig processConfig = new ProcessConfig();
+		ServerTemplateKeyDto serverTemplateKey = new ServerTemplateKeyDto(serverId, serverId);
+		ReleaseIdDto releaseId = new ReleaseIdDto(groupId, artifactId, version);
+		ProcessConfigDto processConfig = new ProcessConfigDto();
 		processConfig.setRuntimeStrategy("PER_PROCESS_INSTANCE");
 		processConfig.setMergeMode("MERGE_COLLECTIONS");
 		
-		ContainerSpec container = new ContainerSpec();
+		ContainerSpecDto container = new ContainerSpecDto();
 		container.setId(gav);
 		container.setContainerName(gav);
 		container.setServerTemplateKey(serverTemplateKey);

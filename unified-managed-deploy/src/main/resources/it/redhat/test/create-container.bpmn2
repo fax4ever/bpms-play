@@ -14,6 +14,8 @@
   <bpmn2:itemDefinition id="ItemDefinition_133" isCollection="false" structureRef="Object"/>
   <bpmn2:itemDefinition id="ItemDefinition_917" isCollection="false" structureRef="org.kie.server.api.model.ServiceResponse.ResponseType"/>
   <bpmn2:itemDefinition id="ItemDefinition_918" isCollection="false" structureRef="org.kie.server.api.model.ServiceResponse"/>
+  <bpmn2:itemDefinition id="ItemDefinition_26" isCollection="false" structureRef="it.redhat.demo.dto.ServerTemplateDto"/>
+  <bpmn2:itemDefinition id="ItemDefinition_27" isCollection="false" structureRef="it.redhat.demo.dto.ContainerSpecDto"/>
   <bpmn2:process id="it.redhat.test.create-container" tns:packageName="it.redhat.test" name="create-container" isExecutable="true" processType="Private">
     <bpmn2:extensionElements>
       <tns:import name="java.util.List"/>
@@ -23,6 +25,8 @@
       <tns:import name="org.kie.services.client.serialization.jaxb.impl.deploy.JaxbDeploymentJobResult"/>
       <tns:import name="org.kie.server.api.model.ServiceResponse"/>
       <tns:import name="org.kie.server.api.model.ServiceResponse.ResponseType"/>
+      <tns:import name="it.redhat.demo.dto.ServerTemplateDto"/>
+      <tns:import name="it.redhat.demo.dto.ContainerSpecDto"/>
     </bpmn2:extensionElements>
     <bpmn2:property id="bcHost" itemSubjectRef="ItemDefinition_1" name="bcHost"/>
     <bpmn2:property id="bcPort" itemSubjectRef="ItemDefinition_343" name="bcPort"/>
@@ -32,11 +36,11 @@
     <bpmn2:property id="groupId" itemSubjectRef="ItemDefinition_1" name="groupId"/>
     <bpmn2:property id="version" itemSubjectRef="ItemDefinition_1" name="version"/>
     <bpmn2:property id="mergeMode" itemSubjectRef="ItemDefinition_1" name="mergeMode"/>
-    <bpmn2:property id="serverTemplate" itemSubjectRef="ItemDefinition_2" name="serverTemplate"/>
+    <bpmn2:property id="serverTemplate" itemSubjectRef="ItemDefinition_26" name="serverTemplate"/>
     <bpmn2:property id="httpResponseStatus" itemSubjectRef="ItemDefinition_1" name="httpResponseStatus"/>
     <bpmn2:property id="httpResponseMessage" itemSubjectRef="ItemDefinition_1" name="httpResponseMessage"/>
     <bpmn2:property id="bcDeployResponse" itemSubjectRef="ItemDefinition_695" name="bcDeployResponse"/>
-    <bpmn2:property id="psDeployRequest" itemSubjectRef="ItemDefinition_131" name="psDeployRequest"/>
+    <bpmn2:property id="psDeployRequest" itemSubjectRef="ItemDefinition_27" name="psDeployRequest"/>
     <bpmn2:property id="processServerUrls" itemSubjectRef="ItemDefinition_175" name="processServerUrls"/>
     <bpmn2:property id="httpResponseBody" itemSubjectRef="ItemDefinition_2" name="httpResponseBody"/>
     <bpmn2:property id="uri" itemSubjectRef="ItemDefinition_1" name="uri"/>
