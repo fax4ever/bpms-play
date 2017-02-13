@@ -411,7 +411,7 @@
         <bpmn2:dataInput id="DataInput_21" itemSubjectRef="ItemDefinition_1" name="HandleResponseErrors"/>
         <bpmn2:dataInput id="DataInput_22" itemSubjectRef="ItemDefinition_1" name="ResultClass"/>
         <bpmn2:dataInput id="DataInput_23" itemSubjectRef="ItemDefinition_1" name="ContentType"/>
-        <bpmn2:dataInput id="DataInput_24" itemSubjectRef="ItemDefinition_2" name="Content"/>
+        <bpmn2:dataInput id="DataInput_24" itemSubjectRef="ItemDefinition_27" name="Content"/>
         <bpmn2:dataInput id="DataInput_25" itemSubjectRef="ItemDefinition_1" name="AuthType"/>
         <bpmn2:dataInput id="DataInput_26" itemSubjectRef="ItemDefinition_1" name="ConnectTimeout"/>
         <bpmn2:dataInput id="DataInput_27" itemSubjectRef="ItemDefinition_1" name="ReadTimeout"/>
@@ -455,11 +455,12 @@
       <bpmn2:dataInputAssociation id="_DataInputAssociation_33">
         <bpmn2:targetRef>DataInput_23</bpmn2:targetRef>
         <bpmn2:assignment id="Assignment_11">
-          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_30">application/xml</bpmn2:from>
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_30">application/json</bpmn2:from>
           <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_28">DataInput_23</bpmn2:to>
         </bpmn2:assignment>
       </bpmn2:dataInputAssociation>
       <bpmn2:dataInputAssociation id="_DataInputAssociation_34">
+        <bpmn2:sourceRef>psDeployRequest</bpmn2:sourceRef>
         <bpmn2:targetRef>DataInput_24</bpmn2:targetRef>
       </bpmn2:dataInputAssociation>
       <bpmn2:dataInputAssociation id="_DataInputAssociation_35">
