@@ -19,7 +19,7 @@ import it.redhat.test.stub.VerifyServerStub;
 
 public class UnifiedManagedDeployTest extends JbpmJUnitBaseTestCase {
 	
-	private KieSession kieSession;
+	protected KieSession kieSession;
 	private AuditService auditService;
 	
 	public UnifiedManagedDeployTest() {
@@ -34,11 +34,15 @@ public class UnifiedManagedDeployTest extends JbpmJUnitBaseTestCase {
 		RuntimeEngine runtimeEngine = getRuntimeEngine();
 		kieSession = runtimeEngine.getKieSession();
 		auditService = runtimeEngine.getAuditService();
+		registerWorkItemHandler();
+		
+	}
+
+	protected void registerWorkItemHandler() {
 		kieSession.getWorkItemManager().registerWorkItemHandler("Rest", new RestStub());
 		kieSession.getWorkItemManager().registerWorkItemHandler("ProcessServerRest", new VerifyServerStub());
 		kieSession.getWorkItemManager().registerWorkItemHandler("ChooseDeployStrategy", new ChooseDeployStrategy());
 		kieSession.getWorkItemManager().registerWorkItemHandler("CreateContainerSpec", new CreateContainerSpec());
-		
 	}
 	
 	@Test
