@@ -95,7 +95,7 @@
       <bpmn2:dataInputAssociation id="_DataInputAssociation_5">
         <bpmn2:targetRef>DataInput_4</bpmn2:targetRef>
         <bpmn2:assignment id="Assignment_4">
-          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_12">org.kie.server.controller.api.model.spec.ServerTemplate</bpmn2:from>
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_12">it.redhat.demo.dto.ServerTemplateDto</bpmn2:from>
           <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_10">DataInput_4</bpmn2:to>
         </bpmn2:assignment>
       </bpmn2:dataInputAssociation>
