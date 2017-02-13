@@ -8,15 +8,15 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "process-config")
+@XmlRootElement(name = "processConfig")
 public class ProcessConfigDto extends ContainerConfigDto implements Serializable {
 	
 	@XmlElement(name = "runtimeStrategy")
     private String runtimeStrategy;
     @XmlElement(name = "kbase")
-    private String kBase;
+    private String kBase = "";
     @XmlElement(name = "ksession")
-    private String kSession;
+    private String kSession = "";
     @XmlElement(name = "mergeMode")
     private String mergeMode;
     

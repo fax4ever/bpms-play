@@ -18,7 +18,7 @@ public class ContainerSpecDto extends ContainerSpecKeyDto implements Serializabl
 	
 	@XmlElement(name = "release-id")
     private ReleaseIdDto releasedId;
-    @XmlElement(name = "configuration")
+    @XmlElement(name = "configuration", type = ProcessConfigDto.class)
     private Map<Capability, ProcessConfigDto> configs = new HashMap<Capability, ProcessConfigDto>();
     @XmlElement(name = "status")
     private KieContainerStatus status = KieContainerStatus.STOPPED;
