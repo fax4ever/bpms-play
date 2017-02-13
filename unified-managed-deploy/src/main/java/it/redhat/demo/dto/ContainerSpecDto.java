@@ -19,7 +19,7 @@ public class ContainerSpecDto extends ContainerSpecKeyDto implements Serializabl
 	@XmlElement(name = "release-id")
     private ReleaseIdDto releasedId;
     @XmlElement(name = "configuration")
-    private Map<Capability, ContainerConfigDto> configs = new HashMap<Capability, ContainerConfigDto>();
+    private Map<Capability, ProcessConfigDto> configs = new HashMap<Capability, ProcessConfigDto>();
     @XmlElement(name = "status")
     private KieContainerStatus status = KieContainerStatus.STOPPED;
     
@@ -28,14 +28,14 @@ public class ContainerSpecDto extends ContainerSpecKeyDto implements Serializabl
     }
     
 	public ContainerSpecDto(String id, String containerName, ServerTemplateKeyDto serverTemplateKey,
-			ReleaseIdDto releaseId, KieContainerStatus status, Map<Capability, ContainerConfigDto> config) {
+			ReleaseIdDto releaseId, KieContainerStatus status, Map<Capability, ProcessConfigDto> config) {
     	super(id, containerName, serverTemplateKey);
     	this.releasedId = releaseId;
     	this.status = status;
     	this.configs = config;
 	}
 	
-	public void addConfig(Capability capability, ContainerConfigDto config) {
+	public void addConfig(Capability capability, ProcessConfigDto config) {
         this.configs.put(capability, config);
     }
 
@@ -47,11 +47,11 @@ public class ContainerSpecDto extends ContainerSpecKeyDto implements Serializabl
 		this.releasedId = releasedId;
 	}
 
-	public Map<Capability, ContainerConfigDto> getConfigs() {
+	public Map<Capability, ProcessConfigDto> getConfigs() {
 		return configs;
 	}
 
-	public void setConfigs(Map<Capability, ContainerConfigDto> configs) {
+	public void setConfigs(Map<Capability, ProcessConfigDto> configs) {
 		this.configs = configs;
 	}
 
