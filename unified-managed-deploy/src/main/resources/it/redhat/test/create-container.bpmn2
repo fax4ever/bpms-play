@@ -13,6 +13,7 @@
   <bpmn2:itemDefinition id="ItemDefinition_918" isCollection="false" structureRef="org.kie.server.api.model.ServiceResponse"/>
   <bpmn2:itemDefinition id="ItemDefinition_26" isCollection="false" structureRef="it.redhat.demo.dto.ServerTemplateDto"/>
   <bpmn2:itemDefinition id="ItemDefinition_27" isCollection="false" structureRef="it.redhat.demo.dto.ContainerSpecDto"/>
+  <bpmn2:itemDefinition id="ItemDefinition_5" isCollection="false" structureRef="it.redhat.demo.dto.ProcessConfigDto"/>
   <bpmn2:process id="it.redhat.test.create-container" tns:packageName="it.redhat.test" name="create-container" isExecutable="true" processType="Private">
     <bpmn2:extensionElements>
       <tns:import name="java.util.List"/>
@@ -21,6 +22,7 @@
       <tns:import name="org.kie.server.api.model.ServiceResponse.ResponseType"/>
       <tns:import name="it.redhat.demo.dto.ServerTemplateDto"/>
       <tns:import name="it.redhat.demo.dto.ContainerSpecDto"/>
+      <tns:import name="it.redhat.demo.dto.ProcessConfigDto"/>
     </bpmn2:extensionElements>
     <bpmn2:property id="bcHost" itemSubjectRef="ItemDefinition_1" name="bcHost"/>
     <bpmn2:property id="bcPort" itemSubjectRef="ItemDefinition_343" name="bcPort"/>
@@ -642,7 +644,7 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_Task_5" bpmnElement="Task_5" isExpanded="true">
         <dc:Bounds height="50.0" width="110.0" x="665.0" y="143.0"/>
-        <bpmndi:BPMNLabel>
+        <bpmndi:BPMNLabel id="BPMNLabel_10">
           <dc:Bounds height="11.0" width="51.0" x="694.0" y="162.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
@@ -727,13 +729,13 @@
         <di:waypoint xsi:type="dc:Point" x="625.0" y="168.0"/>
         <di:waypoint xsi:type="dc:Point" x="645.0" y="168.0"/>
         <di:waypoint xsi:type="dc:Point" x="665.0" y="168.0"/>
-        <bpmndi:BPMNLabel/>
+        <bpmndi:BPMNLabel id="BPMNLabel_18"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_6" bpmnElement="SequenceFlow_6" sourceElement="BPMNShape_Task_5" targetElement="BPMNShape_ExclusiveGateway_2">
         <di:waypoint xsi:type="dc:Point" x="775.0" y="168.0"/>
         <di:waypoint xsi:type="dc:Point" x="797.0" y="168.0"/>
         <di:waypoint xsi:type="dc:Point" x="820.0" y="168.0"/>
-        <bpmndi:BPMNLabel/>
+        <bpmndi:BPMNLabel id="BPMNLabel_20"/>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
