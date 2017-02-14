@@ -22,6 +22,8 @@
         <module>bpms-jndi-lookup</module>
         <module>bpms-domain-specific-task</module>
         <module>bpms-domain-advanced-task</module>
+        <module>bpms-migration</module>
+        <module>bpms-migration-next</module>
     </modules>
 
     <properties>
