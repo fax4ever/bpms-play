@@ -14,6 +14,7 @@ import org.kie.api.runtime.process.ProcessInstance;
 
 import it.redhat.demo.customtask.ChooseDeployStrategy;
 import it.redhat.demo.customtask.CreateContainerSpec;
+import it.redhat.demo.customtask.InputValidator;
 import it.redhat.test.stub.RestStub;
 import it.redhat.test.stub.VerifyServerStub;
 
@@ -43,6 +44,7 @@ public class UnifiedManagedDeployTest extends JbpmJUnitBaseTestCase {
 		kieSession.getWorkItemManager().registerWorkItemHandler("ProcessServerRest", new VerifyServerStub());
 		kieSession.getWorkItemManager().registerWorkItemHandler("ChooseDeployStrategy", new ChooseDeployStrategy());
 		kieSession.getWorkItemManager().registerWorkItemHandler("CreateContainerSpec", new CreateContainerSpec());
+		kieSession.getWorkItemManager().registerWorkItemHandler("InputValidator", new InputValidator());
 	}
 	
 	@Test
