@@ -30,22 +30,22 @@ public class InputValidator implements WorkItemHandler {
 			bcPort = bcPortInt.toString();
 		}
 		
-		if (bcHost == null) {
+		if (bcHost == null || bcHost.trim().isEmpty()) {
 			throw new InvalidParameterRuntimeException("invalid bcHost");
 		}
-		if (serverId == null) {
+		if (serverId == null || serverId.trim().isEmpty()) {
 			throw new InvalidParameterRuntimeException("invalid serverId");
 		}
-		if (groupId == null) {
+		if (groupId == null || groupId.trim().isEmpty()) {
 			throw new InvalidParameterRuntimeException("invalid groupId");
 		}
-		if (artifactId == null) {
+		if (artifactId == null || artifactId.trim().isEmpty()) {
 			throw new InvalidParameterRuntimeException("invalid artifactId");
 		}
-		if (version == null) {
+		if (version == null || version.trim().isEmpty()) {
 			throw new InvalidParameterRuntimeException("invalid version");
 		}
-		if (bcPort == null) {
+		if (bcPort == null || bcPort.trim().isEmpty()) {
 			throw new InvalidParameterRuntimeException("invalid bcPort and bcPortInt");
 		}
 		
