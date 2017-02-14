@@ -159,7 +159,7 @@
         <bpmn2:dataInput id="DataInput_12" itemSubjectRef="ItemDefinition_1" name="HandleResponseErrors"/>
         <bpmn2:dataInput id="DataInput_13" itemSubjectRef="ItemDefinition_1" name="ResultClass"/>
         <bpmn2:dataInput id="DataInput_14" itemSubjectRef="ItemDefinition_1" name="ContentType"/>
-        <bpmn2:dataInput id="DataInput_15" name="Content"/>
+        <bpmn2:dataInput id="DataInput_15" itemSubjectRef="ItemDefinition_27" name="Content"/>
         <bpmn2:dataInput id="DataInput_16" itemSubjectRef="ItemDefinition_1" name="AuthType"/>
         <bpmn2:dataInput id="DataInput_17" itemSubjectRef="ItemDefinition_1" name="ConnectTimeout"/>
         <bpmn2:dataInput id="DataInput_18" itemSubjectRef="ItemDefinition_1" name="ReadTimeout"/>

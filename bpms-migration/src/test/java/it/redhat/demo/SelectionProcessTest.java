@@ -64,7 +64,7 @@ public class SelectionProcessTest extends JbpmJUnitBaseTestCase {
 		taskService.start(taskId, "trionfera");
 		
 		HashMap<String,Object> taskResults = new HashMap<String, Object>();
-		taskResults.put("feedback", false);
+		taskResults.put("feedback", "KO");
 		
 		// the HR trionfera reject the candidate
 		taskService.complete(taskId, "trionfera", taskResults);
@@ -94,7 +94,7 @@ public class SelectionProcessTest extends JbpmJUnitBaseTestCase {
 		
 		// the HR coppellardi approve the candidate
 		HashMap<String,Object> taskResults = new HashMap<String, Object>();
-		taskResults.put("feedback", true);
+		taskResults.put("feedback", "OK");
 		
 		taskService.complete(taskSummary.getId(), "trionfera", taskResults);
 		
