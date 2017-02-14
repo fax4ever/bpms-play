@@ -47,6 +47,12 @@
             <parameters/>
             <name>EchoDomainSpecificTask</name>
         </work-item-handler>
+        <work-item-handler>
+            <resolver>mvel</resolver>
+            <identifier>new it.redhat.demo.ParameterDomainSpecificTask()</identifier>
+            <parameters/>
+            <name>ParameterDomainSpecificTask</name>
+        </work-item-handler>
     </work-item-handlers>
     <environment-entries/>
     <configurations/>
