@@ -48,7 +48,7 @@ public class UnifiedManagedDeployTest extends JbpmJUnitBaseTestCase {
 	}
 	
 	@Test
-	public void test() {
+	public void test_bcPortStringValue() {
 		
 		HashMap<String,Object> params = new HashMap<>();
 		
@@ -59,6 +59,26 @@ public class UnifiedManagedDeployTest extends JbpmJUnitBaseTestCase {
 		params.put("artifactId", "bpms-rest-task");
 		params.put("version", "1.1.0-SNAPSHOT");
 		
+		testProcess(params);
+		
+	}
+	
+	public void test_bcPortIntValue() {
+		
+		HashMap<String,Object> params = new HashMap<>();
+		
+		params.put("bcHost", "localhost");
+		params.put("bcPortInt", 8230);
+		params.put("serverId", "process-server");
+		params.put("groupId", "it.redhat.demo");
+		params.put("artifactId", "bpms-rest-task");
+		params.put("version", "1.1.0-SNAPSHOT");
+		
+		testProcess(params);
+		
+	}
+
+	private void testProcess(HashMap<String, Object> params) {
 		ProcessInstance instance = kieSession.startProcess("it.redhat.test.unified-managed-deploy", params);
 		assertProcessInstanceCompleted(instance.getId());
 		assertNodeTriggered(instance.getId(), "StartProcess", "Read Server Template", "ChooseDeployStrategy", "Create / Update", "Create Container", "Migration / Not", "NEW Release");
@@ -70,7 +90,6 @@ public class UnifiedManagedDeployTest extends JbpmJUnitBaseTestCase {
 		assertNodeTriggered(createContainerProcessInstance.getProcessInstanceId(), 
 				"StartProcess", "Bc-Ps fork start", "Bc-Deploy", "CreateContainerSpec", "Ps-Deploy", "Ps-Deploy", "Bc-Ps fork end", "EndProcess",
 				"StartVerify", "verify server gateway", "verify server gateway", "verify server gateway", "EndVerify");
-		
 	}
 
 }
