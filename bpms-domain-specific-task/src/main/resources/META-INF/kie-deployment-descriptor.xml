@@ -45,7 +45,7 @@
             <resolver>mvel</resolver>
             <identifier>new it.redhat.demo.EchoDomainSpecificTask()</identifier>
             <parameters/>
-            <name>JndiLookupHandler</name>
+            <name>EchoDomainSpecificTask</name>
         </work-item-handler>
     </work-item-handlers>
     <environment-entries/>
