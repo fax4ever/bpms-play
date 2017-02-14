@@ -29,6 +29,7 @@
     <bpmn2:property id="httpResponseStatus" itemSubjectRef="ItemDefinition_1" name="httpResponseStatus"/>
     <bpmn2:property id="httpResponseMessage" itemSubjectRef="ItemDefinition_1" name="httpResponseMessage"/>
     <bpmn2:property id="uri" itemSubjectRef="ItemDefinition_1" name="uri"/>
+    <bpmn2:property id="bcPortInt" itemSubjectRef="ItemDefinition_7" name="bcPortInt"/>
     <bpmn2:startEvent id="StartEvent_1" name="StartProcess">
       <bpmn2:extensionElements>
         <tns:metaData name="elementname">
