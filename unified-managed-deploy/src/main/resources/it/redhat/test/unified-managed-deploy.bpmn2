@@ -462,7 +462,7 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_Task_3" bpmnElement="Task_3" isExpanded="true">
         <dc:Bounds height="50.0" width="110.0" x="75.0" y="236.0"/>
-        <bpmndi:BPMNLabel>
+        <bpmndi:BPMNLabel id="BPMNLabel_12">
           <dc:Bounds height="11.0" width="57.0" x="101.0" y="255.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
@@ -532,13 +532,13 @@
         <di:waypoint xsi:type="dc:Point" x="130.0" y="174.0"/>
         <di:waypoint xsi:type="dc:Point" x="130.0" y="205.0"/>
         <di:waypoint xsi:type="dc:Point" x="130.0" y="236.0"/>
-        <bpmndi:BPMNLabel/>
+        <bpmndi:BPMNLabel id="BPMNLabel_20"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_4" bpmnElement="SequenceFlow_4" sourceElement="BPMNShape_Task_3" targetElement="BPMNShape_Task_1">
         <di:waypoint xsi:type="dc:Point" x="185.0" y="261.0"/>
         <di:waypoint xsi:type="dc:Point" x="217.0" y="261.0"/>
         <di:waypoint xsi:type="dc:Point" x="250.0" y="261.0"/>
-        <bpmndi:BPMNLabel/>
+        <bpmndi:BPMNLabel id="BPMNLabel_21"/>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
