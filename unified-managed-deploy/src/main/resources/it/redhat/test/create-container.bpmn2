@@ -284,10 +284,10 @@
       </bpmn2:exclusiveGateway>
       <bpmn2:sequenceFlow id="SequenceFlow_13" tns:priority="1" sourceRef="StartEvent_2" targetRef="ExclusiveGateway_1"/>
       <bpmn2:sequenceFlow id="SequenceFlow_18" tns:priority="1" name="STARTED" sourceRef="ExclusiveGateway_2" targetRef="EndEvent_1">
-        <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_20" language="http://www.mvel.org/2.0">deployContainerStatus.result.status.name() == 'STARTED'</bpmn2:conditionExpression>
+        <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_20" language="http://www.mvel.org/2.0">deployContainerStatus.result != null &amp;&amp; deployContainerStatus.result.status.name() == 'STARTED'</bpmn2:conditionExpression>
       </bpmn2:sequenceFlow>
       <bpmn2:sequenceFlow id="SequenceFlow_19" tns:priority="1" name="CREATING" sourceRef="ExclusiveGateway_2" targetRef="ExclusiveGateway_1">
-        <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_26" language="http://www.mvel.org/2.0">deployContainerStatus.result.status.name() == 'CREATING'</bpmn2:conditionExpression>
+        <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_26" language="http://www.mvel.org/2.0">deployContainerStatus.result == null || deployContainerStatus.result.status.name() == 'CREATING'</bpmn2:conditionExpression>
       </bpmn2:sequenceFlow>
       <bpmn2:task id="Task_5" tns:taskName="ProcessServerRest" tns:displayName="ProcessServerRest" tns:icon="task.png" name="VerifyServer">
         <bpmn2:extensionElements>
