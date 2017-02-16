@@ -5,6 +5,8 @@ import java.util.HashMap;
 import org.kie.api.runtime.process.WorkItem;
 import org.kie.api.runtime.process.WorkItemHandler;
 import org.kie.api.runtime.process.WorkItemManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import it.redhat.demo.dto.ContainerSpecDto;
 import it.redhat.demo.dto.ReleaseIdDto;
@@ -13,6 +15,8 @@ import it.redhat.demo.model.MavenGavInfo;
 import it.redhat.demo.model.MavenGavInfo.Affinity;
 
 public class ChooseDeployStrategy implements WorkItemHandler {
+	
+	private static Logger log = LoggerFactory.getLogger(ChooseDeployStrategy.class);
 
 	@Override
 	public void executeWorkItem(WorkItem workItem, WorkItemManager manager) {
@@ -55,13 +59,23 @@ public class ChooseDeployStrategy implements WorkItemHandler {
 			resultsMap.put("update", false);
 			resultsMap.put("migration", true);
 			resultsMap.put("miniMigration", miniMigration);
+			
+			log.info("Performe Migration Deploy Strategy");
+			
 		} else if (Affinity.EQUALS.equals(maxAffinity)) {
 			resultsMap.put("update", true);
 			resultsMap.put("migration", false);
+			
+			log.info("Performe Snapshot Deploy Strategy");
+			
 		} else {
 			resultsMap.put("update", false);
 			resultsMap.put("migration", false);
+			
+			log.info("Performe Create New Deploy Strategy");
 		}
+		
+		
 		
 		manager.completeWorkItem(workItem.getId(), resultsMap);
 		

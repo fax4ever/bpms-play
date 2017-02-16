@@ -13,6 +13,8 @@
   <bpmn2:itemDefinition id="ItemDefinition_27" isCollection="false" structureRef="it.redhat.demo.dto.ContainerSpecDto"/>
   <bpmn2:itemDefinition id="ItemDefinition_5" isCollection="false" structureRef="it.redhat.demo.dto.ProcessConfigDto"/>
   <bpmn2:itemDefinition id="ItemDefinition_6" isCollection="false" structureRef="it.redhat.demo.pojo.ServiceResponsePojo"/>
+  <bpmn2:itemDefinition id="ItemDefinition_7" isCollection="false" structureRef="org.slf4j.Logger"/>
+  <bpmn2:itemDefinition id="ItemDefinition_9" isCollection="false" structureRef="org.slf4j.LoggerFactory"/>
   <bpmn2:process id="it.redhat.test.create-container" tns:packageName="it.redhat.test" name="create-container" isExecutable="true" processType="Private">
     <bpmn2:extensionElements>
       <tns:import name="java.util.List"/>
@@ -21,6 +23,8 @@
       <tns:import name="it.redhat.demo.dto.ContainerSpecDto"/>
       <tns:import name="it.redhat.demo.dto.ProcessConfigDto"/>
       <tns:import name="it.redhat.demo.pojo.ServiceResponsePojo"/>
+      <tns:import name="org.slf4j.Logger"/>
+      <tns:import name="org.slf4j.LoggerFactory"/>
     </bpmn2:extensionElements>
     <bpmn2:property id="bcHost" itemSubjectRef="ItemDefinition_1" name="bcHost"/>
     <bpmn2:property id="bcPort" itemSubjectRef="ItemDefinition_1" name="bcPort"/>
@@ -295,6 +299,12 @@
           <tns:onEntry-script scriptFormat="http://www.java.com/java">
             <tns:script>kcontext.setVariable(&quot;uri&quot;, processServerUrl + &quot;/containers/&quot; + groupId + &quot;:&quot; + artifactId + &quot;:&quot; + version);</tns:script>
           </tns:onEntry-script>
+          <tns:onExit-script scriptFormat="http://www.java.com/java">
+            <tns:script>Logger logger = null;
+logger = LoggerFactory.getLogger(&quot;it.redhat.demo.VerifyServer&quot;);
+logger.info(&quot;Server Url:-&quot;+ kcontext.getVariable(&quot;uri&quot;));
+logger.info(&quot;Server Response:-&quot;+kcontext.getVariable(&quot;deployContainerStatus&quot;));</tns:script>
+          </tns:onExit-script>
         </bpmn2:extensionElements>
         <bpmn2:incoming>SequenceFlow_9</bpmn2:incoming>
         <bpmn2:outgoing>SequenceFlow_6</bpmn2:outgoing>

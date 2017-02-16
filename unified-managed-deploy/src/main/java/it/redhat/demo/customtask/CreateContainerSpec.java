@@ -9,6 +9,8 @@ import org.kie.api.runtime.process.WorkItemHandler;
 import org.kie.api.runtime.process.WorkItemManager;
 import org.kie.server.api.model.KieContainerStatus;
 import org.kie.server.controller.api.model.spec.Capability;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import it.redhat.demo.dto.ContainerSpecDto;
 import it.redhat.demo.dto.ProcessConfigDto;
@@ -17,10 +19,16 @@ import it.redhat.demo.dto.ServerTemplateDto;
 import it.redhat.demo.dto.ServerTemplateKeyDto;
 
 public class CreateContainerSpec implements WorkItemHandler {
+	
+	private static Logger log = LoggerFactory.getLogger(CreateContainerSpec.class);
 
 	@Override
 	public void executeWorkItem(WorkItem workItem, WorkItemManager manager) {
+		
 		ServerTemplateDto serverTemplate = (ServerTemplateDto) workItem.getParameter("serverTemplate");
+		
+		log.info("Target Server Template " + serverTemplate);
+		
 		String groupId = (String) workItem.getParameter("groupId");
 		String artifactId = (String) workItem.getParameter("artifactId");
 		String version = (String) workItem.getParameter("version");
@@ -46,6 +54,9 @@ public class CreateContainerSpec implements WorkItemHandler {
 		HashMap<String,Object> results = new HashMap<>();
 		results.put("psDeployRequest", container);
 		results.put("processServerUrls", processServerUrls);
+		
+		log.info("Deploy new container " + container);
+		log.info("On server lists " + processServerUrls);
 		
 		manager.completeWorkItem(workItem.getId(), results);
 		
