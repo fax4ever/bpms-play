@@ -35,6 +35,11 @@ public class UnifiedManagedDeployTest extends JbpmJUnitBaseTestCase {
 		//Enable the PseudoClock using the following system property.
 		System.setProperty("drools.clockType", "pseudo");
 		
+		System.setProperty("org.kie.server.controller.user", "fabio");
+		System.setProperty("org.kie.server.controller.pwd", "fabio$739");
+		System.setProperty("org.kie.server.user", "fabio");
+		System.setProperty("org.kie.server.pwd", "fabio$739");
+		
 		runtimeManager = createRuntimeManager("it/redhat/test/create-container.bpmn2", "it/redhat/test/update-container.bpmn2", "it/redhat/test/migration.bpmn2", "it/redhat/test/unified-managed-deploy.bpmn2");
 		
 		runtimeEngine = getRuntimeEngine();

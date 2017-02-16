@@ -63,4 +63,10 @@ public class ServerInstanceKeyDto implements Serializable {
 		this.url = url;
 	}
 
+	@Override
+	public String toString() {
+		return "ServerInstanceKeyDto [serverInstanceId=" + serverInstanceId + ", serverName=" + serverName
+				+ ", serverTemplateId=" + serverTemplateId + ", url=" + url + "]";
+	}
+
 }

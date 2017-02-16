@@ -71,4 +71,12 @@ public class ProcessConfigDto implements Serializable {
 		this.mergeMode = mergeMode;
 	}
 
+	@Override
+	public String toString() {
+		return "ProcessConfigDto [xsi=" + xsi + ", type=" + type + ", runtimeStrategy=" + runtimeStrategy + ", kBase="
+				+ kBase + ", kSession=" + kSession + ", mergeMode=" + mergeMode + "]";
+	}
+	
+	
+
 }

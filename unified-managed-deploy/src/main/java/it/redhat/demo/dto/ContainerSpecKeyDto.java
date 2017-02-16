@@ -52,4 +52,10 @@ public class ContainerSpecKeyDto implements Serializable {
 		this.serverTemplateKey = serverTemplateKey;
 	}
 
+	@Override
+	public String toString() {
+		return "ContainerSpecKeyDto [id=" + id + ", containerName=" + containerName + ", serverTemplateKey="
+				+ serverTemplateKey + "]";
+	}
+
 }

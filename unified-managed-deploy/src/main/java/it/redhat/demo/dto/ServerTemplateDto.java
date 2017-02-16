@@ -80,4 +80,10 @@ public class ServerTemplateDto extends ServerTemplateKeyDto implements Serializa
 		 return serverInstances;
 	}
 
+	@Override
+	public String toString() {
+		return "ServerTemplateDto [containersSpec=" + containersSpec + ", configs=" + configs + ", serverInstances="
+				+ serverInstances + ", capabilities=" + capabilities + "]";
+	}
+
 }

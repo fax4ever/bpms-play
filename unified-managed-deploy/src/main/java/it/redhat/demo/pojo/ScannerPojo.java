@@ -13,6 +13,11 @@ public class ScannerPojo implements Serializable {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+
+	@Override
+	public String toString() {
+		return "ScannerPojo [status=" + status + "]";
+	}
 		
 }
 

@@ -56,6 +56,26 @@ public class InputValidator implements WorkItemHandler {
 		log.info("version {}", version);
 		log.info("bcPort {}", bcPort);
 		
+		String bcUser = System.getProperty("org.kie.server.controller.user");
+		if (bcUser == null || bcUser.trim().isEmpty()) {
+			throw new InvalidParameterRuntimeException("invalid bcUser");
+		}
+		
+		String bcPass = System.getProperty("org.kie.server.controller.pwd");
+		if (bcPass == null || bcPass.trim().isEmpty()) {
+			throw new InvalidParameterRuntimeException("invalid bcPass");
+		}
+		
+		String psUser = System.getProperty("org.kie.server.user");
+		if (psUser == null || psUser.trim().isEmpty()) {
+			throw new InvalidParameterRuntimeException("invalid psUser");
+		}
+		
+		String psPass = System.getProperty("org.kie.server.pwd");
+		if (psPass == null || psPass.trim().isEmpty()) {
+			throw new InvalidParameterRuntimeException("invalid psPass");
+		}
+		
 		HashMap<String, Object> results = new HashMap<>();
 		
 		results.put("bcPort", bcPort);

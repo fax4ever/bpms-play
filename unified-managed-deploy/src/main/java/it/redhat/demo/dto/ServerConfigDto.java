@@ -9,5 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "server-config")
 public class ServerConfigDto implements Serializable {
+	
+	
 
 }

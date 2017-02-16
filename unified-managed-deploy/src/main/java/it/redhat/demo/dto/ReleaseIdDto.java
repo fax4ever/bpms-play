@@ -54,4 +54,11 @@ public class ReleaseIdDto implements Serializable {
 		this.version = version;
 	}
 
+	@Override
+	public String toString() {
+		return "ReleaseIdDto [groupId=" + groupId + ", artifactId=" + artifactId + ", version=" + version + "]";
+	}
+	
+	
+
 }

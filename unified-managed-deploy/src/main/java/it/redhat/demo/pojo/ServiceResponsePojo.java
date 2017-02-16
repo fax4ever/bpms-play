@@ -45,4 +45,9 @@ public class ServiceResponsePojo implements Serializable {
 		this.result = result;
 	}
 
+	@Override
+	public String toString() {
+		return "ServiceResponsePojo [type=" + type + ", msg=" + msg + ", result=" + result + "]";
+	}
+
 }

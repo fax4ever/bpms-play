@@ -44,4 +44,9 @@ public class ConfigItemPojo implements Serializable {
 		this.itemType = itemType;
 	}
 
+	@Override
+	public String toString() {
+		return "ConfigItemPojo [itemName=" + itemName + ", itemValue=" + itemValue + ", itemType=" + itemType + "]";
+	}
+
 }

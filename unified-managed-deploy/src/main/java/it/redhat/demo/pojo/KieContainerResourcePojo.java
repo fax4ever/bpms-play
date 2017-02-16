@@ -92,5 +92,12 @@ public class KieContainerResourcePojo implements Serializable {
 	public void setScanner(ScannerPojo scanner) {
 		this.scanner = scanner;
 	}
+
+	@Override
+	public String toString() {
+		return "KieContainerResourcePojo [containerId=" + containerId + ", status=" + status + ", configs=" + configs
+				+ ", messages=" + messages + ", releaseId=" + releaseId + ", resolvedReleaseId=" + resolvedReleaseId
+				+ ", scanner=" + scanner + "]";
+	}
 	
 }

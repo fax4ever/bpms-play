@@ -33,4 +33,9 @@ public class KieMessage implements Serializable {
 		this.timestamp = timestamp;
 	}
 
+	@Override
+	public String toString() {
+		return "KieMessage [content=" + content + ", severity=" + severity + ", timestamp=" + timestamp + "]";
+	}
+
 }

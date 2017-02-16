@@ -63,4 +63,9 @@ public class ContainerSpecDto extends ContainerSpecKeyDto implements Serializabl
 		this.status = status;
 	}
 
+	@Override
+	public String toString() {
+		return "ContainerSpecDto [releasedId=" + releasedId + ", configs=" + configs + ", status=" + status + "]";
+	}
+
 }
