@@ -9,20 +9,18 @@
   <bpmn2:itemDefinition id="ItemDefinition_3" isCollection="false" structureRef="Object"/>
   <bpmn2:itemDefinition id="ItemDefinition_132" isCollection="false" structureRef="Object"/>
   <bpmn2:itemDefinition id="ItemDefinition_133" isCollection="false" structureRef="Object"/>
-  <bpmn2:itemDefinition id="ItemDefinition_917" isCollection="false" structureRef="org.kie.server.api.model.ServiceResponse.ResponseType"/>
-  <bpmn2:itemDefinition id="ItemDefinition_918" isCollection="false" structureRef="org.kie.server.api.model.ServiceResponse"/>
   <bpmn2:itemDefinition id="ItemDefinition_26" isCollection="false" structureRef="it.redhat.demo.dto.ServerTemplateDto"/>
   <bpmn2:itemDefinition id="ItemDefinition_27" isCollection="false" structureRef="it.redhat.demo.dto.ContainerSpecDto"/>
   <bpmn2:itemDefinition id="ItemDefinition_5" isCollection="false" structureRef="it.redhat.demo.dto.ProcessConfigDto"/>
+  <bpmn2:itemDefinition id="ItemDefinition_6" isCollection="false" structureRef="it.redhat.demo.pojo.ServiceResponsePojo"/>
   <bpmn2:process id="it.redhat.test.create-container" tns:packageName="it.redhat.test" name="create-container" isExecutable="true" processType="Private">
     <bpmn2:extensionElements>
       <tns:import name="java.util.List"/>
       <tns:import name="org.kie.services.client.serialization.jaxb.impl.deploy.JaxbDeploymentJobResult"/>
-      <tns:import name="org.kie.server.api.model.ServiceResponse"/>
-      <tns:import name="org.kie.server.api.model.ServiceResponse.ResponseType"/>
       <tns:import name="it.redhat.demo.dto.ServerTemplateDto"/>
       <tns:import name="it.redhat.demo.dto.ContainerSpecDto"/>
       <tns:import name="it.redhat.demo.dto.ProcessConfigDto"/>
+      <tns:import name="it.redhat.demo.pojo.ServiceResponsePojo"/>
     </bpmn2:extensionElements>
     <bpmn2:property id="bcHost" itemSubjectRef="ItemDefinition_1" name="bcHost"/>
     <bpmn2:property id="bcPort" itemSubjectRef="ItemDefinition_1" name="bcPort"/>
@@ -247,7 +245,7 @@
           <bpmn2:dataInputRefs>DataInput_30</bpmn2:dataInputRefs>
         </bpmn2:inputSet>
       </bpmn2:ioSpecification>
-      <bpmn2:property id="deployContainerStatus" itemSubjectRef="ItemDefinition_918" name="deployContainerStatus"/>
+      <bpmn2:property id="deployContainerStatus" itemSubjectRef="ItemDefinition_6" name="deployContainerStatus"/>
       <bpmn2:dataInputAssociation id="DataInputAssociation_3">
         <bpmn2:sourceRef>processServerUrls</bpmn2:sourceRef>
         <bpmn2:targetRef>DataInput_30</bpmn2:targetRef>
@@ -275,7 +273,7 @@
       <bpmn2:exclusiveGateway id="ExclusiveGateway_1" name="verify server gateway" gatewayDirection="Converging">
         <bpmn2:incoming>SequenceFlow_13</bpmn2:incoming>
         <bpmn2:incoming>SequenceFlow_19</bpmn2:incoming>
-        <bpmn2:outgoing>SequenceFlow_5</bpmn2:outgoing>
+        <bpmn2:outgoing>SequenceFlow_8</bpmn2:outgoing>
       </bpmn2:exclusiveGateway>
       <bpmn2:exclusiveGateway id="ExclusiveGateway_2" name="verify status" gatewayDirection="Diverging">
         <bpmn2:incoming>SequenceFlow_6</bpmn2:incoming>
@@ -284,10 +282,10 @@
       </bpmn2:exclusiveGateway>
       <bpmn2:sequenceFlow id="SequenceFlow_13" tns:priority="1" sourceRef="StartEvent_2" targetRef="ExclusiveGateway_1"/>
       <bpmn2:sequenceFlow id="SequenceFlow_18" tns:priority="1" name="STARTED" sourceRef="ExclusiveGateway_2" targetRef="EndEvent_1">
-        <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_20" language="http://www.mvel.org/2.0">deployContainerStatus.result != null &amp;&amp; deployContainerStatus.result.status.name() == 'STARTED'</bpmn2:conditionExpression>
+        <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_20" language="http://www.mvel.org/2.0">deployContainerStatus.result != null &amp;&amp; deployContainerStatus.result.status == 'STARTED'</bpmn2:conditionExpression>
       </bpmn2:sequenceFlow>
       <bpmn2:sequenceFlow id="SequenceFlow_19" tns:priority="1" name="CREATING" sourceRef="ExclusiveGateway_2" targetRef="ExclusiveGateway_1">
-        <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_26" language="http://www.mvel.org/2.0">deployContainerStatus.result == null || deployContainerStatus.result.status.name() == 'CREATING'</bpmn2:conditionExpression>
+        <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_26" language="http://www.mvel.org/2.0">deployContainerStatus.result == null || deployContainerStatus.result.status == 'CREATING'</bpmn2:conditionExpression>
       </bpmn2:sequenceFlow>
       <bpmn2:task id="Task_5" tns:taskName="ProcessServerRest" tns:displayName="ProcessServerRest" tns:icon="task.png" name="VerifyServer">
         <bpmn2:extensionElements>
@@ -298,7 +296,7 @@
             <tns:script>kcontext.setVariable(&quot;uri&quot;, processServerUrl + &quot;/containers/&quot; + groupId + &quot;:&quot; + artifactId + &quot;:&quot; + version);</tns:script>
           </tns:onEntry-script>
         </bpmn2:extensionElements>
-        <bpmn2:incoming>SequenceFlow_5</bpmn2:incoming>
+        <bpmn2:incoming>SequenceFlow_9</bpmn2:incoming>
         <bpmn2:outgoing>SequenceFlow_6</bpmn2:outgoing>
         <bpmn2:ioSpecification id="InputOutputSpecification_5">
           <bpmn2:dataInput id="DataInput_29" itemSubjectRef="ItemDefinition_1" name="Url"/>
@@ -310,7 +308,7 @@
           <bpmn2:dataInput id="DataInput_36" itemSubjectRef="ItemDefinition_1" name="AuthType"/>
           <bpmn2:dataInput id="DataInput_40" itemSubjectRef="ItemDefinition_1" name="ConnectTimeout"/>
           <bpmn2:dataInput id="DataInput_52" itemSubjectRef="ItemDefinition_1" name="ReadTimeout"/>
-          <bpmn2:dataOutput id="DataOutput_11" itemSubjectRef="ItemDefinition_918" name="Result"/>
+          <bpmn2:dataOutput id="DataOutput_11" itemSubjectRef="ItemDefinition_6" name="Result"/>
           <bpmn2:dataOutput id="DataOutput_12" itemSubjectRef="ItemDefinition_1" name="StatusMsg"/>
           <bpmn2:dataOutput id="DataOutput_17" itemSubjectRef="ItemDefinition_1" name="Status"/>
           <bpmn2:inputSet id="_InputSet_15">
@@ -347,7 +345,7 @@
         <bpmn2:dataInputAssociation id="_DataInputAssociation_63">
           <bpmn2:targetRef>DataInput_33</bpmn2:targetRef>
           <bpmn2:assignment id="Assignment_3">
-            <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_17">org.kie.server.api.model.ServiceResponse</bpmn2:from>
+            <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_17">it.redhat.demo.pojo.ServiceResponsePojo</bpmn2:from>
             <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_7">DataInput_33</bpmn2:to>
           </bpmn2:assignment>
         </bpmn2:dataInputAssociation>
@@ -383,8 +381,21 @@
           <bpmn2:targetRef>httpResponseStatus</bpmn2:targetRef>
         </bpmn2:dataOutputAssociation>
       </bpmn2:task>
-      <bpmn2:sequenceFlow id="SequenceFlow_5" tns:priority="1" sourceRef="ExclusiveGateway_1" targetRef="Task_5"/>
       <bpmn2:sequenceFlow id="SequenceFlow_6" tns:priority="1" sourceRef="Task_5" targetRef="ExclusiveGateway_2"/>
+      <bpmn2:intermediateCatchEvent id="IntermediateCatchEvent_1" name="Intermediate Catch Event 1">
+        <bpmn2:extensionElements>
+          <tns:metaData name="elementname">
+            <tns:metaValue><![CDATA[Intermediate Catch Event 1]]></tns:metaValue>
+          </tns:metaData>
+        </bpmn2:extensionElements>
+        <bpmn2:incoming>SequenceFlow_8</bpmn2:incoming>
+        <bpmn2:outgoing>SequenceFlow_9</bpmn2:outgoing>
+        <bpmn2:timerEventDefinition id="TimerEventDefinition_1">
+          <bpmn2:timeDuration xsi:type="bpmn2:tFormalExpression" id="FormalExpression_14" language="http://www.mvel.org/2.0">3s</bpmn2:timeDuration>
+        </bpmn2:timerEventDefinition>
+      </bpmn2:intermediateCatchEvent>
+      <bpmn2:sequenceFlow id="SequenceFlow_8" tns:priority="1" sourceRef="ExclusiveGateway_1" targetRef="IntermediateCatchEvent_1"/>
+      <bpmn2:sequenceFlow id="SequenceFlow_9" tns:priority="1" sourceRef="IntermediateCatchEvent_1" targetRef="Task_5"/>
     </bpmn2:subProcess>
     <bpmn2:endEvent id="EndEvent_2" name="EndProcess">
       <bpmn2:extensionElements>
@@ -570,9 +581,9 @@
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_Process_1" bpmnElement="it.redhat.test.create-container">
       <bpmndi:BPMNShape id="BPMNShape_SubProcess_1" bpmnElement="SubProcess_1" isExpanded="true">
-        <dc:Bounds height="213.0" width="514.0" x="480.0" y="108.0"/>
+        <dc:Bounds height="213.0" width="526.0" x="470.0" y="108.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_1">
-          <dc:Bounds height="11.0" width="61.0" x="486.0" y="111.0"/>
+          <dc:Bounds height="11.0" width="61.0" x="476.0" y="111.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_StartEvent_1" bpmnElement="StartEvent_1">
@@ -594,15 +605,15 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_StartEvent_2" bpmnElement="StartEvent_2">
-        <dc:Bounds height="36.0" width="36.0" x="510.0" y="150.0"/>
+        <dc:Bounds height="36.0" width="36.0" x="490.0" y="247.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_6">
-          <dc:Bounds height="11.0" width="44.0" x="506.0" y="186.0"/>
+          <dc:Bounds height="11.0" width="44.0" x="486.0" y="283.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_EndEvent_1" bpmnElement="EndEvent_1">
-        <dc:Bounds height="36.0" width="36.0" x="912.0" y="150.0"/>
+        <dc:Bounds height="36.0" width="36.0" x="940.0" y="247.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_7">
-          <dc:Bounds height="11.0" width="40.0" x="910.0" y="186.0"/>
+          <dc:Bounds height="11.0" width="40.0" x="938.0" y="283.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_EndEvent_2" bpmnElement="EndEvent_2">
@@ -618,15 +629,15 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_ExclusiveGateway_1" bpmnElement="ExclusiveGateway_1" isMarkerVisible="true">
-        <dc:Bounds height="50.0" width="50.0" x="575.0" y="143.0"/>
+        <dc:Bounds height="50.0" width="50.0" x="576.0" y="240.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_13">
-          <dc:Bounds height="22.0" width="57.0" x="572.0" y="193.0"/>
+          <dc:Bounds height="22.0" width="57.0" x="573.0" y="290.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_ExclusiveGateway_2" bpmnElement="ExclusiveGateway_2" isMarkerVisible="true">
-        <dc:Bounds height="50.0" width="50.0" x="820.0" y="143.0"/>
+        <dc:Bounds height="50.0" width="50.0" x="820.0" y="240.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_14">
-          <dc:Bounds height="11.0" width="52.0" x="819.0" y="193.0"/>
+          <dc:Bounds height="11.0" width="52.0" x="819.0" y="290.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_ParallelGateway_4" bpmnElement="ParallelGateway_4" isMarkerVisible="true">
@@ -648,9 +659,15 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_Task_5" bpmnElement="Task_5" isExpanded="true">
-        <dc:Bounds height="50.0" width="110.0" x="665.0" y="143.0"/>
+        <dc:Bounds height="50.0" width="110.0" x="711.0" y="143.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_10">
-          <dc:Bounds height="11.0" width="51.0" x="694.0" y="162.0"/>
+          <dc:Bounds height="11.0" width="51.0" x="740.0" y="162.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_IntermediateCatchEvent_1" bpmnElement="IntermediateCatchEvent_1">
+        <dc:Bounds height="36.0" width="36.0" x="628.0" y="150.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_12">
+          <dc:Bounds height="22.0" width="62.0" x="615.0" y="186.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_4" bpmnElement="SequenceFlow_4" sourceElement="BPMNShape_Task_2" targetElement="BPMNShape_Task_3">
@@ -660,26 +677,25 @@
         <bpmndi:BPMNLabel id="BPMNLabel_19"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_13" bpmnElement="SequenceFlow_13" sourceElement="BPMNShape_StartEvent_2" targetElement="BPMNShape_ExclusiveGateway_1">
-        <di:waypoint xsi:type="dc:Point" x="546.0" y="168.0"/>
-        <di:waypoint xsi:type="dc:Point" x="560.0" y="168.0"/>
-        <di:waypoint xsi:type="dc:Point" x="575.0" y="168.0"/>
+        <di:waypoint xsi:type="dc:Point" x="526.0" y="265.0"/>
+        <di:waypoint xsi:type="dc:Point" x="551.0" y="265.0"/>
+        <di:waypoint xsi:type="dc:Point" x="576.0" y="265.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_17"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_18" bpmnElement="SequenceFlow_18" sourceElement="BPMNShape_ExclusiveGateway_2" targetElement="BPMNShape_EndEvent_1">
-        <di:waypoint xsi:type="dc:Point" x="870.0" y="168.0"/>
-        <di:waypoint xsi:type="dc:Point" x="891.0" y="168.0"/>
-        <di:waypoint xsi:type="dc:Point" x="912.0" y="168.0"/>
+        <di:waypoint xsi:type="dc:Point" x="870.0" y="265.0"/>
+        <di:waypoint xsi:type="dc:Point" x="905.0" y="265.0"/>
+        <di:waypoint xsi:type="dc:Point" x="940.0" y="265.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_23">
-          <dc:Bounds height="11.0" width="40.0" x="872.0" y="169.0"/>
+          <dc:Bounds height="11.0" width="40.0" x="886.0" y="266.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_19" bpmnElement="SequenceFlow_19" sourceElement="BPMNShape_ExclusiveGateway_2" targetElement="BPMNShape_ExclusiveGateway_1">
-        <di:waypoint xsi:type="dc:Point" x="845.0" y="193.0"/>
-        <di:waypoint xsi:type="dc:Point" x="845.0" y="264.0"/>
-        <di:waypoint xsi:type="dc:Point" x="600.0" y="264.0"/>
-        <di:waypoint xsi:type="dc:Point" x="600.0" y="193.0"/>
+        <di:waypoint xsi:type="dc:Point" x="820.0" y="265.0"/>
+        <di:waypoint xsi:type="dc:Point" x="723.0" y="265.0"/>
+        <di:waypoint xsi:type="dc:Point" x="626.0" y="265.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_24">
-          <dc:Bounds height="11.0" width="45.0" x="701.0" y="265.0"/>
+          <dc:Bounds height="11.0" width="45.0" x="701.0" y="266.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_16" bpmnElement="SequenceFlow_16" sourceElement="BPMNShape_StartEvent_1" targetElement="BPMNShape_ParallelGateway_5">
@@ -701,7 +717,7 @@
         <bpmndi:BPMNLabel id="BPMNLabel_26"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_22" bpmnElement="SequenceFlow_22" sourceElement="BPMNShape_SubProcess_1" targetElement="BPMNShape_ParallelGateway_4">
-        <di:waypoint xsi:type="dc:Point" x="994.0" y="214.0"/>
+        <di:waypoint xsi:type="dc:Point" x="996.0" y="214.0"/>
         <di:waypoint xsi:type="dc:Point" x="1051.0" y="214.0"/>
         <di:waypoint xsi:type="dc:Point" x="1051.0" y="188.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_27"/>
@@ -727,20 +743,26 @@
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_3" bpmnElement="SequenceFlow_3" sourceElement="BPMNShape_Task_3" targetElement="BPMNShape_SubProcess_1">
         <di:waypoint xsi:type="dc:Point" x="355.0" y="240.0"/>
         <di:waypoint xsi:type="dc:Point" x="355.0" y="214.0"/>
-        <di:waypoint xsi:type="dc:Point" x="480.0" y="214.0"/>
+        <di:waypoint xsi:type="dc:Point" x="470.0" y="214.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_12"/>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_5" bpmnElement="SequenceFlow_5" sourceElement="BPMNShape_ExclusiveGateway_1" targetElement="BPMNShape_Task_5">
-        <di:waypoint xsi:type="dc:Point" x="625.0" y="168.0"/>
-        <di:waypoint xsi:type="dc:Point" x="645.0" y="168.0"/>
-        <di:waypoint xsi:type="dc:Point" x="665.0" y="168.0"/>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_6" bpmnElement="SequenceFlow_6" sourceElement="BPMNShape_Task_5" targetElement="BPMNShape_ExclusiveGateway_2">
+        <di:waypoint xsi:type="dc:Point" x="821.0" y="168.0"/>
+        <di:waypoint xsi:type="dc:Point" x="845.0" y="168.0"/>
+        <di:waypoint xsi:type="dc:Point" x="845.0" y="240.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_20"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_8" bpmnElement="SequenceFlow_8" sourceElement="BPMNShape_ExclusiveGateway_1" targetElement="BPMNShape_IntermediateCatchEvent_1">
+        <di:waypoint xsi:type="dc:Point" x="601.0" y="240.0"/>
+        <di:waypoint xsi:type="dc:Point" x="601.0" y="168.0"/>
+        <di:waypoint xsi:type="dc:Point" x="628.0" y="168.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_18"/>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_6" bpmnElement="SequenceFlow_6" sourceElement="BPMNShape_Task_5" targetElement="BPMNShape_ExclusiveGateway_2">
-        <di:waypoint xsi:type="dc:Point" x="775.0" y="168.0"/>
-        <di:waypoint xsi:type="dc:Point" x="797.0" y="168.0"/>
-        <di:waypoint xsi:type="dc:Point" x="820.0" y="168.0"/>
-        <bpmndi:BPMNLabel id="BPMNLabel_20"/>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_9" bpmnElement="SequenceFlow_9" sourceElement="BPMNShape_IntermediateCatchEvent_1" targetElement="BPMNShape_Task_5">
+        <di:waypoint xsi:type="dc:Point" x="664.0" y="168.0"/>
+        <di:waypoint xsi:type="dc:Point" x="687.0" y="168.0"/>
+        <di:waypoint xsi:type="dc:Point" x="711.0" y="168.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_21"/>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

@@ -5,9 +5,9 @@ import java.util.HashMap;
 import org.kie.api.runtime.process.WorkItem;
 import org.kie.api.runtime.process.WorkItemHandler;
 import org.kie.api.runtime.process.WorkItemManager;
-import org.kie.server.api.model.KieContainerResource;
-import org.kie.server.api.model.KieContainerStatus;
-import org.kie.server.api.model.ServiceResponse;
+
+import it.redhat.demo.pojo.KieContainerResourcePojo;
+import it.redhat.demo.pojo.ServiceResponsePojo;
 
 public class VerifyServerStub implements WorkItemHandler {
 	
@@ -18,14 +18,14 @@ public class VerifyServerStub implements WorkItemHandler {
 		
 		HashMap<String, Object> results = new HashMap<>();
 		
-		ServiceResponse<KieContainerResource> serviceResponse = new ServiceResponse<KieContainerResource>();
-		KieContainerResource kieContainerResource = new KieContainerResource();
+		ServiceResponsePojo serviceResponse = new ServiceResponsePojo();
+		KieContainerResourcePojo kieContainerResource = new KieContainerResourcePojo();
 		
 		if (times < 3) {
-			kieContainerResource.setStatus(KieContainerStatus.CREATING);
+			kieContainerResource.setStatus("CREATING");
 			times++;
 		} else {
-			kieContainerResource.setStatus(KieContainerStatus.STARTED);
+			kieContainerResource.setStatus("STARTED");
 		}
 		
 		serviceResponse.setResult(kieContainerResource);
