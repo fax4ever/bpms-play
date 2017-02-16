@@ -24,6 +24,7 @@
         <module>bpms-domain-advanced-task</module>
         <module>bpms-migration</module>
         <module>bpms-migration-next</module>
+        <module>bpms-timer</module>
     </modules>
 
     <properties>
