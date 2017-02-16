@@ -7,6 +7,7 @@ import org.jbpm.process.workitem.rest.RESTWorkItemHandler;
 import it.redhat.demo.customtask.ChooseDeployStrategy;
 import it.redhat.demo.customtask.CreateContainerSpec;
 import it.redhat.demo.customtask.InputValidator;
+import it.redhat.demo.customtask.WaitTask;
 
 public class UnifiedManagedDeployIT extends UnifiedManagedDeployTest {
 
@@ -28,6 +29,7 @@ public class UnifiedManagedDeployIT extends UnifiedManagedDeployTest {
 		kieSession.getWorkItemManager().registerWorkItemHandler("ChooseDeployStrategy", new ChooseDeployStrategy());
 		kieSession.getWorkItemManager().registerWorkItemHandler("CreateContainerSpec", new CreateContainerSpec());
 		kieSession.getWorkItemManager().registerWorkItemHandler("InputValidator", new InputValidator());
+		kieSession.getWorkItemManager().registerWorkItemHandler("WaitTask", new WaitTask());
 		
 	}
 	

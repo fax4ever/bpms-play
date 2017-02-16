@@ -89,5 +89,11 @@ import org.drools.core.process.core.datatype.impl.type.ObjectDataType;
         "bcPort" : new StringDataType()
      ],
     "displayName" : "InputValidator"
+  ],
+  [
+    "name" : "WaitTask",
+  	"parameters" : [],
+  	"results" : [],
+    "displayName" : "WaitTask"
   ]
 ]

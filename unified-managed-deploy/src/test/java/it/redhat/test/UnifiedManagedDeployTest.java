@@ -1,9 +1,7 @@
 package it.redhat.test;
 
 import java.util.HashMap;
-import java.util.concurrent.TimeUnit;
 
-import org.drools.core.time.impl.PseudoClockScheduler;
 import org.jbpm.test.JbpmJUnitBaseTestCase;
 import org.junit.After;
 import org.junit.Before;
@@ -16,6 +14,7 @@ import org.kie.api.runtime.process.ProcessInstance;
 import it.redhat.demo.customtask.ChooseDeployStrategy;
 import it.redhat.demo.customtask.CreateContainerSpec;
 import it.redhat.demo.customtask.InputValidator;
+import it.redhat.demo.customtask.WaitTask;
 import it.redhat.test.stub.RestStub;
 import it.redhat.test.stub.VerifyServerStub;
 
@@ -32,9 +31,6 @@ public class UnifiedManagedDeployTest extends JbpmJUnitBaseTestCase {
 	@Before
 	public void before() {
 		
-		//Enable the PseudoClock using the following system property.
-		System.setProperty("drools.clockType", "pseudo");
-		
 		System.setProperty("org.kie.server.controller.user", "fabio");
 		System.setProperty("org.kie.server.controller.pwd", "fabio$739");
 		System.setProperty("org.kie.server.user", "fabio");
@@ -50,6 +46,7 @@ public class UnifiedManagedDeployTest extends JbpmJUnitBaseTestCase {
 		kieSession.getWorkItemManager().registerWorkItemHandler("ChooseDeployStrategy", new ChooseDeployStrategy());
 		kieSession.getWorkItemManager().registerWorkItemHandler("CreateContainerSpec", new CreateContainerSpec());
 		kieSession.getWorkItemManager().registerWorkItemHandler("InputValidator", new InputValidator());
+		kieSession.getWorkItemManager().registerWorkItemHandler("WaitTask", new WaitTask());
 		
 	}
 	
@@ -79,9 +76,6 @@ public class UnifiedManagedDeployTest extends JbpmJUnitBaseTestCase {
 
 	protected void testProcess(HashMap<String, Object> params) {
 		ProcessInstance pi = kieSession.startProcess("it.redhat.test.unified-managed-deploy", params);
-		
-		PseudoClockScheduler sessionClock = kieSession.getSessionClock();
-		sessionClock.advanceTime(10, TimeUnit.SECONDS);
 		
 		assertProcessInstanceCompleted(pi.getId());
 	}
