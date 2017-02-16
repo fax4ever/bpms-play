@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "processConfig")
-public class ProcessConfigDto extends ContainerConfigDto implements Serializable {
+public class ProcessConfigDto implements Serializable {
 	
 	@XmlAttribute(name="xmlns:xsi")
 	private String xsi = "http://www.w3.org/2001/XMLSchema-instance";
