@@ -14,7 +14,7 @@
         <module>bpms-simple-war</module>
         <module>brms-simple</module>
         <module>brms-simple-war</module>
-        <module>bpmrule</module>
+        <module>bpms-process-rule</module>
         <module>bpms-process</module>
         <module>bpms-kie-process</module>
         <module>unified-managed-deploy</module>
