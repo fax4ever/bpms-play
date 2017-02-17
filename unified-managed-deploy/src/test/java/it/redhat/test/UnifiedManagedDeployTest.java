@@ -64,11 +64,11 @@ public class UnifiedManagedDeployTest extends JbpmJUnitBaseTestCase {
 		HashMap<String,Object> params = new HashMap<>();
 		
 		params.put("bcHost", "localhost");
-		params.put("bcPortInt", 8230);
+		params.put("bcPort", "8230s");
 		params.put("serverId", "process-server");
 		params.put("groupId", "it.redhat.demo");
 		params.put("artifactId", "bpms-rest-task");
-		params.put("version", "1.1.0-SNAPSHOT");
+		params.put("version", "1.1.0-SNAPSHOTs");
 		
 		testProcess(params);
 		

@@ -79,14 +79,14 @@ import org.drools.core.process.core.datatype.impl.type.ObjectDataType;
   	 "parameters" : [
   	 	 "bcHost" : new StringDataType(),
   	 	 "bcPort" : new StringDataType(),
-  	 	 "bcPortInt" : new IntegerDataType(),
          "serverId" : new StringDataType(),
          "groupId" : new StringDataType(),
          "artifactId" : new StringDataType(),
          "version" : new StringDataType()
       ],
   	"results" : [
-        "bcPort" : new StringDataType()
+        "bcPort" : new StringDataType(),
+        "version" : new StringDataType()
      ],
     "displayName" : "InputValidator"
   ],

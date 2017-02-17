@@ -12,26 +12,23 @@ import it.redhat.demo.exception.InvalidParameterRuntimeException;
 
 public class InputValidator implements WorkItemHandler {
 	
+	private static final String STRING_SUFFIX = "s";
 	private static Logger log = LoggerFactory.getLogger(InputValidator.class);
 
 	@Override
 	public void executeWorkItem(WorkItem workItem, WorkItemManager manager) {
 		String bcHost = (String) workItem.getParameter("bcHost");
+		String bcPort = (String) workItem.getParameter("bcPort");
 		String serverId = (String) workItem.getParameter("serverId");
 		String groupId = (String) workItem.getParameter("groupId");
 		String artifactId = (String) workItem.getParameter("artifactId");
 		String version = (String) workItem.getParameter("version");
 		
-		String bcPort = (String) workItem.getParameter("bcPort");
-		Integer bcPortInt = (Integer) workItem.getParameter("bcPortInt");
-		
-		// setting bcPort if pass as integer value
-		if (bcPortInt != null) {
-			bcPort = bcPortInt.toString();
-		}
-		
 		if (bcHost == null || bcHost.trim().isEmpty()) {
 			throw new InvalidParameterRuntimeException("invalid bcHost");
+		}
+		if (bcPort == null || bcPort.trim().isEmpty()) {
+			throw new InvalidParameterRuntimeException("invalid bcPort");
 		}
 		if (serverId == null || serverId.trim().isEmpty()) {
 			throw new InvalidParameterRuntimeException("invalid serverId");
@@ -45,8 +42,16 @@ public class InputValidator implements WorkItemHandler {
 		if (version == null || version.trim().isEmpty()) {
 			throw new InvalidParameterRuntimeException("invalid version");
 		}
-		if (bcPort == null || bcPort.trim().isEmpty()) {
-			throw new InvalidParameterRuntimeException("invalid bcPort and bcPortInt");
+		
+		// remove port string suffix
+		// required for passing String parameter to Business Central Rest API
+		if (bcPort.endsWith(STRING_SUFFIX)) {
+			bcPort = bcPort.substring(0, bcPort.lastIndexOf(STRING_SUFFIX));
+		}
+		// remove release suffix
+		// required for passing String parameter to Business Central Rest API
+		if (version.endsWith(STRING_SUFFIX)) {
+			version = version.substring(0, version.lastIndexOf(STRING_SUFFIX));
 		}
 		
 		log.info("bcHost {}", bcHost);
@@ -79,6 +84,7 @@ public class InputValidator implements WorkItemHandler {
 		HashMap<String, Object> results = new HashMap<>();
 		
 		results.put("bcPort", bcPort);
+		results.put("version", version);
 		
 		manager.completeWorkItem(workItem.getId(), results);
 	}

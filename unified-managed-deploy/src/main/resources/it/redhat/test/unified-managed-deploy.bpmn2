@@ -8,6 +8,7 @@
   <bpmn2:itemDefinition id="ItemDefinition_14" isCollection="false" structureRef="it.redhat.demo.model.MavenGavInfo.Affinity"/>
   <bpmn2:itemDefinition id="ItemDefinition_15" isCollection="false" structureRef="it.redhat.demo.model.MavenGavInfo"/>
   <bpmn2:itemDefinition id="ItemDefinition_5" isCollection="false" structureRef="it.redhat.demo.dto.ServerTemplateDto"/>
+  <bpmn2:itemDefinition id="ItemDefinition_4" isCollection="false" structureRef="Object"/>
   <bpmn2:process id="it.redhat.test.unified-managed-deploy" tns:packageName="it.redhat.test" name="unified-managed-deploy" isExecutable="true" processType="Private">
     <bpmn2:extensionElements>
       <tns:import name="it.redhat.demo.model.MavenGavInfo"/>
@@ -29,7 +30,6 @@
     <bpmn2:property id="httpResponseStatus" itemSubjectRef="ItemDefinition_1" name="httpResponseStatus"/>
     <bpmn2:property id="httpResponseMessage" itemSubjectRef="ItemDefinition_1" name="httpResponseMessage"/>
     <bpmn2:property id="uri" itemSubjectRef="ItemDefinition_1" name="uri"/>
-    <bpmn2:property id="bcPortInt" itemSubjectRef="ItemDefinition_7" name="bcPortInt"/>
     <bpmn2:startEvent id="StartEvent_1" name="StartProcess">
       <bpmn2:extensionElements>
         <tns:metaData name="elementname">
@@ -343,6 +343,7 @@
         <bpmn2:dataInput id="DataInput_28" itemSubjectRef="ItemDefinition_1" name="artifactId"/>
         <bpmn2:dataInput id="DataInput_29" itemSubjectRef="ItemDefinition_1" name="version"/>
         <bpmn2:dataOutput id="DataOutput_4" itemSubjectRef="ItemDefinition_1" name="bcPort"/>
+        <bpmn2:dataOutput id="DataOutput_5" itemSubjectRef="ItemDefinition_1" name="version"/>
         <bpmn2:inputSet id="_InputSet_3">
           <bpmn2:dataInputRefs>DataInput_18</bpmn2:dataInputRefs>
           <bpmn2:dataInputRefs>DataInput_24</bpmn2:dataInputRefs>
@@ -354,6 +355,7 @@
         </bpmn2:inputSet>
         <bpmn2:outputSet id="_OutputSet_3">
           <bpmn2:dataOutputRefs>DataOutput_4</bpmn2:dataOutputRefs>
+          <bpmn2:dataOutputRefs>DataOutput_5</bpmn2:dataOutputRefs>
         </bpmn2:outputSet>
       </bpmn2:ioSpecification>
       <bpmn2:dataInputAssociation id="_DataInputAssociation_11">
@@ -365,7 +367,6 @@
         <bpmn2:targetRef>DataInput_24</bpmn2:targetRef>
       </bpmn2:dataInputAssociation>
       <bpmn2:dataInputAssociation id="_DataInputAssociation_13">
-        <bpmn2:sourceRef>bcPortInt</bpmn2:sourceRef>
         <bpmn2:targetRef>DataInput_25</bpmn2:targetRef>
       </bpmn2:dataInputAssociation>
       <bpmn2:dataInputAssociation id="_DataInputAssociation_14">
@@ -387,6 +388,10 @@
       <bpmn2:dataOutputAssociation id="_DataOutputAssociation_5">
         <bpmn2:sourceRef>DataOutput_4</bpmn2:sourceRef>
         <bpmn2:targetRef>bcPort</bpmn2:targetRef>
+      </bpmn2:dataOutputAssociation>
+      <bpmn2:dataOutputAssociation id="DataOutputAssociation_1">
+        <bpmn2:sourceRef>DataOutput_5</bpmn2:sourceRef>
+        <bpmn2:targetRef>version</bpmn2:targetRef>
       </bpmn2:dataOutputAssociation>
     </bpmn2:task>
     <bpmn2:sequenceFlow id="SequenceFlow_3" tns:priority="1" sourceRef="StartEvent_1" targetRef="Task_3"/>
