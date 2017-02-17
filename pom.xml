@@ -10,14 +10,12 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>bpms-simple</module>
-        <module>bpms-simple-war</module>
         <module>brms-simple</module>
         <module>brms-simple-war</module>
+        <module>bpms-embedded-in-war</module>
         <module>bpms-process-rule</module>
         <module>bpms-process</module>
         <module>bpms-kie-process</module>
-        <module>unified-managed-deploy</module>
         <module>bpms-rest-task</module>
         <module>bpms-jndi-lookup</module>
         <module>bpms-domain-specific-task</module>
@@ -25,6 +23,7 @@
         <module>bpms-migration</module>
         <module>bpms-migration-next</module>
         <module>bpms-timer</module>
+        <module>unified-managed-deploy</module>
     </modules>
 
     <properties>
