@@ -20,8 +20,7 @@
         <module>bpms-jndi-lookup</module>
         <module>bpms-domain-specific-task</module>
         <module>bpms-domain-advanced-task</module>
-        <module>bpms-migration</module>
-        <module>bpms-migration-next</module>
+        <module>bpms-selection-process</module>
         <module>bpms-timer</module>
         <module>unified-managed-deploy</module>
     </modules>

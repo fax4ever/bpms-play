@@ -1,4 +1,4 @@
-package it.redhat.demo;
+package it.redhat.demo.v2;
 
 import java.util.HashMap;
 import java.util.List;
@@ -28,7 +28,7 @@ public class SelectionProcessTest extends JbpmJUnitBaseTestCase {
 	@Before
 	public void before() {
 		
-		createRuntimeManager("it/redhat/demo/selection-process.bpmn2");
+		createRuntimeManager("it/redhat/demo/v2/selection-process.bpmn2");
 		RuntimeEngine runtimeEngine = getRuntimeEngine();
 		kieSession = runtimeEngine.getKieSession();
 		auditService = runtimeEngine.getAuditService();
