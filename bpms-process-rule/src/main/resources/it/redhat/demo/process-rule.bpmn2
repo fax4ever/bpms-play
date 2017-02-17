@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- origin at X=0.0 Y=0.0 -->
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmn20="http://www.omg.org/bpmn20" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:bpsim="http://www.bpsim.org/schemas/1.0" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:drools="http://www.jboss.org/drools" xmlns="http://www.jboss.org/drools" xmlns:java="http://www.java.com/javaTypes" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd http://www.jboss.org/drools drools.xsd http://www.bpsim.org/schemas/1.0 bpsim.xsd" id="_Zc1swFNBEeaMEeEtlt9jQg" exporter="org.eclipse.bpmn2.modeler.core" exporterVersion="1.3.2.Final-v20161020-1541-B59" expressionLanguage="http://www.mvel.org/2.0" targetNamespace="http://www.omg.org/bpmn20" typeLanguage="http://www.java.com/javaTypes">
+  <bpmn2:itemDefinition id="_personItem" isCollection="false" structureRef="org.bpms.myproject.Person"/>
+  <bpmn2:itemDefinition id="__84E43595-3018-436E-A9DD-26EDCBB538AD_personInputXItem" isCollection="false" structureRef="org.bpms.myproject.Person"/>
+  <bpmn2:process id="it.redhat.demo.process-rule" drools:packageName="it.redhat.demo" drools:version="1.0" name="process-rule" isExecutable="true">
+    <bpmn2:property id="person" itemSubjectRef="_personItem" name="person"/>
+    <bpmn2:startEvent id="processStartEvent" drools:selectable="true" color:background-color="#9acd32" color:border-color="#000000" color:color="#000000" name="">
+      <bpmn2:extensionElements>
+        <drools:metaData name="elementname">
+          <drools:metaValue><![CDATA[]]></drools:metaValue>
+        </drools:metaData>
+      </bpmn2:extensionElements>
+      <bpmn2:outgoing>_BEBF730E-6C4C-461D-B351-1F5E018781D5</bpmn2:outgoing>
+    </bpmn2:startEvent>
+    <bpmn2:businessRuleTask id="_84E43595-3018-436E-A9DD-26EDCBB538AD" drools:selectable="true" drools:ruleFlowGroup="MyProjectGroup" drools:scriptFormat="http://www.java.com/java" color:background-color="#fafad2" color:border-color="#000000" color:color="#000000" name="person_Task">
+      <bpmn2:extensionElements>
+        <drools:metaData name="elementname">
+          <drools:metaValue><![CDATA[person_Task]]></drools:metaValue>
+        </drools:metaData>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>_BEBF730E-6C4C-461D-B351-1F5E018781D5</bpmn2:incoming>
+      <bpmn2:outgoing>_64F2BAC2-39D9-46A6-A318-FFE9F93DFF46</bpmn2:outgoing>
+      <bpmn2:ioSpecification id="_Zc1swVNBEeaMEeEtlt9jQg">
+        <bpmn2:dataInput id="_84E43595-3018-436E-A9DD-26EDCBB538AD_personInputX" drools:dtype="org.bpms.myproject.Person" itemSubjectRef="__84E43595-3018-436E-A9DD-26EDCBB538AD_personInputXItem" name="person"/>
+        <bpmn2:inputSet id="_Zc1swlNBEeaMEeEtlt9jQg">
+          <bpmn2:dataInputRefs>_84E43595-3018-436E-A9DD-26EDCBB538AD_personInputX</bpmn2:dataInputRefs>
+        </bpmn2:inputSet>
+        <bpmn2:outputSet id="_Zc1sw1NBEeaMEeEtlt9jQg"/>
+      </bpmn2:ioSpecification>
+      <bpmn2:dataInputAssociation id="_Zc1sxFNBEeaMEeEtlt9jQg">
+        <bpmn2:sourceRef>person</bpmn2:sourceRef>
+        <bpmn2:targetRef>_84E43595-3018-436E-A9DD-26EDCBB538AD_personInputX</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+    </bpmn2:businessRuleTask>
+    <bpmn2:sequenceFlow id="_BEBF730E-6C4C-461D-B351-1F5E018781D5" drools:selectable="true" color:background-color="#000000" color:border-color="#000000" color:color="#000000" sourceRef="processStartEvent" targetRef="_84E43595-3018-436E-A9DD-26EDCBB538AD"/>
+    <bpmn2:endEvent id="_FA0CC7BF-E865-4743-86CA-F248B296A654" drools:selectable="true" color:background-color="#ff6347" color:border-color="#000000" color:color="#000000" name="">
+      <bpmn2:extensionElements>
+        <drools:metaData name="elementname">
+          <drools:metaValue><![CDATA[]]></drools:metaValue>
+        </drools:metaData>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>_64F2BAC2-39D9-46A6-A318-FFE9F93DFF46</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:sequenceFlow id="_64F2BAC2-39D9-46A6-A318-FFE9F93DFF46" drools:selectable="true" color:background-color="#000000" color:border-color="#000000" color:color="#000000" sourceRef="_84E43595-3018-436E-A9DD-26EDCBB538AD" targetRef="_FA0CC7BF-E865-4743-86CA-F248B296A654"/>
+  </bpmn2:process>
+  <bpmndi:BPMNDiagram id="_Zc1sxVNBEeaMEeEtlt9jQg">
+    <bpmndi:BPMNPlane id="_Zc1sxlNBEeaMEeEtlt9jQg" bpmnElement="it.redhat.demo.process-rule">
+      <bpmndi:BPMNShape id="_Zc1sx1NBEeaMEeEtlt9jQg" bpmnElement="processStartEvent">
+        <dc:Bounds height="30.0" width="30.0" x="120.0" y="165.0"/>
+        <bpmndi:BPMNLabel/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_Zc1syFNBEeaMEeEtlt9jQg" bpmnElement="_84E43595-3018-436E-A9DD-26EDCBB538AD">
+        <dc:Bounds height="80.0" width="100.0" x="225.0" y="140.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="11.0" width="53.0" x="248.0" y="174.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_Zc1sylNBEeaMEeEtlt9jQg" bpmnElement="_FA0CC7BF-E865-4743-86CA-F248B296A654">
+        <dc:Bounds height="28.0" width="28.0" x="400.0" y="166.0"/>
+        <bpmndi:BPMNLabel/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="_Zc1syVNBEeaMEeEtlt9jQg" bpmnElement="_BEBF730E-6C4C-461D-B351-1F5E018781D5" sourceElement="_Zc1sx1NBEeaMEeEtlt9jQg" targetElement="_Zc1syFNBEeaMEeEtlt9jQg">
+        <di:waypoint xsi:type="dc:Point" x="135.0" y="180.0"/>
+        <di:waypoint xsi:type="dc:Point" x="275.0" y="180.0"/>
+        <bpmndi:BPMNLabel/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="_Zc1sy1NBEeaMEeEtlt9jQg" bpmnElement="_64F2BAC2-39D9-46A6-A318-FFE9F93DFF46" sourceElement="_Zc1syFNBEeaMEeEtlt9jQg" targetElement="_Zc1sylNBEeaMEeEtlt9jQg">
+        <di:waypoint xsi:type="dc:Point" x="325.0" y="180.0"/>
+        <di:waypoint xsi:type="dc:Point" x="362.0" y="180.0"/>
+        <di:waypoint xsi:type="dc:Point" x="400.0" y="180.0"/>
+        <bpmndi:BPMNLabel/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn2:definitions>
