@@ -3,7 +3,7 @@
   
   <groupId>it.redhat.demo</groupId> 
   <artifactId>bpms-selection-process</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>${projectVersion}</version>
   
   <properties>
 
@@ -52,5 +52,44 @@
 		    <scope>test</scope>
 		</dependency>
 	</dependencies>
+	
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>**/${process.version.filter}/**</include>
+					<include>**/META-INF/**</include>
+				</includes>
+			</resource>
+		</resources>
+	</build>
+	
+	<profiles>
+		<profile>
+			<id>test</id>
+			<activation>
+	            <activeByDefault>true</activeByDefault>
+	        </activation>
+	        <properties>
+            	<projectVersion>1.0.0-SNAPSHOT</projectVersion>
+            	<process.version.filter>redhat</process.version.filter>
+        	</properties>
+		</profile>
+		<profile>
+			<id>v1</id>
+	        <properties>
+            	<projectVersion>1.0.0</projectVersion>
+            	<process.version.filter>v1</process.version.filter>
+        	</properties>
+		</profile>
+		<profile>
+			<id>v2</id>
+			<properties>
+            	<projectVersion>1.0.1</projectVersion>
+            	<process.version.filter>v2</process.version.filter>
+        	</properties>
+		</profile>
+	</profiles>
   
 </project>
