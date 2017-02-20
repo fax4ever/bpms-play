@@ -1,11 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  
-  <groupId>it.redhat.demo</groupId> 
-  <artifactId>bpms-selection-process</artifactId>
-  <version>${projectVersion}</version>
-  
-  <properties>
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>it.redhat.demo</groupId>
+	<artifactId>bpms-selection-process</artifactId>
+	<version>${projectVersion}</version>
+
+	<properties>
 
 		<!-- JAVA -->
 		<maven.compiler.target>1.8</maven.compiler.target>
@@ -45,14 +45,14 @@
 			<artifactId>slf4j-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
-	
+
 		<dependency>
-		    <groupId>org.slf4j</groupId>
-		    <artifactId>slf4j-simple</artifactId>
-		    <scope>test</scope>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
-	
+
 	<build>
 		<resources>
 			<resource>
@@ -63,33 +63,46 @@
 				</includes>
 			</resource>
 		</resources>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.19.1</version>
+				<configuration>
+					<includes>
+						<include></include>
+						<include>**/${process.version.filter}/**/*Test.java</include>
+					</includes>
+				</configuration>
+			</plugin>
+		</plugins>
 	</build>
-	
+
 	<profiles>
 		<profile>
 			<id>test</id>
 			<activation>
-	            <activeByDefault>true</activeByDefault>
-	        </activation>
-	        <properties>
-            	<projectVersion>1.0.0-SNAPSHOT</projectVersion>
-            	<process.version.filter>redhat</process.version.filter>
-        	</properties>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<projectVersion>1.0.0-SNAPSHOT</projectVersion>
+				<process.version.filter>demo</process.version.filter>
+			</properties>
 		</profile>
 		<profile>
 			<id>v1</id>
-	        <properties>
-            	<projectVersion>1.0.0</projectVersion>
-            	<process.version.filter>v1</process.version.filter>
-        	</properties>
+			<properties>
+				<projectVersion>1.0.0</projectVersion>
+				<process.version.filter>v1</process.version.filter>
+			</properties>
 		</profile>
 		<profile>
 			<id>v2</id>
 			<properties>
-            	<projectVersion>1.0.1</projectVersion>
-            	<process.version.filter>v2</process.version.filter>
-        	</properties>
+				<projectVersion>1.0.1</projectVersion>
+				<process.version.filter>v2</process.version.filter>
+			</properties>
 		</profile>
 	</profiles>
-  
+
 </project>
