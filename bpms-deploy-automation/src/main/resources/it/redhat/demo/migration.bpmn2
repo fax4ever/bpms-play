@@ -52,7 +52,7 @@
         </tns:onEntry-script>
         <tns:onExit-script scriptFormat="http://www.mvel.org/2.0">
           <tns:script>Logger logger = null;
-logger = LoggerFactory.getLogger(&quot;com.generaligroup.bpms.umd.task.script.LoadProcessDefinitions&quot;);
+logger = LoggerFactory.getLogger(&quot;it.redhat.demo.task.script.LoadProcessDefinitions&quot;);
 logger.info(&quot;Server Url:-&quot;+ kcontext.getVariable(&quot;url&quot;));
 logger.info(&quot;Server Response:-&quot;+kcontext.getVariable(&quot;processDefinitionsResponse&quot;));
 kcontext.setVariable(&quot;processDefinitions&quot;, processDefinitionsResponse.processDefinitionList);</tns:script>
@@ -107,7 +107,7 @@ kcontext.setVariable(&quot;processDefinitions&quot;, processDefinitionsResponse.
       <bpmn2:dataInputAssociation id="_DataInputAssociation_5">
         <bpmn2:targetRef>DataInput_4</bpmn2:targetRef>
         <bpmn2:assignment id="Assignment_3">
-          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_9">com.generaligroup.bpms.umd.jaxb.JaxbProcessDefinitionList</bpmn2:from>
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_9">it.redhat.demo.jaxb.JaxbProcessDefinitionList</bpmn2:from>
           <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_7">DataInput_4</bpmn2:to>
         </bpmn2:assignment>
       </bpmn2:dataInputAssociation>
@@ -235,7 +235,7 @@ logger.info(&quot;Server Response:-&quot;+kcontext.getVariable(&quot;processInst
         <bpmn2:dataInputAssociation id="_DataInputAssociation_72">
           <bpmn2:targetRef>DataInput_14</bpmn2:targetRef>
           <bpmn2:assignment id="Assignment_5">
-            <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_11">com.generaligroup.bpms.umd.jaxb.JaxbQueryProcessInstanceResult</bpmn2:from>
+            <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_11">it.redhat.demo.jaxb.JaxbQueryProcessInstanceResult</bpmn2:from>
             <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_6">DataInput_14</bpmn2:to>
           </bpmn2:assignment>
         </bpmn2:dataInputAssociation>
