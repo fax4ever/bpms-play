@@ -15,7 +15,7 @@
   <bpmn2:itemDefinition id="ItemDefinition_6" isCollection="false" structureRef="it.redhat.demo.pojo.ServiceResponsePojo"/>
   <bpmn2:itemDefinition id="ItemDefinition_7" isCollection="false" structureRef="org.slf4j.Logger"/>
   <bpmn2:itemDefinition id="ItemDefinition_9" isCollection="false" structureRef="org.slf4j.LoggerFactory"/>
-  <bpmn2:process id="it.redhat.test.create-container" tns:packageName="it.redhat.test" name="create-container" isExecutable="true" processType="Private">
+  <bpmn2:process id="it.redhat.demo.create-container" tns:packageName="it.redhat.demo" name="create-container" isExecutable="true" processType="Private">
     <bpmn2:extensionElements>
       <tns:import name="java.util.List"/>
       <tns:import name="org.kie.services.client.serialization.jaxb.impl.deploy.JaxbDeploymentJobResult"/>
@@ -26,7 +26,7 @@
       <tns:import name="org.slf4j.Logger"/>
       <tns:import name="org.slf4j.LoggerFactory"/>
     </bpmn2:extensionElements>
-    <bpmn2:property id="bcHost" itemSubjectRef="ItemDefinition_1" name="bcHost"/>
+    <bpmn2:property id="verifyBCdeploy" itemSubjectRef="ItemDefinition_1" name="verifyBCdeploy"/>
     <bpmn2:property id="bcPort" itemSubjectRef="ItemDefinition_1" name="bcPort"/>
     <bpmn2:property id="strategy" itemSubjectRef="ItemDefinition_1" name="strategy"/>
     <bpmn2:property id="serverId" itemSubjectRef="ItemDefinition_1" name="serverId"/>
@@ -42,6 +42,7 @@
     <bpmn2:property id="processServerUrls" itemSubjectRef="ItemDefinition_175" name="processServerUrls"/>
     <bpmn2:property id="httpResponseBody" itemSubjectRef="ItemDefinition_2" name="httpResponseBody"/>
     <bpmn2:property id="uri" itemSubjectRef="ItemDefinition_1" name="uri"/>
+    <bpmn2:property id="bcHost" itemSubjectRef="ItemDefinition_1" name="bcHost"/>
     <bpmn2:startEvent id="StartEvent_1" name="StartProcess">
       <bpmn2:extensionElements>
         <tns:metaData name="elementname">
@@ -60,7 +61,7 @@
         </tns:onEntry-script>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_17</bpmn2:incoming>
-      <bpmn2:outgoing>SequenceFlow_21</bpmn2:outgoing>
+      <bpmn2:outgoing>SequenceFlow_5</bpmn2:outgoing>
       <bpmn2:ioSpecification id="InputOutputSpecification_1">
         <bpmn2:dataInput id="DataInput_1" itemSubjectRef="ItemDefinition_1" name="Url"/>
         <bpmn2:dataInput id="DataInput_2" itemSubjectRef="ItemDefinition_1" name="Method"/>
@@ -505,8 +506,8 @@ logger.info(&quot;Server Response:-&quot;+kcontext.getVariable(&quot;deployConta
     </bpmn2:task>
     <bpmn2:sequenceFlow id="SequenceFlow_4" tns:priority="1" sourceRef="Task_2" targetRef="Task_3"/>
     <bpmn2:parallelGateway id="ParallelGateway_4" name="Bc-Ps fork end" gatewayDirection="Converging">
-      <bpmn2:incoming>SequenceFlow_21</bpmn2:incoming>
       <bpmn2:incoming>SequenceFlow_22</bpmn2:incoming>
+      <bpmn2:incoming>SequenceFlow_12</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_23</bpmn2:outgoing>
     </bpmn2:parallelGateway>
     <bpmn2:parallelGateway id="ParallelGateway_5" name="Bc-Ps fork start" gatewayDirection="Diverging">
@@ -516,7 +517,6 @@ logger.info(&quot;Server Response:-&quot;+kcontext.getVariable(&quot;deployConta
     </bpmn2:parallelGateway>
     <bpmn2:sequenceFlow id="SequenceFlow_16" tns:priority="1" sourceRef="StartEvent_1" targetRef="ParallelGateway_5"/>
     <bpmn2:sequenceFlow id="SequenceFlow_17" tns:priority="1" sourceRef="ParallelGateway_5" targetRef="Task_1"/>
-    <bpmn2:sequenceFlow id="SequenceFlow_21" tns:priority="1" sourceRef="Task_1" targetRef="ParallelGateway_4"/>
     <bpmn2:sequenceFlow id="SequenceFlow_22" tns:priority="1" sourceRef="SubProcess_1" targetRef="ParallelGateway_4"/>
     <bpmn2:sequenceFlow id="SequenceFlow_23" tns:priority="1" sourceRef="ParallelGateway_4" targetRef="EndEvent_2"/>
     <bpmn2:task id="Task_4" tns:taskName="CreateContainerSpec" tns:displayName="CreateContainerSpec" tns:icon="task.png" name="CreateContainerSpec">
@@ -584,13 +584,138 @@ logger.info(&quot;Server Response:-&quot;+kcontext.getVariable(&quot;deployConta
     <bpmn2:sequenceFlow id="SequenceFlow_1" tns:priority="1" sourceRef="ParallelGateway_5" targetRef="Task_4"/>
     <bpmn2:sequenceFlow id="SequenceFlow_2" tns:priority="1" sourceRef="Task_4" targetRef="Task_2"/>
     <bpmn2:sequenceFlow id="SequenceFlow_3" tns:priority="1" sourceRef="Task_3" targetRef="SubProcess_1"/>
+    <bpmn2:exclusiveGateway id="ExclusiveGateway_3" name="verify bc gateway" gatewayDirection="Converging">
+      <bpmn2:incoming>SequenceFlow_5</bpmn2:incoming>
+      <bpmn2:incoming>SequenceFlow_14</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_9</bpmn2:outgoing>
+    </bpmn2:exclusiveGateway>
+    <bpmn2:sequenceFlow id="SequenceFlow_5" tns:priority="1" sourceRef="Task_1" targetRef="ExclusiveGateway_3"/>
+    <bpmn2:task id="Task_7" tns:taskName="WaitTask" tns:displayName="WaitTask" tns:icon="task.png" name="WaitTask">
+      <bpmn2:extensionElements>
+        <tns:metaData name="elementname">
+          <tns:metaValue><![CDATA[WaitTask]]></tns:metaValue>
+        </tns:metaData>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_9</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_10</bpmn2:outgoing>
+    </bpmn2:task>
+    <bpmn2:sequenceFlow id="SequenceFlow_9" tns:priority="1" sourceRef="ExclusiveGateway_3" targetRef="Task_7"/>
+    <bpmn2:task id="Task_8" tns:taskName="Rest" tns:displayName="Rest" tns:icon="task.png" name="VerifyBcDeploy">
+      <bpmn2:extensionElements>
+        <tns:metaData name="elementname">
+          <tns:metaValue><![CDATA[VerifyBcDeploy]]></tns:metaValue>
+        </tns:metaData>
+        <tns:onEntry-script scriptFormat="http://www.java.com/java">
+          <tns:script>kcontext.setVariable(&quot;uri&quot;, &quot;http://&quot;+bcHost+&quot;:&quot;+bcPort+&quot;/business-central/rest/deployment/&quot;+groupId+&quot;:&quot;+artifactId+&quot;:&quot;+version);</tns:script>
+        </tns:onEntry-script>
+        <tns:onExit-script scriptFormat="http://www.java.com/java">
+          <tns:script>Logger logger = null;
+logger = LoggerFactory.getLogger(&quot;i.redhat.demo.task.script.VerifyBcDeploy&quot;);
+logger.info(&quot;Server Url:-&quot;+ kcontext.getVariable(&quot;uri&quot;));
+logger.info(&quot;Server Response:-&quot;+kcontext.getVariable(&quot;verifyBCdeploy&quot;));</tns:script>
+        </tns:onExit-script>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_10</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_11</bpmn2:outgoing>
+      <bpmn2:ioSpecification id="InputOutputSpecification_6">
+        <bpmn2:dataInput id="DataInput_37" itemSubjectRef="ItemDefinition_1" name="Url"/>
+        <bpmn2:dataInput id="DataInput_38" itemSubjectRef="ItemDefinition_1" name="Method"/>
+        <bpmn2:dataInput id="DataInput_39" itemSubjectRef="ItemDefinition_1" name="HandleResponseErrors"/>
+        <bpmn2:dataInput id="DataInput_41" itemSubjectRef="ItemDefinition_1" name="ResultClass"/>
+        <bpmn2:dataInput id="DataInput_42" itemSubjectRef="ItemDefinition_1" name="ContentType"/>
+        <bpmn2:dataInput id="DataInput_43" itemSubjectRef="ItemDefinition_2" name="Content"/>
+        <bpmn2:dataInput id="DataInput_44" itemSubjectRef="ItemDefinition_1" name="AuthType"/>
+        <bpmn2:dataInput id="DataInput_45" itemSubjectRef="ItemDefinition_1" name="ConnectTimeout"/>
+        <bpmn2:dataInput id="DataInput_46" itemSubjectRef="ItemDefinition_1" name="ReadTimeout"/>
+        <bpmn2:dataOutput id="DataOutput_13" itemSubjectRef="ItemDefinition_1" name="Result"/>
+        <bpmn2:dataOutput id="DataOutput_14" itemSubjectRef="ItemDefinition_1" name="StatusMsg"/>
+        <bpmn2:dataOutput id="DataOutput_15" itemSubjectRef="ItemDefinition_1" name="Status"/>
+        <bpmn2:inputSet id="_InputSet_20">
+          <bpmn2:dataInputRefs>DataInput_37</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>DataInput_38</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>DataInput_39</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>DataInput_41</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>DataInput_42</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>DataInput_43</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>DataInput_44</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>DataInput_45</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>DataInput_46</bpmn2:dataInputRefs>
+        </bpmn2:inputSet>
+        <bpmn2:outputSet id="_OutputSet_14">
+          <bpmn2:dataOutputRefs>DataOutput_13</bpmn2:dataOutputRefs>
+          <bpmn2:dataOutputRefs>DataOutput_14</bpmn2:dataOutputRefs>
+          <bpmn2:dataOutputRefs>DataOutput_15</bpmn2:dataOutputRefs>
+        </bpmn2:outputSet>
+      </bpmn2:ioSpecification>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_100">
+        <bpmn2:sourceRef>uri</bpmn2:sourceRef>
+        <bpmn2:targetRef>DataInput_37</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_101">
+        <bpmn2:targetRef>DataInput_38</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_8">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_16">GET</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_5">DataInput_38</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_102">
+        <bpmn2:targetRef>DataInput_39</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_103">
+        <bpmn2:targetRef>DataInput_41</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_104">
+        <bpmn2:targetRef>DataInput_42</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_12">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_23">application/json</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_18">DataInput_42</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_105">
+        <bpmn2:targetRef>DataInput_43</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_106">
+        <bpmn2:targetRef>DataInput_44</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_107">
+        <bpmn2:targetRef>DataInput_45</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_108">
+        <bpmn2:targetRef>DataInput_46</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataOutputAssociation id="_DataOutputAssociation_34">
+        <bpmn2:sourceRef>DataOutput_13</bpmn2:sourceRef>
+        <bpmn2:targetRef>verifyBCdeploy</bpmn2:targetRef>
+      </bpmn2:dataOutputAssociation>
+      <bpmn2:dataOutputAssociation id="_DataOutputAssociation_35">
+        <bpmn2:sourceRef>DataOutput_14</bpmn2:sourceRef>
+        <bpmn2:targetRef>httpResponseMessage</bpmn2:targetRef>
+      </bpmn2:dataOutputAssociation>
+      <bpmn2:dataOutputAssociation id="_DataOutputAssociation_36">
+        <bpmn2:sourceRef>DataOutput_15</bpmn2:sourceRef>
+        <bpmn2:targetRef>httpResponseStatus</bpmn2:targetRef>
+      </bpmn2:dataOutputAssociation>
+    </bpmn2:task>
+    <bpmn2:sequenceFlow id="SequenceFlow_10" tns:priority="1" sourceRef="Task_7" targetRef="Task_8"/>
+    <bpmn2:exclusiveGateway id="ExclusiveGateway_4" name="verify bc" gatewayDirection="Diverging">
+      <bpmn2:incoming>SequenceFlow_11</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_12</bpmn2:outgoing>
+      <bpmn2:outgoing>SequenceFlow_14</bpmn2:outgoing>
+    </bpmn2:exclusiveGateway>
+    <bpmn2:sequenceFlow id="SequenceFlow_11" tns:priority="1" sourceRef="Task_8" targetRef="ExclusiveGateway_4"/>
+    <bpmn2:sequenceFlow id="SequenceFlow_12" tns:priority="1" name="DEPLOYED" sourceRef="ExclusiveGateway_4" targetRef="ParallelGateway_4">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_29" language="http://www.mvel.org/2.0">verifyBCdeploy.contains(&quot;DEPLOYED&quot;)</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:sequenceFlow id="SequenceFlow_14" tns:priority="1" name="NOT DEPLOYED" sourceRef="ExclusiveGateway_4" targetRef="ExclusiveGateway_3">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_24" language="http://www.mvel.org/2.0">!verifyBCdeploy.contains(&quot;DEPLOYED&quot;)</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
   </bpmn2:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_Process_1" bpmnElement="it.redhat.test.create-container">
+    <bpmndi:BPMNPlane id="BPMNPlane_Process_1" bpmnElement="it.redhat.demo.create-container">
       <bpmndi:BPMNShape id="BPMNShape_SubProcess_1" bpmnElement="SubProcess_1" isExpanded="true">
-        <dc:Bounds height="213.0" width="526.0" x="470.0" y="108.0"/>
+        <dc:Bounds height="213.0" width="526.0" x="470.0" y="276.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_1">
-          <dc:Bounds height="11.0" width="61.0" x="476.0" y="111.0"/>
+          <dc:Bounds height="11.0" width="61.0" x="476.0" y="279.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_StartEvent_1" bpmnElement="StartEvent_1">
@@ -612,15 +737,15 @@ logger.info(&quot;Server Response:-&quot;+kcontext.getVariable(&quot;deployConta
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_StartEvent_2" bpmnElement="StartEvent_2">
-        <dc:Bounds height="36.0" width="36.0" x="490.0" y="247.0"/>
+        <dc:Bounds height="36.0" width="36.0" x="490.0" y="415.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_6">
-          <dc:Bounds height="11.0" width="44.0" x="486.0" y="283.0"/>
+          <dc:Bounds height="11.0" width="44.0" x="486.0" y="451.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_EndEvent_1" bpmnElement="EndEvent_1">
-        <dc:Bounds height="36.0" width="36.0" x="940.0" y="247.0"/>
+        <dc:Bounds height="36.0" width="36.0" x="940.0" y="415.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_7">
-          <dc:Bounds height="11.0" width="40.0" x="938.0" y="283.0"/>
+          <dc:Bounds height="11.0" width="40.0" x="938.0" y="451.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_EndEvent_2" bpmnElement="EndEvent_2">
@@ -636,15 +761,15 @@ logger.info(&quot;Server Response:-&quot;+kcontext.getVariable(&quot;deployConta
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_ExclusiveGateway_1" bpmnElement="ExclusiveGateway_1" isMarkerVisible="true">
-        <dc:Bounds height="50.0" width="50.0" x="576.0" y="240.0"/>
+        <dc:Bounds height="50.0" width="50.0" x="576.0" y="408.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_13">
-          <dc:Bounds height="22.0" width="57.0" x="573.0" y="290.0"/>
+          <dc:Bounds height="22.0" width="57.0" x="573.0" y="458.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_ExclusiveGateway_2" bpmnElement="ExclusiveGateway_2" isMarkerVisible="true">
-        <dc:Bounds height="50.0" width="50.0" x="820.0" y="240.0"/>
+        <dc:Bounds height="50.0" width="50.0" x="820.0" y="408.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_14">
-          <dc:Bounds height="11.0" width="52.0" x="819.0" y="290.0"/>
+          <dc:Bounds height="11.0" width="52.0" x="819.0" y="458.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_ParallelGateway_4" bpmnElement="ParallelGateway_4" isMarkerVisible="true">
@@ -666,15 +791,39 @@ logger.info(&quot;Server Response:-&quot;+kcontext.getVariable(&quot;deployConta
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_Task_5" bpmnElement="Task_5" isExpanded="true">
-        <dc:Bounds height="50.0" width="110.0" x="711.0" y="143.0"/>
+        <dc:Bounds height="50.0" width="110.0" x="711.0" y="311.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_10">
-          <dc:Bounds height="11.0" width="51.0" x="740.0" y="162.0"/>
+          <dc:Bounds height="11.0" width="51.0" x="740.0" y="330.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_Task_6" bpmnElement="Task_6" isExpanded="true">
-        <dc:Bounds height="50.0" width="110.0" x="545.0" y="143.0"/>
-        <bpmndi:BPMNLabel>
-          <dc:Bounds height="11.0" width="38.0" x="581.0" y="162.0"/>
+        <dc:Bounds height="50.0" width="110.0" x="545.0" y="311.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_12">
+          <dc:Bounds height="11.0" width="38.0" x="581.0" y="330.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_ExclusiveGateway_3" bpmnElement="ExclusiveGateway_3" isMarkerVisible="true">
+        <dc:Bounds height="50.0" width="50.0" x="470.0" y="38.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_16">
+          <dc:Bounds height="11.0" width="73.0" x="459.0" y="88.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_Task_7" bpmnElement="Task_7" isExpanded="true">
+        <dc:Bounds height="50.0" width="110.0" x="550.0" y="38.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_17">
+          <dc:Bounds height="11.0" width="38.0" x="586.0" y="57.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_Task_8" bpmnElement="Task_8" isExpanded="true">
+        <dc:Bounds height="50.0" width="110.0" x="701.0" y="38.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_18">
+          <dc:Bounds height="11.0" width="63.0" x="724.0" y="57.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_ExclusiveGateway_4" bpmnElement="ExclusiveGateway_4" isMarkerVisible="true">
+        <dc:Bounds height="50.0" width="50.0" x="834.0" y="138.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_19">
+          <dc:Bounds height="11.0" width="36.0" x="841.0" y="188.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_4" bpmnElement="SequenceFlow_4" sourceElement="BPMNShape_Task_2" targetElement="BPMNShape_Task_3">
@@ -684,25 +833,25 @@ logger.info(&quot;Server Response:-&quot;+kcontext.getVariable(&quot;deployConta
         <bpmndi:BPMNLabel id="BPMNLabel_19"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_13" bpmnElement="SequenceFlow_13" sourceElement="BPMNShape_StartEvent_2" targetElement="BPMNShape_ExclusiveGateway_1">
-        <di:waypoint xsi:type="dc:Point" x="526.0" y="265.0"/>
-        <di:waypoint xsi:type="dc:Point" x="551.0" y="265.0"/>
-        <di:waypoint xsi:type="dc:Point" x="576.0" y="265.0"/>
+        <di:waypoint xsi:type="dc:Point" x="526.0" y="433.0"/>
+        <di:waypoint xsi:type="dc:Point" x="551.0" y="433.0"/>
+        <di:waypoint xsi:type="dc:Point" x="576.0" y="433.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_17"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_18" bpmnElement="SequenceFlow_18" sourceElement="BPMNShape_ExclusiveGateway_2" targetElement="BPMNShape_EndEvent_1">
-        <di:waypoint xsi:type="dc:Point" x="870.0" y="265.0"/>
-        <di:waypoint xsi:type="dc:Point" x="905.0" y="265.0"/>
-        <di:waypoint xsi:type="dc:Point" x="940.0" y="265.0"/>
+        <di:waypoint xsi:type="dc:Point" x="870.0" y="433.0"/>
+        <di:waypoint xsi:type="dc:Point" x="905.0" y="433.0"/>
+        <di:waypoint xsi:type="dc:Point" x="940.0" y="433.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_23">
-          <dc:Bounds height="11.0" width="40.0" x="886.0" y="266.0"/>
+          <dc:Bounds height="11.0" width="40.0" x="886.0" y="434.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_19" bpmnElement="SequenceFlow_19" sourceElement="BPMNShape_ExclusiveGateway_2" targetElement="BPMNShape_ExclusiveGateway_1">
-        <di:waypoint xsi:type="dc:Point" x="820.0" y="265.0"/>
-        <di:waypoint xsi:type="dc:Point" x="723.0" y="265.0"/>
-        <di:waypoint xsi:type="dc:Point" x="626.0" y="265.0"/>
+        <di:waypoint xsi:type="dc:Point" x="820.0" y="433.0"/>
+        <di:waypoint xsi:type="dc:Point" x="723.0" y="433.0"/>
+        <di:waypoint xsi:type="dc:Point" x="626.0" y="433.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_24">
-          <dc:Bounds height="11.0" width="45.0" x="701.0" y="266.0"/>
+          <dc:Bounds height="11.0" width="45.0" x="701.0" y="434.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_16" bpmnElement="SequenceFlow_16" sourceElement="BPMNShape_StartEvent_1" targetElement="BPMNShape_ParallelGateway_5">
@@ -717,15 +866,9 @@ logger.info(&quot;Server Response:-&quot;+kcontext.getVariable(&quot;deployConta
         <di:waypoint xsi:type="dc:Point" x="313.0" y="63.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_16"/>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_21" bpmnElement="SequenceFlow_21" sourceElement="BPMNShape_Task_1" targetElement="BPMNShape_ParallelGateway_4">
-        <di:waypoint xsi:type="dc:Point" x="423.0" y="63.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1051.0" y="63.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1051.0" y="138.0"/>
-        <bpmndi:BPMNLabel id="BPMNLabel_26"/>
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_22" bpmnElement="SequenceFlow_22" sourceElement="BPMNShape_SubProcess_1" targetElement="BPMNShape_ParallelGateway_4">
-        <di:waypoint xsi:type="dc:Point" x="996.0" y="214.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1051.0" y="214.0"/>
+        <di:waypoint xsi:type="dc:Point" x="996.0" y="382.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1051.0" y="382.0"/>
         <di:waypoint xsi:type="dc:Point" x="1051.0" y="188.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_27"/>
       </bpmndi:BPMNEdge>
@@ -748,28 +891,68 @@ logger.info(&quot;Server Response:-&quot;+kcontext.getVariable(&quot;deployConta
         <bpmndi:BPMNLabel id="BPMNLabel_29"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_3" bpmnElement="SequenceFlow_3" sourceElement="BPMNShape_Task_3" targetElement="BPMNShape_SubProcess_1">
-        <di:waypoint xsi:type="dc:Point" x="355.0" y="240.0"/>
-        <di:waypoint xsi:type="dc:Point" x="355.0" y="214.0"/>
-        <di:waypoint xsi:type="dc:Point" x="470.0" y="214.0"/>
+        <di:waypoint xsi:type="dc:Point" x="355.0" y="290.0"/>
+        <di:waypoint xsi:type="dc:Point" x="355.0" y="382.0"/>
+        <di:waypoint xsi:type="dc:Point" x="470.0" y="382.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_12"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_6" bpmnElement="SequenceFlow_6" sourceElement="BPMNShape_Task_5" targetElement="BPMNShape_ExclusiveGateway_2">
-        <di:waypoint xsi:type="dc:Point" x="821.0" y="168.0"/>
-        <di:waypoint xsi:type="dc:Point" x="845.0" y="168.0"/>
-        <di:waypoint xsi:type="dc:Point" x="845.0" y="240.0"/>
+        <di:waypoint xsi:type="dc:Point" x="821.0" y="336.0"/>
+        <di:waypoint xsi:type="dc:Point" x="845.0" y="336.0"/>
+        <di:waypoint xsi:type="dc:Point" x="845.0" y="408.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_20"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_7" bpmnElement="SequenceFlow_7" sourceElement="BPMNShape_ExclusiveGateway_1" targetElement="BPMNShape_Task_6">
-        <di:waypoint xsi:type="dc:Point" x="601.0" y="240.0"/>
-        <di:waypoint xsi:type="dc:Point" x="600.0" y="217.0"/>
-        <di:waypoint xsi:type="dc:Point" x="600.0" y="193.0"/>
-        <bpmndi:BPMNLabel/>
+        <di:waypoint xsi:type="dc:Point" x="601.0" y="408.0"/>
+        <di:waypoint xsi:type="dc:Point" x="601.0" y="385.0"/>
+        <di:waypoint xsi:type="dc:Point" x="600.0" y="361.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_18"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_8" bpmnElement="SequenceFlow_8" sourceElement="BPMNShape_Task_6" targetElement="BPMNShape_Task_5">
-        <di:waypoint xsi:type="dc:Point" x="655.0" y="168.0"/>
-        <di:waypoint xsi:type="dc:Point" x="683.0" y="168.0"/>
-        <di:waypoint xsi:type="dc:Point" x="711.0" y="168.0"/>
-        <bpmndi:BPMNLabel/>
+        <di:waypoint xsi:type="dc:Point" x="655.0" y="336.0"/>
+        <di:waypoint xsi:type="dc:Point" x="683.0" y="336.0"/>
+        <di:waypoint xsi:type="dc:Point" x="711.0" y="336.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_21"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_5" bpmnElement="SequenceFlow_5" sourceElement="BPMNShape_Task_1" targetElement="BPMNShape_ExclusiveGateway_3">
+        <di:waypoint xsi:type="dc:Point" x="423.0" y="63.0"/>
+        <di:waypoint xsi:type="dc:Point" x="446.0" y="63.0"/>
+        <di:waypoint xsi:type="dc:Point" x="470.0" y="63.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_22"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_9" bpmnElement="SequenceFlow_9" sourceElement="BPMNShape_ExclusiveGateway_3" targetElement="BPMNShape_Task_7">
+        <di:waypoint xsi:type="dc:Point" x="520.0" y="63.0"/>
+        <di:waypoint xsi:type="dc:Point" x="535.0" y="63.0"/>
+        <di:waypoint xsi:type="dc:Point" x="550.0" y="63.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_26"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_10" bpmnElement="SequenceFlow_10" sourceElement="BPMNShape_Task_7" targetElement="BPMNShape_Task_8">
+        <di:waypoint xsi:type="dc:Point" x="660.0" y="63.0"/>
+        <di:waypoint xsi:type="dc:Point" x="680.0" y="63.0"/>
+        <di:waypoint xsi:type="dc:Point" x="701.0" y="63.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_30"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_11" bpmnElement="SequenceFlow_11" sourceElement="BPMNShape_Task_8" targetElement="BPMNShape_ExclusiveGateway_4">
+        <di:waypoint xsi:type="dc:Point" x="811.0" y="63.0"/>
+        <di:waypoint xsi:type="dc:Point" x="859.0" y="63.0"/>
+        <di:waypoint xsi:type="dc:Point" x="859.0" y="138.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_31"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_12" bpmnElement="SequenceFlow_12" sourceElement="BPMNShape_ExclusiveGateway_4" targetElement="BPMNShape_ParallelGateway_4">
+        <di:waypoint xsi:type="dc:Point" x="884.0" y="163.0"/>
+        <di:waypoint xsi:type="dc:Point" x="955.0" y="163.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1026.0" y="163.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_32">
+          <dc:Bounds height="11.0" width="48.0" x="932.0" y="164.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_14" bpmnElement="SequenceFlow_14" sourceElement="BPMNShape_ExclusiveGateway_4" targetElement="BPMNShape_ExclusiveGateway_3">
+        <di:waypoint xsi:type="dc:Point" x="834.0" y="163.0"/>
+        <di:waypoint xsi:type="dc:Point" x="495.0" y="163.0"/>
+        <di:waypoint xsi:type="dc:Point" x="495.0" y="88.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_33">
+          <dc:Bounds height="11.0" width="69.0" x="593.0" y="164.0"/>
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

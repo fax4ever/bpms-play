@@ -55,7 +55,8 @@ import org.drools.core.process.core.datatype.impl.type.ObjectDataType;
   	"results" : [
         "update" : new BooleanDataType(),
         "migration" : new BooleanDataType(),
-        "miniMigration" : new ObjectDataType()
+        "oldDeployment" : new ObjectDataType(),
+        "newDeployment" : new ObjectDataType()
      ],
     "displayName" : "ChooseDeployStrategy"
   ],
@@ -95,5 +96,18 @@ import org.drools.core.process.core.datatype.impl.type.ObjectDataType;
   	"parameters" : [],
   	"results" : [],
     "displayName" : "WaitTask"
+  ],
+  [
+    "name" : "MigrationTask",
+  	"parameters" : [
+  	 	 "oldDeployment" : new StringDataType(),
+  	 	 "newDeployment" : new StringDataType(),
+         "processDefinition" : new StringDataType(),
+         "processInstances" : new ObjectDataType()
+    ],
+  	"results" : [
+        "reports" : new ObjectDataType()
+     ],
+    "displayName" : "MigrationTask"
   ]
 ]

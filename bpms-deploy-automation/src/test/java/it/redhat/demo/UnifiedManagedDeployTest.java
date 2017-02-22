@@ -1,4 +1,4 @@
-package it.redhat.test;
+package it.redhat.demo;
 
 import java.util.HashMap;
 
@@ -15,10 +15,12 @@ import it.redhat.demo.customtask.ChooseDeployStrategy;
 import it.redhat.demo.customtask.CreateContainerSpec;
 import it.redhat.demo.customtask.InputValidator;
 import it.redhat.demo.customtask.WaitTask;
-import it.redhat.test.stub.RestStub;
-import it.redhat.test.stub.VerifyServerStub;
+import it.redhat.demo.stub.RestStub;
+import it.redhat.demo.stub.VerifyServerStub;
 
 public class UnifiedManagedDeployTest extends JbpmJUnitBaseTestCase {
+	
+	private final static String PROCESSES_BASE_PATH = "it/redhat/demo/";
 	
 	protected KieSession kieSession;
 	protected RuntimeManager runtimeManager;
@@ -36,7 +38,7 @@ public class UnifiedManagedDeployTest extends JbpmJUnitBaseTestCase {
 		System.setProperty("org.kie.server.user", "fabio");
 		System.setProperty("org.kie.server.pwd", "fabio$739");
 		
-		runtimeManager = createRuntimeManager("it/redhat/test/create-container.bpmn2", "it/redhat/test/update-container.bpmn2", "it/redhat/test/migration.bpmn2", "it/redhat/test/unified-managed-deploy.bpmn2");
+		runtimeManager = createRuntimeManager(PROCESSES_BASE_PATH+"create-container.bpmn2", PROCESSES_BASE_PATH+"update-container.bpmn2", PROCESSES_BASE_PATH+"migration.bpmn2", PROCESSES_BASE_PATH+"unified-managed-deploy.bpmn2");
 		
 		runtimeEngine = getRuntimeEngine();
 		kieSession = runtimeEngine.getKieSession();
@@ -75,7 +77,7 @@ public class UnifiedManagedDeployTest extends JbpmJUnitBaseTestCase {
 	}
 
 	protected void testProcess(HashMap<String, Object> params) {
-		ProcessInstance pi = kieSession.startProcess("it.redhat.test.unified-managed-deploy", params);
+		ProcessInstance pi = kieSession.startProcess("it.redhat.demo.unified-managed-deploy", params);
 		
 		assertProcessInstanceCompleted(pi.getId());
 	}

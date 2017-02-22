@@ -1,4 +1,4 @@
-package it.redhat.test.stub;
+package it.redhat.demo.stub;
 
 import java.util.HashMap;
 
