@@ -2,10 +2,8 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>it.redhat.demo</groupId>
-	<artifactId>unified-managed-deploy</artifactId>
+	<artifactId>bpms-deploy-automation</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
-
-	<name>Unified Managed Deploy</name>
 
 	<properties>
 
