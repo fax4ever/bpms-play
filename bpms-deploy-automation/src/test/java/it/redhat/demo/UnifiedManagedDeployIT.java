@@ -37,7 +37,7 @@ public class UnifiedManagedDeployIT extends UnifiedManagedDeployTest {
 	
 	@Override
 	protected void testProcess(HashMap<String, Object> params) {
-		kieSession.startProcess("it.redhat.test.unified-managed-deploy", params);
+		kieSession.startProcess("it.redhat.demo.unified-managed-deploy", params);
 	}
 	
 }
