@@ -58,7 +58,8 @@ public class ChooseDeployStrategy implements WorkItemHandler {
 		if (Affinity.DIFFERNT_MINI.equals(maxAffinity) && gav.greterMini(miniMigration)) {
 			resultsMap.put("update", false);
 			resultsMap.put("migration", true);
-			resultsMap.put("miniMigration", miniMigration);
+			resultsMap.put("newDeployment", gav.getGav());
+			resultsMap.put("oldDeployment", miniMigration.getGav());
 			
 			log.info("Performe Migration Deploy Strategy");
 			

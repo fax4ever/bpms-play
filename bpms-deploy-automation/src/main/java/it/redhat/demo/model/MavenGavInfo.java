@@ -34,6 +34,7 @@ public class MavenGavInfo implements Serializable {
 
 	private String groupId;
 	private String artifactId;
+	private String version;
 	private int majorVersion;
 	private int minorVersion;
 	private int miniVersion;
@@ -43,6 +44,7 @@ public class MavenGavInfo implements Serializable {
 
 		this.groupId = groupId;
 		this.artifactId = artifactId;
+		this.version = version;
 
 		Pattern pattern = Pattern.compile(VERSION_REGEX);
 		Matcher matcher = pattern.matcher(version);
@@ -116,6 +118,10 @@ public class MavenGavInfo implements Serializable {
 	public String toString() {
 		return "MavenGavInfo [groupId=" + groupId + ", artifactId=" + artifactId + ", majorVersion=" + majorVersion
 				+ ", minorVersion=" + minorVersion + ", miniVersion=" + miniVersion + ", snapshot=" + snapshot + "]";
+	}
+	
+	public String getGav() {
+		return groupId + ":" + artifactId + ":" + version;
 	}
 
 }
