@@ -4,16 +4,6 @@ import org.kie.api.runtime.process.WorkItem;
 import org.kie.api.runtime.process.WorkItemHandler;
 import org.kie.api.runtime.process.WorkItemManager;
 
-import it.redhat.demo.stub.BusinessCentralDeployStub;
-import it.redhat.demo.stub.DisponseOldContainerStub;
-import it.redhat.demo.stub.GetServerTemplateStub;
-import it.redhat.demo.stub.LoadProcessDefinitionStub;
-import it.redhat.demo.stub.LoadProcessInstancesStub;
-import it.redhat.demo.stub.ProcessServerContainerStartStub;
-import it.redhat.demo.stub.ProcessServerDeployStub;
-import it.redhat.demo.stub.UndeployOldContainerStub;
-import it.redhat.demo.stub.VerifyBcDeployStub;
-
 public class RestStub implements WorkItemHandler {
 	
 	private static final String DEPLOYMENT = "/business-central/rest/deployment/";

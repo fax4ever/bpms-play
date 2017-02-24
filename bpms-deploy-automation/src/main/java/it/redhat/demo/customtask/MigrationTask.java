@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import it.redhat.demo.jaxb.JaxbQueryProcessInstanceResult;
 import org.jbpm.kie.services.impl.admin.ProcessInstanceMigrationServiceImpl;
 import org.jbpm.services.api.admin.MigrationEntry;
 import org.jbpm.services.api.admin.MigrationReport;
@@ -15,8 +16,6 @@ import org.kie.api.runtime.process.WorkItemHandler;
 import org.kie.api.runtime.process.WorkItemManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import it.redhat.demo.jaxb.JaxbQueryProcessInstanceResult;
 
 public class MigrationTask implements WorkItemHandler {
 	

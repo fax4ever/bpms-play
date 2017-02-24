@@ -2,11 +2,10 @@ package it.redhat.demo.model;
 
 import static org.junit.Assert.*;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-
-import it.redhat.demo.model.MavenGavInfo.Affinity;
 
 @RunWith(JUnit4.class)
 public class MavenGavInfoTest {
@@ -47,11 +46,11 @@ public class MavenGavInfoTest {
 		MavenGavInfo gavA = new MavenGavInfo("it.redhat.demo", "mykjar", "1.0.21-SNAPSHOT");
 		MavenGavInfo gavB = new MavenGavInfo("it.redhat.demo", "mykjarb", "1.0.21-SNAPSHOT");
 		
-		Affinity affinityAB = gavA.affinity(gavB);
-		Affinity affinityBA = gavB.affinity(gavA);
+		MavenGavInfo.Affinity affinityAB = gavA.affinity(gavB);
+		MavenGavInfo.Affinity affinityBA = gavB.affinity(gavA);
 		
-		assertEquals(Affinity.DIFFERENT_ARTIFACT, affinityAB);
-		assertEquals(Affinity.DIFFERENT_ARTIFACT, affinityBA);
+		Assert.assertEquals(MavenGavInfo.Affinity.DIFFERENT_ARTIFACT, affinityAB);
+		Assert.assertEquals(MavenGavInfo.Affinity.DIFFERENT_ARTIFACT, affinityBA);
 		
 	}
 	
@@ -61,11 +60,11 @@ public class MavenGavInfoTest {
 		MavenGavInfo gavA = new MavenGavInfo("it.redhat.demo", "mykjar", "1.0.21-SNAPSHOT");
 		MavenGavInfo gavB = new MavenGavInfo("it.redhat.demo", "mykjar", "2.0.21-SNAPSHOT");
 		
-		Affinity affinityAB = gavA.affinity(gavB);
-		Affinity affinityBA = gavB.affinity(gavA);
+		MavenGavInfo.Affinity affinityAB = gavA.affinity(gavB);
+		MavenGavInfo.Affinity affinityBA = gavB.affinity(gavA);
 		
-		assertEquals(Affinity.DIFFERENT_MAJOR, affinityAB);
-		assertEquals(Affinity.DIFFERENT_MAJOR, affinityBA);
+		Assert.assertEquals(MavenGavInfo.Affinity.DIFFERENT_MAJOR, affinityAB);
+		Assert.assertEquals(MavenGavInfo.Affinity.DIFFERENT_MAJOR, affinityBA);
 		
 	}
 	
@@ -75,11 +74,11 @@ public class MavenGavInfoTest {
 		MavenGavInfo gavA = new MavenGavInfo("it.redhat.demo", "mykjar", "1.0.21");
 		MavenGavInfo gavB = new MavenGavInfo("it.redhat.demo", "mykjar", "1.2.21");
 		
-		Affinity affinityAB = gavA.affinity(gavB);
-		Affinity affinityBA = gavB.affinity(gavA);
+		MavenGavInfo.Affinity affinityAB = gavA.affinity(gavB);
+		MavenGavInfo.Affinity affinityBA = gavB.affinity(gavA);
 		
-		assertEquals(Affinity.DIFFERENT_MINOR, affinityAB);
-		assertEquals(Affinity.DIFFERENT_MINOR, affinityBA);
+		Assert.assertEquals(MavenGavInfo.Affinity.DIFFERENT_MINOR, affinityAB);
+		Assert.assertEquals(MavenGavInfo.Affinity.DIFFERENT_MINOR, affinityBA);
 		
 	}
 	
@@ -89,11 +88,11 @@ public class MavenGavInfoTest {
 		MavenGavInfo gavA = new MavenGavInfo("it.redhat.demo", "mykjar", "1.0.21");
 		MavenGavInfo gavB = new MavenGavInfo("it.redhat.demo", "mykjar", "1.0.22");
 		
-		Affinity affinityAB = gavA.affinity(gavB);
-		Affinity affinityBA = gavB.affinity(gavA);
+		MavenGavInfo.Affinity affinityAB = gavA.affinity(gavB);
+		MavenGavInfo.Affinity affinityBA = gavB.affinity(gavA);
 		
-		assertEquals(Affinity.DIFFERNT_MINI, affinityAB);
-		assertEquals(Affinity.DIFFERNT_MINI, affinityBA);
+		Assert.assertEquals(MavenGavInfo.Affinity.DIFFERNT_MINI, affinityAB);
+		Assert.assertEquals(MavenGavInfo.Affinity.DIFFERNT_MINI, affinityBA);
 		
 	}
 	
@@ -103,11 +102,11 @@ public class MavenGavInfoTest {
 		MavenGavInfo gavA = new MavenGavInfo("it.redhat.demo", "mykjar", "1.0.21");
 		MavenGavInfo gavB = new MavenGavInfo("it.redhat.demo", "mykjar", "1.0.21-SNAPSHOT");
 		
-		Affinity affinityAB = gavA.affinity(gavB);
-		Affinity affinityBA = gavB.affinity(gavA);
+		MavenGavInfo.Affinity affinityAB = gavA.affinity(gavB);
+		MavenGavInfo.Affinity affinityBA = gavB.affinity(gavA);
 		
-		assertEquals(Affinity.DIFFERNT_SNAPSHOT, affinityAB);
-		assertEquals(Affinity.DIFFERNT_SNAPSHOT, affinityBA);
+		Assert.assertEquals(MavenGavInfo.Affinity.DIFFERNT_SNAPSHOT, affinityAB);
+		Assert.assertEquals(MavenGavInfo.Affinity.DIFFERNT_SNAPSHOT, affinityBA);
 		
 	}
 	
@@ -117,11 +116,11 @@ public class MavenGavInfoTest {
 		MavenGavInfo gavA = new MavenGavInfo("it.redhat.demo", "mykjar", "1.0.21");
 		MavenGavInfo gavB = new MavenGavInfo("it.redhat.demo", "mykjar", "1.0.21");
 		
-		Affinity affinityAB = gavA.affinity(gavB);
-		Affinity affinityBA = gavB.affinity(gavA);
+		MavenGavInfo.Affinity affinityAB = gavA.affinity(gavB);
+		MavenGavInfo.Affinity affinityBA = gavB.affinity(gavA);
 		
-		assertEquals(Affinity.EQUALS, affinityAB);
-		assertEquals(Affinity.EQUALS, affinityBA);
+		Assert.assertEquals(MavenGavInfo.Affinity.EQUALS, affinityAB);
+		Assert.assertEquals(MavenGavInfo.Affinity.EQUALS, affinityBA);
 		
 	}
 

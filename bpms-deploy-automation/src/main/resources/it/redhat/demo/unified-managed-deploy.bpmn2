@@ -5,20 +5,22 @@
   <bpmn2:itemDefinition id="ItemDefinition_2" isCollection="false" structureRef="java.lang.Object"/>
   <bpmn2:itemDefinition id="ItemDefinition_3" isCollection="false" structureRef="java.lang.Boolean"/>
   <bpmn2:itemDefinition id="ItemDefinition_7" isCollection="false" structureRef="java.lang.Integer"/>
-  <bpmn2:itemDefinition id="ItemDefinition_14" isCollection="false" structureRef="it.redhat.demo.model.MavenGavInfo.Affinity"/>
-  <bpmn2:itemDefinition id="ItemDefinition_15" isCollection="false" structureRef="it.redhat.demo.model.MavenGavInfo"/>
-  <bpmn2:itemDefinition id="ItemDefinition_5" isCollection="false" structureRef="it.redhat.demo.dto.ServerTemplateDto"/>
   <bpmn2:itemDefinition id="ItemDefinition_4" isCollection="false" structureRef="Object"/>
-  <bpmn2:itemDefinition id="ItemDefinition_54" isCollection="false" structureRef="java.lang.Long"/>
+  <bpmn2:itemDefinition id="ItemDefinition_12" isCollection="false" structureRef="it.redhat.demo.model.MavenGavInfo.Affinity"/>
+  <bpmn2:itemDefinition id="ItemDefinition_13" isCollection="false" structureRef="it.redhat.demo.model.MavenGavInfo"/>
+  <bpmn2:itemDefinition id="ItemDefinition_17" isCollection="false" structureRef="it.redhat.demo.dto.ServerTemplateDto"/>
+  <bpmn2:itemDefinition id="ItemDefinition_1698" isCollection="false" structureRef="java.lang.Long"/>
+  <bpmn2:itemDefinition id="ItemDefinition_5" isCollection="false" structureRef="Object"/>
   <bpmn2:itemDefinition id="ItemDefinition_6" isCollection="false" structureRef="Object"/>
-  <bpmn2:itemDefinition id="ItemDefinition_8" isCollection="false" structureRef="Object"/>
+  <bpmn2:itemDefinition id="ItemDefinition_311" isCollection="false" structureRef="Object"/>
+  <bpmn2:itemDefinition id="ItemDefinition_312" isCollection="false" structureRef="Object"/>
   <bpmn2:process id="it.redhat.demo.unified-managed-deploy" tns:packageName="it.redhat.demo" name="unified-managed-deploy" isExecutable="true" processType="Private">
     <bpmn2:extensionElements>
       <tns:import name="it.redhat.demo.model.MavenGavInfo"/>
       <tns:import name="it.redhat.demo.model.MavenGavInfo.Affinity"/>
       <tns:import name="it.redhat.demo.dto.ServerTemplateDto"/>
     </bpmn2:extensionElements>
-    <bpmn2:property id="serverTemplate" itemSubjectRef="ItemDefinition_5" name="serverTemplate"/>
+    <bpmn2:property id="serverTemplate" itemSubjectRef="ItemDefinition_17" name="serverTemplate"/>
     <bpmn2:property id="serverId" itemSubjectRef="ItemDefinition_1" name="serverId"/>
     <bpmn2:property id="bcHost" itemSubjectRef="ItemDefinition_1" name="bcHost"/>
     <bpmn2:property id="groupId" itemSubjectRef="ItemDefinition_1" name="groupId"/>
@@ -26,14 +28,14 @@
     <bpmn2:property id="version" itemSubjectRef="ItemDefinition_1" name="version"/>
     <bpmn2:property id="update" itemSubjectRef="ItemDefinition_3" name="update"/>
     <bpmn2:property id="migration" itemSubjectRef="ItemDefinition_3" name="migration"/>
-    <bpmn2:property id="miniMigration" itemSubjectRef="ItemDefinition_15" name="miniMigration"/>
+    <bpmn2:property id="miniMigration" itemSubjectRef="ItemDefinition_13" name="miniMigration"/>
     <bpmn2:property id="bcPort" itemSubjectRef="ItemDefinition_1" name="bcPort"/>
     <bpmn2:property id="strategy" itemSubjectRef="ItemDefinition_1" name="strategy"/>
     <bpmn2:property id="mergeMode" itemSubjectRef="ItemDefinition_1" name="mergeMode"/>
     <bpmn2:property id="httpResponseStatus" itemSubjectRef="ItemDefinition_1" name="httpResponseStatus"/>
     <bpmn2:property id="httpResponseMessage" itemSubjectRef="ItemDefinition_1" name="httpResponseMessage"/>
     <bpmn2:property id="uri" itemSubjectRef="ItemDefinition_1" name="uri"/>
-    <bpmn2:property id="bcPortL" itemSubjectRef="ItemDefinition_54" name="bcPortL"/>
+    <bpmn2:property id="bcPortL" itemSubjectRef="ItemDefinition_1698" name="bcPortL"/>
     <bpmn2:property id="oldDeployment" itemSubjectRef="ItemDefinition_1" name="oldDeployment"/>
     <bpmn2:property id="newDeployment" itemSubjectRef="ItemDefinition_1" name="newDeployment"/>
     <bpmn2:startEvent id="StartEvent_1" name="StartProcess">
@@ -65,7 +67,7 @@
         <bpmn2:dataInput id="DataInput_7" itemSubjectRef="ItemDefinition_1" name="AuthType"/>
         <bpmn2:dataInput id="DataInput_8" itemSubjectRef="ItemDefinition_1" name="ConnectTimeout"/>
         <bpmn2:dataInput id="DataInput_9" itemSubjectRef="ItemDefinition_1" name="ReadTimeout"/>
-        <bpmn2:dataOutput id="DataOutput_1" itemSubjectRef="ItemDefinition_5" name="Result"/>
+        <bpmn2:dataOutput id="DataOutput_1" itemSubjectRef="ItemDefinition_17" name="Result"/>
         <bpmn2:dataOutput id="DataOutput_2" itemSubjectRef="ItemDefinition_1" name="StatusMsg"/>
         <bpmn2:dataOutput id="DataOutput_3" itemSubjectRef="ItemDefinition_1" name="Status"/>
         <bpmn2:inputSet id="_InputSet_2">
@@ -143,18 +145,20 @@
         <tns:metaData name="elementname">
           <tns:metaValue><![CDATA[ChooseDeployStrategy]]></tns:metaValue>
         </tns:metaData>
+        <tns:onEntry-script scriptFormat="http://www.java.com/java"/>
+        <tns:onExit-script scriptFormat="http://www.java.com/java"/>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_2</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_18</bpmn2:outgoing>
       <bpmn2:ioSpecification id="InputOutputSpecification_2">
-        <bpmn2:dataInput id="DataInput_19" itemSubjectRef="ItemDefinition_5" name="serverTemplate"/>
+        <bpmn2:dataInput id="DataInput_19" itemSubjectRef="ItemDefinition_17" name="serverTemplate"/>
         <bpmn2:dataInput id="DataInput_20" itemSubjectRef="ItemDefinition_1" name="groupId"/>
         <bpmn2:dataInput id="DataInput_21" itemSubjectRef="ItemDefinition_1" name="artifactId"/>
         <bpmn2:dataInput id="DataInput_22" itemSubjectRef="ItemDefinition_1" name="version"/>
-        <bpmn2:dataOutput id="DataOutput_7" itemSubjectRef="ItemDefinition_3" name="update"/>
-        <bpmn2:dataOutput id="DataOutput_8" itemSubjectRef="ItemDefinition_3" name="migration"/>
         <bpmn2:dataOutput id="DataOutput_6" itemSubjectRef="ItemDefinition_1" name="oldDeployment"/>
         <bpmn2:dataOutput id="DataOutput_10" itemSubjectRef="ItemDefinition_1" name="newDeployment"/>
+        <bpmn2:dataOutput id="DataOutput_11" itemSubjectRef="ItemDefinition_3" name="update"/>
+        <bpmn2:dataOutput id="DataOutput_12" itemSubjectRef="ItemDefinition_3" name="migration"/>
         <bpmn2:inputSet id="InputSet_1">
           <bpmn2:dataInputRefs>DataInput_19</bpmn2:dataInputRefs>
           <bpmn2:dataInputRefs>DataInput_20</bpmn2:dataInputRefs>
@@ -162,10 +166,10 @@
           <bpmn2:dataInputRefs>DataInput_22</bpmn2:dataInputRefs>
         </bpmn2:inputSet>
         <bpmn2:outputSet id="OutputSet_1">
-          <bpmn2:dataOutputRefs>DataOutput_7</bpmn2:dataOutputRefs>
-          <bpmn2:dataOutputRefs>DataOutput_8</bpmn2:dataOutputRefs>
           <bpmn2:dataOutputRefs>DataOutput_6</bpmn2:dataOutputRefs>
           <bpmn2:dataOutputRefs>DataOutput_10</bpmn2:dataOutputRefs>
+          <bpmn2:dataOutputRefs>DataOutput_11</bpmn2:dataOutputRefs>
+          <bpmn2:dataOutputRefs>DataOutput_12</bpmn2:dataOutputRefs>
         </bpmn2:outputSet>
       </bpmn2:ioSpecification>
       <bpmn2:dataInputAssociation id="DataInputAssociation_10">
@@ -184,14 +188,6 @@
         <bpmn2:sourceRef>version</bpmn2:sourceRef>
         <bpmn2:targetRef>DataInput_22</bpmn2:targetRef>
       </bpmn2:dataInputAssociation>
-      <bpmn2:dataOutputAssociation id="DataOutputAssociation_4">
-        <bpmn2:sourceRef>DataOutput_7</bpmn2:sourceRef>
-        <bpmn2:targetRef>update</bpmn2:targetRef>
-      </bpmn2:dataOutputAssociation>
-      <bpmn2:dataOutputAssociation id="DataOutputAssociation_5">
-        <bpmn2:sourceRef>DataOutput_8</bpmn2:sourceRef>
-        <bpmn2:targetRef>migration</bpmn2:targetRef>
-      </bpmn2:dataOutputAssociation>
       <bpmn2:dataOutputAssociation id="DataOutputAssociation_2">
         <bpmn2:sourceRef>DataOutput_6</bpmn2:sourceRef>
         <bpmn2:targetRef>oldDeployment</bpmn2:targetRef>
@@ -200,6 +196,14 @@
         <bpmn2:sourceRef>DataOutput_10</bpmn2:sourceRef>
         <bpmn2:targetRef>newDeployment</bpmn2:targetRef>
       </bpmn2:dataOutputAssociation>
+      <bpmn2:dataOutputAssociation id="DataOutputAssociation_7">
+        <bpmn2:sourceRef>DataOutput_11</bpmn2:sourceRef>
+        <bpmn2:targetRef>update</bpmn2:targetRef>
+      </bpmn2:dataOutputAssociation>
+      <bpmn2:dataOutputAssociation id="DataOutputAssociation_8">
+        <bpmn2:sourceRef>DataOutput_12</bpmn2:sourceRef>
+        <bpmn2:targetRef>migration</bpmn2:targetRef>
+      </bpmn2:dataOutputAssociation>
     </bpmn2:task>
     <bpmn2:sequenceFlow id="SequenceFlow_2" tns:priority="1" sourceRef="Task_1" targetRef="Task_2"/>
     <bpmn2:callActivity id="CallActivity_10" tns:waitForCompletion="true" tns:independent="true" name="Create Container" calledElement="it.redhat.demo.create-container">
@@ -207,6 +211,7 @@
         <tns:metaData name="elementname">
           <tns:metaValue><![CDATA[Create Container]]></tns:metaValue>
         </tns:metaData>
+        <tns:onEntry-script scriptFormat="http://www.java.com/java"/>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_19</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_22</bpmn2:outgoing>
@@ -219,7 +224,7 @@
         <bpmn2:dataInput id="DataInput_15" itemSubjectRef="ItemDefinition_1" name="version"/>
         <bpmn2:dataInput id="DataInput_16" itemSubjectRef="ItemDefinition_1" name="strategy"/>
         <bpmn2:dataInput id="DataInput_17" itemSubjectRef="ItemDefinition_1" name="mergeMode"/>
-        <bpmn2:dataInput id="DataInput_23" itemSubjectRef="ItemDefinition_5" name="serverTemplate"/>
+        <bpmn2:dataInput id="DataInput_23" itemSubjectRef="ItemDefinition_17" name="serverTemplate"/>
         <bpmn2:inputSet id="InputSet_2" name="Input Set 2">
           <bpmn2:dataInputRefs>DataInput_10</bpmn2:dataInputRefs>
           <bpmn2:dataInputRefs>DataInput_11</bpmn2:dataInputRefs>
@@ -273,23 +278,11 @@
     <bpmn2:exclusiveGateway id="ExclusiveGateway_8" name="Create / Update" gatewayDirection="Diverging">
       <bpmn2:incoming>SequenceFlow_18</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_19</bpmn2:outgoing>
-      <bpmn2:outgoing>SequenceFlow_20</bpmn2:outgoing>
+      <bpmn2:outgoing>SequenceFlow_13</bpmn2:outgoing>
     </bpmn2:exclusiveGateway>
     <bpmn2:sequenceFlow id="SequenceFlow_18" tns:priority="1" sourceRef="Task_2" targetRef="ExclusiveGateway_8"/>
     <bpmn2:sequenceFlow id="SequenceFlow_19" tns:priority="1" name="create" sourceRef="ExclusiveGateway_8" targetRef="CallActivity_10">
-      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_11" language="http://www.java.com/java">return !((Boolean) kcontext.getVariable(&quot;update&quot;));</bpmn2:conditionExpression>
-    </bpmn2:sequenceFlow>
-    <bpmn2:callActivity id="CallActivity_11" tns:waitForCompletion="true" tns:independent="true" name="Update Container" calledElement="it.redhat.demo.update-container">
-      <bpmn2:extensionElements>
-        <tns:metaData name="elementname">
-          <tns:metaValue><![CDATA[Update Container]]></tns:metaValue>
-        </tns:metaData>
-      </bpmn2:extensionElements>
-      <bpmn2:incoming>SequenceFlow_20</bpmn2:incoming>
-      <bpmn2:outgoing>SequenceFlow_21</bpmn2:outgoing>
-    </bpmn2:callActivity>
-    <bpmn2:sequenceFlow id="SequenceFlow_20" tns:priority="1" name="update" sourceRef="ExclusiveGateway_8" targetRef="CallActivity_11">
-      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_8" language="http://www.java.com/java">return kcontext.getVariable(&quot;update&quot;);</bpmn2:conditionExpression>
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_11" language="http://www.mvel.org/2.0">!((Boolean) kcontext.getVariable(&quot;update&quot;));</bpmn2:conditionExpression>
     </bpmn2:sequenceFlow>
     <bpmn2:endEvent id="EndEvent_12" name="SNAPSHOT Release">
       <bpmn2:extensionElements>
@@ -297,9 +290,8 @@
           <tns:metaValue><![CDATA[SNAPSHOT Release]]></tns:metaValue>
         </tns:metaData>
       </bpmn2:extensionElements>
-      <bpmn2:incoming>SequenceFlow_21</bpmn2:incoming>
+      <bpmn2:incoming>SequenceFlow_16</bpmn2:incoming>
     </bpmn2:endEvent>
-    <bpmn2:sequenceFlow id="SequenceFlow_21" tns:priority="1" sourceRef="CallActivity_11" targetRef="EndEvent_12"/>
     <bpmn2:exclusiveGateway id="ExclusiveGateway_9" name="Migration / Not" gatewayDirection="Diverging">
       <bpmn2:incoming>SequenceFlow_22</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_23</bpmn2:outgoing>
@@ -312,39 +304,40 @@
           <tns:metaValue><![CDATA[Migration]]></tns:metaValue>
         </tns:metaData>
         <tns:onEntry-script scriptFormat="http://www.mvel.org/2.0">
-          <tns:script>kcontext.setVariable(&quot;bcPortL&quot;, Long.parseLong(bcPort));</tns:script>
+          <tns:script>kcontext.setVariable(&quot;bcPortL&quot;, Long.parseLong(bcPort));
+</tns:script>
         </tns:onEntry-script>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_23</bpmn2:incoming>
-      <bpmn2:outgoing>SequenceFlow_26</bpmn2:outgoing>
-      <bpmn2:ioSpecification id="InputOutputSpecification_6">
+      <bpmn2:outgoing>SequenceFlow_1</bpmn2:outgoing>
+      <bpmn2:ioSpecification id="InputOutputSpecification_5">
         <bpmn2:dataInput id="DataInput_30" itemSubjectRef="ItemDefinition_1" name="bcHost"/>
-        <bpmn2:dataInput id="DataInput_31" itemSubjectRef="ItemDefinition_54" name="bcPort"/>
+        <bpmn2:dataInput id="DataInput_33" itemSubjectRef="ItemDefinition_1698" name="bcPort"/>
+        <bpmn2:dataInput id="DataInput_31" itemSubjectRef="ItemDefinition_1" name="oldDeployment"/>
         <bpmn2:dataInput id="DataInput_32" itemSubjectRef="ItemDefinition_1" name="newDeployment"/>
-        <bpmn2:dataInput id="DataInput_33" itemSubjectRef="ItemDefinition_1" name="oldDeployment"/>
-        <bpmn2:inputSet id="InputSet_4" name="Input Set 4">
+        <bpmn2:inputSet id="InputSet_3" name="Input Set 3">
           <bpmn2:dataInputRefs>DataInput_30</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>DataInput_33</bpmn2:dataInputRefs>
           <bpmn2:dataInputRefs>DataInput_31</bpmn2:dataInputRefs>
           <bpmn2:dataInputRefs>DataInput_32</bpmn2:dataInputRefs>
-          <bpmn2:dataInputRefs>DataInput_33</bpmn2:dataInputRefs>
         </bpmn2:inputSet>
-        <bpmn2:outputSet id="OutputSet_4" name="Output Set 4"/>
+        <bpmn2:outputSet id="OutputSet_3" name="Output Set 3"/>
       </bpmn2:ioSpecification>
       <bpmn2:dataInputAssociation id="DataInputAssociation_9">
         <bpmn2:sourceRef>bcHost</bpmn2:sourceRef>
         <bpmn2:targetRef>DataInput_30</bpmn2:targetRef>
       </bpmn2:dataInputAssociation>
-      <bpmn2:dataInputAssociation id="DataInputAssociation_15">
+      <bpmn2:dataInputAssociation id="DataInputAssociation_17">
         <bpmn2:sourceRef>bcPortL</bpmn2:sourceRef>
+        <bpmn2:targetRef>DataInput_33</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="DataInputAssociation_15">
+        <bpmn2:sourceRef>oldDeployment</bpmn2:sourceRef>
         <bpmn2:targetRef>DataInput_31</bpmn2:targetRef>
       </bpmn2:dataInputAssociation>
       <bpmn2:dataInputAssociation id="DataInputAssociation_16">
         <bpmn2:sourceRef>newDeployment</bpmn2:sourceRef>
         <bpmn2:targetRef>DataInput_32</bpmn2:targetRef>
-      </bpmn2:dataInputAssociation>
-      <bpmn2:dataInputAssociation id="DataInputAssociation_17">
-        <bpmn2:sourceRef>oldDeployment</bpmn2:sourceRef>
-        <bpmn2:targetRef>DataInput_33</bpmn2:targetRef>
       </bpmn2:dataInputAssociation>
     </bpmn2:callActivity>
     <bpmn2:sequenceFlow id="SequenceFlow_23" tns:priority="1" name="with migration" sourceRef="ExclusiveGateway_9" targetRef="CallActivity_12">
@@ -367,9 +360,8 @@
           <tns:metaValue><![CDATA[MIGRATION Release]]></tns:metaValue>
         </tns:metaData>
       </bpmn2:extensionElements>
-      <bpmn2:incoming>SequenceFlow_26</bpmn2:incoming>
+      <bpmn2:incoming>SequenceFlow_5</bpmn2:incoming>
     </bpmn2:endEvent>
-    <bpmn2:sequenceFlow id="SequenceFlow_26" tns:priority="1" sourceRef="CallActivity_12" targetRef="EndEvent_15"/>
     <bpmn2:task id="Task_3" tns:taskName="InputValidator" tns:displayName="InputValidator" tns:icon="task.png" name="InputValidator">
       <bpmn2:extensionElements>
         <tns:metaData name="elementname">
@@ -440,6 +432,200 @@
     </bpmn2:task>
     <bpmn2:sequenceFlow id="SequenceFlow_3" tns:priority="1" sourceRef="StartEvent_1" targetRef="Task_3"/>
     <bpmn2:sequenceFlow id="SequenceFlow_4" tns:priority="1" sourceRef="Task_3" targetRef="Task_1"/>
+    <bpmn2:callActivity id="CallActivity_1" tns:waitForCompletion="true" tns:independent="true" name="Remove Old Container" calledElement="it.redhat.demo.remove-container">
+      <bpmn2:extensionElements>
+        <tns:metaData name="elementname">
+          <tns:metaValue><![CDATA[Remove Old Container]]></tns:metaValue>
+        </tns:metaData>
+        <tns:metaData name="customAsync">
+          <tns:metaValue><![CDATA[true]]></tns:metaValue>
+        </tns:metaData>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_1</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_5</bpmn2:outgoing>
+      <bpmn2:ioSpecification id="InputOutputSpecification_6">
+        <bpmn2:dataInput id="DataInput_34" itemSubjectRef="ItemDefinition_1" name="bcHost"/>
+        <bpmn2:dataInput id="DataInput_35" itemSubjectRef="ItemDefinition_1698" name="bcPort"/>
+        <bpmn2:dataInput id="DataInput_38" itemSubjectRef="ItemDefinition_1" name="deploymentId"/>
+        <bpmn2:dataInput id="DataInput_39" itemSubjectRef="ItemDefinition_1" name="serverId"/>
+        <bpmn2:inputSet id="InputSet_4" name="Input Set 4">
+          <bpmn2:dataInputRefs>DataInput_34</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>DataInput_35</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>DataInput_38</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>DataInput_39</bpmn2:dataInputRefs>
+        </bpmn2:inputSet>
+        <bpmn2:outputSet id="OutputSet_4" name="Output Set 4"/>
+      </bpmn2:ioSpecification>
+      <bpmn2:dataInputAssociation id="DataInputAssociation_18">
+        <bpmn2:sourceRef>bcHost</bpmn2:sourceRef>
+        <bpmn2:targetRef>DataInput_34</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="DataInputAssociation_19">
+        <bpmn2:sourceRef>bcPortL</bpmn2:sourceRef>
+        <bpmn2:targetRef>DataInput_35</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="DataInputAssociation_22">
+        <bpmn2:sourceRef>oldDeployment</bpmn2:sourceRef>
+        <bpmn2:targetRef>DataInput_38</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="DataInputAssociation_23">
+        <bpmn2:sourceRef>serverId</bpmn2:sourceRef>
+        <bpmn2:targetRef>DataInput_39</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+    </bpmn2:callActivity>
+    <bpmn2:sequenceFlow id="SequenceFlow_1" tns:priority="1" sourceRef="CallActivity_12" targetRef="CallActivity_1"/>
+    <bpmn2:sequenceFlow id="SequenceFlow_5" tns:priority="1" sourceRef="CallActivity_1" targetRef="EndEvent_15"/>
+    <bpmn2:callActivity id="CallActivity_2" tns:waitForCompletion="true" tns:independent="true" name="Remove Container" calledElement="it.redhat.demo.remove-container">
+      <bpmn2:extensionElements>
+        <tns:metaData name="elementname">
+          <tns:metaValue><![CDATA[Remove Container]]></tns:metaValue>
+        </tns:metaData>
+        <tns:onEntry-script scriptFormat="http://www.mvel.org/2.0">
+          <tns:script>kcontext.setVariable(&quot;bcPortL&quot;, Long.parseLong(bcPort));</tns:script>
+        </tns:onEntry-script>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_14</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_15</bpmn2:outgoing>
+      <bpmn2:ioSpecification id="InputOutputSpecification_7">
+        <bpmn2:dataInput id="DataInput_36" itemSubjectRef="ItemDefinition_1" name="bcHost"/>
+        <bpmn2:dataInput id="DataInput_37" itemSubjectRef="ItemDefinition_1698" name="bcPort"/>
+        <bpmn2:dataInput id="DataInput_40" itemSubjectRef="ItemDefinition_1" name="serverId"/>
+        <bpmn2:dataInput id="DataInput_41" itemSubjectRef="ItemDefinition_1" name="deploymentId"/>
+        <bpmn2:inputSet id="InputSet_5" name="Input Set 5">
+          <bpmn2:dataInputRefs>DataInput_36</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>DataInput_37</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>DataInput_40</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>DataInput_41</bpmn2:dataInputRefs>
+        </bpmn2:inputSet>
+        <bpmn2:outputSet id="OutputSet_5" name="Output Set 5"/>
+      </bpmn2:ioSpecification>
+      <bpmn2:dataInputAssociation id="DataInputAssociation_20">
+        <bpmn2:sourceRef>bcHost</bpmn2:sourceRef>
+        <bpmn2:targetRef>DataInput_36</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="DataInputAssociation_21">
+        <bpmn2:sourceRef>bcPortL</bpmn2:sourceRef>
+        <bpmn2:targetRef>DataInput_37</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="DataInputAssociation_24">
+        <bpmn2:sourceRef>serverId</bpmn2:sourceRef>
+        <bpmn2:targetRef>DataInput_40</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="DataInputAssociation_25">
+        <bpmn2:sourceRef>newDeployment</bpmn2:sourceRef>
+        <bpmn2:targetRef>DataInput_41</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+    </bpmn2:callActivity>
+    <bpmn2:callActivity id="CallActivity_5" tns:waitForCompletion="true" tns:independent="true" name="Create Container" calledElement="it.redhat.demo.create-container">
+      <bpmn2:extensionElements>
+        <tns:metaData name="elementname">
+          <tns:metaValue><![CDATA[Create Container]]></tns:metaValue>
+        </tns:metaData>
+        <tns:onEntry-script scriptFormat="http://www.java.com/java"/>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_15</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_16</bpmn2:outgoing>
+      <bpmn2:ioSpecification id="InputOutputSpecification_8">
+        <bpmn2:dataInput id="DataInput_42" itemSubjectRef="ItemDefinition_1" name="bcHost"/>
+        <bpmn2:dataInput id="DataInput_43" itemSubjectRef="ItemDefinition_7" name="bcPort"/>
+        <bpmn2:dataInput id="DataInput_44" itemSubjectRef="ItemDefinition_1" name="serverId"/>
+        <bpmn2:dataInput id="DataInput_45" itemSubjectRef="ItemDefinition_1" name="groupId"/>
+        <bpmn2:dataInput id="DataInput_46" itemSubjectRef="ItemDefinition_1" name="artifactId"/>
+        <bpmn2:dataInput id="DataInput_47" itemSubjectRef="ItemDefinition_1" name="version"/>
+        <bpmn2:dataInput id="DataInput_48" itemSubjectRef="ItemDefinition_1" name="strategy"/>
+        <bpmn2:dataInput id="DataInput_49" itemSubjectRef="ItemDefinition_1" name="mergeMode"/>
+        <bpmn2:dataInput id="DataInput_50" itemSubjectRef="ItemDefinition_17" name="serverTemplate"/>
+        <bpmn2:inputSet id="InputSet_6" name="Input Set 2">
+          <bpmn2:dataInputRefs>DataInput_42</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>DataInput_43</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>DataInput_44</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>DataInput_45</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>DataInput_46</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>DataInput_47</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>DataInput_48</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>DataInput_49</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>DataInput_50</bpmn2:dataInputRefs>
+        </bpmn2:inputSet>
+        <bpmn2:outputSet id="OutputSet_6" name="Output Set 2"/>
+      </bpmn2:ioSpecification>
+      <bpmn2:dataInputAssociation id="DataInputAssociation_26">
+        <bpmn2:sourceRef>bcHost</bpmn2:sourceRef>
+        <bpmn2:targetRef>DataInput_42</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="DataInputAssociation_27">
+        <bpmn2:sourceRef>bcPort</bpmn2:sourceRef>
+        <bpmn2:targetRef>DataInput_43</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="DataInputAssociation_28">
+        <bpmn2:sourceRef>serverId</bpmn2:sourceRef>
+        <bpmn2:targetRef>DataInput_44</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="DataInputAssociation_29">
+        <bpmn2:sourceRef>groupId</bpmn2:sourceRef>
+        <bpmn2:targetRef>DataInput_45</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="DataInputAssociation_30">
+        <bpmn2:sourceRef>artifactId</bpmn2:sourceRef>
+        <bpmn2:targetRef>DataInput_46</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="DataInputAssociation_31">
+        <bpmn2:sourceRef>version</bpmn2:sourceRef>
+        <bpmn2:targetRef>DataInput_47</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="DataInputAssociation_32">
+        <bpmn2:sourceRef>strategy</bpmn2:sourceRef>
+        <bpmn2:targetRef>DataInput_48</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="DataInputAssociation_33">
+        <bpmn2:sourceRef>mergeMode</bpmn2:sourceRef>
+        <bpmn2:targetRef>DataInput_49</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="DataInputAssociation_34">
+        <bpmn2:sourceRef>serverTemplate</bpmn2:sourceRef>
+        <bpmn2:targetRef>DataInput_50</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+    </bpmn2:callActivity>
+    <bpmn2:callActivity id="CallActivity_6" tns:waitForCompletion="true" tns:independent="true" name="Abort Active Instances" calledElement="it.redhat.demo.abort-active-instances">
+      <bpmn2:extensionElements>
+        <tns:metaData name="elementname">
+          <tns:metaValue><![CDATA[Abort Active Instances]]></tns:metaValue>
+        </tns:metaData>
+        <tns:onEntry-script scriptFormat="http://www.mvel.org/2.0">
+          <tns:script>kcontext.setVariable(&quot;bcPortL&quot;, Long.parseLong(bcPort));</tns:script>
+        </tns:onEntry-script>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_13</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_14</bpmn2:outgoing>
+      <bpmn2:ioSpecification id="InputOutputSpecification_9">
+        <bpmn2:dataInput id="DataInput_51" itemSubjectRef="ItemDefinition_1" name="bcHost"/>
+        <bpmn2:dataInput id="DataInput_52" itemSubjectRef="ItemDefinition_1698" name="bcPort"/>
+        <bpmn2:dataInput id="DataInput_54" itemSubjectRef="ItemDefinition_1" name="deploymentId"/>
+        <bpmn2:inputSet id="InputSet_7" name="Input Set 5">
+          <bpmn2:dataInputRefs>DataInput_51</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>DataInput_52</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>DataInput_54</bpmn2:dataInputRefs>
+        </bpmn2:inputSet>
+        <bpmn2:outputSet id="OutputSet_7" name="Output Set 5"/>
+      </bpmn2:ioSpecification>
+      <bpmn2:dataInputAssociation id="DataInputAssociation_35">
+        <bpmn2:sourceRef>bcHost</bpmn2:sourceRef>
+        <bpmn2:targetRef>DataInput_51</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="DataInputAssociation_36">
+        <bpmn2:sourceRef>bcPortL</bpmn2:sourceRef>
+        <bpmn2:targetRef>DataInput_52</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="DataInputAssociation_38">
+        <bpmn2:sourceRef>newDeployment</bpmn2:sourceRef>
+        <bpmn2:targetRef>DataInput_54</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+    </bpmn2:callActivity>
+    <bpmn2:sequenceFlow id="SequenceFlow_13" tns:priority="1" name="update" sourceRef="ExclusiveGateway_8" targetRef="CallActivity_6">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_2" language="http://www.mvel.org/2.0">(Boolean) kcontext.getVariable(&quot;update&quot;);</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:sequenceFlow id="SequenceFlow_14" tns:priority="1" sourceRef="CallActivity_6" targetRef="CallActivity_2"/>
+    <bpmn2:sequenceFlow id="SequenceFlow_15" tns:priority="1" sourceRef="CallActivity_2" targetRef="CallActivity_5"/>
+    <bpmn2:sequenceFlow id="SequenceFlow_16" tns:priority="1" sourceRef="CallActivity_5" targetRef="EndEvent_12"/>
   </bpmn2:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_Process_1" bpmnElement="it.redhat.demo.unified-managed-deploy">
@@ -473,16 +659,10 @@
           <dc:Bounds height="11.0" width="65.0" x="438.0" y="181.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_CallActivity_13" bpmnElement="CallActivity_11" isExpanded="true">
-        <dc:Bounds height="50.0" width="110.0" x="565.0" y="38.0"/>
-        <bpmndi:BPMNLabel id="BPMNLabel_6">
-          <dc:Bounds height="11.0" width="71.0" x="584.0" y="57.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_EndEvent_15" bpmnElement="EndEvent_12">
-        <dc:Bounds height="36.0" width="36.0" x="743.0" y="45.0"/>
+        <dc:Bounds height="36.0" width="36.0" x="1080.0" y="52.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_7">
-          <dc:Bounds height="22.0" width="57.0" x="733.0" y="81.0"/>
+          <dc:Bounds height="22.0" width="57.0" x="1070.0" y="88.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_ExclusiveGateway_9" bpmnElement="ExclusiveGateway_9" isMarkerVisible="true">
@@ -504,15 +684,39 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_EndEvent_18" bpmnElement="EndEvent_15">
-        <dc:Bounds height="36.0" width="36.0" x="942.0" y="250.0"/>
+        <dc:Bounds height="36.0" width="36.0" x="1157.0" y="250.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_11">
-          <dc:Bounds height="22.0" width="59.0" x="931.0" y="286.0"/>
+          <dc:Bounds height="22.0" width="59.0" x="1146.0" y="286.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_Task_3" bpmnElement="Task_3" isExpanded="true">
         <dc:Bounds height="50.0" width="110.0" x="75.0" y="236.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_12">
           <dc:Bounds height="11.0" width="57.0" x="101.0" y="255.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_CallActivity_1" bpmnElement="CallActivity_1" isExpanded="true">
+        <dc:Bounds height="50.0" width="110.0" x="1120.0" y="131.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_6">
+          <dc:Bounds height="11.0" width="92.0" x="1129.0" y="150.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_CallActivity_2" bpmnElement="CallActivity_2" isExpanded="true">
+        <dc:Bounds height="50.0" width="110.0" x="730.0" y="45.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_13">
+          <dc:Bounds height="11.0" width="75.0" x="747.0" y="64.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_CallActivity_5" bpmnElement="CallActivity_5" isExpanded="true">
+        <dc:Bounds height="50.0" width="110.0" x="905.0" y="45.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_14">
+          <dc:Bounds height="11.0" width="69.0" x="925.0" y="64.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_CallActivity_6" bpmnElement="CallActivity_6" isExpanded="true">
+        <dc:Bounds height="50.0" width="110.0" x="565.0" y="45.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_15">
+          <dc:Bounds height="11.0" width="95.0" x="572.0" y="64.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_2" bpmnElement="SequenceFlow_2" sourceElement="BPMNShape_Task_1" targetElement="BPMNShape_Task_2">
@@ -534,20 +738,6 @@
         <bpmndi:BPMNLabel id="BPMNLabel_13">
           <dc:Bounds height="11.0" width="26.0" x="518.0" y="157.0"/>
         </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_21" bpmnElement="SequenceFlow_20" sourceElement="BPMNShape_ExclusiveGateway_8" targetElement="BPMNShape_CallActivity_13">
-        <di:waypoint xsi:type="dc:Point" x="470.0" y="131.0"/>
-        <di:waypoint xsi:type="dc:Point" x="470.0" y="63.0"/>
-        <di:waypoint xsi:type="dc:Point" x="565.0" y="63.0"/>
-        <bpmndi:BPMNLabel id="BPMNLabel_14">
-          <dc:Bounds height="11.0" width="28.0" x="471.0" y="64.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_22" bpmnElement="SequenceFlow_21" sourceElement="BPMNShape_CallActivity_13" targetElement="BPMNShape_EndEvent_15">
-        <di:waypoint xsi:type="dc:Point" x="675.0" y="63.0"/>
-        <di:waypoint xsi:type="dc:Point" x="709.0" y="63.0"/>
-        <di:waypoint xsi:type="dc:Point" x="743.0" y="63.0"/>
-        <bpmndi:BPMNLabel id="BPMNLabel_15"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_23" bpmnElement="SequenceFlow_22" sourceElement="BPMNShape_CallActivity_12" targetElement="BPMNShape_ExclusiveGateway_9">
         <di:waypoint xsi:type="dc:Point" x="675.0" y="156.0"/>
@@ -571,12 +761,6 @@
           <dc:Bounds height="11.0" width="50.0" x="751.0" y="217.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_27" bpmnElement="SequenceFlow_26" sourceElement="BPMNShape_CallActivity_14" targetElement="BPMNShape_EndEvent_18">
-        <di:waypoint xsi:type="dc:Point" x="960.0" y="181.0"/>
-        <di:waypoint xsi:type="dc:Point" x="960.0" y="215.0"/>
-        <di:waypoint xsi:type="dc:Point" x="960.0" y="250.0"/>
-        <bpmndi:BPMNLabel id="BPMNLabel_19"/>
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_3" bpmnElement="SequenceFlow_3" sourceElement="BPMNShape_StartEvent_1" targetElement="BPMNShape_Task_3">
         <di:waypoint xsi:type="dc:Point" x="130.0" y="174.0"/>
         <di:waypoint xsi:type="dc:Point" x="130.0" y="205.0"/>
@@ -588,6 +772,44 @@
         <di:waypoint xsi:type="dc:Point" x="217.0" y="261.0"/>
         <di:waypoint xsi:type="dc:Point" x="250.0" y="261.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_21"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_1" bpmnElement="SequenceFlow_1" sourceElement="BPMNShape_CallActivity_14" targetElement="BPMNShape_CallActivity_1">
+        <di:waypoint xsi:type="dc:Point" x="1015.0" y="156.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1067.0" y="156.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1120.0" y="156.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_14"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_5" bpmnElement="SequenceFlow_5" sourceElement="BPMNShape_CallActivity_1" targetElement="BPMNShape_EndEvent_18">
+        <di:waypoint xsi:type="dc:Point" x="1175.0" y="181.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1175.0" y="215.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1175.0" y="250.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_15"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_13" bpmnElement="SequenceFlow_13" sourceElement="BPMNShape_ExclusiveGateway_8" targetElement="BPMNShape_CallActivity_6">
+        <di:waypoint xsi:type="dc:Point" x="470.0" y="131.0"/>
+        <di:waypoint xsi:type="dc:Point" x="470.0" y="70.0"/>
+        <di:waypoint xsi:type="dc:Point" x="565.0" y="70.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_19">
+          <dc:Bounds height="11.0" width="28.0" x="474.0" y="71.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_14" bpmnElement="SequenceFlow_14" sourceElement="BPMNShape_CallActivity_6" targetElement="BPMNShape_CallActivity_2">
+        <di:waypoint xsi:type="dc:Point" x="675.0" y="70.0"/>
+        <di:waypoint xsi:type="dc:Point" x="702.0" y="70.0"/>
+        <di:waypoint xsi:type="dc:Point" x="730.0" y="70.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_22"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_15" bpmnElement="SequenceFlow_15" sourceElement="BPMNShape_CallActivity_2" targetElement="BPMNShape_CallActivity_5">
+        <di:waypoint xsi:type="dc:Point" x="840.0" y="70.0"/>
+        <di:waypoint xsi:type="dc:Point" x="872.0" y="70.0"/>
+        <di:waypoint xsi:type="dc:Point" x="905.0" y="70.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_23"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_16" bpmnElement="SequenceFlow_16" sourceElement="BPMNShape_CallActivity_5" targetElement="BPMNShape_EndEvent_15">
+        <di:waypoint xsi:type="dc:Point" x="1015.0" y="70.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1047.0" y="70.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1080.0" y="70.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_24"/>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

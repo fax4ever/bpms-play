@@ -1,7 +1,9 @@
-package it.redhat.demo;
+package it.redhat.demo.test;
 
 import java.util.HashMap;
 
+import it.redhat.demo.stub.MigrationTaskStub;
+import it.redhat.demo.stub.RestStub;
 import org.jbpm.test.JbpmJUnitBaseTestCase;
 import org.junit.After;
 import org.junit.Before;
@@ -10,9 +12,6 @@ import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.manager.RuntimeEngine;
 import org.kie.api.runtime.manager.RuntimeManager;
 import org.kie.api.runtime.process.ProcessInstance;
-
-import it.redhat.demo.stub.MigrationTaskStub;
-import it.redhat.demo.stub.RestStub;
 
 public class MigrationProcessTest extends JbpmJUnitBaseTestCase {
 	

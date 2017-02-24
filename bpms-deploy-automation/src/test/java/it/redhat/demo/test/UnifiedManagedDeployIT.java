@@ -1,4 +1,4 @@
-package it.redhat.demo;
+package it.redhat.demo.test;
 
 import java.util.HashMap;
 
@@ -10,8 +10,6 @@ import it.redhat.demo.customtask.InputValidator;
 import it.redhat.demo.customtask.WaitTask;
 
 public class UnifiedManagedDeployIT extends UnifiedManagedDeployTest {
-	
-	private final static String PROCESSES_BASE_PATH = "it/redhat/demo/";
 
 	@Override
 	public void before() {
@@ -21,7 +19,7 @@ public class UnifiedManagedDeployIT extends UnifiedManagedDeployTest {
 		System.setProperty("org.kie.server.user", "fabio");
 		System.setProperty("org.kie.server.pwd", "fabio$739");
 		
-		runtimeManager = createRuntimeManager(PROCESSES_BASE_PATH+"create-container.bpmn2", PROCESSES_BASE_PATH+"update-container.bpmn2", PROCESSES_BASE_PATH+"migration.bpmn2", PROCESSES_BASE_PATH+"unified-managed-deploy.bpmn2");
+		runtimeManager = createRuntimeManager(PROCESSES_BASE_PATH +"create-container.bpmn2", PROCESSES_BASE_PATH +"remove-container.bpmn2", PROCESSES_BASE_PATH +"migration.bpmn2", PROCESSES_BASE_PATH +"unified-managed-deploy.bpmn2");
 		
 		runtimeEngine = getRuntimeEngine();
 		kieSession = runtimeEngine.getKieSession();

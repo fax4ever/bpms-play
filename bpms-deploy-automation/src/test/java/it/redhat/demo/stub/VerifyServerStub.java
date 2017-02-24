@@ -2,11 +2,11 @@ package it.redhat.demo.stub;
 
 import java.util.HashMap;
 
+import it.redhat.demo.pojo.KieContainerResourcePojo;
 import org.kie.api.runtime.process.WorkItem;
 import org.kie.api.runtime.process.WorkItemHandler;
 import org.kie.api.runtime.process.WorkItemManager;
 
-import it.redhat.demo.pojo.KieContainerResourcePojo;
 import it.redhat.demo.pojo.ServiceResponsePojo;
 
 public class VerifyServerStub implements WorkItemHandler {
