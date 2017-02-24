@@ -2,21 +2,25 @@
 
 ## bpms-deploy-automation
 
-### deploy process "it.redhat.demo:bpms-deploy-automation:1.0.0-SNAPSHOT" on BC 
+### deploy process 
+"it.redhat.demo:bpms-deploy-automation:1.0.0-SNAPSHOT" on BC 
 
-### create new container :: it.redhat.demo:bpms-selection-process:1.0.0
-
-curl -v -u fabio:fabio\$739 -X POST -H 'Accept: application/json' 'http://localhost:8230/business-central/rest/runtime/it.redhat.demo:bpms-deploy-automation:1.0.0-SNAPSHOT/process/it.redhat.demo.unified-managed-deploy/start?map_bcPort=8230s&map_groupId=it.redhat.demo&map_bcHost=localhost&map_artifactId=bpms-selection-process&map_serverId=process-server&map_version=1.0.0s'
-
-### run some process instances
-
-### container update :: it.redhat.demo:bpms-selection-process:1.0.0
+### create new container 
+it.redhat.demo:bpms-selection-process:1.0.0
 
 curl -v -u fabio:fabio\$739 -X POST -H 'Accept: application/json' 'http://localhost:8230/business-central/rest/runtime/it.redhat.demo:bpms-deploy-automation:1.0.0-SNAPSHOT/process/it.redhat.demo.unified-managed-deploy/start?map_bcPort=8230s&map_groupId=it.redhat.demo&map_bcHost=localhost&map_artifactId=bpms-selection-process&map_serverId=process-server&map_version=1.0.0s'
 
-### run some other process instances
+#### run some process instances
 
-### mini release with migration :: it.redhat.demo:bpms-selection-process:1.0.0
+### container update 
+it.redhat.demo:bpms-selection-process:1.0.0
+
+curl -v -u fabio:fabio\$739 -X POST -H 'Accept: application/json' 'http://localhost:8230/business-central/rest/runtime/it.redhat.demo:bpms-deploy-automation:1.0.0-SNAPSHOT/process/it.redhat.demo.unified-managed-deploy/start?map_bcPort=8230s&map_groupId=it.redhat.demo&map_bcHost=localhost&map_artifactId=bpms-selection-process&map_serverId=process-server&map_version=1.0.0s'
+
+#### run some other process instances
+
+### mini release with migration 
+it.redhat.demo:bpms-selection-process:1.0.0
 
 curl -v -u fabio:fabio\$739 -X POST -H 'Accept: application/json' 'http://localhost:8230/business-central/rest/runtime/it.redhat.demo:bpms-deploy-automation:1.0.0-SNAPSHOT/process/it.redhat.demo.unified-managed-deploy/start?map_bcPort=8230s&map_groupId=it.redhat.demo&map_bcHost=localhost&map_artifactId=bpms-selection-process&map_serverId=process-server&map_version=1.0.1s'
 
