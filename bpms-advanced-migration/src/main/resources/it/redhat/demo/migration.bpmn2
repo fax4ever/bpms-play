@@ -12,6 +12,7 @@
   <bpmn2:itemDefinition id="ItemDefinition_5" isCollection="false" structureRef="org.slf4j.LoggerFactory"/>
   <bpmn2:itemDefinition id="ItemDefinition_9" isCollection="false" structureRef="java.lang.Long"/>
   <bpmn2:itemDefinition id="ItemDefinition_62" isCollection="false" structureRef="org.kie.services.client.serialization.jaxb.impl.deploy.JaxbDeploymentJobResult"/>
+  <bpmn2:itemDefinition id="ItemDefinition_16" isCollection="false" structureRef="java.lang.Integer"/>
   <bpmn2:process id="it.redhat.demo.migration" tns:packageName="it.redhat.demo" name="migration" isExecutable="true" processType="Private">
     <bpmn2:extensionElements>
       <tns:import name="it.redhat.demo.jaxb.JaxbProcessDefinitionList"/>
@@ -25,7 +26,7 @@
     </bpmn2:extensionElements>
     <bpmn2:property id="processDefinitionsResponse" itemSubjectRef="ItemDefinition_2" name="processDefinitionsResponse"/>
     <bpmn2:property id="bcHost" itemSubjectRef="ItemDefinition_213" name="bcHost"/>
-    <bpmn2:property id="bcPort" itemSubjectRef="ItemDefinition_9" name="bcPort"/>
+    <bpmn2:property id="bcPort" itemSubjectRef="ItemDefinition_16" name="bcPort"/>
     <bpmn2:property id="oldDeployment" itemSubjectRef="ItemDefinition_213" name="oldDeployment"/>
     <bpmn2:property id="newDeployment" itemSubjectRef="ItemDefinition_213" name="newDeployment"/>
     <bpmn2:property id="url" itemSubjectRef="ItemDefinition_213" name="url"/>
@@ -432,7 +433,7 @@ logger.info(&quot;Server Response:-&quot;+kcontext.getVariable(&quot;processInst
         <di:waypoint xsi:type="dc:Point" x="804.0" y="258.0"/>
         <di:waypoint xsi:type="dc:Point" x="817.0" y="258.0"/>
         <di:waypoint xsi:type="dc:Point" x="830.0" y="258.0"/>
-        <bpmndi:BPMNLabel/>
+        <bpmndi:BPMNLabel id="BPMNLabel_11"/>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

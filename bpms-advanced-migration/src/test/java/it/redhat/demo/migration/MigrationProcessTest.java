@@ -56,7 +56,7 @@ protected final static String PROCESSES_BASE_PATH = "it/redhat/demo/";
 		HashMap<String,Object> params = new HashMap<>();
 		
 		params.put("bcHost", "localhost");
-		params.put("bcPort", 8230l);
+		params.put("bcPort", 8230);
 		params.put("oldDeployment", "it.redhat.demo:bpms-selection-process:1.0.0");
 		params.put("newDeployment", "it.redhat.demo:bpms-selection-process:1.0.1");
 		
