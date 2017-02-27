@@ -85,8 +85,15 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<properties>
-				<projectVersion>1.0.0-SNAPSHOT</projectVersion>
+				<projectVersion>0.0.1-SNAPSHOT</projectVersion>
 				<process.version.filter>demo</process.version.filter>
+			</properties>
+		</profile>
+		<profile>
+			<id>snap</id>
+			<properties>
+				<projectVersion>1.0.0-SNAPSHOT</projectVersion>
+				<process.version.filter>v2</process.version.filter>
 			</properties>
 		</profile>
 		<profile>
