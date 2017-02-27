@@ -107,7 +107,7 @@
 			<id>110</id>
 			<properties>
 				<projectVersion>1.1.0</projectVersion>
-				<process.version.filter>v2</process.version.filter>
+				<process.version.filter>v3</process.version.filter>
 			</properties>
 		</profile>
 	</profiles>
