@@ -33,6 +33,9 @@ public class MigrationTask implements WorkItemHandler {
 		@SuppressWarnings("unchecked")
 		HashMap<String, String> nodeMappging = (HashMap<String, String>) workItem.getParameter("nodeMappging");
 		
+		@SuppressWarnings("unchecked")
+		HashMap<String, String> processDefinitionMapping = (HashMap<String, String>) workItem.getParameter("processDefinitionMapping");
+		
 		HashMap<String, Object> results = new HashMap<>();
 		List<MigrationReport> reports = new ArrayList<>();
 		results.put("reports", reports);
@@ -44,6 +47,11 @@ public class MigrationTask implements WorkItemHandler {
 			log.warn("no process instances to migrate from deployment {} with process definition {}", oldDeployment, processDefinition);
 			manager.completeWorkItem(workItem.getId(), results);
 			return;
+		}
+		
+		// override target process definition
+		if (processDefinitionMapping.containsKey(processDefinition)) {
+			processDefinition = processDefinitionMapping.get(processDefinition);
 		}
 		
 		reports = migrationService.migrate(oldDeployment, processInstanceIds, newDeployment, processDefinition, nodeMappging);

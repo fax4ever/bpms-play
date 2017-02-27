@@ -41,7 +41,7 @@ public class SelectionProcessTest extends JbpmJUnitBaseTestCase {
 		
 		HashMap<String,Object> params = new HashMap<>();
 		params.put("curriculum", "/curriculum/path/redhat/fercoli");
-		ProcessInstance pi = kieSession.startProcess("it.redhat.demo.selection-process", params);
+		ProcessInstance pi = kieSession.startProcess("it.redhat.demo.hiring-process", params);
 		assertProcessInstanceActive(pi.getId());
 		
 		// find task by process instance id
@@ -76,7 +76,7 @@ public class SelectionProcessTest extends JbpmJUnitBaseTestCase {
 		
 		HashMap<String,Object> params = new HashMap<>();
 		params.put("curriculum", "/curriculum/path/redhat/fercoli");
-		ProcessInstance pi = kieSession.startProcess("it.redhat.demo.selection-process", params);
+		ProcessInstance pi = kieSession.startProcess("it.redhat.demo.hiring-process", params);
 		assertProcessInstanceActive(pi.getId());
 		
 		// find task by pot owners
@@ -117,7 +117,7 @@ public class SelectionProcessTest extends JbpmJUnitBaseTestCase {
 		
 		HashMap<String,Object> params = new HashMap<>();
 		params.put("curriculum", "/curriculum/path/redhat/fercoli");
-		ProcessInstance pi = kieSession.startProcess("it.redhat.demo.selection-process", params);
+		ProcessInstance pi = kieSession.startProcess("it.redhat.demo.hiring-process", params);
 		assertProcessInstanceActive(pi.getId());
 		
 		// find task by pot owners

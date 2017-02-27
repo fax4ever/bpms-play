@@ -4,7 +4,7 @@
   <bpmn2:itemDefinition id="ItemDefinition_1" isCollection="false" structureRef="java.lang.String"/>
   <bpmn2:itemDefinition id="ItemDefinition_2" isCollection="false" structureRef="java.lang.Integer"/>
   <bpmn2:itemDefinition id="ItemDefinition_3" isCollection="false" structureRef="java.lang.Boolean"/>
-  <bpmn2:process id="it.redhat.demo.selection-process" tns:packageName="it.redhat.demo" name="selection-process" isExecutable="true" processType="Private">
+  <bpmn2:process id="it.redhat.demo.hiring-process" tns:packageName="it.redhat.demo" name="hiring-process" isExecutable="true" processType="Private">
     <bpmn2:property id="currilculum" itemSubjectRef="ItemDefinition_1" name="currilculum"/>
     <bpmn2:property id="hrFeedback" itemSubjectRef="ItemDefinition_1" name="hrFeedback"/>
     <bpmn2:property id="managerFeedback" itemSubjectRef="ItemDefinition_1" name="managerFeedback"/>
@@ -251,7 +251,7 @@
     </bpmn2:sequenceFlow>
   </bpmn2:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_Process_1" bpmnElement="it.redhat.demo.selection-process">
+    <bpmndi:BPMNPlane id="BPMNPlane_Process_1" bpmnElement="it.redhat.demo.hiring-process">
       <bpmndi:BPMNShape id="BPMNShape_StartEvent_1" bpmnElement="StartEvent_1">
         <dc:Bounds height="0.0" width="0.0" x="45.0" y="45.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_1">
