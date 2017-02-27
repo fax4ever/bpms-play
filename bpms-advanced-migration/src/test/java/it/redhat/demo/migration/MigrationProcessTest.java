@@ -16,7 +16,7 @@ import it.redhat.demo.migration.RestStub;
 
 public class MigrationProcessTest extends JbpmJUnitBaseTestCase {
 	
-protected final static String PROCESSES_BASE_PATH = "it/redhat/demo/";
+	protected final static String PROCESSES_BASE_PATH = "it/redhat/demo/";
 	
 	protected KieSession kieSession;
 	protected RuntimeManager runtimeManager;
