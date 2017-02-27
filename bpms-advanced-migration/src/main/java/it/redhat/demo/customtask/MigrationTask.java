@@ -30,6 +30,9 @@ public class MigrationTask implements WorkItemHandler {
 		String processDefinition = (String) workItem.getParameter("processDefinition");
 		JaxbQueryProcessInstanceResult processInstances = (JaxbQueryProcessInstanceResult) workItem.getParameter("processInstances");
 		
+		@SuppressWarnings("unchecked")
+		HashMap<String, String> nodeMappging = (HashMap<String, String>) workItem.getParameter("nodeMappging");
+		
 		HashMap<String, Object> results = new HashMap<>();
 		List<MigrationReport> reports = new ArrayList<>();
 		results.put("reports", reports);
@@ -43,7 +46,7 @@ public class MigrationTask implements WorkItemHandler {
 			return;
 		}
 		
-		reports = migrationService.migrate(oldDeployment, processInstanceIds, newDeployment, processDefinition);
+		reports = migrationService.migrate(oldDeployment, processInstanceIds, newDeployment, processDefinition, nodeMappging);
 		for (MigrationReport report : reports) {
 			boolean successful = report.isSuccessful();
 			Date startDate = report.getStartDate();

@@ -13,6 +13,8 @@
   <bpmn2:itemDefinition id="ItemDefinition_9" isCollection="false" structureRef="java.lang.Long"/>
   <bpmn2:itemDefinition id="ItemDefinition_62" isCollection="false" structureRef="org.kie.services.client.serialization.jaxb.impl.deploy.JaxbDeploymentJobResult"/>
   <bpmn2:itemDefinition id="ItemDefinition_16" isCollection="false" structureRef="java.lang.Integer"/>
+  <bpmn2:itemDefinition id="ItemDefinition_4" isCollection="false" structureRef="java.util.HashMap"/>
+  <bpmn2:itemDefinition id="ItemDefinition_1" isCollection="false" structureRef="Object"/>
   <bpmn2:process id="it.redhat.demo.migration" tns:packageName="it.redhat.demo" name="migration" isExecutable="true" processType="Private">
     <bpmn2:extensionElements>
       <tns:import name="it.redhat.demo.jaxb.JaxbProcessDefinitionList"/>
@@ -23,6 +25,7 @@
       <tns:import name="org.slf4j.Logger"/>
       <tns:import name="org.slf4j.LoggerFactory"/>
       <tns:import name="org.kie.services.client.serialization.jaxb.impl.deploy.JaxbDeploymentJobResult"/>
+      <tns:import name="java.util.HashMap"/>
     </bpmn2:extensionElements>
     <bpmn2:property id="processDefinitionsResponse" itemSubjectRef="ItemDefinition_2" name="processDefinitionsResponse"/>
     <bpmn2:property id="bcHost" itemSubjectRef="ItemDefinition_213" name="bcHost"/>
@@ -35,6 +38,7 @@
     <bpmn2:property id="processDefinitions" itemSubjectRef="ItemDefinition_189" name="processDefinitions"/>
     <bpmn2:property id="disposeDeployResponse" itemSubjectRef="ItemDefinition_62" name="disposeDeployResponse"/>
     <bpmn2:property id="httpResponseBody" itemSubjectRef="ItemDefinition_214" name="httpResponseBody"/>
+    <bpmn2:property id="nodeMappging" itemSubjectRef="ItemDefinition_4" name="nodeMappging"/>
     <bpmn2:startEvent id="StartEvent_1" name="Start Migration">
       <bpmn2:extensionElements>
         <tns:metaData name="elementname">
@@ -295,12 +299,14 @@ logger.info(&quot;Server Response:-&quot;+kcontext.getVariable(&quot;processInst
           <bpmn2:dataInput id="DataInput_20" itemSubjectRef="ItemDefinition_213" name="newDeployment"/>
           <bpmn2:dataInput id="DataInput_22" itemSubjectRef="ItemDefinition_213" name="processDefinition"/>
           <bpmn2:dataInput id="DataInput_23" itemSubjectRef="ItemDefinition_1015" name="processInstances"/>
+          <bpmn2:dataInput id="DataInput_24" itemSubjectRef="ItemDefinition_4" name="nodeMappging"/>
           <bpmn2:dataOutput id="DataOutput_7" itemSubjectRef="ItemDefinition_189" name="reports"/>
           <bpmn2:inputSet id="_InputSet_17">
             <bpmn2:dataInputRefs>DataInput_10</bpmn2:dataInputRefs>
             <bpmn2:dataInputRefs>DataInput_20</bpmn2:dataInputRefs>
             <bpmn2:dataInputRefs>DataInput_22</bpmn2:dataInputRefs>
             <bpmn2:dataInputRefs>DataInput_23</bpmn2:dataInputRefs>
+            <bpmn2:dataInputRefs>DataInput_24</bpmn2:dataInputRefs>
           </bpmn2:inputSet>
           <bpmn2:outputSet id="_OutputSet_11">
             <bpmn2:dataOutputRefs>DataOutput_7</bpmn2:dataOutputRefs>
@@ -321,6 +327,10 @@ logger.info(&quot;Server Response:-&quot;+kcontext.getVariable(&quot;processInst
         <bpmn2:dataInputAssociation id="_DataInputAssociation_81">
           <bpmn2:sourceRef>processInstances</bpmn2:sourceRef>
           <bpmn2:targetRef>DataInput_23</bpmn2:targetRef>
+        </bpmn2:dataInputAssociation>
+        <bpmn2:dataInputAssociation id="DataInputAssociation_2">
+          <bpmn2:sourceRef>nodeMappging</bpmn2:sourceRef>
+          <bpmn2:targetRef>DataInput_24</bpmn2:targetRef>
         </bpmn2:dataInputAssociation>
         <bpmn2:dataOutputAssociation id="_DataOutputAssociation_27">
           <bpmn2:sourceRef>DataOutput_7</bpmn2:sourceRef>
