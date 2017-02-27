@@ -90,16 +90,23 @@
 			</properties>
 		</profile>
 		<profile>
-			<id>v1</id>
+			<id>100</id>
 			<properties>
 				<projectVersion>1.0.0</projectVersion>
 				<process.version.filter>v1</process.version.filter>
 			</properties>
 		</profile>
 		<profile>
-			<id>v2</id>
+			<id>101</id>
 			<properties>
 				<projectVersion>1.0.1</projectVersion>
+				<process.version.filter>v2</process.version.filter>
+			</properties>
+		</profile>
+		<profile>
+			<id>110</id>
+			<properties>
+				<projectVersion>1.1.0</projectVersion>
 				<process.version.filter>v2</process.version.filter>
 			</properties>
 		</profile>
