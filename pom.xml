@@ -23,6 +23,7 @@
         <module>bpms-selection-process</module>
         <module>bpms-timer</module>
         <module>bpms-deploy-automation</module>
+        <module>bpms-advanced-migration</module>
     </modules>
 
     <properties>

@@ -1,0 +1,40 @@
+import org.drools.core.process.core.datatype.impl.type.StringDataType;
+import org.drools.core.process.core.datatype.impl.type.IntegerDataType;
+import org.drools.core.process.core.datatype.impl.type.BooleanDataType;
+import org.drools.core.process.core.datatype.impl.type.ObjectDataType;
+
+[
+  [
+    "name" : "Rest",
+  	 "parameters" : [
+         "Url" : new StringDataType(),
+         "Method" : new StringDataType(),
+         "HandleResponseErrors" : new StringDataType(),
+         "ResultClass" : new StringDataType(),
+         "ContentType" : new StringDataType(),
+         "Content" : new ObjectDataType(),
+         "AuthType" : new StringDataType(),
+         "ConnectTimeout" : new StringDataType(),
+         "ReadTimeout" : new StringDataType()
+      ],
+  	"results" : [
+        "Result" : new ObjectDataType(),
+        "StatusMsg" : new StringDataType(),
+        "Status" : new StringDataType()
+     ],
+    "displayName" : "Rest"
+  ],
+  [
+    "name" : "MigrationTask",
+  	"parameters" : [
+  	 	 "oldDeployment" : new StringDataType(),
+  	 	 "newDeployment" : new StringDataType(),
+         "processDefinition" : new StringDataType(),
+         "processInstances" : new ObjectDataType()
+    ],
+  	"results" : [
+        "reports" : new ObjectDataType()
+     ],
+    "displayName" : "MigrationTask"
+  ]
+]

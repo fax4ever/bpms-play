@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- origin at X=0.0 Y=0.0 -->
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:java="http://www.java.com/javaTypes" xmlns:tns="http://www.jboss.org/drools" xmlns="http://www.jboss.org/drools" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd http://www.jboss.org/drools drools.xsd http://www.bpsim.org/schemas/1.0 bpsim.xsd" id="Definition" exporter="org.eclipse.bpmn2.modeler.core" exporterVersion="1.3.2.Final-v20161020-1541-B59" expressionLanguage="http://www.mvel.org/2.0" targetNamespace="http://www.jboss.org/drools" typeLanguage="http://www.java.com/javaTypes">
+  <bpmn2:itemDefinition id="ItemDefinition_2" isCollection="false" structureRef="it.redhat.demo.jaxb.JaxbProcessDefinitionList"/>
+  <bpmn2:itemDefinition id="ItemDefinition_213" isCollection="false" structureRef="java.lang.String"/>
+  <bpmn2:itemDefinition id="ItemDefinition_214" isCollection="false" structureRef="java.lang.Object"/>
+  <bpmn2:itemDefinition id="ItemDefinition_317" isCollection="false" structureRef="org.kie.services.client.serialization.jaxb.impl.process.JaxbProcessDefinition"/>
+  <bpmn2:itemDefinition id="ItemDefinition_1015" isCollection="false" structureRef="it.redhat.demo.jaxb.JaxbQueryProcessInstanceResult"/>
+  <bpmn2:itemDefinition id="ItemDefinition_147" isCollection="false" structureRef="org.jbpm.services.api.admin.MigrationReport"/>
+  <bpmn2:itemDefinition id="ItemDefinition_189" isCollection="false" structureRef="java.util.List"/>
+  <bpmn2:itemDefinition id="ItemDefinition_3" isCollection="false" structureRef="org.slf4j.Logger"/>
+  <bpmn2:itemDefinition id="ItemDefinition_5" isCollection="false" structureRef="org.slf4j.LoggerFactory"/>
+  <bpmn2:itemDefinition id="ItemDefinition_9" isCollection="false" structureRef="java.lang.Long"/>
+  <bpmn2:itemDefinition id="ItemDefinition_62" isCollection="false" structureRef="org.kie.services.client.serialization.jaxb.impl.deploy.JaxbDeploymentJobResult"/>
+  <bpmn2:process id="it.redhat.demo.migration" tns:packageName="it.redhat.demo" name="migration" isExecutable="true" processType="Private">
+    <bpmn2:extensionElements>
+      <tns:import name="it.redhat.demo.jaxb.JaxbProcessDefinitionList"/>
+      <tns:import name="org.kie.services.client.serialization.jaxb.impl.process.JaxbProcessDefinition"/>
+      <tns:import name="it.redhat.demo.jaxb.JaxbQueryProcessInstanceResult"/>
+      <tns:import name="org.jbpm.services.api.admin.MigrationReport"/>
+      <tns:import name="java.util.List"/>
+      <tns:import name="org.slf4j.Logger"/>
+      <tns:import name="org.slf4j.LoggerFactory"/>
+      <tns:import name="org.kie.services.client.serialization.jaxb.impl.deploy.JaxbDeploymentJobResult"/>
+    </bpmn2:extensionElements>
+    <bpmn2:property id="processDefinitionsResponse" itemSubjectRef="ItemDefinition_2" name="processDefinitionsResponse"/>
+    <bpmn2:property id="bcHost" itemSubjectRef="ItemDefinition_213" name="bcHost"/>
+    <bpmn2:property id="bcPort" itemSubjectRef="ItemDefinition_9" name="bcPort"/>
+    <bpmn2:property id="oldDeployment" itemSubjectRef="ItemDefinition_213" name="oldDeployment"/>
+    <bpmn2:property id="newDeployment" itemSubjectRef="ItemDefinition_213" name="newDeployment"/>
+    <bpmn2:property id="url" itemSubjectRef="ItemDefinition_213" name="url"/>
+    <bpmn2:property id="httpResponseStatus" itemSubjectRef="ItemDefinition_213" name="httpResponseStatus"/>
+    <bpmn2:property id="httpResponseMessage" itemSubjectRef="ItemDefinition_213" name="httpResponseMessage"/>
+    <bpmn2:property id="processDefinitions" itemSubjectRef="ItemDefinition_189" name="processDefinitions"/>
+    <bpmn2:property id="disposeDeployResponse" itemSubjectRef="ItemDefinition_62" name="disposeDeployResponse"/>
+    <bpmn2:property id="httpResponseBody" itemSubjectRef="ItemDefinition_214" name="httpResponseBody"/>
+    <bpmn2:startEvent id="StartEvent_1" name="Start Migration">
+      <bpmn2:extensionElements>
+        <tns:metaData name="elementname">
+          <tns:metaValue><![CDATA[Start Migration]]></tns:metaValue>
+        </tns:metaData>
+      </bpmn2:extensionElements>
+      <bpmn2:outgoing>SequenceFlow_2</bpmn2:outgoing>
+    </bpmn2:startEvent>
+    <bpmn2:task id="Task_1" tns:taskName="Rest" tns:displayName="Rest" tns:icon="task.png" name="LoadProcessDefinitions">
+      <bpmn2:extensionElements>
+        <tns:metaData name="elementname">
+          <tns:metaValue><![CDATA[LoadProcessDefinitions]]></tns:metaValue>
+        </tns:metaData>
+        <tns:onEntry-script scriptFormat="http://www.java.com/java">
+          <tns:script>kcontext.setVariable(&quot;url&quot;, &quot;http://&quot;+bcHost+&quot;:&quot;+bcPort+&quot;/business-central/rest/deployment/&quot;+oldDeployment+&quot;/processes&quot;);</tns:script>
+        </tns:onEntry-script>
+        <tns:onExit-script scriptFormat="http://www.mvel.org/2.0">
+          <tns:script>Logger logger = null;
+logger = LoggerFactory.getLogger(&quot;it.redhat.demo.task.script.LoadProcessDefinitions&quot;);
+logger.info(&quot;Server Url:-&quot;+ kcontext.getVariable(&quot;url&quot;));
+logger.info(&quot;Server Response:-&quot;+kcontext.getVariable(&quot;processDefinitionsResponse&quot;));
+kcontext.setVariable(&quot;processDefinitions&quot;, processDefinitionsResponse.processDefinitionList);</tns:script>
+        </tns:onExit-script>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_2</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_3</bpmn2:outgoing>
+      <bpmn2:ioSpecification id="InputOutputSpecification_1">
+        <bpmn2:dataInput id="DataInput_1" itemSubjectRef="ItemDefinition_213" name="Url"/>
+        <bpmn2:dataInput id="DataInput_2" itemSubjectRef="ItemDefinition_213" name="Method"/>
+        <bpmn2:dataInput id="DataInput_3" itemSubjectRef="ItemDefinition_213" name="HandleResponseErrors"/>
+        <bpmn2:dataInput id="DataInput_4" itemSubjectRef="ItemDefinition_213" name="ResultClass"/>
+        <bpmn2:dataInput id="DataInput_5" itemSubjectRef="ItemDefinition_213" name="ContentType"/>
+        <bpmn2:dataInput id="DataInput_6" itemSubjectRef="ItemDefinition_214" name="Content"/>
+        <bpmn2:dataInput id="DataInput_7" itemSubjectRef="ItemDefinition_213" name="AuthType"/>
+        <bpmn2:dataInput id="DataInput_8" itemSubjectRef="ItemDefinition_213" name="ConnectTimeout"/>
+        <bpmn2:dataInput id="DataInput_9" itemSubjectRef="ItemDefinition_213" name="ReadTimeout"/>
+        <bpmn2:dataOutput id="DataOutput_1" itemSubjectRef="ItemDefinition_2" name="Result"/>
+        <bpmn2:dataOutput id="DataOutput_2" itemSubjectRef="ItemDefinition_213" name="StatusMsg"/>
+        <bpmn2:dataOutput id="DataOutput_3" itemSubjectRef="ItemDefinition_213" name="Status"/>
+        <bpmn2:inputSet id="_InputSet_2">
+          <bpmn2:dataInputRefs>DataInput_1</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>DataInput_2</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>DataInput_3</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>DataInput_4</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>DataInput_5</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>DataInput_6</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>DataInput_7</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>DataInput_8</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>DataInput_9</bpmn2:dataInputRefs>
+        </bpmn2:inputSet>
+        <bpmn2:outputSet id="_OutputSet_2">
+          <bpmn2:dataOutputRefs>DataOutput_1</bpmn2:dataOutputRefs>
+          <bpmn2:dataOutputRefs>DataOutput_2</bpmn2:dataOutputRefs>
+          <bpmn2:dataOutputRefs>DataOutput_3</bpmn2:dataOutputRefs>
+        </bpmn2:outputSet>
+      </bpmn2:ioSpecification>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_2">
+        <bpmn2:sourceRef>url</bpmn2:sourceRef>
+        <bpmn2:targetRef>DataInput_1</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_3">
+        <bpmn2:targetRef>DataInput_2</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_1">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_3">GET</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_1">DataInput_2</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_4">
+        <bpmn2:targetRef>DataInput_3</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_5">
+        <bpmn2:targetRef>DataInput_4</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_3">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_9">it.redhat.demo.jaxb.JaxbProcessDefinitionList</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_7">DataInput_4</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_6">
+        <bpmn2:targetRef>DataInput_5</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_4">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_12">application/json</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_10">DataInput_5</bpmn2:to>
+        </bpmn2:assignment>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_7">
+        <bpmn2:targetRef>DataInput_6</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_8">
+        <bpmn2:targetRef>DataInput_7</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_9">
+        <bpmn2:targetRef>DataInput_8</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="_DataInputAssociation_10">
+        <bpmn2:targetRef>DataInput_9</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataOutputAssociation id="_DataOutputAssociation_2">
+        <bpmn2:sourceRef>DataOutput_1</bpmn2:sourceRef>
+        <bpmn2:targetRef>processDefinitionsResponse</bpmn2:targetRef>
+      </bpmn2:dataOutputAssociation>
+      <bpmn2:dataOutputAssociation id="_DataOutputAssociation_3">
+        <bpmn2:sourceRef>DataOutput_2</bpmn2:sourceRef>
+        <bpmn2:targetRef>httpResponseMessage</bpmn2:targetRef>
+      </bpmn2:dataOutputAssociation>
+      <bpmn2:dataOutputAssociation id="_DataOutputAssociation_4">
+        <bpmn2:sourceRef>DataOutput_3</bpmn2:sourceRef>
+        <bpmn2:targetRef>httpResponseStatus</bpmn2:targetRef>
+      </bpmn2:dataOutputAssociation>
+    </bpmn2:task>
+    <bpmn2:sequenceFlow id="SequenceFlow_2" tns:priority="1" sourceRef="StartEvent_1" targetRef="Task_1"/>
+    <bpmn2:subProcess id="SubProcess_1" name="Process Definition Instances Migration">
+      <bpmn2:extensionElements>
+        <tns:metaData name="elementname">
+          <tns:metaValue><![CDATA[Process Definition Instances Migration]]></tns:metaValue>
+        </tns:metaData>
+        <tns:onEntry-script scriptFormat="http://www.java.com/java"/>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_3</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_8</bpmn2:outgoing>
+      <bpmn2:ioSpecification id="InputOutputSpecification_3">
+        <bpmn2:dataInput id="DataInput_21" itemSubjectRef="ItemDefinition_189" isCollection="true" name="processDefinitions"/>
+        <bpmn2:inputSet id="InputSet_1" name="Input Set 1">
+          <bpmn2:dataInputRefs>DataInput_21</bpmn2:dataInputRefs>
+        </bpmn2:inputSet>
+      </bpmn2:ioSpecification>
+      <bpmn2:property id="processInstances" itemSubjectRef="ItemDefinition_1015" name="processInstances"/>
+      <bpmn2:property id="reports" itemSubjectRef="ItemDefinition_189" name="reports"/>
+      <bpmn2:property id="processDefinitionID" itemSubjectRef="ItemDefinition_213" name="processDefinitionID"/>
+      <bpmn2:dataInputAssociation id="DataInputAssociation_1">
+        <bpmn2:sourceRef>processDefinitions</bpmn2:sourceRef>
+        <bpmn2:targetRef>DataInput_21</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:multiInstanceLoopCharacteristics id="MultiInstanceLoopCharacteristics_1">
+        <bpmn2:loopDataInputRef>DataInput_21</bpmn2:loopDataInputRef>
+        <bpmn2:inputDataItem xsi:type="bpmn2:tDataInput" id="processDefinition" itemSubjectRef="ItemDefinition_317" name="processDefinition"/>
+      </bpmn2:multiInstanceLoopCharacteristics>
+      <bpmn2:task id="Task_2" tns:taskName="Rest" tns:displayName="Rest" tns:icon="task.png" name="LoadProcessInstances">
+        <bpmn2:extensionElements>
+          <tns:metaData name="elementname">
+            <tns:metaValue><![CDATA[LoadProcessInstances]]></tns:metaValue>
+          </tns:metaData>
+          <tns:onEntry-script scriptFormat="http://www.mvel.org/2.0">
+            <tns:script>kcontext.setVariable(&quot;processDefinitionID&quot;, processDefinition.id);
+kcontext.setVariable(&quot;url&quot;, &quot;http://&quot;+bcHost+&quot;:&quot;+bcPort+&quot;/business-central/rest/query/runtime/process?processId=&quot;+processDefinition.id+&quot;&amp;deploymentid=&quot;+processDefinition.deploymentId+&quot;&amp;processinstancestatus=1&quot;);</tns:script>
+          </tns:onEntry-script>
+          <tns:onExit-script scriptFormat="http://www.mvel.org/2.0">
+            <tns:script>Logger logger = null;
+logger = LoggerFactory.getLogger(&quot;it.redhat.demo.task.script.LoadProcessInstances&quot;);
+logger.info(&quot;Server Url:-&quot;+ kcontext.getVariable(&quot;url&quot;));
+logger.info(&quot;Server Response:-&quot;+kcontext.getVariable(&quot;processInstances&quot;));</tns:script>
+          </tns:onExit-script>
+        </bpmn2:extensionElements>
+        <bpmn2:incoming>SequenceFlow_5</bpmn2:incoming>
+        <bpmn2:outgoing>SequenceFlow_6</bpmn2:outgoing>
+        <bpmn2:ioSpecification id="InputOutputSpecification_2">
+          <bpmn2:dataInput id="DataInput_11" itemSubjectRef="ItemDefinition_213" name="Url"/>
+          <bpmn2:dataInput id="DataInput_12" itemSubjectRef="ItemDefinition_213" name="Method"/>
+          <bpmn2:dataInput id="DataInput_13" itemSubjectRef="ItemDefinition_213" name="HandleResponseErrors"/>
+          <bpmn2:dataInput id="DataInput_14" itemSubjectRef="ItemDefinition_213" name="ResultClass"/>
+          <bpmn2:dataInput id="DataInput_15" itemSubjectRef="ItemDefinition_213" name="ContentType"/>
+          <bpmn2:dataInput id="DataInput_16" itemSubjectRef="ItemDefinition_214" name="Content"/>
+          <bpmn2:dataInput id="DataInput_17" itemSubjectRef="ItemDefinition_213" name="AuthType"/>
+          <bpmn2:dataInput id="DataInput_18" itemSubjectRef="ItemDefinition_213" name="ConnectTimeout"/>
+          <bpmn2:dataInput id="DataInput_19" itemSubjectRef="ItemDefinition_213" name="ReadTimeout"/>
+          <bpmn2:dataOutput id="DataOutput_4" itemSubjectRef="ItemDefinition_1015" name="Result"/>
+          <bpmn2:dataOutput id="DataOutput_5" itemSubjectRef="ItemDefinition_213" name="StatusMsg"/>
+          <bpmn2:dataOutput id="DataOutput_6" itemSubjectRef="ItemDefinition_213" name="Status"/>
+          <bpmn2:inputSet id="_InputSet_16">
+            <bpmn2:dataInputRefs>DataInput_11</bpmn2:dataInputRefs>
+            <bpmn2:dataInputRefs>DataInput_12</bpmn2:dataInputRefs>
+            <bpmn2:dataInputRefs>DataInput_13</bpmn2:dataInputRefs>
+            <bpmn2:dataInputRefs>DataInput_14</bpmn2:dataInputRefs>
+            <bpmn2:dataInputRefs>DataInput_15</bpmn2:dataInputRefs>
+            <bpmn2:dataInputRefs>DataInput_16</bpmn2:dataInputRefs>
+            <bpmn2:dataInputRefs>DataInput_17</bpmn2:dataInputRefs>
+            <bpmn2:dataInputRefs>DataInput_18</bpmn2:dataInputRefs>
+            <bpmn2:dataInputRefs>DataInput_19</bpmn2:dataInputRefs>
+          </bpmn2:inputSet>
+          <bpmn2:outputSet id="_OutputSet_10">
+            <bpmn2:dataOutputRefs>DataOutput_4</bpmn2:dataOutputRefs>
+            <bpmn2:dataOutputRefs>DataOutput_5</bpmn2:dataOutputRefs>
+            <bpmn2:dataOutputRefs>DataOutput_6</bpmn2:dataOutputRefs>
+          </bpmn2:outputSet>
+        </bpmn2:ioSpecification>
+        <bpmn2:dataInputAssociation id="_DataInputAssociation_69">
+          <bpmn2:sourceRef>url</bpmn2:sourceRef>
+          <bpmn2:targetRef>DataInput_11</bpmn2:targetRef>
+        </bpmn2:dataInputAssociation>
+        <bpmn2:dataInputAssociation id="_DataInputAssociation_70">
+          <bpmn2:targetRef>DataInput_12</bpmn2:targetRef>
+          <bpmn2:assignment id="Assignment_2">
+            <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_5">GET</bpmn2:from>
+            <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_2">DataInput_12</bpmn2:to>
+          </bpmn2:assignment>
+        </bpmn2:dataInputAssociation>
+        <bpmn2:dataInputAssociation id="_DataInputAssociation_71">
+          <bpmn2:targetRef>DataInput_13</bpmn2:targetRef>
+        </bpmn2:dataInputAssociation>
+        <bpmn2:dataInputAssociation id="_DataInputAssociation_72">
+          <bpmn2:targetRef>DataInput_14</bpmn2:targetRef>
+          <bpmn2:assignment id="Assignment_5">
+            <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_11">it.redhat.demo.jaxb.JaxbQueryProcessInstanceResult</bpmn2:from>
+            <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_6">DataInput_14</bpmn2:to>
+          </bpmn2:assignment>
+        </bpmn2:dataInputAssociation>
+        <bpmn2:dataInputAssociation id="_DataInputAssociation_73">
+          <bpmn2:targetRef>DataInput_15</bpmn2:targetRef>
+          <bpmn2:assignment id="Assignment_6">
+            <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_16">application/json</bpmn2:from>
+            <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_14">DataInput_15</bpmn2:to>
+          </bpmn2:assignment>
+        </bpmn2:dataInputAssociation>
+        <bpmn2:dataInputAssociation id="_DataInputAssociation_74">
+          <bpmn2:targetRef>DataInput_16</bpmn2:targetRef>
+        </bpmn2:dataInputAssociation>
+        <bpmn2:dataInputAssociation id="_DataInputAssociation_75">
+          <bpmn2:targetRef>DataInput_17</bpmn2:targetRef>
+        </bpmn2:dataInputAssociation>
+        <bpmn2:dataInputAssociation id="_DataInputAssociation_76">
+          <bpmn2:targetRef>DataInput_18</bpmn2:targetRef>
+        </bpmn2:dataInputAssociation>
+        <bpmn2:dataInputAssociation id="_DataInputAssociation_77">
+          <bpmn2:targetRef>DataInput_19</bpmn2:targetRef>
+        </bpmn2:dataInputAssociation>
+        <bpmn2:dataOutputAssociation id="_DataOutputAssociation_24">
+          <bpmn2:sourceRef>DataOutput_4</bpmn2:sourceRef>
+          <bpmn2:targetRef>processInstances</bpmn2:targetRef>
+        </bpmn2:dataOutputAssociation>
+        <bpmn2:dataOutputAssociation id="_DataOutputAssociation_25">
+          <bpmn2:sourceRef>DataOutput_5</bpmn2:sourceRef>
+          <bpmn2:targetRef>httpResponseMessage</bpmn2:targetRef>
+        </bpmn2:dataOutputAssociation>
+        <bpmn2:dataOutputAssociation id="_DataOutputAssociation_26">
+          <bpmn2:sourceRef>DataOutput_6</bpmn2:sourceRef>
+          <bpmn2:targetRef>httpResponseStatus</bpmn2:targetRef>
+        </bpmn2:dataOutputAssociation>
+      </bpmn2:task>
+      <bpmn2:startEvent id="StartEvent_2" name="Start Definition Migration">
+        <bpmn2:extensionElements>
+          <tns:metaData name="elementname">
+            <tns:metaValue><![CDATA[Start Definition Migration]]></tns:metaValue>
+          </tns:metaData>
+        </bpmn2:extensionElements>
+        <bpmn2:outgoing>SequenceFlow_5</bpmn2:outgoing>
+      </bpmn2:startEvent>
+      <bpmn2:sequenceFlow id="SequenceFlow_5" tns:priority="1" sourceRef="StartEvent_2" targetRef="Task_2"/>
+      <bpmn2:task id="Task_3" tns:taskName="MigrationTask" tns:displayName="MigrationTask" tns:icon="task.png" name="MigrationTask">
+        <bpmn2:extensionElements>
+          <tns:metaData name="elementname">
+            <tns:metaValue><![CDATA[MigrationTask]]></tns:metaValue>
+          </tns:metaData>
+          <tns:onEntry-script scriptFormat="http://www.java.com/java"/>
+        </bpmn2:extensionElements>
+        <bpmn2:incoming>SequenceFlow_6</bpmn2:incoming>
+        <bpmn2:outgoing>SequenceFlow_7</bpmn2:outgoing>
+        <bpmn2:ioSpecification id="InputOutputSpecification_4">
+          <bpmn2:dataInput id="DataInput_10" itemSubjectRef="ItemDefinition_213" name="oldDeployment"/>
+          <bpmn2:dataInput id="DataInput_20" itemSubjectRef="ItemDefinition_213" name="newDeployment"/>
+          <bpmn2:dataInput id="DataInput_22" itemSubjectRef="ItemDefinition_213" name="processDefinition"/>
+          <bpmn2:dataInput id="DataInput_23" itemSubjectRef="ItemDefinition_1015" name="processInstances"/>
+          <bpmn2:dataOutput id="DataOutput_7" itemSubjectRef="ItemDefinition_189" name="reports"/>
+          <bpmn2:inputSet id="_InputSet_17">
+            <bpmn2:dataInputRefs>DataInput_10</bpmn2:dataInputRefs>
+            <bpmn2:dataInputRefs>DataInput_20</bpmn2:dataInputRefs>
+            <bpmn2:dataInputRefs>DataInput_22</bpmn2:dataInputRefs>
+            <bpmn2:dataInputRefs>DataInput_23</bpmn2:dataInputRefs>
+          </bpmn2:inputSet>
+          <bpmn2:outputSet id="_OutputSet_11">
+            <bpmn2:dataOutputRefs>DataOutput_7</bpmn2:dataOutputRefs>
+          </bpmn2:outputSet>
+        </bpmn2:ioSpecification>
+        <bpmn2:dataInputAssociation id="_DataInputAssociation_78">
+          <bpmn2:sourceRef>oldDeployment</bpmn2:sourceRef>
+          <bpmn2:targetRef>DataInput_10</bpmn2:targetRef>
+        </bpmn2:dataInputAssociation>
+        <bpmn2:dataInputAssociation id="_DataInputAssociation_79">
+          <bpmn2:sourceRef>newDeployment</bpmn2:sourceRef>
+          <bpmn2:targetRef>DataInput_20</bpmn2:targetRef>
+        </bpmn2:dataInputAssociation>
+        <bpmn2:dataInputAssociation id="_DataInputAssociation_80">
+          <bpmn2:sourceRef>processDefinitionID</bpmn2:sourceRef>
+          <bpmn2:targetRef>DataInput_22</bpmn2:targetRef>
+        </bpmn2:dataInputAssociation>
+        <bpmn2:dataInputAssociation id="_DataInputAssociation_81">
+          <bpmn2:sourceRef>processInstances</bpmn2:sourceRef>
+          <bpmn2:targetRef>DataInput_23</bpmn2:targetRef>
+        </bpmn2:dataInputAssociation>
+        <bpmn2:dataOutputAssociation id="_DataOutputAssociation_27">
+          <bpmn2:sourceRef>DataOutput_7</bpmn2:sourceRef>
+          <bpmn2:targetRef>reports</bpmn2:targetRef>
+        </bpmn2:dataOutputAssociation>
+      </bpmn2:task>
+      <bpmn2:sequenceFlow id="SequenceFlow_6" tns:priority="1" sourceRef="Task_2" targetRef="Task_3"/>
+      <bpmn2:endEvent id="EndEvent_3" name="End Definition Migration">
+        <bpmn2:extensionElements>
+          <tns:metaData name="elementname">
+            <tns:metaValue><![CDATA[End Definition Migration]]></tns:metaValue>
+          </tns:metaData>
+        </bpmn2:extensionElements>
+        <bpmn2:incoming>SequenceFlow_7</bpmn2:incoming>
+      </bpmn2:endEvent>
+      <bpmn2:sequenceFlow id="SequenceFlow_7" tns:priority="1" sourceRef="Task_3" targetRef="EndEvent_3"/>
+    </bpmn2:subProcess>
+    <bpmn2:sequenceFlow id="SequenceFlow_3" tns:priority="1" sourceRef="Task_1" targetRef="SubProcess_1"/>
+    <bpmn2:endEvent id="EndEvent_2" name="End Migration">
+      <bpmn2:extensionElements>
+        <tns:metaData name="elementname">
+          <tns:metaValue><![CDATA[End Migration]]></tns:metaValue>
+        </tns:metaData>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_8</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:sequenceFlow id="SequenceFlow_8" tns:priority="1" sourceRef="SubProcess_1" targetRef="EndEvent_2"/>
+  </bpmn2:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_Process_1" bpmnElement="it.redhat.demo.migration">
+      <bpmndi:BPMNShape id="BPMNShape_SubProcess_1" bpmnElement="SubProcess_1" isExpanded="true">
+        <dc:Bounds height="150.0" width="534.0" x="270.0" y="183.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_1">
+          <dc:Bounds height="11.0" width="159.0" x="276.0" y="186.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_StartEvent_1" bpmnElement="StartEvent_1">
+        <dc:Bounds height="36.0" width="36.0" x="45.0" y="240.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_1">
+          <dc:Bounds height="11.0" width="60.0" x="33.0" y="276.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_Task_1" bpmnElement="Task_1" isExpanded="true">
+        <dc:Bounds height="50.0" width="110.0" x="120.0" y="233.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_2">
+          <dc:Bounds height="11.0" width="97.0" x="126.0" y="252.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_EndEvent_2" bpmnElement="EndEvent_2">
+        <dc:Bounds height="36.0" width="36.0" x="830.0" y="240.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_3">
+          <dc:Bounds height="11.0" width="56.0" x="820.0" y="276.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_Task_2" bpmnElement="Task_2" isExpanded="true">
+        <dc:Bounds height="50.0" width="110.0" x="410.0" y="228.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_4">
+          <dc:Bounds height="11.0" width="95.0" x="417.0" y="247.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_StartEvent_2" bpmnElement="StartEvent_2">
+        <dc:Bounds height="36.0" width="36.0" x="312.0" y="235.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_6">
+          <dc:Bounds height="22.0" width="70.0" x="295.0" y="271.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_Task_3" bpmnElement="Task_3" isExpanded="true">
+        <dc:Bounds height="50.0" width="110.0" x="570.0" y="228.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_5">
+          <dc:Bounds height="11.0" width="57.0" x="596.0" y="247.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_EndEvent_3" bpmnElement="EndEvent_3">
+        <dc:Bounds height="36.0" width="36.0" x="728.0" y="235.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_7">
+          <dc:Bounds height="22.0" width="66.0" x="713.0" y="271.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_2" bpmnElement="SequenceFlow_2" sourceElement="BPMNShape_StartEvent_1" targetElement="BPMNShape_Task_1">
+        <di:waypoint xsi:type="dc:Point" x="81.0" y="258.0"/>
+        <di:waypoint xsi:type="dc:Point" x="100.0" y="258.0"/>
+        <di:waypoint xsi:type="dc:Point" x="120.0" y="258.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_5"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_3" bpmnElement="SequenceFlow_3" sourceElement="BPMNShape_Task_1" targetElement="BPMNShape_SubProcess_1">
+        <di:waypoint xsi:type="dc:Point" x="230.0" y="258.0"/>
+        <di:waypoint xsi:type="dc:Point" x="250.0" y="258.0"/>
+        <di:waypoint xsi:type="dc:Point" x="270.0" y="258.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_6"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_5" bpmnElement="SequenceFlow_5" sourceElement="BPMNShape_StartEvent_2" targetElement="BPMNShape_Task_2">
+        <di:waypoint xsi:type="dc:Point" x="348.0" y="253.0"/>
+        <di:waypoint xsi:type="dc:Point" x="379.0" y="253.0"/>
+        <di:waypoint xsi:type="dc:Point" x="410.0" y="253.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_9"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_6" bpmnElement="SequenceFlow_6" sourceElement="BPMNShape_Task_2" targetElement="BPMNShape_Task_3">
+        <di:waypoint xsi:type="dc:Point" x="520.0" y="253.0"/>
+        <di:waypoint xsi:type="dc:Point" x="545.0" y="253.0"/>
+        <di:waypoint xsi:type="dc:Point" x="570.0" y="253.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_8"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_7" bpmnElement="SequenceFlow_7" sourceElement="BPMNShape_Task_3" targetElement="BPMNShape_EndEvent_3">
+        <di:waypoint xsi:type="dc:Point" x="680.0" y="253.0"/>
+        <di:waypoint xsi:type="dc:Point" x="704.0" y="253.0"/>
+        <di:waypoint xsi:type="dc:Point" x="728.0" y="253.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_10"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_8" bpmnElement="SequenceFlow_8" sourceElement="BPMNShape_SubProcess_1" targetElement="BPMNShape_EndEvent_2">
+        <di:waypoint xsi:type="dc:Point" x="804.0" y="258.0"/>
+        <di:waypoint xsi:type="dc:Point" x="817.0" y="258.0"/>
+        <di:waypoint xsi:type="dc:Point" x="830.0" y="258.0"/>
+        <bpmndi:BPMNLabel/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn2:definitions>
