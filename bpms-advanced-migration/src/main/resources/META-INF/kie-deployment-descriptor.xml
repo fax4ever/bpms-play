@@ -37,24 +37,6 @@
         </work-item-handler>
         <work-item-handler>
             <resolver>mvel</resolver>
-            <identifier>new it.redhat.demo.customtask.ChooseDeployStrategy()</identifier>
-            <parameters/>
-            <name>ChooseDeployStrategy</name>
-        </work-item-handler>
-        <work-item-handler>
-            <resolver>mvel</resolver>
-            <identifier>new it.redhat.demo.customtask.CreateContainerSpec()</identifier>
-            <parameters/>
-            <name>CreateContainerSpec</name>
-        </work-item-handler>
-        <work-item-handler>
-            <resolver>mvel</resolver>
-            <identifier>new it.redhat.demo.customtask.InputValidator()</identifier>
-            <parameters/>
-            <name>InputValidator</name>
-        </work-item-handler>
-        <work-item-handler>
-            <resolver>mvel</resolver>
             <identifier>new org.jbpm.process.workitem.rest.RESTWorkItemHandler(System.getProperty("org.kie.server.controller.user"), System.getProperty("org.kie.server.controller.pwd"), classLoader)</identifier>
             <parameters/>
             <name>Rest</name>
@@ -64,12 +46,6 @@
             <identifier>new org.jbpm.process.workitem.rest.RESTWorkItemHandler(System.getProperty("org.kie.server.user"), System.getProperty("org.kie.server.pwd"), classLoader)</identifier>
             <parameters/>
             <name>ProcessServerRest</name>
-        </work-item-handler>
-        <work-item-handler>
-            <resolver>mvel</resolver>
-            <identifier>new it.redhat.demo.customtask.WaitTask()</identifier>
-            <parameters/>
-            <name>WaitTask</name>
         </work-item-handler>
         <work-item-handler>
             <resolver>mvel</resolver>
