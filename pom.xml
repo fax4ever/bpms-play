@@ -25,6 +25,7 @@
         <module>bpms-timer</module>
         <module>bpms-deploy-automation</module>
         <module>bpms-advanced-migration</module>
+        <module>bpms-exception-handler</module>
     </modules>
 
     <properties>
