@@ -273,7 +273,7 @@ logger.info(&quot;Server Response:-&quot;+kcontext.getVariable(&quot;bcResponseP
           <tns:metaValue><![CDATA[RemoveOldContainer]]></tns:metaValue>
         </tns:metaData>
         <tns:onEntry-script scriptFormat="http://www.java.com/java">
-          <tns:script>kcontext.setVariable(&quot;url&quot;, &quot;http://&quot;+bcHost+&quot;:&quot;+bcPort+&quot;/business-central/rest/controller/management/servers/process-server/containers/&quot;+deploymentId);</tns:script>
+          <tns:script>kcontext.setVariable(&quot;url&quot;, &quot;http://&quot;+bcHost+&quot;:&quot;+bcPort+&quot;/business-central/rest/controller/management/servers/&quot;+serverId+&quot;/containers/&quot;+deploymentId);</tns:script>
         </tns:onEntry-script>
         <tns:onExit-script scriptFormat="http://www.java.com/java">
           <tns:script>Logger logger = null;
