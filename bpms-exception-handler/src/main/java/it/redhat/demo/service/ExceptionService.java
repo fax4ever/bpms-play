@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 public class ExceptionService {
 
 	public static String exceptionParameterName = "my.exception.parameter.name";
-	public static Logger log = LoggerFactory.getLogger(ExceptionService.class);
+	private static Logger log = LoggerFactory.getLogger(ExceptionService.class);
 	
 	public void handleException(WorkItem workItem) {
 		System.out.println(

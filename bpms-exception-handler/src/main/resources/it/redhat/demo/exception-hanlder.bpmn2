@@ -6,6 +6,7 @@
   <bpmn2:itemDefinition id="ItemDefinition_4" isCollection="false" structureRef="it.redhat.demo.model.Command"/>
   <bpmn2:itemDefinition id="ItemDefinition_5" isCollection="false" structureRef="org.slf4j.LoggerFactory"/>
   <bpmn2:itemDefinition id="ItemDefinition_7" isCollection="false" structureRef="org.slf4j.Logger"/>
+  <bpmn2:error id="Error_1" errorCode="code" name="exception" structureRef="ItemDefinition_2"/>
   <bpmn2:process id="it.redhat.demo.exception-hanlder" tns:packageName="it.redhat.demo" name="exception-hanlder" isExecutable="true" processType="Private">
     <bpmn2:extensionElements>
       <tns:import name="it.redhat.demo.model.Command"/>
@@ -17,6 +18,7 @@
     <bpmn2:property id="status" itemSubjectRef="ItemDefinition_2" name="status"/>
     <bpmn2:property id="message" itemSubjectRef="ItemDefinition_1" name="message"/>
     <bpmn2:property id="response" itemSubjectRef="ItemDefinition_2" name="response"/>
+    <bpmn2:property id="exception" itemSubjectRef="ItemDefinition_2" name="exception"/>
     <bpmn2:startEvent id="StartEvent_1" name="StartProcess">
       <bpmn2:extensionElements>
         <tns:metaData name="elementname">
@@ -89,6 +91,10 @@ logger.info(&quot;Message: &quot; + message);</tns:script>
       </bpmn2:dataInputAssociation>
       <bpmn2:dataInputAssociation id="_DataInputAssociation_4">
         <bpmn2:targetRef>DataInput_3</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_3">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_7">true</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_2">DataInput_3</bpmn2:to>
+        </bpmn2:assignment>
       </bpmn2:dataInputAssociation>
       <bpmn2:dataInputAssociation id="_DataInputAssociation_5">
         <bpmn2:targetRef>DataInput_4</bpmn2:targetRef>
@@ -136,6 +142,32 @@ logger.info(&quot;Message: &quot; + message);</tns:script>
       <bpmn2:incoming>SequenceFlow_2</bpmn2:incoming>
     </bpmn2:endEvent>
     <bpmn2:sequenceFlow id="SequenceFlow_2" tns:priority="1" sourceRef="Task_1" targetRef="EndEvent_1"/>
+    <bpmn2:boundaryEvent id="BoundaryEvent_1" name="" attachedToRef="Task_1">
+      <bpmn2:extensionElements>
+        <tns:metaData name="elementname">
+          <tns:metaValue><![CDATA[]]></tns:metaValue>
+        </tns:metaData>
+      </bpmn2:extensionElements>
+      <bpmn2:outgoing>SequenceFlow_3</bpmn2:outgoing>
+      <bpmn2:dataOutput id="DataOutput_4" itemSubjectRef="ItemDefinition_2" name="Error_1_Output"/>
+      <bpmn2:dataOutputAssociation id="DataOutputAssociation_1">
+        <bpmn2:sourceRef>DataOutput_4</bpmn2:sourceRef>
+        <bpmn2:targetRef>exception</bpmn2:targetRef>
+      </bpmn2:dataOutputAssociation>
+      <bpmn2:outputSet id="OutputSet_1" name="Output Set 1">
+        <bpmn2:dataOutputRefs>DataOutput_4</bpmn2:dataOutputRefs>
+      </bpmn2:outputSet>
+      <bpmn2:errorEventDefinition id="ErrorEventDefinition_1" errorRef="Error_1"/>
+    </bpmn2:boundaryEvent>
+    <bpmn2:endEvent id="EndEvent_2" name="End Event 2">
+      <bpmn2:extensionElements>
+        <tns:metaData name="elementname">
+          <tns:metaValue><![CDATA[End Event 2]]></tns:metaValue>
+        </tns:metaData>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_3</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:sequenceFlow id="SequenceFlow_3" tns:priority="1" sourceRef="BoundaryEvent_1" targetRef="EndEvent_2"/>
   </bpmn2:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_Process_1" bpmnElement="it.redhat.demo.exception-hanlder">
@@ -157,6 +189,16 @@ logger.info(&quot;Message: &quot; + message);</tns:script>
           <dc:Bounds height="11.0" width="50.0" x="357.0" y="81.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_EndEvent_2" bpmnElement="EndEvent_2">
+        <dc:Bounds height="36.0" width="36.0" x="223.0" y="160.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="11.0" width="51.0" x="216.0" y="196.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_BoundaryEvent_1" bpmnElement="BoundaryEvent_1">
+        <dc:Bounds height="36.0" width="36.0" x="223.0" y="69.0"/>
+        <bpmndi:BPMNLabel/>
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_1" bpmnElement="SequenceFlow_1" sourceElement="BPMNShape_StartEvent_1" targetElement="BPMNShape_Task_1">
         <di:waypoint xsi:type="dc:Point" x="81.0" y="63.0"/>
         <di:waypoint xsi:type="dc:Point" x="133.0" y="63.0"/>
@@ -168,6 +210,12 @@ logger.info(&quot;Message: &quot; + message);</tns:script>
         <di:waypoint xsi:type="dc:Point" x="330.0" y="63.0"/>
         <di:waypoint xsi:type="dc:Point" x="364.0" y="63.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_5"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_3" bpmnElement="SequenceFlow_3" sourceElement="BPMNShape_BoundaryEvent_1" targetElement="BPMNShape_EndEvent_2">
+        <di:waypoint xsi:type="dc:Point" x="241.0" y="105.0"/>
+        <di:waypoint xsi:type="dc:Point" x="241.0" y="132.0"/>
+        <di:waypoint xsi:type="dc:Point" x="241.0" y="160.0"/>
+        <bpmndi:BPMNLabel/>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
