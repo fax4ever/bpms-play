@@ -7,7 +7,7 @@ public class ExceptionHandlerProcessIT extends ExceptionHandlerProcessTest {
 	@Override
 	public void before() {
 		
-		runtimeManager = createRuntimeManager(PROCESSES_BASE_PATH + "exception-hanlder.bpmn2");
+		runtimeManager = createRuntimeManager(PROCESSES_BASE_PATH + "exception-handler.bpmn2");
 
 		runtimeEngine = getRuntimeEngine();
 		kieSession = runtimeEngine.getKieSession();
