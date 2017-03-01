@@ -17,9 +17,9 @@ public class ExceptionHandlerProcessTest extends JbpmJUnitBaseTestCase {
 	
 	protected final static String PROCESSES_BASE_PATH = "it/redhat/demo/";
 	
-	private KieSession kieSession;
-	private RuntimeManager runtimeManager;
-	private RuntimeEngine runtimeEngine;
+	protected KieSession kieSession;
+	protected RuntimeManager runtimeManager;
+	protected RuntimeEngine runtimeEngine;
 	
 	public ExceptionHandlerProcessTest() {
 		super(true, true);
