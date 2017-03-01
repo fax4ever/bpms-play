@@ -4,7 +4,7 @@
 	<groupId>it.redhat.demo</groupId>
 	<artifactId>bpms-asynchronous-execution</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
-	
+
 	<properties>
 
 		<!-- JAVA -->
@@ -15,7 +15,7 @@
 		<version.org.brms-bpmsuite>6.4.0.GA-redhat-2</version.org.brms-bpmsuite>
 
 	</properties>
-	
+
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -27,7 +27,7 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-	
+
 	<dependencies>
 		<dependency>
 			<groupId>org.kie</groupId>
@@ -42,6 +42,12 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.jbpm</groupId>
+			<artifactId>jbpm-services-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-simple</artifactId>
 			<scope>test</scope>
@@ -52,6 +58,7 @@
 			<artifactId>jbpm-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
 	</dependencies>
 
 </project>
