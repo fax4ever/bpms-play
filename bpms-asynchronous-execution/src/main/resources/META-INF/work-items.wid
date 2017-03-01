@@ -1,0 +1,20 @@
+import org.drools.core.process.core.datatype.impl.type.StringDataType;
+import org.drools.core.process.core.datatype.impl.type.IntegerDataType;
+import org.drools.core.process.core.datatype.impl.type.ObjectDataType;
+import org.drools.core.process.core.datatype.impl.type.BooleanDataType;
+
+[
+	[
+	  	"name" : "AsyncCommand",
+		"parameters" : [
+		    "CommandClass" : new StringDataType(),
+		    "Retries" : new IntegerDataType(),
+		    "RetryDelay" : new StringDataType(),
+		    "Delay" : new StringDataType(),
+		    "AutoComplete" : new BooleanDataType(),
+		    "Priority" : new IntegerDataType()
+		],
+		"results" : [],
+		"displayName" : "AsyncCommand"
+	]
+]
