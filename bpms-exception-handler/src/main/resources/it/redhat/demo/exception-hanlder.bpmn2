@@ -14,7 +14,7 @@
     </bpmn2:extensionElements>
     <bpmn2:property id="url" itemSubjectRef="ItemDefinition_1" name="url"/>
     <bpmn2:property id="command" itemSubjectRef="ItemDefinition_4" name="command"/>
-    <bpmn2:property id="status" itemSubjectRef="ItemDefinition_1" name="status"/>
+    <bpmn2:property id="status" itemSubjectRef="ItemDefinition_2" name="status"/>
     <bpmn2:property id="message" itemSubjectRef="ItemDefinition_1" name="message"/>
     <bpmn2:property id="response" itemSubjectRef="ItemDefinition_2" name="response"/>
     <bpmn2:startEvent id="StartEvent_1" name="StartProcess">
@@ -31,7 +31,9 @@
           <tns:metaValue><![CDATA[RestCommandTask]]></tns:metaValue>
         </tns:metaData>
         <tns:onEntry-script scriptFormat="http://www.mvel.org/2.0">
-          <tns:script>kcontext.setVariable(&quot;url&quot;, &quot;http://localhost:8080/eap6-rest/command&quot;);</tns:script>
+          <tns:script>kcontext.setVariable(&quot;url&quot;, &quot;http://localhost:8080/eap6-rest/command&quot;);
+
+</tns:script>
         </tns:onEntry-script>
         <tns:onExit-script scriptFormat="http://www.java.com/java">
           <tns:script>Logger logger = null;
@@ -56,7 +58,7 @@ logger.info(&quot;Message: &quot; + message);</tns:script>
         <bpmn2:dataInput id="DataInput_9" itemSubjectRef="ItemDefinition_1" name="ReadTimeout"/>
         <bpmn2:dataOutput id="DataOutput_1" itemSubjectRef="ItemDefinition_2" name="Result"/>
         <bpmn2:dataOutput id="DataOutput_2" itemSubjectRef="ItemDefinition_1" name="StatusMsg"/>
-        <bpmn2:dataOutput id="DataOutput_3" itemSubjectRef="ItemDefinition_1" name="Status"/>
+        <bpmn2:dataOutput id="DataOutput_3" itemSubjectRef="ItemDefinition_2" name="Status"/>
         <bpmn2:inputSet id="_InputSet_2">
           <bpmn2:dataInputRefs>DataInput_1</bpmn2:dataInputRefs>
           <bpmn2:dataInputRefs>DataInput_2</bpmn2:dataInputRefs>
