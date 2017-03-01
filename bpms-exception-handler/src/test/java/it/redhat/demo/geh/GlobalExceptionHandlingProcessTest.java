@@ -1,4 +1,4 @@
-package it.redhat.demo.process;
+package it.redhat.demo.geh;
 
 import java.util.HashMap;
 
