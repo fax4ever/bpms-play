@@ -115,9 +115,17 @@ logger.info(&quot;Message: &quot; + message);</tns:script>
       </bpmn2:dataInputAssociation>
       <bpmn2:dataInputAssociation id="_DataInputAssociation_9">
         <bpmn2:targetRef>DataInput_8</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_4">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_9">60000</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_5">DataInput_8</bpmn2:to>
+        </bpmn2:assignment>
       </bpmn2:dataInputAssociation>
       <bpmn2:dataInputAssociation id="_DataInputAssociation_10">
         <bpmn2:targetRef>DataInput_9</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_5">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_12">60000</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_10">DataInput_9</bpmn2:to>
+        </bpmn2:assignment>
       </bpmn2:dataInputAssociation>
       <bpmn2:dataOutputAssociation id="_DataOutputAssociation_2">
         <bpmn2:sourceRef>DataOutput_1</bpmn2:sourceRef>
@@ -148,7 +156,7 @@ logger.info(&quot;Message: &quot; + message);</tns:script>
           <tns:metaValue><![CDATA[]]></tns:metaValue>
         </tns:metaData>
       </bpmn2:extensionElements>
-      <bpmn2:outgoing>SequenceFlow_3</bpmn2:outgoing>
+      <bpmn2:outgoing>SequenceFlow_4</bpmn2:outgoing>
       <bpmn2:dataOutput id="DataOutput_4" itemSubjectRef="ItemDefinition_2" name="Error_1_Output"/>
       <bpmn2:dataOutputAssociation id="DataOutputAssociation_1">
         <bpmn2:sourceRef>DataOutput_4</bpmn2:sourceRef>
@@ -159,15 +167,28 @@ logger.info(&quot;Message: &quot; + message);</tns:script>
       </bpmn2:outputSet>
       <bpmn2:errorEventDefinition id="ErrorEventDefinition_1" errorRef="Error_1"/>
     </bpmn2:boundaryEvent>
-    <bpmn2:endEvent id="EndEvent_2" name="End Event 2">
+    <bpmn2:endEvent id="EndEvent_2" name="EndWithException">
       <bpmn2:extensionElements>
         <tns:metaData name="elementname">
-          <tns:metaValue><![CDATA[End Event 2]]></tns:metaValue>
+          <tns:metaValue><![CDATA[EndWithException]]></tns:metaValue>
         </tns:metaData>
       </bpmn2:extensionElements>
-      <bpmn2:incoming>SequenceFlow_3</bpmn2:incoming>
+      <bpmn2:incoming>SequenceFlow_5</bpmn2:incoming>
     </bpmn2:endEvent>
-    <bpmn2:sequenceFlow id="SequenceFlow_3" tns:priority="1" sourceRef="BoundaryEvent_1" targetRef="EndEvent_2"/>
+    <bpmn2:scriptTask id="ScriptTask_1" name="ExcpetionHandlerTask" scriptFormat="http://www.java.com/java">
+      <bpmn2:extensionElements>
+        <tns:metaData name="elementname">
+          <tns:metaValue><![CDATA[ExcpetionHandlerTask]]></tns:metaValue>
+        </tns:metaData>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_4</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_5</bpmn2:outgoing>
+      <bpmn2:script>Logger logger = null;
+logger = LoggerFactory.getLogger(&quot;it.redhat.demo.task.script.ExcpetionHandlerTask&quot;);
+logger.info(&quot;Exception rest service -> {}&quot;, exception);</bpmn2:script>
+    </bpmn2:scriptTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_4" tns:priority="1" sourceRef="BoundaryEvent_1" targetRef="ScriptTask_1"/>
+    <bpmn2:sequenceFlow id="SequenceFlow_5" tns:priority="1" sourceRef="ScriptTask_1" targetRef="EndEvent_2"/>
   </bpmn2:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_Process_1" bpmnElement="it.redhat.demo.exception-hanlder">
@@ -190,14 +211,20 @@ logger.info(&quot;Message: &quot; + message);</tns:script>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_EndEvent_2" bpmnElement="EndEvent_2">
-        <dc:Bounds height="36.0" width="36.0" x="223.0" y="160.0"/>
+        <dc:Bounds height="36.0" width="36.0" x="223.0" y="242.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_4">
+          <dc:Bounds height="11.0" width="75.0" x="204.0" y="278.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_ScriptTask_1" bpmnElement="ScriptTask_1" isExpanded="true">
+        <dc:Bounds height="50.0" width="110.0" x="187.0" y="150.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="11.0" width="51.0" x="216.0" y="196.0"/>
+          <dc:Bounds height="11.0" width="92.0" x="196.0" y="169.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_BoundaryEvent_1" bpmnElement="BoundaryEvent_1">
         <dc:Bounds height="36.0" width="36.0" x="223.0" y="69.0"/>
-        <bpmndi:BPMNLabel/>
+        <bpmndi:BPMNLabel id="BPMNLabel_5"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_1" bpmnElement="SequenceFlow_1" sourceElement="BPMNShape_StartEvent_1" targetElement="BPMNShape_Task_1">
         <di:waypoint xsi:type="dc:Point" x="81.0" y="63.0"/>
@@ -211,10 +238,16 @@ logger.info(&quot;Message: &quot; + message);</tns:script>
         <di:waypoint xsi:type="dc:Point" x="364.0" y="63.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_5"/>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_3" bpmnElement="SequenceFlow_3" sourceElement="BPMNShape_BoundaryEvent_1" targetElement="BPMNShape_EndEvent_2">
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_4" bpmnElement="SequenceFlow_4" sourceElement="BPMNShape_BoundaryEvent_1" targetElement="BPMNShape_ScriptTask_1">
         <di:waypoint xsi:type="dc:Point" x="241.0" y="105.0"/>
-        <di:waypoint xsi:type="dc:Point" x="241.0" y="132.0"/>
-        <di:waypoint xsi:type="dc:Point" x="241.0" y="160.0"/>
+        <di:waypoint xsi:type="dc:Point" x="241.0" y="127.0"/>
+        <di:waypoint xsi:type="dc:Point" x="242.0" y="150.0"/>
+        <bpmndi:BPMNLabel/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_5" bpmnElement="SequenceFlow_5" sourceElement="BPMNShape_ScriptTask_1" targetElement="BPMNShape_EndEvent_2">
+        <di:waypoint xsi:type="dc:Point" x="242.0" y="200.0"/>
+        <di:waypoint xsi:type="dc:Point" x="241.0" y="221.0"/>
+        <di:waypoint xsi:type="dc:Point" x="241.0" y="242.0"/>
         <bpmndi:BPMNLabel/>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
