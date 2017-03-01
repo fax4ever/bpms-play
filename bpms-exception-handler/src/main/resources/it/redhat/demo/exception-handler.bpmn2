@@ -6,19 +6,21 @@
   <bpmn2:itemDefinition id="ItemDefinition_4" isCollection="false" structureRef="it.redhat.demo.model.Command"/>
   <bpmn2:itemDefinition id="ItemDefinition_5" isCollection="false" structureRef="org.slf4j.LoggerFactory"/>
   <bpmn2:itemDefinition id="ItemDefinition_7" isCollection="false" structureRef="org.slf4j.Logger"/>
-  <bpmn2:error id="Error_1" errorCode="code" name="exception" structureRef="ItemDefinition_2"/>
-  <bpmn2:process id="it.redhat.demo.exception-hanlder" tns:packageName="it.redhat.demo" name="exception-hanlder" isExecutable="true" processType="Private">
+  <bpmn2:itemDefinition id="ItemDefinition_55" isCollection="false" structureRef="java.lang.Exception"/>
+  <bpmn2:error id="Error_1" errorCode="code" name="exception" structureRef="ItemDefinition_55"/>
+  <bpmn2:process id="it.redhat.demo.exception-handler" tns:packageName="it.redhat.demo" name="exception-handler" isExecutable="true" processType="Private">
     <bpmn2:extensionElements>
       <tns:import name="it.redhat.demo.model.Command"/>
       <tns:import name="org.slf4j.LoggerFactory"/>
       <tns:import name="org.slf4j.Logger"/>
+      <tns:import name="java.lang.Exception"/>
     </bpmn2:extensionElements>
     <bpmn2:property id="url" itemSubjectRef="ItemDefinition_1" name="url"/>
     <bpmn2:property id="command" itemSubjectRef="ItemDefinition_4" name="command"/>
     <bpmn2:property id="status" itemSubjectRef="ItemDefinition_2" name="status"/>
     <bpmn2:property id="message" itemSubjectRef="ItemDefinition_1" name="message"/>
     <bpmn2:property id="response" itemSubjectRef="ItemDefinition_2" name="response"/>
-    <bpmn2:property id="exception" itemSubjectRef="ItemDefinition_2" name="exception"/>
+    <bpmn2:property id="exception" itemSubjectRef="ItemDefinition_55" name="exception"/>
     <bpmn2:startEvent id="StartEvent_1" name="StartProcess">
       <bpmn2:extensionElements>
         <tns:metaData name="elementname">
@@ -157,7 +159,7 @@ logger.info(&quot;Message: &quot; + message);</tns:script>
         </tns:metaData>
       </bpmn2:extensionElements>
       <bpmn2:outgoing>SequenceFlow_4</bpmn2:outgoing>
-      <bpmn2:dataOutput id="DataOutput_4" itemSubjectRef="ItemDefinition_2" name="Error_1_Output"/>
+      <bpmn2:dataOutput id="DataOutput_4" itemSubjectRef="ItemDefinition_55" name="Error_1_Output"/>
       <bpmn2:dataOutputAssociation id="DataOutputAssociation_1">
         <bpmn2:sourceRef>DataOutput_4</bpmn2:sourceRef>
         <bpmn2:targetRef>exception</bpmn2:targetRef>
@@ -185,13 +187,13 @@ logger.info(&quot;Message: &quot; + message);</tns:script>
       <bpmn2:outgoing>SequenceFlow_5</bpmn2:outgoing>
       <bpmn2:script>Logger logger = null;
 logger = LoggerFactory.getLogger(&quot;it.redhat.demo.task.script.ExcpetionHandlerTask&quot;);
-logger.info(&quot;Exception rest service -> {}&quot;, exception);</bpmn2:script>
+logger.info(&quot;Exception rest service -> {}&quot;, exception.getMessage());</bpmn2:script>
     </bpmn2:scriptTask>
     <bpmn2:sequenceFlow id="SequenceFlow_4" tns:priority="1" sourceRef="BoundaryEvent_1" targetRef="ScriptTask_1"/>
     <bpmn2:sequenceFlow id="SequenceFlow_5" tns:priority="1" sourceRef="ScriptTask_1" targetRef="EndEvent_2"/>
   </bpmn2:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_Process_1" bpmnElement="it.redhat.demo.exception-hanlder">
+    <bpmndi:BPMNPlane id="BPMNPlane_Process_1" bpmnElement="it.redhat.demo.exception-handler">
       <bpmndi:BPMNShape id="BPMNShape_StartEvent_1" bpmnElement="StartEvent_1">
         <dc:Bounds height="0.0" width="0.0" x="45.0" y="45.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_1">

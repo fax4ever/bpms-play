@@ -28,7 +28,7 @@ public class ExceptionHandlerProcessTest extends JbpmJUnitBaseTestCase {
 	@Before
 	public void before() {
 
-		runtimeManager = createRuntimeManager(PROCESSES_BASE_PATH + "exception-hanlder.bpmn2");
+		runtimeManager = createRuntimeManager(PROCESSES_BASE_PATH + "exception-handler.bpmn2");
 
 		runtimeEngine = getRuntimeEngine();
 		kieSession = runtimeEngine.getKieSession();
@@ -57,7 +57,7 @@ public class ExceptionHandlerProcessTest extends JbpmJUnitBaseTestCase {
 		
 		parameters.put("command", command);
 		
-		ProcessInstance proc = kieSession.startProcess("it.redhat.demo.exception-hanlder", parameters);
+		ProcessInstance proc = kieSession.startProcess("it.redhat.demo.exception-handler", parameters);
 		assertNodeTriggered(proc.getId(), "StartProcess", "RestCommandTask", "EndProcess");
 		assertProcessInstanceCompleted(proc.getId());
 		
