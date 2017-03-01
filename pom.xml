@@ -26,6 +26,7 @@
         <module>bpms-deploy-automation</module>
         <module>bpms-advanced-migration</module>
         <module>bpms-exception-handler</module>
+        <module>bpms-asynchronous-execution</module>
     </modules>
 
     <properties>

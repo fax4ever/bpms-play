@@ -4,7 +4,7 @@
   <bpmn2:itemDefinition id="ItemDefinition_1" isCollection="false" structureRef="java.lang.String"/>
   <bpmn2:itemDefinition id="ItemDefinition_2" isCollection="false" structureRef="java.lang.Integer"/>
   <bpmn2:itemDefinition id="ItemDefinition_3" isCollection="false" structureRef="java.lang.Boolean"/>
-  <bpmn2:process id="it.redhat.demo.selection-process" tns:packageName="it.redhat.demo" name="selection-process" isExecutable="true" processType="Private">
+  <bpmn2:process id="it.redhat.demo.selection-process" tns:packageName="it.redhat.demo" tns:version="2" name="selection-process" isExecutable="true" processType="Private">
     <bpmn2:property id="currilculum" itemSubjectRef="ItemDefinition_1" name="currilculum"/>
     <bpmn2:property id="hrFeedback" itemSubjectRef="ItemDefinition_1" name="hrFeedback"/>
     <bpmn2:property id="managerFeedback" itemSubjectRef="ItemDefinition_1" name="managerFeedback"/>
@@ -284,19 +284,19 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_UserTask_2" bpmnElement="UserTask_2" isExpanded="true">
         <dc:Bounds height="50.0" width="110.0" x="480.0" y="38.0"/>
-        <bpmndi:BPMNLabel>
+        <bpmndi:BPMNLabel id="BPMNLabel_6">
           <dc:Bounds height="11.0" width="75.0" x="497.0" y="57.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_ExclusiveGateway_2" bpmnElement="ExclusiveGateway_2" isMarkerVisible="true">
         <dc:Bounds height="50.0" width="50.0" x="665.0" y="38.0"/>
-        <bpmndi:BPMNLabel>
+        <bpmndi:BPMNLabel id="BPMNLabel_7">
           <dc:Bounds height="11.0" width="62.0" x="659.0" y="88.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_EndEvent_3" bpmnElement="EndEvent_3">
         <dc:Bounds height="36.0" width="36.0" x="672.0" y="146.0"/>
-        <bpmndi:BPMNLabel>
+        <bpmndi:BPMNLabel id="BPMNLabel_8">
           <dc:Bounds height="11.0" width="77.0" x="652.0" y="182.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
@@ -324,7 +324,7 @@
         <di:waypoint xsi:type="dc:Point" x="408.0" y="63.0"/>
         <di:waypoint xsi:type="dc:Point" x="444.0" y="63.0"/>
         <di:waypoint xsi:type="dc:Point" x="480.0" y="63.0"/>
-        <bpmndi:BPMNLabel>
+        <bpmndi:BPMNLabel id="BPMNLabel_9">
           <dc:Bounds height="11.0" width="32.0" x="429.0" y="64.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
@@ -332,13 +332,13 @@
         <di:waypoint xsi:type="dc:Point" x="590.0" y="63.0"/>
         <di:waypoint xsi:type="dc:Point" x="627.0" y="63.0"/>
         <di:waypoint xsi:type="dc:Point" x="665.0" y="63.0"/>
-        <bpmndi:BPMNLabel/>
+        <bpmndi:BPMNLabel id="BPMNLabel_10"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_8" bpmnElement="SequenceFlow_8" sourceElement="BPMNShape_ExclusiveGateway_2" targetElement="BPMNShape_EndEvent_1">
         <di:waypoint xsi:type="dc:Point" x="715.0" y="63.0"/>
         <di:waypoint xsi:type="dc:Point" x="742.0" y="63.0"/>
         <di:waypoint xsi:type="dc:Point" x="770.0" y="63.0"/>
-        <bpmndi:BPMNLabel>
+        <bpmndi:BPMNLabel id="BPMNLabel_11">
           <dc:Bounds height="11.0" width="32.0" x="728.0" y="64.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
@@ -346,7 +346,7 @@
         <di:waypoint xsi:type="dc:Point" x="690.0" y="88.0"/>
         <di:waypoint xsi:type="dc:Point" x="690.0" y="117.0"/>
         <di:waypoint xsi:type="dc:Point" x="690.0" y="146.0"/>
-        <bpmndi:BPMNLabel>
+        <bpmndi:BPMNLabel id="BPMNLabel_12">
           <dc:Bounds height="11.0" width="35.0" x="673.0" y="118.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>

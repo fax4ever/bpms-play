@@ -4,7 +4,7 @@
   <bpmn2:itemDefinition id="ItemDefinition_1" isCollection="false" structureRef="java.lang.String"/>
   <bpmn2:itemDefinition id="ItemDefinition_2" isCollection="false" structureRef="java.lang.Integer"/>
   <bpmn2:itemDefinition id="ItemDefinition_3" isCollection="false" structureRef="java.lang.Boolean"/>
-  <bpmn2:process id="it.redhat.demo.hiring-process" tns:packageName="it.redhat.demo" name="hiring-process" isExecutable="true" processType="Private">
+  <bpmn2:process id="it.redhat.demo.hiring-process" tns:packageName="it.redhat.demo" tns:version="3" name="hiring-process" isExecutable="true" processType="Private">
     <bpmn2:property id="currilculum" itemSubjectRef="ItemDefinition_1" name="currilculum"/>
     <bpmn2:property id="hrFeedback" itemSubjectRef="ItemDefinition_1" name="hrFeedback"/>
     <bpmn2:property id="managerFeedback" itemSubjectRef="ItemDefinition_1" name="managerFeedback"/>

@@ -91,7 +91,14 @@
 			</properties>
 		</profile>
 		<profile>
-			<id>snap</id>
+			<id>snap1</id>
+			<properties>
+				<projectVersion>1.0.0-SNAPSHOT</projectVersion>
+				<process.version.filter>v1</process.version.filter>
+			</properties>
+		</profile>
+		<profile>
+			<id>snap2</id>
 			<properties>
 				<projectVersion>1.0.0-SNAPSHOT</projectVersion>
 				<process.version.filter>v2</process.version.filter>
