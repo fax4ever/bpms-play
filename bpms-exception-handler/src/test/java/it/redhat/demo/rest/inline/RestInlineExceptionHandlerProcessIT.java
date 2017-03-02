@@ -1,13 +1,13 @@
-package it.redhat.demo.reh;
+package it.redhat.demo.rest.inline;
 
 import org.jbpm.process.workitem.rest.RESTWorkItemHandler;
 
-public class ExceptionHandlerSubProcessIT extends ExceptionHandlerSubProcessTest {
+public class RestInlineExceptionHandlerProcessIT extends RestInlineExceptionHandlerProcessTest {
 
 	@Override
 	public void before() {
 		
-		runtimeManager = createRuntimeManager(PROCESSES_BASE_PATH + "exception-handler-subprocess.bpmn2");
+		runtimeManager = createRuntimeManager(PROCESSES_BASE_PATH + "rest-inline-exception-handler.bpmn2");
 
 		runtimeEngine = getRuntimeEngine();
 		kieSession = runtimeEngine.getKieSession();

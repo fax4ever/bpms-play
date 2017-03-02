@@ -15,7 +15,7 @@
       <bpmn2:inMessageRef>Message_2</bpmn2:inMessageRef>
     </bpmn2:operation>
   </bpmn2:interface>
-  <bpmn2:process id="it.redhat.demo.global-exception-handling" tns:packageName="it.redhat.demo" name="global-exception-handling" isExecutable="true" processType="Private">
+  <bpmn2:process id="it.redhat.demo.service-global-exception-handler" tns:packageName="it.redhat.demo" name="service-global-exception-handler" isExecutable="true" processType="Private">
     <bpmn2:extensionElements>
       <tns:import name="org.kie.api.runtime.process.WorkItem"/>
       <tns:import name="it.redhat.demo.service.ExceptionService"/>
@@ -116,7 +116,7 @@
     </bpmn2:subProcess>
   </bpmn2:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_Process_1" bpmnElement="it.redhat.demo.global-exception-handling">
+    <bpmndi:BPMNPlane id="BPMNPlane_Process_1" bpmnElement="it.redhat.demo.service-global-exception-handler">
       <bpmndi:BPMNShape id="BPMNShape_SubProcess_1" bpmnElement="SubProcess_1" isExpanded="true">
         <dc:Bounds height="161.0" width="397.0" x="36.0" y="130.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_1">

@@ -9,7 +9,7 @@
   <bpmn2:itemDefinition id="ItemDefinition_10" isCollection="false" structureRef="java.lang.Exception"/>
   <bpmn2:itemDefinition id="ItemDefinition_1871" isCollection="false" structureRef="java.lang.Integer"/>
   <bpmn2:error id="Error_1" errorCode="org.jbpm.bpmn2.handler.WorkItemHandlerRuntimeException" name="error" structureRef="ItemDefinition_10"/>
-  <bpmn2:process id="it.redhat.demo.exception-handler-subprocess" tns:packageName="it.redhat.demo" name="exception-handler-subprocess" isExecutable="true" processType="Private">
+  <bpmn2:process id="it.redhat.demo.rest-global-exception-handler" tns:packageName="it.redhat.demo" name="rest-global-exception-handler" isExecutable="true" processType="Private">
     <bpmn2:extensionElements>
       <tns:import name="it.redhat.demo.model.Command"/>
       <tns:import name="org.slf4j.LoggerFactory"/>
@@ -191,46 +191,46 @@ logger.info(&quot;Exception rest service -> {}&quot;, exception.getMessage());</
     </bpmn2:subProcess>
   </bpmn2:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_Process_1" bpmnElement="it.redhat.demo.exception-handler-subprocess">
+    <bpmndi:BPMNPlane id="BPMNPlane_Process_1" bpmnElement="it.redhat.demo.rest-global-exception-handler">
       <bpmndi:BPMNShape id="BPMNShape_SubProcess_1" bpmnElement="SubProcess_1" isExpanded="true">
         <dc:Bounds height="198.0" width="465.0" x="36.0" y="123.0"/>
-        <bpmndi:BPMNLabel>
+        <bpmndi:BPMNLabel id="BPMNLabel_1">
           <dc:Bounds height="11.0" width="58.0" x="42.0" y="126.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_StartEvent_1" bpmnElement="StartEvent_1">
         <dc:Bounds height="0.0" width="0.0" x="45.0" y="45.0"/>
-        <bpmndi:BPMNLabel>
+        <bpmndi:BPMNLabel id="BPMNLabel_2">
           <dc:Bounds height="11.0" width="57.0" x="35.0" y="81.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_Task_1" bpmnElement="Task_1" isExpanded="true">
         <dc:Bounds height="50.0" width="110.0" x="180.0" y="38.0"/>
-        <bpmndi:BPMNLabel>
+        <bpmndi:BPMNLabel id="BPMNLabel_3">
           <dc:Bounds height="11.0" width="79.0" x="195.0" y="57.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_EndEvent_1" bpmnElement="EndEvent_1">
         <dc:Bounds height="36.0" width="36.0" x="364.0" y="45.0"/>
-        <bpmndi:BPMNLabel>
+        <bpmndi:BPMNLabel id="BPMNLabel_4">
           <dc:Bounds height="11.0" width="53.0" x="356.0" y="81.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_StartEvent_2" bpmnElement="StartEvent_2">
         <dc:Bounds height="36.0" width="36.0" x="68.0" y="205.0"/>
-        <bpmndi:BPMNLabel>
+        <bpmndi:BPMNLabel id="BPMNLabel_5">
           <dc:Bounds height="11.0" width="47.0" x="63.0" y="241.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_ScriptTask_1" bpmnElement="ScriptTask_1" isExpanded="true">
         <dc:Bounds height="50.0" width="110.0" x="200.0" y="198.0"/>
-        <bpmndi:BPMNLabel>
+        <bpmndi:BPMNLabel id="BPMNLabel_6">
           <dc:Bounds height="11.0" width="92.0" x="209.0" y="217.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_EndEvent_2" bpmnElement="EndEvent_2">
         <dc:Bounds height="36.0" width="36.0" x="410.0" y="205.0"/>
-        <bpmndi:BPMNLabel>
+        <bpmndi:BPMNLabel id="BPMNLabel_7">
           <dc:Bounds height="11.0" width="43.0" x="407.0" y="241.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
@@ -238,25 +238,25 @@ logger.info(&quot;Exception rest service -> {}&quot;, exception.getMessage());</
         <di:waypoint xsi:type="dc:Point" x="81.0" y="63.0"/>
         <di:waypoint xsi:type="dc:Point" x="130.0" y="63.0"/>
         <di:waypoint xsi:type="dc:Point" x="180.0" y="63.0"/>
-        <bpmndi:BPMNLabel/>
+        <bpmndi:BPMNLabel id="BPMNLabel_8"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_2" bpmnElement="SequenceFlow_2" sourceElement="BPMNShape_Task_1" targetElement="BPMNShape_EndEvent_1">
         <di:waypoint xsi:type="dc:Point" x="290.0" y="63.0"/>
         <di:waypoint xsi:type="dc:Point" x="327.0" y="63.0"/>
         <di:waypoint xsi:type="dc:Point" x="364.0" y="63.0"/>
-        <bpmndi:BPMNLabel/>
+        <bpmndi:BPMNLabel id="BPMNLabel_9"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_3" bpmnElement="SequenceFlow_3" sourceElement="BPMNShape_ScriptTask_1" targetElement="BPMNShape_EndEvent_2">
         <di:waypoint xsi:type="dc:Point" x="310.0" y="223.0"/>
         <di:waypoint xsi:type="dc:Point" x="360.0" y="223.0"/>
         <di:waypoint xsi:type="dc:Point" x="410.0" y="223.0"/>
-        <bpmndi:BPMNLabel/>
+        <bpmndi:BPMNLabel id="BPMNLabel_10"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_4" bpmnElement="SequenceFlow_4" sourceElement="BPMNShape_StartEvent_2" targetElement="BPMNShape_ScriptTask_1">
         <di:waypoint xsi:type="dc:Point" x="104.0" y="223.0"/>
         <di:waypoint xsi:type="dc:Point" x="152.0" y="223.0"/>
         <di:waypoint xsi:type="dc:Point" x="200.0" y="223.0"/>
-        <bpmndi:BPMNLabel/>
+        <bpmndi:BPMNLabel id="BPMNLabel_11"/>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

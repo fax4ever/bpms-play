@@ -1,4 +1,4 @@
-package it.redhat.demo.reh;
+package it.redhat.demo.rest.inline;
 
 import java.util.HashMap;
 
@@ -12,8 +12,9 @@ import org.kie.api.runtime.manager.RuntimeManager;
 import org.kie.api.runtime.process.ProcessInstance;
 
 import it.redhat.demo.model.Command;
+import it.redhat.demo.util.CompleteNoActionWid;
 
-public class ExceptionHandlerProcessTest extends JbpmJUnitBaseTestCase {
+public class RestInlineExceptionHandlerProcessTest extends JbpmJUnitBaseTestCase {
 	
 	protected final static String PROCESSES_BASE_PATH = "it/redhat/demo/";
 	
@@ -21,19 +22,19 @@ public class ExceptionHandlerProcessTest extends JbpmJUnitBaseTestCase {
 	protected RuntimeManager runtimeManager;
 	protected RuntimeEngine runtimeEngine;
 	
-	public ExceptionHandlerProcessTest() {
+	public RestInlineExceptionHandlerProcessTest() {
 		super(true, true);
 	}
 	
 	@Before
 	public void before() {
 
-		runtimeManager = createRuntimeManager(PROCESSES_BASE_PATH + "exception-handler.bpmn2");
+		runtimeManager = createRuntimeManager(PROCESSES_BASE_PATH + "rest-inline-exception-handler.bpmn2");
 
 		runtimeEngine = getRuntimeEngine();
 		kieSession = runtimeEngine.getKieSession();
 
-		kieSession.getWorkItemManager().registerWorkItemHandler("Rest", new RestStub());
+		kieSession.getWorkItemManager().registerWorkItemHandler("Rest", new CompleteNoActionWid());
 
 	}
 	
@@ -57,7 +58,7 @@ public class ExceptionHandlerProcessTest extends JbpmJUnitBaseTestCase {
 		
 		parameters.put("command", command);
 		
-		ProcessInstance pinstance = kieSession.startProcess("it.redhat.demo.exception-handler", parameters);
+		ProcessInstance pinstance = kieSession.startProcess("it.redhat.demo.rest-inline-exception-handler", parameters);
 		assertProcessInstanceCompleted(pinstance.getId());
 		
 	}

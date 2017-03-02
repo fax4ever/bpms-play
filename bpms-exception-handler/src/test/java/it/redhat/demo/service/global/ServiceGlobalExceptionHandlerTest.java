@@ -1,4 +1,4 @@
-package it.redhat.demo.geh;
+package it.redhat.demo.service.global;
 
 import java.util.HashMap;
 
@@ -15,7 +15,7 @@ import org.kie.api.runtime.process.ProcessInstance;
 
 import it.redhat.demo.service.ExceptionService;
 
-public class GlobalExceptionHandlingProcessTest extends JbpmJUnitBaseTestCase {
+public class ServiceGlobalExceptionHandlerTest extends JbpmJUnitBaseTestCase {
 	
 	protected final static String PROCESSES_BASE_PATH = "it/redhat/demo/";
 	
@@ -23,14 +23,14 @@ public class GlobalExceptionHandlingProcessTest extends JbpmJUnitBaseTestCase {
 	protected RuntimeManager runtimeManager;
 	protected RuntimeEngine runtimeEngine;
 	
-	public GlobalExceptionHandlingProcessTest() {
+	public ServiceGlobalExceptionHandlerTest() {
 		super(true, true);
 	}
 	
 	@Before
 	public void before() {
 
-		runtimeManager = createRuntimeManager(PROCESSES_BASE_PATH + "global-exception-handling.bpmn2");
+		runtimeManager = createRuntimeManager(PROCESSES_BASE_PATH + "service-global-exception-handler.bpmn2");
 
 		runtimeEngine = getRuntimeEngine();
 		kieSession = runtimeEngine.getKieSession();
@@ -56,7 +56,7 @@ public class GlobalExceptionHandlingProcessTest extends JbpmJUnitBaseTestCase {
 		HashMap<String, Object> params = new HashMap<>();
 		params.put("serviceInputItem", "Input to Original Service");
 		
-		ProcessInstance pi = kieSession.startProcess("it.redhat.demo.global-exception-handling", params);
+		ProcessInstance pi = kieSession.startProcess("it.redhat.demo.service-global-exception-handler", params);
 		
 		assertProcessInstanceAborted(pi.getId());
 		
