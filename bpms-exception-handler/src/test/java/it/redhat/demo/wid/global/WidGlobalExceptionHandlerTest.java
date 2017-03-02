@@ -3,13 +3,13 @@ package it.redhat.demo.wid.global;
 import java.util.HashMap;
 
 import org.jbpm.test.JbpmJUnitBaseTestCase;
-import org.jbpm.workflow.instance.WorkflowRuntimeException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.manager.RuntimeEngine;
 import org.kie.api.runtime.manager.RuntimeManager;
+import org.kie.api.runtime.process.ProcessInstance;
 
 import it.redhat.demo.wid.MyRuntimeExceptionThrowerWid;
 
@@ -45,12 +45,14 @@ protected final static String PROCESSES_BASE_PATH = "it/redhat/demo/";
 
 	}
 	
-	@Test(expected = WorkflowRuntimeException.class)
+	@Test
 	public void test() {
 		
 		HashMap<String, Object> parameters = new HashMap<>();
 		parameters.put("input", "this is the input");
-		kieSession.startProcess("it.redhat.demo.wid-global-exception-handler", parameters);
+		ProcessInstance pi = kieSession.startProcess("it.redhat.demo.wid-global-exception-handler", parameters);
+		
+		assertProcessInstanceAborted(pi.getId());
 		
 	}
 

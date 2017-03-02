@@ -6,14 +6,14 @@
   <bpmn2:itemDefinition id="ItemDefinition_172" isCollection="false" structureRef="it.redhat.demo.excpetion.MyRuntimeException"/>
   <bpmn2:itemDefinition id="ItemDefinition_958" isCollection="false" structureRef="org.slf4j.LoggerFactory"/>
   <bpmn2:itemDefinition id="ItemDefinition_960" isCollection="false" structureRef="org.slf4j.Logger"/>
-  <bpmn2:error id="Error_1" errorCode="it.redhat.demo.MyRuntimeException" name="myError" structureRef="ItemDefinition_172"/>
+  <bpmn2:error id="Error_1" errorCode="it.redhat.demo.excpetion.MyRuntimeException" name="myError" structureRef="ItemDefinition_172"/>
   <bpmn2:process id="it.redhat.demo.wid-global-exception-handler" tns:packageName="it.redhat.demo" name="wid-global-exception-handler" isExecutable="true" processType="Private">
     <bpmn2:extensionElements>
       <tns:import name="it.redhat.demo.excpetion.MyRuntimeException"/>
       <tns:import name="org.slf4j.LoggerFactory"/>
       <tns:import name="org.slf4j.Logger"/>
     </bpmn2:extensionElements>
-    <bpmn2:property id="input" itemSubjectRef="ItemDefinition_172" name="input"/>
+    <bpmn2:property id="input" itemSubjectRef="ItemDefinition_1" name="input"/>
     <bpmn2:property id="exception" itemSubjectRef="ItemDefinition_172" name="exception"/>
     <bpmn2:startEvent id="StartEvent_1" name="StartProcess">
       <bpmn2:extensionElements>
@@ -104,7 +104,7 @@ logger.info(&quot;Exception rest service -> {}&quot;, exception.getMessage());</
     <bpmndi:BPMNPlane id="BPMNPlane_Process_1" bpmnElement="it.redhat.demo.wid-global-exception-handler">
       <bpmndi:BPMNShape id="BPMNShape_SubProcess_1" bpmnElement="SubProcess_1" isExpanded="true">
         <dc:Bounds height="157.0" width="421.0" x="20.0" y="124.0"/>
-        <bpmndi:BPMNLabel>
+        <bpmndi:BPMNLabel id="BPMNLabel_1">
           <dc:Bounds height="11.0" width="58.0" x="26.0" y="127.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
@@ -128,19 +128,19 @@ logger.info(&quot;Exception rest service -> {}&quot;, exception.getMessage());</
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_StartEvent_2" bpmnElement="StartEvent_2">
         <dc:Bounds height="36.0" width="36.0" x="52.0" y="177.0"/>
-        <bpmndi:BPMNLabel>
+        <bpmndi:BPMNLabel id="BPMNLabel_4">
           <dc:Bounds height="11.0" width="55.0" x="43.0" y="213.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_ScriptTask_2" bpmnElement="ScriptTask_2" isExpanded="true">
         <dc:Bounds height="50.0" width="110.0" x="170.0" y="170.0"/>
-        <bpmndi:BPMNLabel>
+        <bpmndi:BPMNLabel id="BPMNLabel_5">
           <dc:Bounds height="11.0" width="92.0" x="179.0" y="189.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_EndEvent_3" bpmnElement="EndEvent_3">
         <dc:Bounds height="36.0" width="36.0" x="348.0" y="177.0"/>
-        <bpmndi:BPMNLabel>
+        <bpmndi:BPMNLabel id="BPMNLabel_6">
           <dc:Bounds height="11.0" width="51.0" x="341.0" y="213.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
@@ -160,13 +160,13 @@ logger.info(&quot;Exception rest service -> {}&quot;, exception.getMessage());</
         <di:waypoint xsi:type="dc:Point" x="88.0" y="195.0"/>
         <di:waypoint xsi:type="dc:Point" x="129.0" y="195.0"/>
         <di:waypoint xsi:type="dc:Point" x="170.0" y="195.0"/>
-        <bpmndi:BPMNLabel/>
+        <bpmndi:BPMNLabel id="BPMNLabel_9"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_2" bpmnElement="SequenceFlow_2" sourceElement="BPMNShape_ScriptTask_2" targetElement="BPMNShape_EndEvent_3">
         <di:waypoint xsi:type="dc:Point" x="280.0" y="195.0"/>
         <di:waypoint xsi:type="dc:Point" x="314.0" y="195.0"/>
         <di:waypoint xsi:type="dc:Point" x="348.0" y="195.0"/>
-        <bpmndi:BPMNLabel/>
+        <bpmndi:BPMNLabel id="BPMNLabel_10"/>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

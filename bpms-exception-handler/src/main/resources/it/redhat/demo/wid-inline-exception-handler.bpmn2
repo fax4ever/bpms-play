@@ -6,7 +6,7 @@
   <bpmn2:itemDefinition id="ItemDefinition_172" isCollection="false" structureRef="it.redhat.demo.excpetion.MyRuntimeException"/>
   <bpmn2:itemDefinition id="ItemDefinition_958" isCollection="false" structureRef="org.slf4j.LoggerFactory"/>
   <bpmn2:itemDefinition id="ItemDefinition_960" isCollection="false" structureRef="org.slf4j.Logger"/>
-  <bpmn2:error id="Error_1" errorCode="it.redhat.demo.MyRuntimeException" name="myError" structureRef="ItemDefinition_172"/>
+  <bpmn2:error id="Error_1" errorCode="it.redhat.demo.excpetion.MyRuntimeException" name="myError" structureRef="ItemDefinition_172"/>
   <bpmn2:process id="it.redhat.demo.wid-inline-exception-handler" tns:packageName="it.redhat.demo" name="wid-inline-exception-handler" isExecutable="true" processType="Private">
     <bpmn2:extensionElements>
       <tns:import name="it.redhat.demo.excpetion.MyRuntimeException"/>
