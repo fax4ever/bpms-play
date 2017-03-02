@@ -9,13 +9,15 @@ import it.redhat.demo.excpetion.MyRuntimeException;
 public class MyRuntimeExceptionThrowerWid implements WorkItemHandler {
 
 	@Override
-	public void abortWorkItem(WorkItem arg0, WorkItemManager arg1) {
+	public void abortWorkItem(WorkItem workItem, WorkItemManager workItemManager) {
 		
 	}
 
 	@Override
-	public void executeWorkItem(WorkItem arg0, WorkItemManager arg1) {
-		throw new MyRuntimeException("my custom excetion");
+	public void executeWorkItem(WorkItem workItem, WorkItemManager workItemManager) {
+		String input = (String) workItem.getParameter("input");
+		
+		throw new MyRuntimeException("my custom excetion input: " + input);
 	}
 
 }

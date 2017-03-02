@@ -22,5 +22,13 @@ import org.drools.core.process.core.datatype.impl.type.ObjectDataType;
         "Status" : new StringDataType()
      ],
     "displayName" : "Rest"
+  ],
+  [
+    "name" : "MyRuntimeExceptionThrowerWid",
+  	 "parameters" : [
+         "input" : new StringDataType()
+      ],
+  	"results" : [],
+    "displayName" : "MyRuntimeExceptionThrowerWid"
   ]
 ]
