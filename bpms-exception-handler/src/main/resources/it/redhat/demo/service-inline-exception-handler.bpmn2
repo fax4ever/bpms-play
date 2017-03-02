@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- origin at X=0.0 Y=0.0 -->
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:java="http://www.java.com/javaTypes" xmlns:tns="http://www.jboss.org/drools" xmlns="http://www.jboss.org/drools" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd http://www.jboss.org/drools drools.xsd http://www.bpsim.org/schemas/1.0 bpsim.xsd" id="Definition" exporter="org.eclipse.bpmn2.modeler.core" exporterVersion="1.3.2.Final-v20161020-1541-B59" expressionLanguage="http://www.mvel.org/2.0" targetNamespace="http://www.jboss.org/drools" typeLanguage="http://www.java.com/javaTypes">
+  <bpmn2:itemDefinition id="ItemDefinition_2" isCollection="false" structureRef="org.slf4j.Logger"/>
+  <bpmn2:itemDefinition id="ItemDefinition_4" isCollection="false" structureRef="org.slf4j.LoggerFactory"/>
+  <bpmn2:itemDefinition id="ItemDefinition_13" isCollection="false" structureRef="java.lang.String"/>
+  <bpmn2:itemDefinition id="ItemDefinition_212" isCollection="false" structureRef="it.redhat.demo.service.MyRuntimeExceptionThrowerService"/>
+  <bpmn2:itemDefinition id="ItemDefinition_1051" isCollection="false" structureRef="java.lang.Exception"/>
+  <bpmn2:itemDefinition id="ItemDefinition_2403" isCollection="false" structureRef="it.redhat.demo.excpetion.MyRuntimeException"/>
+  <bpmn2:error id="Error_1" errorCode="org.jbpm.bpmn2.handler.WorkItemHandlerRuntimeException" name="exception" structureRef="ItemDefinition_1051"/>
+  <bpmn2:message id="Message_1" itemRef="ItemDefinition_13" name="message"/>
+  <bpmn2:interface id="Interface_1" implementationRef="it.redhat.demo.service.MyRuntimeExceptionThrowerService" name="MyRuntimeExceptionThrowerService">
+    <bpmn2:operation id="Operation_1" name="throwException">
+      <bpmn2:inMessageRef>Message_1</bpmn2:inMessageRef>
+    </bpmn2:operation>
+  </bpmn2:interface>
+  <bpmn2:process id="it.redhat.demo.service-inline-exception-handler" tns:packageName="it.redhat.demo" name="service-inline-exception-handler" isExecutable="true" processType="Private">
+    <bpmn2:extensionElements>
+      <tns:import name="org.slf4j.Logger"/>
+      <tns:import name="org.slf4j.LoggerFactory"/>
+      <tns:import name="it.redhat.demo.service.MyRuntimeExceptionThrowerService"/>
+      <tns:import name="java.lang.Exception"/>
+      <tns:import name="it.redhat.demo.excpetion.MyRuntimeException"/>
+    </bpmn2:extensionElements>
+    <bpmn2:property id="message" itemSubjectRef="ItemDefinition_13" name="message"/>
+    <bpmn2:property id="exception" itemSubjectRef="ItemDefinition_1051" name="exception"/>
+    <bpmn2:startEvent id="StartEvent_1" name="Start Process">
+      <bpmn2:extensionElements>
+        <tns:metaData name="elementname">
+          <tns:metaValue><![CDATA[Start Process]]></tns:metaValue>
+        </tns:metaData>
+      </bpmn2:extensionElements>
+      <bpmn2:outgoing>SequenceFlow_1</bpmn2:outgoing>
+    </bpmn2:startEvent>
+    <bpmn2:serviceTask id="ServiceTask_1" name="MyRuntimeExceptionThrowerService" implementation="Java" operationRef="Operation_1">
+      <bpmn2:extensionElements>
+        <tns:metaData name="elementname">
+          <tns:metaValue><![CDATA[MyRuntimeExceptionThrowerService]]></tns:metaValue>
+        </tns:metaData>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_1</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_2</bpmn2:outgoing>
+      <bpmn2:ioSpecification id="InputOutputSpecification_2">
+        <bpmn2:dataInput id="DataInput_1" itemSubjectRef="ItemDefinition_13" name="Parameter"/>
+        <bpmn2:inputSet id="InputSet_2" name="Input Set 2">
+          <bpmn2:dataInputRefs>DataInput_1</bpmn2:dataInputRefs>
+        </bpmn2:inputSet>
+        <bpmn2:outputSet id="OutputSet_2" name="Output Set 2"/>
+      </bpmn2:ioSpecification>
+      <bpmn2:dataInputAssociation id="DataInputAssociation_3">
+        <bpmn2:sourceRef>message</bpmn2:sourceRef>
+        <bpmn2:targetRef>DataInput_1</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+    </bpmn2:serviceTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_1" tns:priority="1" sourceRef="StartEvent_1" targetRef="ServiceTask_1"/>
+    <bpmn2:endEvent id="EndEvent_1" name="End Process">
+      <bpmn2:extensionElements>
+        <tns:metaData name="elementname">
+          <tns:metaValue><![CDATA[End Process]]></tns:metaValue>
+        </tns:metaData>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_2</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:sequenceFlow id="SequenceFlow_2" tns:priority="1" sourceRef="ServiceTask_1" targetRef="EndEvent_1"/>
+    <bpmn2:boundaryEvent id="BoundaryEvent_1" name="CatchException" attachedToRef="ServiceTask_1">
+      <bpmn2:extensionElements>
+        <tns:metaData name="elementname">
+          <tns:metaValue><![CDATA[CatchException]]></tns:metaValue>
+        </tns:metaData>
+      </bpmn2:extensionElements>
+      <bpmn2:outgoing>SequenceFlow_3</bpmn2:outgoing>
+      <bpmn2:dataOutput id="DataOutput_1" itemSubjectRef="ItemDefinition_1051" name="Error_1_Output"/>
+      <bpmn2:dataOutputAssociation id="DataOutputAssociation_1">
+        <bpmn2:sourceRef>DataOutput_1</bpmn2:sourceRef>
+        <bpmn2:targetRef>exception</bpmn2:targetRef>
+      </bpmn2:dataOutputAssociation>
+      <bpmn2:outputSet id="OutputSet_3" name="Output Set 3">
+        <bpmn2:dataOutputRefs>DataOutput_1</bpmn2:dataOutputRefs>
+      </bpmn2:outputSet>
+      <bpmn2:errorEventDefinition id="ErrorEventDefinition_1" errorRef="Error_1"/>
+    </bpmn2:boundaryEvent>
+    <bpmn2:scriptTask id="ScriptTask_1" name="ExcpetionHandlerTask" scriptFormat="http://www.java.com/java">
+      <bpmn2:extensionElements>
+        <tns:metaData name="elementname">
+          <tns:metaValue><![CDATA[ExcpetionHandlerTask]]></tns:metaValue>
+        </tns:metaData>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_3</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_4</bpmn2:outgoing>
+      <bpmn2:script>Logger logger = null;
+logger = LoggerFactory.getLogger(&quot;it.redhat.demo.task.script.ExcpetionHandlerTask&quot;);
+logger.info(&quot;Exception rest service -> {}&quot;, exception.getMessage());</bpmn2:script>
+    </bpmn2:scriptTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_3" tns:priority="1" sourceRef="BoundaryEvent_1" targetRef="ScriptTask_1"/>
+    <bpmn2:endEvent id="EndEvent_2" name="End Catch Exception">
+      <bpmn2:extensionElements>
+        <tns:metaData name="elementname">
+          <tns:metaValue><![CDATA[End Catch Exception]]></tns:metaValue>
+        </tns:metaData>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_4</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:sequenceFlow id="SequenceFlow_4" tns:priority="1" sourceRef="ScriptTask_1" targetRef="EndEvent_2"/>
+  </bpmn2:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_Process_1" bpmnElement="it.redhat.demo.service-inline-exception-handler">
+      <bpmndi:BPMNShape id="BPMNShape_StartEvent_1" bpmnElement="StartEvent_1">
+        <dc:Bounds height="0.0" width="0.0" x="45.0" y="45.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="11.0" width="57.0" x="35.0" y="81.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_ServiceTask_1" bpmnElement="ServiceTask_1" isExpanded="true">
+        <dc:Bounds height="50.0" width="110.0" x="186.0" y="38.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="22.0" width="95.0" x="193.0" y="52.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_EndEvent_1" bpmnElement="EndEvent_1">
+        <dc:Bounds height="36.0" width="36.0" x="364.0" y="45.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="11.0" width="53.0" x="356.0" y="81.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_BoundaryEvent_1" bpmnElement="BoundaryEvent_1">
+        <dc:Bounds height="36.0" width="36.0" x="228.0" y="70.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="11.0" width="65.0" x="214.0" y="106.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_ScriptTask_1" bpmnElement="ScriptTask_1" isExpanded="true">
+        <dc:Bounds height="50.0" width="110.0" x="191.0" y="150.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="11.0" width="92.0" x="200.0" y="169.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_EndEvent_2" bpmnElement="EndEvent_2">
+        <dc:Bounds height="36.0" width="36.0" x="369.0" y="157.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="22.0" width="52.0" x="361.0" y="193.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_1" bpmnElement="SequenceFlow_1" sourceElement="BPMNShape_StartEvent_1" targetElement="BPMNShape_ServiceTask_1">
+        <di:waypoint xsi:type="dc:Point" x="81.0" y="63.0"/>
+        <di:waypoint xsi:type="dc:Point" x="133.0" y="63.0"/>
+        <di:waypoint xsi:type="dc:Point" x="186.0" y="63.0"/>
+        <bpmndi:BPMNLabel/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_2" bpmnElement="SequenceFlow_2" sourceElement="BPMNShape_ServiceTask_1" targetElement="BPMNShape_EndEvent_1">
+        <di:waypoint xsi:type="dc:Point" x="296.0" y="63.0"/>
+        <di:waypoint xsi:type="dc:Point" x="330.0" y="63.0"/>
+        <di:waypoint xsi:type="dc:Point" x="364.0" y="63.0"/>
+        <bpmndi:BPMNLabel/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_3" bpmnElement="SequenceFlow_3" sourceElement="BPMNShape_BoundaryEvent_1" targetElement="BPMNShape_ScriptTask_1">
+        <di:waypoint xsi:type="dc:Point" x="246.0" y="106.0"/>
+        <di:waypoint xsi:type="dc:Point" x="246.0" y="128.0"/>
+        <di:waypoint xsi:type="dc:Point" x="246.0" y="150.0"/>
+        <bpmndi:BPMNLabel/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_4" bpmnElement="SequenceFlow_4" sourceElement="BPMNShape_ScriptTask_1" targetElement="BPMNShape_EndEvent_2">
+        <di:waypoint xsi:type="dc:Point" x="301.0" y="175.0"/>
+        <di:waypoint xsi:type="dc:Point" x="335.0" y="175.0"/>
+        <di:waypoint xsi:type="dc:Point" x="369.0" y="175.0"/>
+        <bpmndi:BPMNLabel/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn2:definitions>
