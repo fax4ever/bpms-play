@@ -12,7 +12,7 @@ import org.kie.api.runtime.manager.RuntimeManager;
 import org.kie.api.runtime.process.ProcessInstance;
 
 import it.redhat.demo.model.Command;
-import it.redhat.demo.util.CompleteNoActionWid;
+import it.redhat.demo.util.ExcpetionThrowerWid;
 
 public class RestGlobalExceptionHandlerTest extends JbpmJUnitBaseTestCase {
 	
@@ -34,7 +34,7 @@ public class RestGlobalExceptionHandlerTest extends JbpmJUnitBaseTestCase {
 		runtimeEngine = getRuntimeEngine();
 		kieSession = runtimeEngine.getKieSession();
 
-		kieSession.getWorkItemManager().registerWorkItemHandler("Rest", new CompleteNoActionWid());
+		kieSession.getWorkItemManager().registerWorkItemHandler("Rest", new ExcpetionThrowerWid());
 
 	}
 	
@@ -59,7 +59,7 @@ public class RestGlobalExceptionHandlerTest extends JbpmJUnitBaseTestCase {
 		parameters.put("command", command);
 		
 		ProcessInstance pinstance = kieSession.startProcess("it.redhat.demo.rest-global-exception-handler", parameters);
-		assertProcessInstanceCompleted(pinstance.getId());
+		assertProcessInstanceAborted(pinstance.getId());
 		
 	}
 

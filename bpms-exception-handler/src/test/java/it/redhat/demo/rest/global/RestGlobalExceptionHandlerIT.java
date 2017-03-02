@@ -1,11 +1,6 @@
 package it.redhat.demo.rest.global;
 
-import java.util.HashMap;
-
 import org.jbpm.process.workitem.rest.RESTWorkItemHandler;
-import org.kie.api.runtime.process.ProcessInstance;
-
-import it.redhat.demo.model.Command;
 
 public class RestGlobalExceptionHandlerIT extends RestGlobalExceptionHandlerTest {
 
@@ -18,23 +13,6 @@ public class RestGlobalExceptionHandlerIT extends RestGlobalExceptionHandlerTest
 		kieSession = runtimeEngine.getKieSession();
 
 		kieSession.getWorkItemManager().registerWorkItemHandler("Rest", new RESTWorkItemHandler(this.getClass().getClassLoader()));
-		
-	}
-	
-	@Override
-	public void test() {
-		
-		HashMap<String, Object> parameters = new HashMap<>();
-		
-		Command command = new Command();
-		command.setName("Fabio M.");
-		command.setValue(739);
-		command.setOption(false);
-		
-		parameters.put("command", command);
-		
-		ProcessInstance pinstance = kieSession.startProcess("it.redhat.demo.rest-global-exception-handler", parameters);
-		assertProcessInstanceAborted(pinstance.getId());
 		
 	}
 	
