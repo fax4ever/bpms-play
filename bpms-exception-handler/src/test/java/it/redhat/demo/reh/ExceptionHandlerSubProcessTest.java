@@ -13,7 +13,7 @@ import org.kie.api.runtime.process.ProcessInstance;
 
 import it.redhat.demo.model.Command;
 
-public class ExceptionHandlerProcessTest extends JbpmJUnitBaseTestCase {
+public class ExceptionHandlerSubProcessTest extends JbpmJUnitBaseTestCase {
 	
 	protected final static String PROCESSES_BASE_PATH = "it/redhat/demo/";
 	
@@ -21,14 +21,14 @@ public class ExceptionHandlerProcessTest extends JbpmJUnitBaseTestCase {
 	protected RuntimeManager runtimeManager;
 	protected RuntimeEngine runtimeEngine;
 	
-	public ExceptionHandlerProcessTest() {
+	public ExceptionHandlerSubProcessTest() {
 		super(true, true);
 	}
 	
 	@Before
 	public void before() {
 
-		runtimeManager = createRuntimeManager(PROCESSES_BASE_PATH + "exception-handler.bpmn2");
+		runtimeManager = createRuntimeManager(PROCESSES_BASE_PATH + "exception-handler-subprocess.bpmn2");
 
 		runtimeEngine = getRuntimeEngine();
 		kieSession = runtimeEngine.getKieSession();
@@ -57,8 +57,8 @@ public class ExceptionHandlerProcessTest extends JbpmJUnitBaseTestCase {
 		
 		parameters.put("command", command);
 		
-		ProcessInstance pinstance = kieSession.startProcess("it.redhat.demo.exception-handler", parameters);
-		assertProcessInstanceCompleted(pinstance.getId());
+		ProcessInstance pinstance = kieSession.startProcess("it.redhat.demo.exception-handler-subprocess", parameters);
+		assertProcessInstanceAborted(pinstance.getId());
 		
 	}
 

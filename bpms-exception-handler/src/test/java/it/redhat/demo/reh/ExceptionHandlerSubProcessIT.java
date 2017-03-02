@@ -2,7 +2,7 @@ package it.redhat.demo.reh;
 
 import org.jbpm.process.workitem.rest.RESTWorkItemHandler;
 
-public class ExceptionHandlerProcessIT extends ExceptionHandlerProcessTest {
+public class ExceptionHandlerSubProcessIT extends ExceptionHandlerSubProcessTest {
 
 	@Override
 	public void before() {
