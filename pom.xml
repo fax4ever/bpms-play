@@ -27,6 +27,7 @@
         <module>bpms-advanced-migration</module>
         <module>bpms-exception-handler</module>
         <module>bpms-asynchronous-execution</module>
+        <module>bpms-stubborn-rest-client</module>
     </modules>
 
     <properties>
