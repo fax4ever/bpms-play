@@ -5,7 +5,7 @@ import org.kie.api.runtime.process.WorkItem;
 import org.kie.api.runtime.process.WorkItemHandler;
 import org.kie.api.runtime.process.WorkItemManager;
 
-public class ExcpetionThrowerWid implements WorkItemHandler {
+public class WIRuntimeExceptionThrowerWid implements WorkItemHandler {
 
 	@Override
 	public void abortWorkItem(WorkItem workItem, WorkItemManager workItemManager) {

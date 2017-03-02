@@ -12,7 +12,7 @@ import org.kie.api.runtime.manager.RuntimeManager;
 import org.kie.api.runtime.process.ProcessInstance;
 
 import it.redhat.demo.model.Command;
-import it.redhat.demo.util.ExcpetionThrowerWid;
+import it.redhat.demo.util.WIRuntimeExceptionThrowerWid;
 
 public class RestInlineExceptionHandlerProcessTest extends JbpmJUnitBaseTestCase {
 	
@@ -34,7 +34,7 @@ public class RestInlineExceptionHandlerProcessTest extends JbpmJUnitBaseTestCase
 		runtimeEngine = getRuntimeEngine();
 		kieSession = runtimeEngine.getKieSession();
 
-		kieSession.getWorkItemManager().registerWorkItemHandler("Rest", new ExcpetionThrowerWid());
+		kieSession.getWorkItemManager().registerWorkItemHandler("Rest", new WIRuntimeExceptionThrowerWid());
 
 	}
 	
