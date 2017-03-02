@@ -7,7 +7,7 @@
   <bpmn2:itemDefinition id="ItemDefinition_5" isCollection="false" structureRef="org.slf4j.LoggerFactory"/>
   <bpmn2:itemDefinition id="ItemDefinition_7" isCollection="false" structureRef="org.slf4j.Logger"/>
   <bpmn2:itemDefinition id="ItemDefinition_55" isCollection="false" structureRef="java.lang.Exception"/>
-  <bpmn2:error id="Error_1" errorCode="code" name="exception" structureRef="ItemDefinition_55"/>
+  <bpmn2:error id="Error_1" errorCode="org.jbpm.bpmn2.handler.WorkItemHandlerRuntimeException" name="exception" structureRef="ItemDefinition_55"/>
   <bpmn2:process id="it.redhat.demo.exception-handler" tns:packageName="it.redhat.demo" name="exception-handler" isExecutable="true" processType="Private">
     <bpmn2:extensionElements>
       <tns:import name="it.redhat.demo.model.Command"/>

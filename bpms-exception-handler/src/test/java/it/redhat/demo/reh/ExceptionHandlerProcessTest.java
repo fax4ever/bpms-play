@@ -57,9 +57,7 @@ public class ExceptionHandlerProcessTest extends JbpmJUnitBaseTestCase {
 		
 		parameters.put("command", command);
 		
-		ProcessInstance proc = kieSession.startProcess("it.redhat.demo.exception-handler", parameters);
-		assertNodeTriggered(proc.getId(), "StartProcess", "RestCommandTask", "EndProcess");
-		assertProcessInstanceCompleted(proc.getId());
+		kieSession.startProcess("it.redhat.demo.exception-handler", parameters);
 		
 	}
 
