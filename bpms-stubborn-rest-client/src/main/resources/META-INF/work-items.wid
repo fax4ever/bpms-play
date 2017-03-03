@@ -1,0 +1,41 @@
+import org.drools.core.process.core.datatype.impl.type.StringDataType;
+import org.drools.core.process.core.datatype.impl.type.IntegerDataType;
+import org.drools.core.process.core.datatype.impl.type.ObjectDataType;
+
+[
+  [
+    "name" : "Rest",
+  	 "parameters" : [
+         "Url" : new StringDataType(),
+         "Method" : new StringDataType(),
+         "HandleResponseErrors" : new StringDataType(),
+         "ResultClass" : new StringDataType(),
+         "ContentType" : new StringDataType(),
+         "Content" : new ObjectDataType(),
+         "AuthType" : new StringDataType(),
+         "ConnectTimeout" : new StringDataType(),
+         "ReadTimeout" : new StringDataType()
+      ],
+  	"results" : [
+        "Result" : new ObjectDataType(),
+        "StatusMsg" : new StringDataType(),
+        "Status" : new StringDataType()
+     ],
+    "displayName" : "Rest"
+  ],
+  [
+	"name" : "InitTask",
+  	 "parameters" : [
+         "maxAttempts" : new IntegerDataType(),
+         "initialDelayInSeconds" : new IntegerDataType(),
+         "contentType" : new StringDataType()
+      ],
+  	"results" : [
+  		 "numAttempts" : new IntegerDataType(),
+         "maxAttempts" : new IntegerDataType(),
+         "initialDelayInSeconds" : new IntegerDataType(),
+         "contentType" : new StringDataType()
+      ],
+    "displayName" : "InitTask"
+  ]
+]
