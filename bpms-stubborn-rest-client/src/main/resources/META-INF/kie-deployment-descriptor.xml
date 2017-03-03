@@ -43,9 +43,15 @@
         </work-item-handler>
         <work-item-handler>
             <resolver>mvel</resolver>
-            <identifier>new it.redhat.demo.wid.MyRuntimeExceptionThrowerWid()</identifier>
+            <identifier>new it.redhat.demo.wih.InitTask()</identifier>
             <parameters/>
-            <name>MyRuntimeExceptionThrowerWid</name>
+            <name>InitTask</name>
+        </work-item-handler>
+        <work-item-handler>
+            <resolver>mvel</resolver>
+            <identifier>new it.redhat.demo.wih.IncreaseAttempts()</identifier>
+            <parameters/>
+            <name>IncreaseAttempts</name>
         </work-item-handler>
     </work-item-handlers>
     <environment-entries/>

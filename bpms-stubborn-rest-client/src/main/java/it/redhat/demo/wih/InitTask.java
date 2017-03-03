@@ -12,7 +12,7 @@ public class InitTask implements WorkItemHandler {
 	private static final String INITIAL_DELAY_IN_SECONDS_PROPERTY = "it.redhat.demo.stubborn.rest.client.initialDelayInSeconds";
 
 	private static final int MAX_ATTEMPTS_DEFAULT = 5;
-	private static final int INITIAL_DELAY_IN_SECONDS_DEFAULT = 0;
+	private static final int INITIAL_DELAY_IN_SECONDS_DEFAULT = 50;
 	private static final String CONTENT_TYPE_DEFAULT = "application/json";
 	
 	@Override
@@ -23,9 +23,9 @@ public class InitTask implements WorkItemHandler {
 	@Override
 	public void executeWorkItem(WorkItem workItem, WorkItemManager workItemManager) {
 		
-		Integer maxAttempts = (Integer) workItem.getParameter("maxAttempts");
-		Integer initialDelayInSeconds = (Integer) workItem.getParameter("initialDelayInSeconds");
-		String contentType = (String) workItem.getParameter("contentType");
+		Integer maxAttempts = (Integer) workItem.getParameter(ProcessInstanceVariable.MAX_ATTEMPTS);
+		Integer initialDelayInSeconds = (Integer) workItem.getParameter(ProcessInstanceVariable.INITIAL_DELAY_IN_SECONDS);
+		String contentType = (String) workItem.getParameter(ProcessInstanceVariable.CONTENT_TYPE);
 		
 		String maxAttemptsProp = System.getProperty(MAX_ATTEMPTS_PROPERTY);
 		String initialDelayInSecondsProp = System.getProperty(INITIAL_DELAY_IN_SECONDS_PROPERTY);
@@ -47,10 +47,10 @@ public class InitTask implements WorkItemHandler {
 		}
 		
 		HashMap<String, Object> results = new HashMap<>();
-		results.put("numAttempts", 0);
-		results.put("maxAttempts", maxAttempts);
-		results.put("initialDelayInSeconds", initialDelayInSeconds);
-		results.put("contentType", contentType);
+		results.put(ProcessInstanceVariable.NUM_ATTEMPTS, 0);
+		results.put(ProcessInstanceVariable.MAX_ATTEMPTS, maxAttempts);
+		results.put(ProcessInstanceVariable.INITIAL_DELAY_IN_SECONDS, initialDelayInSeconds);
+		results.put(ProcessInstanceVariable.CONTENT_TYPE, contentType);
 		
 		workItemManager.completeWorkItem(workItem.getId(), results);
 		

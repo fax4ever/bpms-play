@@ -37,5 +37,17 @@ import org.drools.core.process.core.datatype.impl.type.ObjectDataType;
          "contentType" : new StringDataType()
       ],
     "displayName" : "InitTask"
+  ],
+  [
+	"name" : "IncreaseAttempts",
+  	 "parameters" : [
+         "numAttempts" : new IntegerDataType(),
+         "initialDelayInSeconds" : new IntegerDataType()
+      ],
+  	"results" : [
+  		 "numAttempts" : new IntegerDataType(),
+         "delayAttempts" : new StringDataType()
+      ],
+    "displayName" : "IncreaseAttempts"
   ]
 ]
