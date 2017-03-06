@@ -1,9 +1,13 @@
 package it.redhat.demo.process;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.drools.core.time.impl.PseudoClockScheduler;
 import org.jbpm.test.JbpmJUnitBaseTestCase;
 import org.junit.After;
@@ -21,6 +25,8 @@ import it.redhat.demo.wih.IncreaseAttempts;
 import it.redhat.demo.wih.InitTask;
 
 public class StubbornRestClientTest extends JbpmJUnitBaseTestCase {
+	
+	private static final String MACCALLISTER = "maccallister";
 	
 	private RuntimeManager runtimeManager;
 	private RuntimeEngine runtimeEngine;
@@ -78,6 +84,31 @@ public class StubbornRestClientTest extends JbpmJUnitBaseTestCase {
 	}
 	
 	@Test
+	public void test_happyPath_jsonContent() throws Exception {
+	
+		// register happy path stub
+		kieSession.getWorkItemManager().registerWorkItemHandler("Rest", new HappyRestStub());
+		
+		Command command = new Command();
+		command.setName("Fabio M.");
+		command.setValue(739);
+		command.setOption(false);
+		
+		String json = new ObjectMapper().writer().writeValueAsString(command);
+		
+		HashMap<String,Object> params = new HashMap<>();
+		params.put("url", "http://localhost:8080/eap6-rest/command");
+		params.put("method", "POST");
+		params.put("content", json);
+		
+		ProcessInstance pi = kieSession.startProcess("it.redhat.demo.stubborn-rest-client", params);
+		
+		assertProcessInstanceCompleted(pi.getId());
+		assertNodeTriggered(pi.getId(), "StartProcess", "InitTask", "Try Rest Call", "Rest", "Rest Call OK");
+		
+	}
+	
+	@Test
 	public void test_exceptionOnRestCall() {
 	
 		// register exception thrower stub
@@ -103,18 +134,18 @@ public class StubbornRestClientTest extends JbpmJUnitBaseTestCase {
 		assertProcessInstanceActive(pi.getId());
 		assertNodeTriggered(pi.getId(), "Wait User");
 		
-		List<TaskSummary> tasksAssignedAsPotentialOwner = taskService.getTasksAssignedAsPotentialOwner("maccallister", "en-UK");
+		List<TaskSummary> tasksAssignedAsPotentialOwner = taskService.getTasksAssignedAsPotentialOwner(MACCALLISTER, "en-UK");
 		assertEquals(1, tasksAssignedAsPotentialOwner.size());
 		
 		TaskSummary taskSummary = tasksAssignedAsPotentialOwner.get(0);
 		
-		taskService.claim(taskSummary.getId(), "maccallister");
+		taskService.claim(taskSummary.getId(), MACCALLISTER);
 		
 		// register happy path stub
 		kieSession.getWorkItemManager().registerWorkItemHandler("Rest", new HappyRestStub());
 		
-		taskService.start(taskSummary.getId(), "maccallister");
-		taskService.complete(taskSummary.getId(), "maccallister", new HashMap<>());
+		taskService.start(taskSummary.getId(), MACCALLISTER);
+		taskService.complete(taskSummary.getId(), MACCALLISTER, new HashMap<>());
 		
 		assertProcessInstanceCompleted(pi.getId());
 		assertNodeTriggered(pi.getId(), "Rest Call OK");

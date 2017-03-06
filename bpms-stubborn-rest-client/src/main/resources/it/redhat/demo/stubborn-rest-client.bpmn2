@@ -116,6 +116,19 @@ logger.info(&quot;contentType -> {}&quot;, contentType);
         <tns:metaData name="elementname">
           <tns:metaValue><![CDATA[Rest]]></tns:metaValue>
         </tns:metaData>
+        <tns:onEntry-script scriptFormat="http://www.java.com/java">
+          <tns:script>Logger logger = null;
+logger = LoggerFactory.getLogger(&quot;it.redhat.demo.task.script.RestClient&quot;);
+logger.info(&quot;method {} url {}&quot;, method, url);
+logger.info(&quot;{}&quot;, content);
+</tns:script>
+        </tns:onEntry-script>
+        <tns:onExit-script scriptFormat="http://www.java.com/java">
+          <tns:script>Logger logger = null;
+logger = LoggerFactory.getLogger(&quot;it.redhat.demo.task.script.RestClient&quot;);
+logger.info(&quot;status {} message {}&quot;, status, statusMsg);
+logger.info(&quot;{}&quot;, result);</tns:script>
+        </tns:onExit-script>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_3</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_10</bpmn2:outgoing>
@@ -344,6 +357,11 @@ logger.info(&quot;numAttempts -> {}&quot;, numAttempts);
 logger.info(&quot;delayAttempts -> {}&quot;, delayAttempts);
 </tns:script>
         </tns:onExit-script>
+        <tns:onEntry-script scriptFormat="http://www.java.com/java">
+          <tns:script>Logger logger = null;
+logger = LoggerFactory.getLogger(&quot;it.redhat.demo.task.script.InitTask&quot;);
+logger.info(&quot;exception cached {}&quot;, exception.getMessage());</tns:script>
+        </tns:onEntry-script>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_11</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_12</bpmn2:outgoing>

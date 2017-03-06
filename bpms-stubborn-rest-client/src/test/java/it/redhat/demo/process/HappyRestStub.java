@@ -11,7 +11,13 @@ public class HappyRestStub implements WorkItemHandler {
 	@Override
 	public void executeWorkItem(WorkItem workItem, WorkItemManager manager) {
 		
-		manager.completeWorkItem(workItem.getId(), new HashMap<>());
+		HashMap<String, Object> results = new HashMap<>();
+		
+		results.put("Result", "{}");
+		results.put("StatusMsg", "all good!");
+		results.put("Status", 200);
+		
+		manager.completeWorkItem(workItem.getId(), results);
 		
 	}
 
