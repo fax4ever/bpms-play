@@ -1,7 +1,10 @@
 package it.redhat.demo.process;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import org.drools.core.time.impl.PseudoClockScheduler;
 import org.jbpm.test.JbpmJUnitBaseTestCase;
 import org.junit.After;
 import org.junit.Before;
@@ -10,6 +13,8 @@ import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.manager.RuntimeEngine;
 import org.kie.api.runtime.manager.RuntimeManager;
 import org.kie.api.runtime.process.ProcessInstance;
+import org.kie.api.task.TaskService;
+import org.kie.api.task.model.TaskSummary;
 
 import it.redhat.demo.model.Command;
 import it.redhat.demo.wih.IncreaseAttempts;
@@ -20,6 +25,7 @@ public class StubbornRestClientTest extends JbpmJUnitBaseTestCase {
 	private RuntimeManager runtimeManager;
 	private RuntimeEngine runtimeEngine;
 	private KieSession kieSession;
+	private TaskService taskService;
 	
 	public StubbornRestClientTest() {
 		super(true, true);
@@ -33,6 +39,7 @@ public class StubbornRestClientTest extends JbpmJUnitBaseTestCase {
 		runtimeManager = createRuntimeManager("it/redhat/demo/stubborn-rest-client.bpmn2");	
 		runtimeEngine = getRuntimeEngine();
 		kieSession = runtimeEngine.getKieSession();
+		taskService = runtimeEngine.getTaskService();
 	
 		kieSession.getWorkItemManager().registerWorkItemHandler("InitTask", new InitTask());
 		kieSession.getWorkItemManager().registerWorkItemHandler("IncreaseAttempts", new IncreaseAttempts());
@@ -73,7 +80,7 @@ public class StubbornRestClientTest extends JbpmJUnitBaseTestCase {
 	@Test
 	public void test_exceptionOnRestCall() {
 	
-		// register happy path stub
+		// register exception thrower stub
 		kieSession.getWorkItemManager().registerWorkItemHandler("Rest", new WIRuntimeExceptionThrowerWid());
 		
 		Command command = new Command();
@@ -87,8 +94,30 @@ public class StubbornRestClientTest extends JbpmJUnitBaseTestCase {
 		params.put("content", command);
 		
 		ProcessInstance pi = kieSession.startProcess("it.redhat.demo.stubborn-rest-client", params);
+		assertProcessInstanceActive(pi.getId());
+		assertNodeTriggered(pi.getId(), "StartProcess", "InitTask", "Try Rest Call", "Rest", "RestException", "IncreaseAttempts", "Time / User", "Wait Time");
+		
+		PseudoClockScheduler sessionClock = kieSession.getSessionClock();
+		sessionClock.advanceTime(1000, TimeUnit.SECONDS);
 		
 		assertProcessInstanceActive(pi.getId());
+		assertNodeTriggered(pi.getId(), "Wait User");
+		
+		List<TaskSummary> tasksAssignedAsPotentialOwner = taskService.getTasksAssignedAsPotentialOwner("maccallister", "en-UK");
+		assertEquals(1, tasksAssignedAsPotentialOwner.size());
+		
+		TaskSummary taskSummary = tasksAssignedAsPotentialOwner.get(0);
+		
+		taskService.claim(taskSummary.getId(), "maccallister");
+		
+		// register happy path stub
+		kieSession.getWorkItemManager().registerWorkItemHandler("Rest", new HappyRestStub());
+		
+		taskService.start(taskSummary.getId(), "maccallister");
+		taskService.complete(taskSummary.getId(), "maccallister", new HashMap<>());
+		
+		assertProcessInstanceCompleted(pi.getId());
+		assertNodeTriggered(pi.getId(), "Rest Call OK");
 		
 	}
 

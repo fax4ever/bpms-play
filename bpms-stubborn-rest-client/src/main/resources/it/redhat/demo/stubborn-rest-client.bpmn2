@@ -41,9 +41,7 @@
         <tns:metaData name="elementname">
           <tns:metaValue><![CDATA[InitTask]]></tns:metaValue>
         </tns:metaData>
-        <tns:onEntry-script scriptFormat="http://www.java.com/java">
-          <tns:script></tns:script>
-        </tns:onEntry-script>
+        <tns:onEntry-script scriptFormat="http://www.java.com/java"/>
         <tns:onExit-script scriptFormat="http://www.mvel.org/2.0">
           <tns:script>Logger logger = null;
 logger = LoggerFactory.getLogger(&quot;it.redhat.demo.task.script.InitTask&quot;);
@@ -219,6 +217,17 @@ logger.info(&quot;contentType -> {}&quot;, contentType);
         <tns:metaData name="elementname">
           <tns:metaValue><![CDATA[Wait User]]></tns:metaValue>
         </tns:metaData>
+        <tns:onEntry-script scriptFormat="http://www.java.com/java">
+          <tns:script>Logger logger = null;
+logger = LoggerFactory.getLogger(&quot;it.redhat.demo.task.script.WaitUser&quot;);
+logger.info(&quot;numAttempts ({}) == maxAttempts ({})&quot;, numAttempts, maxAttempts);
+logger.info(&quot;need backoffice intervention on WaitUser Task&quot;);</tns:script>
+        </tns:onEntry-script>
+        <tns:onExit-script scriptFormat="http://www.java.com/java">
+          <tns:script>Logger logger = null;
+logger = LoggerFactory.getLogger(&quot;it.redhat.demo.task.script.WaitUser&quot;);
+logger.info(&quot;backoffice user release retry&quot;);</tns:script>
+        </tns:onExit-script>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_7</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_8</bpmn2:outgoing>
@@ -297,10 +306,10 @@ logger.info(&quot;contentType -> {}&quot;, contentType);
       <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_29" language="http://www.mvel.org/2.0">numAttempts >= maxAttempts</bpmn2:conditionExpression>
     </bpmn2:sequenceFlow>
     <bpmn2:sequenceFlow id="SequenceFlow_8" tns:priority="1" sourceRef="UserTask_1" targetRef="ExclusiveGateway_1"/>
-    <bpmn2:boundaryEvent id="BoundaryEvent_1" name="" attachedToRef="Task_2">
+    <bpmn2:boundaryEvent id="BoundaryEvent_1" name="RestException" attachedToRef="Task_2">
       <bpmn2:extensionElements>
         <tns:metaData name="elementname">
-          <tns:metaValue><![CDATA[]]></tns:metaValue>
+          <tns:metaValue><![CDATA[RestException]]></tns:metaValue>
         </tns:metaData>
       </bpmn2:extensionElements>
       <bpmn2:outgoing>SequenceFlow_11</bpmn2:outgoing>
@@ -446,7 +455,9 @@ logger.info(&quot;delayAttempts -> {}&quot;, delayAttempts);
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_BoundaryEvent_1" bpmnElement="BoundaryEvent_1">
         <dc:Bounds height="36.0" width="36.0" x="747.0" y="160.0"/>
-        <bpmndi:BPMNLabel id="BPMNLabel_10"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_10">
+          <dc:Bounds height="11.0" width="60.0" x="735.0" y="196.0"/>
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_1" bpmnElement="SequenceFlow_1" sourceElement="BPMNShape_StartEvent_1" targetElement="BPMNShape_Task_1">
         <di:waypoint xsi:type="dc:Point" x="81.0" y="153.0"/>
