@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.manager.RuntimeEngine;
 import org.kie.api.runtime.manager.RuntimeManager;
+import org.kie.api.runtime.process.ProcessInstance;
 
 public class ServiceInlineExceptionHandlerTest extends JbpmJUnitBaseTestCase {
 	
@@ -48,7 +49,9 @@ protected final static String PROCESSES_BASE_PATH = "it/redhat/demo/";
 		
 		HashMap<String, Object> parameters = new HashMap<>();
 		parameters.put("input", "this is the input");
-		kieSession.startProcess("it.redhat.demo.service-inline-exception-handler", parameters);
+		ProcessInstance pi = kieSession.startProcess("it.redhat.demo.service-inline-exception-handler", parameters);
+		
+		assertProcessInstanceCompleted(pi.getId());
 		
 	}
 
