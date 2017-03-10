@@ -28,7 +28,7 @@
         <module>bpms-exception-handler</module>
         <module>bpms-asynchronous-execution</module>
         <module>bpms-stubborn-rest-client</module>
-        <module>bpms-task-event-listener</module>
+        <module>bpms-event-listener</module>
     </modules>
 
     <properties>
