@@ -4,7 +4,7 @@
   <bpmn2:itemDefinition id="ItemDefinition_2" isCollection="false" structureRef="org.slf4j.LoggerFactory"/>
   <bpmn2:itemDefinition id="ItemDefinition_4" isCollection="false" structureRef="org.slf4j.Logger"/>
   <bpmn2:itemDefinition id="ItemDefinition_11" isCollection="false" structureRef="java.lang.String"/>
-  <bpmn2:process id="it.redhat.demo.parent-user-process" tns:packageName="it.redhat.demo" name="parent-user-process" isExecutable="true" processType="Private">
+  <bpmn2:process id="it.redhat.demo.user-parent-process" tns:packageName="it.redhat.demo" name="user-parent-process" isExecutable="true" processType="Private">
     <bpmn2:extensionElements>
       <tns:import name="org.slf4j.LoggerFactory"/>
       <tns:import name="org.slf4j.Logger"/>
@@ -28,7 +28,7 @@
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_4</bpmn2:incoming>
     </bpmn2:endEvent>
-    <bpmn2:callActivity id="CallActivity_1" tns:waitForCompletion="true" tns:independent="true" name="CallSubprocess" calledElement="it.redhat.demo.user-task-process">
+    <bpmn2:callActivity id="CallActivity_1" tns:waitForCompletion="true" tns:independent="true" name="CallSubprocess" calledElement="it.redhat.demo.user-sub-process">
       <bpmn2:extensionElements>
         <tns:metaData name="elementname">
           <tns:metaValue><![CDATA[CallSubprocess]]></tns:metaValue>
@@ -78,7 +78,7 @@ kcontext.setVariable(&quot;input&quot;, &quot;This is the input&quot;);</tns:scr
     <bpmn2:sequenceFlow id="SequenceFlow_4" tns:priority="1" sourceRef="CallActivity_1" targetRef="EndEvent_1"/>
   </bpmn2:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_Process_1" bpmnElement="it.redhat.demo.parent-user-process">
+    <bpmndi:BPMNPlane id="BPMNPlane_Process_1" bpmnElement="it.redhat.demo.user-parent-process">
       <bpmndi:BPMNShape id="BPMNShape_StartEvent_1" bpmnElement="StartEvent_1">
         <dc:Bounds height="0.0" width="0.0" x="45.0" y="45.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_1">

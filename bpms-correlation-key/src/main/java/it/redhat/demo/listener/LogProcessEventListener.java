@@ -18,7 +18,6 @@ public class LogProcessEventListener extends DefaultProcessEventListener {
 		Object newValue = event.getNewValue();
 		Object oldValue = event.getOldValue();
 		String variableId = event.getVariableId();
-		String variableInstanceId = event.getVariableInstanceId();
 		
 		ProcessInstanceImpl currentPi = (ProcessInstanceImpl) event.getProcessInstance();
 		ProcessInstanceImpl rootPi = LogProcessEventListener.findRoot(event.getKieRuntime(), currentPi);
@@ -31,7 +30,8 @@ public class LogProcessEventListener extends DefaultProcessEventListener {
 		
 		// using for probing object instance scope
 		log.info("Listener Identity Object Instance: [{}]", System.identityHashCode(this));
-		log.info("correlationKey: [{}], variableId: [{}], variableInstanceId: [{}], oldValue [{}], newValue: [{}], processInstance: [{}], rootProcessInstance: [{}]", corrleationKeyString, variableId, variableInstanceId, oldValue, newValue, currentPi.getId(), rootPi.getId());
+		log.info("correlationKey: [{}], processInstance: [{}], rootProcessInstance: [{}], variableId: [{}], oldValue [{}], newValue: [{}]", 
+				corrleationKeyString, currentPi.getId(), rootPi.getId(), variableId, oldValue, newValue);
 		
 	}
 	
