@@ -2,7 +2,6 @@ package it.redhat.demo.listener;
 
 import org.kie.api.event.process.DefaultProcessEventListener;
 import org.kie.api.event.process.ProcessVariableChangedEvent;
-import org.kie.api.runtime.KieRuntime;
 import org.kie.api.runtime.process.ProcessInstance;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,8 +12,6 @@ public class MyProcessEventListener extends DefaultProcessEventListener {
 
 	@Override
 	public void afterVariableChanged(ProcessVariableChangedEvent event) {
-		
-		KieRuntime kieRuntime = event.getKieRuntime();
 		
 		Object newValue = event.getNewValue();
 		Object oldValue = event.getOldValue();
