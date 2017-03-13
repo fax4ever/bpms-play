@@ -29,6 +29,7 @@
         <module>bpms-asynchronous-execution</module>
         <module>bpms-stubborn-rest-client</module>
         <module>bpms-event-listener</module>
+        <module>bpms-correlation-key</module>
     </modules>
 
     <properties>
