@@ -9,6 +9,8 @@ import org.kie.api.runtime.manager.RuntimeEngine;
 import org.kie.api.runtime.manager.RuntimeManager;
 import org.kie.api.runtime.process.ProcessInstance;
 
+import it.redhat.demo.listener.MyProcessEventListener;
+
 public class CorrelationKeyProcessTest extends JbpmJUnitBaseTestCase {
 	
 	private static final String IT_REDHAT_DEMO = "it/redhat/demo/";
@@ -24,6 +26,7 @@ public class CorrelationKeyProcessTest extends JbpmJUnitBaseTestCase {
 	@Before
 	public void before() {
 		
+		addProcessEventListener(new MyProcessEventListener());
 		runtimeManager = createRuntimeManager(IT_REDHAT_DEMO + "parent-process.bpmn2", IT_REDHAT_DEMO + "sub-process.bpmn2");	
 		runtimeEngine = getRuntimeEngine();
 		kieSession = runtimeEngine.getKieSession();
