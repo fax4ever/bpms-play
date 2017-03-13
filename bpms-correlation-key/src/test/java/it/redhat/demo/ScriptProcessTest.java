@@ -31,11 +31,12 @@ public class ScriptProcessTest extends JbpmJUnitBaseTestCase {
 	@Before
 	public void before() {
 		
-		addProcessEventListener(new LogProcessEventListener());
 		runtimeManager = createRuntimeManager(IT_REDHAT_DEMO + "script-parent-process.bpmn2", IT_REDHAT_DEMO + "script-sub-process.bpmn2");	
 		runtimeEngine = getRuntimeEngine();
 		kieSession = runtimeEngine.getKieSession();
 		auditService = runtimeEngine.getAuditService();
+		
+		addProcessEventListener(new LogProcessEventListener());
 		
 	}
 	

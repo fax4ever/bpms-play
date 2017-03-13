@@ -8,14 +8,14 @@
     <marshalling-strategies/>
     <event-listeners>
 		<event-listener>
-			<resolver>reflection</resolver>
-			<identifier>it.redhat.demo.listener.LogProcessEventListener</identifier>
+			<resolver>mvel</resolver>
+            <identifier>new it.redhat.demo.listener.LogProcessEventListener()</identifier>
 		</event-listener>	
 	</event-listeners>
 	<task-event-listeners>
 		<task-event-listener>
-			<resolver>reflection</resolver>
-			<identifier>it.redhat.demo.listener.LogTaskEventListener</identifier>
+			<resolver>mvel</resolver>
+			<identifier>new it.redhat.demo.listener.LogTaskEventListener()</identifier>
 		</task-event-listener>
 	</task-event-listeners>
     <globals>

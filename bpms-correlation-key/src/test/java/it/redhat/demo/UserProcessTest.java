@@ -39,13 +39,14 @@ public class UserProcessTest extends JbpmJUnitBaseTestCase {
 	@Before
 	public void before() {
 		
-		addProcessEventListener(new LogProcessEventListener());
-		addTaskEventListener(new LogTaskEventListener());
 		runtimeManager = createRuntimeManager(IT_REDHAT_DEMO + "user-parent-process.bpmn2", IT_REDHAT_DEMO + "user-sub-process.bpmn2");	
 		runtimeEngine = getRuntimeEngine();
 		kieSession = runtimeEngine.getKieSession();
 		taskService = runtimeEngine.getTaskService();
 		auditService = runtimeEngine.getAuditService();
+		
+		addProcessEventListener(new LogProcessEventListener());
+		addTaskEventListener(new LogTaskEventListener());
 		
 	}
 	
