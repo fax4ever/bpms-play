@@ -30,7 +30,7 @@ public class LogProcessEventListener extends DefaultProcessEventListener {
 		
 		// using for probing object instance scope
 		log.info("Listener Identity Object Instance: [{}]", System.identityHashCode(this));
-		log.info("correlationKey: [{}], processInstance: [{}], rootProcessInstance: [{}], variableId: [{}], oldValue [{}], newValue: [{}]", 
+		log.info("correlationKey: [{}], pi: [{}], root: [{}], variable: [{}], oldValue [{}], newValue: [{}]", 
 				corrleationKeyString, currentPi.getId(), rootPi.getId(), variableId, oldValue, newValue);
 		
 	}
