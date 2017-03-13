@@ -1,5 +1,9 @@
 package it.redhat.demo;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.jbpm.test.JbpmJUnitBaseTestCase;
 import org.junit.After;
 import org.junit.Before;
@@ -8,14 +12,18 @@ import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.manager.RuntimeEngine;
 import org.kie.api.runtime.manager.RuntimeManager;
 import org.kie.api.runtime.manager.audit.AuditService;
+import org.kie.api.runtime.manager.audit.ProcessInstanceLog;
 import org.kie.api.runtime.process.ProcessInstance;
 import org.kie.api.task.TaskService;
+import org.kie.api.task.model.TaskSummary;
 
 import it.redhat.demo.listener.LogProcessEventListener;
 import it.redhat.demo.listener.LogTaskEventListener;
 
 public class UserProcessTest extends JbpmJUnitBaseTestCase {
 	
+	private static final String MACCALLISTER = "maccallister";
+
 	private static final String IT_REDHAT_DEMO = "it/redhat/demo/";
 	
 	private RuntimeManager runtimeManager;
@@ -56,6 +64,35 @@ public class UserProcessTest extends JbpmJUnitBaseTestCase {
 		
 		assertProcessInstanceActive(pi.getId());
 		assertNodeTriggered(pi.getId(), "StartProcess", "CallSubprocess");
+		
+		List<? extends ProcessInstanceLog> subProcessInstances = auditService.findSubProcessInstances(pi.getId());
+		assertEquals(1, subProcessInstances.size());
+		ProcessInstanceLog subPi = subProcessInstances.get(0);
+		
+		assertProcessInstanceActive(subPi.getProcessInstanceId());
+		assertNodeTriggered(subPi.getProcessInstanceId(), "StartProcess", "IOUserTask");
+		
+		List<TaskSummary> tasksAssignedAsPotentialOwner = taskService.getTasksAssignedAsPotentialOwner(MACCALLISTER, "");
+		assertEquals(1, tasksAssignedAsPotentialOwner.size());
+		
+		TaskSummary task = tasksAssignedAsPotentialOwner.get(0);
+		
+		taskService.claim(task.getId(), MACCALLISTER);
+		taskService.start(task.getId(), MACCALLISTER);
+		
+		Map<String, Object> taskContent = taskService.getTaskContent(task.getId());
+		assertTrue(taskContent.containsKey("input"));
+		String input = (String) taskContent.get("input");
+		
+		HashMap<String, Object> data = new HashMap<>();
+		data.put("output", "hello " + input);
+		
+		taskService.complete(task.getId(), MACCALLISTER, data);
+		assertProcessInstanceCompleted(subPi.getProcessInstanceId());
+		assertNodeTriggered(subPi.getProcessInstanceId(), "EndProcess");
+		
+		assertProcessInstanceCompleted(pi.getId());
+		assertNodeTriggered(pi.getId(), "EndProcess");
 		
 	}
 

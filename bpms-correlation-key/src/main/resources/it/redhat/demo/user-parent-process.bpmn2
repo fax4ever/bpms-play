@@ -35,7 +35,7 @@
         </tns:metaData>
         <tns:onEntry-script scriptFormat="http://www.java.com/java">
           <tns:script>kcontext.setVariable(&quot;progress&quot;, &quot;Before Call SubProcess&quot;);
-kcontext.setVariable(&quot;input&quot;, &quot;This is the input&quot;);</tns:script>
+kcontext.setVariable(&quot;input&quot;, &quot;Fabio Massimo&quot;);</tns:script>
         </tns:onEntry-script>
         <tns:onExit-script scriptFormat="http://www.java.com/java">
           <tns:script>kcontext.setVariable(&quot;progress&quot;, &quot;After Call SubProcess&quot;);</tns:script>
