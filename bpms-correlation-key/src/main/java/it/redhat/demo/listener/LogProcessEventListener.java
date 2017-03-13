@@ -15,12 +15,21 @@ public class LogProcessEventListener extends DefaultProcessEventListener {
 	@Override
 	public void afterVariableChanged(ProcessVariableChangedEvent event) {
 		
+		// using for probing object instance scope
+		log.info("Listener Identity Object Instance: [{}]", System.identityHashCode(this));
+		
 		Object newValue = event.getNewValue();
 		Object oldValue = event.getOldValue();
 		String variableId = event.getVariableId();
 		
 		ProcessInstanceImpl currentPi = (ProcessInstanceImpl) event.getProcessInstance();
-		ProcessInstanceImpl rootPi = LogProcessEventListener.findRoot(event.getKieRuntime(), currentPi);
+		ProcessInstanceImpl rootPi = currentPi;
+		
+		try {
+			rootPi = LogProcessEventListener.findRoot(event.getKieRuntime(), currentPi);
+		} catch (Exception e) {
+			log.error(e.getMessage());
+		}	
 		
 		CorrelationKey correlationKey = (CorrelationKey) rootPi.getMetaData().get("CorrelationKey");
 		String corrleationKeyString = "No correlation key";
@@ -28,8 +37,6 @@ public class LogProcessEventListener extends DefaultProcessEventListener {
 			corrleationKeyString = correlationKey.toExternalForm();
 		}
 		
-		// using for probing object instance scope
-		log.info("Listener Identity Object Instance: [{}]", System.identityHashCode(this));
 		log.info("correlationKey: [{}], pi: [{}], root: [{}], variable: [{}], oldValue [{}], newValue: [{}]", 
 				corrleationKeyString, currentPi.getId(), rootPi.getId(), variableId, oldValue, newValue);
 		
