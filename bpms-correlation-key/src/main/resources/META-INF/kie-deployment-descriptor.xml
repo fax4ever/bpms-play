@@ -9,13 +9,13 @@
     <event-listeners>
 		<event-listener>
 			<resolver>reflection</resolver>
-			<identifier>it.redhat.demo.listener.MyProcessEventListener</identifier>
+			<identifier>it.redhat.demo.listener.LogProcessEventListener</identifier>
 		</event-listener>	
 	</event-listeners>
 	<task-event-listeners>
 		<task-event-listener>
 			<resolver>reflection</resolver>
-			<identifier>it.redhat.demo.listener.MyTaskEventListener</identifier>
+			<identifier>it.redhat.demo.listener.LogTaskEventListener</identifier>
 		</task-event-listener>
 	</task-event-listeners>
     <globals>

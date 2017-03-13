@@ -9,9 +9,10 @@ import org.kie.api.runtime.manager.RuntimeEngine;
 import org.kie.api.runtime.manager.RuntimeManager;
 import org.kie.api.runtime.process.ProcessInstance;
 
-import it.redhat.demo.listener.MyProcessEventListener;
+import it.redhat.demo.listener.LogProcessEventListener;
+import it.redhat.demo.listener.LogTaskEventListener;
 
-public class CorrelationKeyProcessTest extends JbpmJUnitBaseTestCase {
+public class UserProcessTest extends JbpmJUnitBaseTestCase {
 	
 	private static final String IT_REDHAT_DEMO = "it/redhat/demo/";
 	
@@ -19,15 +20,16 @@ public class CorrelationKeyProcessTest extends JbpmJUnitBaseTestCase {
 	private RuntimeEngine runtimeEngine;
 	private KieSession kieSession;
 	
-	public CorrelationKeyProcessTest() {
+	public UserProcessTest() {
 		super(true, true);
 	}
 	
 	@Before
 	public void before() {
 		
-		addProcessEventListener(new MyProcessEventListener());
-		runtimeManager = createRuntimeManager(IT_REDHAT_DEMO + "parent-process.bpmn2", IT_REDHAT_DEMO + "sub-process.bpmn2");	
+		addProcessEventListener(new LogProcessEventListener());
+		addTaskEventListener(new LogTaskEventListener());
+		runtimeManager = createRuntimeManager(IT_REDHAT_DEMO + "parent-user-process.bpmn2", IT_REDHAT_DEMO + "user-task-process.bpmn2");	
 		runtimeEngine = getRuntimeEngine();
 		kieSession = runtimeEngine.getKieSession();
 		
@@ -44,9 +46,9 @@ public class CorrelationKeyProcessTest extends JbpmJUnitBaseTestCase {
 	@Test
 	public void test() {
 		
-		ProcessInstance pi = kieSession.startProcess("it.redhat.demo.parent-process");
+		ProcessInstance pi = kieSession.startProcess("it.redhat.demo.parent-user-process");
 		
-		assertProcessInstanceCompleted(pi.getId());
+		assertProcessInstanceActive(pi.getId());
 		
 	}
 

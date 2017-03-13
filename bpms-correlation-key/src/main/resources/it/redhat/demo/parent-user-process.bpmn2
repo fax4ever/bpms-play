@@ -4,12 +4,14 @@
   <bpmn2:itemDefinition id="ItemDefinition_2" isCollection="false" structureRef="org.slf4j.LoggerFactory"/>
   <bpmn2:itemDefinition id="ItemDefinition_4" isCollection="false" structureRef="org.slf4j.Logger"/>
   <bpmn2:itemDefinition id="ItemDefinition_11" isCollection="false" structureRef="java.lang.String"/>
-  <bpmn2:process id="it.redhat.demo.parent-process" tns:packageName="it.redhat.demo" name="parent-process" isExecutable="true" processType="Private">
+  <bpmn2:process id="it.redhat.demo.parent-user-process" tns:packageName="it.redhat.demo" name="parent-user-process" isExecutable="true" processType="Private">
     <bpmn2:extensionElements>
       <tns:import name="org.slf4j.LoggerFactory"/>
       <tns:import name="org.slf4j.Logger"/>
     </bpmn2:extensionElements>
-    <bpmn2:property id="myVariable" itemSubjectRef="ItemDefinition_11" name="myVariable"/>
+    <bpmn2:property id="progress" itemSubjectRef="ItemDefinition_11" name="progress"/>
+    <bpmn2:property id="input" itemSubjectRef="ItemDefinition_11" name="input"/>
+    <bpmn2:property id="output" itemSubjectRef="ItemDefinition_11" name="output"/>
     <bpmn2:startEvent id="StartEvent_1" name="StartProcess">
       <bpmn2:extensionElements>
         <tns:metaData name="elementname">
@@ -26,31 +28,57 @@
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_4</bpmn2:incoming>
     </bpmn2:endEvent>
-    <bpmn2:callActivity id="CallActivity_1" tns:waitForCompletion="true" tns:independent="true" name="CallSubprocess" calledElement="it.redhat.demo.sub-process">
+    <bpmn2:callActivity id="CallActivity_1" tns:waitForCompletion="true" tns:independent="true" name="CallSubprocess" calledElement="it.redhat.demo.user-task-process">
       <bpmn2:extensionElements>
         <tns:metaData name="elementname">
           <tns:metaValue><![CDATA[CallSubprocess]]></tns:metaValue>
         </tns:metaData>
         <tns:onEntry-script scriptFormat="http://www.java.com/java">
-          <tns:script>Logger log = null;
-log = LoggerFactory.getLogger(&quot;it.redhat.demo.script.CallSubprocess&quot;);
-log.info(&quot;before call subprocess&quot;);
-kcontext.setVariable(&quot;myVariable&quot;, &quot;value&quot;);</tns:script>
+          <tns:script>kcontext.setVariable(&quot;progress&quot;, &quot;Before Call SubProcess&quot;);
+kcontext.setVariable(&quot;input&quot;, &quot;This is the input&quot;);</tns:script>
         </tns:onEntry-script>
         <tns:onExit-script scriptFormat="http://www.java.com/java">
-          <tns:script>Logger log = null;
-log = LoggerFactory.getLogger(&quot;it.redhat.demo.script.CallSubprocess&quot;);
-log.info(&quot;after call subprocess&quot;);</tns:script>
+          <tns:script>kcontext.setVariable(&quot;progress&quot;, &quot;After Call SubProcess&quot;);</tns:script>
         </tns:onExit-script>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_3</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_4</bpmn2:outgoing>
+      <bpmn2:ioSpecification id="InputOutputSpecification_1">
+        <bpmn2:dataInput id="DataInput_1" itemSubjectRef="ItemDefinition_11" name="input"/>
+        <bpmn2:dataInput id="DataInput_3" itemSubjectRef="ItemDefinition_11" name="progress"/>
+        <bpmn2:dataOutput id="DataOutput_1" itemSubjectRef="ItemDefinition_11" name="output"/>
+        <bpmn2:dataOutput id="DataOutput_2" itemSubjectRef="ItemDefinition_11" name="progress"/>
+        <bpmn2:inputSet id="InputSet_1" name="Input Set 1">
+          <bpmn2:dataInputRefs>DataInput_1</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>DataInput_3</bpmn2:dataInputRefs>
+        </bpmn2:inputSet>
+        <bpmn2:outputSet id="OutputSet_1" name="Output Set 1">
+          <bpmn2:dataOutputRefs>DataOutput_1</bpmn2:dataOutputRefs>
+          <bpmn2:dataOutputRefs>DataOutput_2</bpmn2:dataOutputRefs>
+        </bpmn2:outputSet>
+      </bpmn2:ioSpecification>
+      <bpmn2:dataInputAssociation id="DataInputAssociation_1">
+        <bpmn2:sourceRef>input</bpmn2:sourceRef>
+        <bpmn2:targetRef>DataInput_1</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="DataInputAssociation_3">
+        <bpmn2:sourceRef>progress</bpmn2:sourceRef>
+        <bpmn2:targetRef>DataInput_3</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataOutputAssociation id="DataOutputAssociation_1">
+        <bpmn2:sourceRef>DataOutput_1</bpmn2:sourceRef>
+        <bpmn2:targetRef>output</bpmn2:targetRef>
+      </bpmn2:dataOutputAssociation>
+      <bpmn2:dataOutputAssociation id="DataOutputAssociation_2">
+        <bpmn2:sourceRef>DataOutput_2</bpmn2:sourceRef>
+        <bpmn2:targetRef>progress</bpmn2:targetRef>
+      </bpmn2:dataOutputAssociation>
     </bpmn2:callActivity>
     <bpmn2:sequenceFlow id="SequenceFlow_3" tns:priority="1" sourceRef="StartEvent_1" targetRef="CallActivity_1"/>
     <bpmn2:sequenceFlow id="SequenceFlow_4" tns:priority="1" sourceRef="CallActivity_1" targetRef="EndEvent_1"/>
   </bpmn2:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_Process_1" bpmnElement="it.redhat.demo.parent-process">
+    <bpmndi:BPMNPlane id="BPMNPlane_Process_1" bpmnElement="it.redhat.demo.parent-user-process">
       <bpmndi:BPMNShape id="BPMNShape_StartEvent_1" bpmnElement="StartEvent_1">
         <dc:Bounds height="0.0" width="0.0" x="45.0" y="45.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_1">

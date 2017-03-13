@@ -8,9 +8,9 @@ import org.kie.internal.process.CorrelationKey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class MyProcessEventListener extends DefaultProcessEventListener {
+public class LogProcessEventListener extends DefaultProcessEventListener {
 	
-	private static final Logger log = LoggerFactory.getLogger(MyProcessEventListener.class);
+	private static final Logger log = LoggerFactory.getLogger(LogProcessEventListener.class);
 
 	@Override
 	public void afterVariableChanged(ProcessVariableChangedEvent event) {
@@ -21,7 +21,7 @@ public class MyProcessEventListener extends DefaultProcessEventListener {
 		String variableInstanceId = event.getVariableInstanceId();
 		
 		ProcessInstanceImpl currentPi = (ProcessInstanceImpl) event.getProcessInstance();
-		ProcessInstanceImpl rootPi = MyProcessEventListener.findRoot(event.getKieRuntime(), currentPi);
+		ProcessInstanceImpl rootPi = LogProcessEventListener.findRoot(event.getKieRuntime(), currentPi);
 		
 		CorrelationKey correlationKey = (CorrelationKey) rootPi.getMetaData().get("CorrelationKey");
 		String corrleationKeyString = "No correlation key";
@@ -29,7 +29,9 @@ public class MyProcessEventListener extends DefaultProcessEventListener {
 			corrleationKeyString = correlationKey.toExternalForm();
 		}
 		
-		log.info("correlationKey {}, variableId {}, variableInstanceId {}, oldValue {}, newValue {}, processInstance {}, rootProcessInstance {}", corrleationKeyString, variableId, variableInstanceId, oldValue, newValue, currentPi.getId(), rootPi.getId());
+		// using for probing object instance scope
+		log.info("Listener Identity Object Instance: [{}]", System.identityHashCode(this));
+		log.info("correlationKey: [{}], variableId: [{}], variableInstanceId: [{}], oldValue [{}], newValue: [{}], processInstance: [{}], rootProcessInstance: [{}]", corrleationKeyString, variableId, variableInstanceId, oldValue, newValue, currentPi.getId(), rootPi.getId());
 		
 	}
 	
@@ -41,7 +43,7 @@ public class MyProcessEventListener extends DefaultProcessEventListener {
 		}
 		
 		ProcessInstanceImpl parentProcessInstance = (ProcessInstanceImpl) kruntime.getProcessInstance(parentProcessInstanceId, true);
-		return MyProcessEventListener.findRoot(kruntime, parentProcessInstance);
+		return LogProcessEventListener.findRoot(kruntime, parentProcessInstance);
 		
 	}
 

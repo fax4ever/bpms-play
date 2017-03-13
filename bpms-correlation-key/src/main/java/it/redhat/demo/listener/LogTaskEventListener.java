@@ -5,9 +5,9 @@ import org.kie.api.task.TaskEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class MyTaskEventListener extends DefaultTaskEventListener {
+public class LogTaskEventListener extends DefaultTaskEventListener {
 	
-	private static final Logger logger = LoggerFactory.getLogger(MyTaskEventListener.class);
+	private static final Logger logger = LoggerFactory.getLogger(LogTaskEventListener.class);
 
 	@Override
 	public void beforeTaskStoppedEvent(TaskEvent event) {
