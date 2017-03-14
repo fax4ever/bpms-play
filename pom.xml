@@ -30,7 +30,6 @@
         <module>bpms-stubborn-rest-client</module>
         <module>bpms-event-listener</module>
         <module>bpms-correlation-key</module>
-        <module>bpms-correlation-emb</module>
     </modules>
 
     <properties>
