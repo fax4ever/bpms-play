@@ -1,63 +1,64 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  
-  <groupId>it.redhat.demo</groupId>
-  <artifactId>bpms-correlation-key</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
-  
-  <properties>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-		<!-- JAVA -->
-		<maven.compiler.target>1.8</maven.compiler.target>
-		<maven.compiler.source>1.8</maven.compiler.source>
+    <groupId>it.redhat.demo</groupId>
+    <artifactId>bpms-correlation-key</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
 
-		<!-- BPMS 6.4.0 -->
-		<version.org.brms-bpmsuite>6.4.0.GA-redhat-2</version.org.brms-bpmsuite>
+    <properties>
 
-	</properties>
+        <!-- JAVA -->
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
 
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>org.jboss.bom.brms</groupId>
-				<artifactId>jboss-brms-bpmsuite-platform-bom</artifactId>
-				<type>pom</type>
-				<version>${version.org.brms-bpmsuite}</version>
-				<scope>import</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
+        <!-- BPMS 6.4.0 -->
+        <version.org.brms-bpmsuite>6.4.0.GA-redhat-2</version.org.brms-bpmsuite>
 
-	<dependencies>
-		<dependency>
-			<groupId>org.kie</groupId>
-			<artifactId>kie-api</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.jbpm</groupId>
-			<artifactId>jbpm-human-task-core</artifactId>
-			<scope>provided</scope>
-		</dependency>
+    </properties>
 
-		<dependency>
-			<groupId>org.jbpm</groupId>
-			<artifactId>jbpm-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<scope>provided</scope>
-		</dependency>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.jboss.bom.brms</groupId>
+                <artifactId>jboss-brms-bpmsuite-platform-bom</artifactId>
+                <type>pom</type>
+                <version>${version.org.brms-bpmsuite}</version>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-simple</artifactId>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
-  
+    <dependencies>
+        <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>kie-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jbpm</groupId>
+            <artifactId>jbpm-human-task-core</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jbpm</groupId>
+            <artifactId>jbpm-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
 </project>
