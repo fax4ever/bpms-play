@@ -14,6 +14,10 @@ import org.kie.api.runtime.manager.RuntimeManager;
 import org.kie.api.runtime.manager.audit.AuditService;
 import org.kie.api.runtime.manager.audit.ProcessInstanceLog;
 import org.kie.api.runtime.process.ProcessInstance;
+import org.kie.internal.KieInternalServices;
+import org.kie.internal.process.CorrelationAwareProcessRuntime;
+import org.kie.internal.process.CorrelationKey;
+import org.kie.internal.process.CorrelationKeyFactory;
 
 import it.redhat.demo.listener.LogProcessEventListener;
 
@@ -26,8 +30,11 @@ public class TimeProcessTest extends JbpmJUnitBaseTestCase {
 	private KieSession kieSession;
 	private AuditService auditService;
 	
+	private CorrelationKeyFactory factory;
+	
 	public TimeProcessTest() {
 		super(true, true);
+		factory = KieInternalServices.Factory.get().newCorrelationKeyFactory();
 	}
 	
 	@Before
@@ -55,7 +62,7 @@ public class TimeProcessTest extends JbpmJUnitBaseTestCase {
 	public void test() {
 		
 		// main process instance
-		ProcessInstance pi = kieSession.startProcess("it.redhat.demo.time-parent-process");
+		ProcessInstance pi = ((CorrelationAwareProcessRuntime)kieSession).startProcess("it.redhat.demo.time-parent-process", getCorrelationKey(), null);
 		
 		// sub process
 		List<? extends ProcessInstanceLog> subProcessInstances = auditService.findSubProcessInstances(pi.getId());
@@ -78,6 +85,10 @@ public class TimeProcessTest extends JbpmJUnitBaseTestCase {
 		assertProcessInstanceCompleted(subPi.getProcessInstanceId());
 		assertNodeTriggered(subPi.getProcessInstanceId(), "EndProcess");
 		
+	}
+
+	private CorrelationKey getCorrelationKey() {
+		return factory.newCorrelationKey("mybusinesskey");
 	}
 
 }

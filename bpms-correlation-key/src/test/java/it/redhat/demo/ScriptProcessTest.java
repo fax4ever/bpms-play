@@ -12,6 +12,10 @@ import org.kie.api.runtime.manager.RuntimeManager;
 import org.kie.api.runtime.manager.audit.AuditService;
 import org.kie.api.runtime.manager.audit.ProcessInstanceLog;
 import org.kie.api.runtime.process.ProcessInstance;
+import org.kie.internal.KieInternalServices;
+import org.kie.internal.process.CorrelationAwareProcessRuntime;
+import org.kie.internal.process.CorrelationKey;
+import org.kie.internal.process.CorrelationKeyFactory;
 
 import it.redhat.demo.listener.LogProcessEventListener;
 
@@ -24,8 +28,11 @@ public class ScriptProcessTest extends JbpmJUnitBaseTestCase {
 	private KieSession kieSession;
 	private AuditService auditService;
 	
+	private CorrelationKeyFactory factory;
+	
 	public ScriptProcessTest() {
 		super(true, true);
+		factory = KieInternalServices.Factory.get().newCorrelationKeyFactory();
 	}
 	
 	@Before
@@ -51,7 +58,7 @@ public class ScriptProcessTest extends JbpmJUnitBaseTestCase {
 	@Test
 	public void test() {
 		
-		ProcessInstance pi = kieSession.startProcess("it.redhat.demo.script-parent-process");
+		ProcessInstance pi = ((CorrelationAwareProcessRuntime)kieSession).startProcess("it.redhat.demo.script-parent-process", getCorrelationKey(), null);
 		
 		assertProcessInstanceCompleted(pi.getId());
 		assertNodeTriggered(pi.getId(), "StartProcess", "CallSubprocess", "EndProcess");
@@ -63,6 +70,10 @@ public class ScriptProcessTest extends JbpmJUnitBaseTestCase {
 		assertProcessInstanceCompleted(subPi.getProcessInstanceId());
 		assertNodeTriggered(subPi.getProcessInstanceId(), "StartProcess", "ScriptTask", "EndProcess");
 		
+	}
+
+	private CorrelationKey getCorrelationKey() {
+		return factory.newCorrelationKey("mybusinesskey");
 	}
 
 }
