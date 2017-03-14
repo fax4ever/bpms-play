@@ -34,13 +34,12 @@ public class TimeProcessTest extends JbpmJUnitBaseTestCase {
 	public void before() {
 		
 		System.setProperty("drools.clockType", "pseudo");
+		addProcessEventListener(new LogProcessEventListener());
 		
 		runtimeManager = createRuntimeManager(IT_REDHAT_DEMO + "time-parent-process.bpmn2", IT_REDHAT_DEMO + "time-sub-process.bpmn2");	
 		runtimeEngine = getRuntimeEngine();
 		kieSession = runtimeEngine.getKieSession();
 		auditService = runtimeEngine.getAuditService();
-		
-		addProcessEventListener(new LogProcessEventListener());
 		
 	}
 	
