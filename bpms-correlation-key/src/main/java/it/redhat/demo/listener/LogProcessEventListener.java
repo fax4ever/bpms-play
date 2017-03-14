@@ -1,8 +1,5 @@
 package it.redhat.demo.listener;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.jbpm.process.instance.impl.ProcessInstanceImpl;
 import org.kie.api.event.process.DefaultProcessEventListener;
 import org.kie.api.event.process.ProcessVariableChangedEvent;
@@ -11,6 +8,9 @@ import org.kie.api.runtime.process.ProcessInstance;
 import org.kie.internal.process.CorrelationKey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class LogProcessEventListener extends DefaultProcessEventListener {
 	
@@ -26,6 +26,11 @@ public class LogProcessEventListener extends DefaultProcessEventListener {
 		log.info("Listener Identity Object Instance: [{}]", System.identityHashCode(this));
 		
 		Object newValue = event.getNewValue();
+
+		if (newValue == null || newValue.toString().trim().isEmpty()) {
+			return;
+		}
+
 		Object oldValue = event.getOldValue();
 		String variableId = event.getVariableId();
 		ProcessInstance pi = event.getProcessInstance();
@@ -35,7 +40,7 @@ public class LogProcessEventListener extends DefaultProcessEventListener {
 			log.info("search correlation key for process instance {}", pi.getId());
 			addKey(event);
 		} else {
-			log.info("search correlation key for process instance {}", pi.getId());
+			log.info("found correlation key for process instance {}", pi.getId());
 		}
 		
 		String correlationKey = correlationKeys.get(pi.getId());

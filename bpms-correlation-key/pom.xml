@@ -44,6 +44,12 @@
 
         <dependency>
             <groupId>org.jbpm</groupId>
+            <artifactId>jbpm-audit</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jbpm</groupId>
             <artifactId>jbpm-test</artifactId>
             <scope>test</scope>
         </dependency>

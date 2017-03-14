@@ -6,6 +6,8 @@ import org.kie.api.event.process.ProcessVariableChangedEvent;
 import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.manager.RuntimeEngine;
 import org.kie.api.runtime.manager.RuntimeManager;
+import org.kie.api.runtime.manager.audit.AuditService;
+import org.kie.api.runtime.manager.audit.ProcessInstanceLog;
 import org.kie.api.runtime.process.ProcessInstance;
 import org.kie.internal.process.CorrelationKey;
 import org.kie.internal.runtime.manager.context.ProcessInstanceIdContext;
@@ -34,6 +36,11 @@ public class LogProcessInstanceEventListener extends DefaultProcessEventListener
 		log.info("Listener Identity Object Instance: [{}]", System.identityHashCode(this));
 		
 		Object newValue = event.getNewValue();
+
+		if (newValue == null || newValue.toString().trim().isEmpty()) {
+			return;
+		}
+
 		Object oldValue = event.getOldValue();
 		String variableId = event.getVariableId();
 		ProcessInstance pi = event.getProcessInstance();
@@ -43,7 +50,7 @@ public class LogProcessInstanceEventListener extends DefaultProcessEventListener
 			log.info("search correlation key for process instance {}", pi.getId());
 			addKey(event);
 		} else {
-			log.info("search correlation key for process instance {}", pi.getId());
+			log.info("cache correlation key for process instance {}", pi.getId());
 		}
 		
 		String correlationKey = correlationKeys.get(pi.getId());
@@ -64,15 +71,35 @@ public class LogProcessInstanceEventListener extends DefaultProcessEventListener
 		try {
 			rootPi = LogProcessInstanceEventListener.findRoot(runtimeManager, (ProcessInstanceImpl) event.getProcessInstance());
 		} catch (Exception e) {
-			log.error(e.getMessage());
+			log.error("ROOT :: " + e.getMessage());
 		}
 		
 		CorrelationKey correlationKey = (CorrelationKey) rootPi.getMetaData().get("CorrelationKey");
+		if (correlationKey == null) {
+			try {
+				tryAuditService(currentPi, rootPi);
+			} catch (Exception e) {
+				log.error("AUDIT :: " + e.getMessage());
+			}
+		}
+
 		if (correlationKey != null) {
 			String externalForm = correlationKey.toExternalForm();
 			correlationKeys.put(currentPi.getId(), externalForm);
 		}
 		
+	}
+
+	private void tryAuditService(ProcessInstance currentPi, ProcessInstanceImpl rootPi) {
+		RuntimeEngine runtimeEngine = runtimeManager.getRuntimeEngine(ProcessInstanceIdContext.get(rootPi.getId()));
+		AuditService auditService = runtimeEngine.getAuditService();
+
+		ProcessInstanceLog log = auditService.findProcessInstance(rootPi.getId());
+		if (log != null) {
+            org.jbpm.process.audit.ProcessInstanceLog piLog = (org.jbpm.process.audit.ProcessInstanceLog) log;
+            String ckey = piLog.getCorrelationKey();
+            correlationKeys.put(currentPi.getId(), ckey);
+        }
 	}
 
 	public static ProcessInstanceImpl findRoot(RuntimeManager rManager, ProcessInstanceImpl pi) {
@@ -84,7 +111,6 @@ public class LogProcessInstanceEventListener extends DefaultProcessEventListener
 
 		RuntimeEngine runtimeEngine = rManager.getRuntimeEngine(ProcessInstanceIdContext.get(parentProcessInstanceId));
 		KieSession kieSession = runtimeEngine.getKieSession();
-
 
 		ProcessInstanceImpl parentProcessInstance = (ProcessInstanceImpl) kieSession.getProcessInstance(parentProcessInstanceId);
 		return LogProcessInstanceEventListener.findRoot(rManager, parentProcessInstance);
