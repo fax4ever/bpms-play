@@ -1,9 +1,13 @@
 package it.redhat.demo.listener;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.jbpm.process.instance.impl.ProcessInstanceImpl;
 import org.kie.api.event.process.DefaultProcessEventListener;
 import org.kie.api.event.process.ProcessVariableChangedEvent;
 import org.kie.api.runtime.KieRuntime;
+import org.kie.api.runtime.process.ProcessInstance;
 import org.kie.internal.process.CorrelationKey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +15,9 @@ import org.slf4j.LoggerFactory;
 public class LogProcessEventListener extends DefaultProcessEventListener {
 	
 	private static final Logger log = LoggerFactory.getLogger(LogProcessEventListener.class);
+	
+	// local cache
+	private volatile Map<Long, String> correlationKeys = new HashMap<>();
 
 	@Override
 	public void afterVariableChanged(ProcessVariableChangedEvent event) {
@@ -21,27 +28,45 @@ public class LogProcessEventListener extends DefaultProcessEventListener {
 		Object newValue = event.getNewValue();
 		Object oldValue = event.getOldValue();
 		String variableId = event.getVariableId();
+		ProcessInstance pi = event.getProcessInstance();
+		String processId = pi.getProcessId();
 		
-		ProcessInstanceImpl currentPi = (ProcessInstanceImpl) event.getProcessInstance();
-		ProcessInstanceImpl rootPi = currentPi;
-		
-		try {
-			rootPi = LogProcessEventListener.findRoot(event.getKieRuntime(), currentPi);
-		} catch (Exception e) {
-			log.error(e.getMessage());
-		}	
-		
-		CorrelationKey correlationKey = (CorrelationKey) rootPi.getMetaData().get("CorrelationKey");
-		String corrleationKeyString = "No correlation key";
-		if (correlationKey != null) {
-			corrleationKeyString = correlationKey.toExternalForm();
+		if (!correlationKeys.containsKey(pi.getId())) {
+			log.info("search correlation key for process instance {}", pi.getId());
+			addKey(event);
+		} else {
+			log.info("search correlation key for process instance {}", pi.getId());
 		}
 		
-		log.info("correlationKey: [{}], pi: [{}], root: [{}], variable: [{}], oldValue [{}], newValue: [{}]", 
-				corrleationKeyString, currentPi.getId(), rootPi.getId(), variableId, oldValue, newValue);
+		String correlationKey = correlationKeys.get(pi.getId());
+		if (correlationKey == null) {
+			correlationKey = "No Correlation Key";
+		}
+	
+		log.info("correlationKey: [{}], processId: [{}], pi: [{}], parent: [{}], variable: [{}], oldValue [{}], newValue: [{}]", 
+				correlationKey, processId, pi.getId(), pi.getParentProcessInstanceId(), variableId, oldValue, newValue);
 		
 	}
 	
+	private void addKey(ProcessVariableChangedEvent event) {
+		
+		ProcessInstance currentPi = event.getProcessInstance();
+		ProcessInstanceImpl rootPi = (ProcessInstanceImpl) event.getProcessInstance();
+		
+		try {
+			rootPi = LogProcessEventListener.findRoot(event.getKieRuntime(), (ProcessInstanceImpl) event.getProcessInstance());
+		} catch (Exception e) {
+			log.error(e.getMessage());
+		}
+		
+		CorrelationKey correlationKey = (CorrelationKey) rootPi.getMetaData().get("CorrelationKey");
+		if (correlationKey != null) {
+			String externalForm = correlationKey.toExternalForm();
+			correlationKeys.put(currentPi.getId(), externalForm);
+		}
+		
+	}
+
 	public static ProcessInstanceImpl findRoot(KieRuntime kruntime, ProcessInstanceImpl pi) {
 		
 		long parentProcessInstanceId = pi.getParentProcessInstanceId();
@@ -49,7 +74,7 @@ public class LogProcessEventListener extends DefaultProcessEventListener {
 			return pi;
 		}
 		
-		ProcessInstanceImpl parentProcessInstance = (ProcessInstanceImpl) kruntime.getProcessInstance(parentProcessInstanceId, true);
+		ProcessInstanceImpl parentProcessInstance = (ProcessInstanceImpl) kruntime.getProcessInstance(parentProcessInstanceId);
 		return LogProcessEventListener.findRoot(kruntime, parentProcessInstance);
 		
 	}

@@ -10,7 +10,7 @@
 		<event-listener>
 			<resolver>mvel</resolver>
             <identifier>new it.redhat.demo.listener.LogProcessEventListener()</identifier>
-		</event-listener>	
+		</event-listener>
 	</event-listeners>
 	<task-event-listeners>
 		<task-event-listener>
