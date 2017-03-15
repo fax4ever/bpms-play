@@ -16,7 +16,7 @@ import java.util.Map;
  */
 public class LogPEventListener extends DefaultProcessEventListener {
 
-    private static final Logger log = LoggerFactory.getLogger(LogProcessEventListener.class);
+    private static final Logger log = LoggerFactory.getLogger(LogPEventListener.class);
 
     // local cache for correlation keys
     // key is the process instance ID

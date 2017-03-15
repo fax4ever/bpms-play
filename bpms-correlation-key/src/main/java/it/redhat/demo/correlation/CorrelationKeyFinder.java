@@ -1,6 +1,5 @@
 package it.redhat.demo.correlation;
 
-import it.redhat.demo.listener.LogProcessInstanceEventListener;
 import org.jbpm.process.audit.ProcessInstanceLog;
 import org.jbpm.process.instance.impl.ProcessInstanceImpl;
 import org.kie.api.event.process.ProcessVariableChangedEvent;
@@ -15,7 +14,7 @@ import org.slf4j.LoggerFactory;
  */
 public class CorrelationKeyFinder {
 
-    private static final Logger log = LoggerFactory.getLogger(LogProcessInstanceEventListener.class);
+    private static final Logger log = LoggerFactory.getLogger(CorrelationKeyFinder.class);
 
     public static String findCorrelationKeyNotPis(ProcessVariableChangedEvent event, RuntimeManager runtimeManager) {
 
