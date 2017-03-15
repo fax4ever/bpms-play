@@ -103,7 +103,7 @@ public class ProcessInstanceHelper {
 
         if (auditPerProcessInstance == null) {
 
-            log.warn("audit process instance with pid {} not found", auditPerProcessInstance);
+            log.trace("audit process instance with pid {} not found", auditPerProcessInstance);
             return null;
         }
 

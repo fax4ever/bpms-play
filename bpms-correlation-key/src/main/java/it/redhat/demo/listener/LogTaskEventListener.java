@@ -60,7 +60,7 @@ public class LogTaskEventListener extends DefaultTaskEventListener {
 	}
 
 	@Override
-	public void afterTaskCompletedEvent(TaskEvent event) {
+	public void beforeTaskCompletedEvent(TaskEvent event) {
 
 		Task task = event.getTask();
 		TaskData taskData = task.getTaskData();
@@ -82,7 +82,7 @@ public class LogTaskEventListener extends DefaultTaskEventListener {
 		Map<String, Object> taskOutputVariables = taskData.getTaskOutputVariables();
 		User actualOwner = taskData.getActualOwner();
 
-		logger.info("Task Completed - correlationKey: [{}], taskName: [{}], processId: [{}], pi: [{}], in: [{}], out: pi: [{}], actualOwner: [{}]",
+		logger.info("Task Completed - correlationKey: [{}], taskName: [{}], processId: [{}], pi: [{}], in: [{}], out:[{}], actualOwner: [{}]",
 				correlationKey, task.getName(), processId, processInstanceId, taskInputVariables, taskOutputVariables, actualOwner.getId());
 
 	}
@@ -90,7 +90,7 @@ public class LogTaskEventListener extends DefaultTaskEventListener {
 	private void verifyAndFillCKMap(Long piid) {
 
 		if (!correlationKeys.containsKey(piid)) {
-			logger.trace("search correlation key for process instance {}", piid);
+			logger.info("search correlation key for process instance {}", piid);
 			String correlationKeyPis = finder.findCorrelationKey(piid);
 
 			if (correlationKeyPis != null) {
@@ -98,7 +98,7 @@ public class LogTaskEventListener extends DefaultTaskEventListener {
 			}
 
 		} else {
-			logger.trace("cache correlation key for process instance {}", piid);
+			logger.info("cache correlation key for process instance {}", piid);
 		}
 
 	}
