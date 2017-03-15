@@ -15,7 +15,7 @@
 	<task-event-listeners>
 		<task-event-listener>
 			<resolver>mvel</resolver>
-			<identifier>new it.redhat.demo.listener.LogTaskEventListener()</identifier>
+			<identifier>new it.redhat.demo.listener.LogTaskEventListener(runtimeManager, true)</identifier>
 		</task-event-listener>
 	</task-event-listeners>
     <globals>

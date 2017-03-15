@@ -49,7 +49,8 @@ public class UserProcessTest extends JbpmJUnitBaseTestCase {
         LogProcessEventListener listener = new LogProcessEventListener(false);
         addProcessEventListener(listener);
 
-        addTaskEventListener(new LogTaskEventListener());
+        LogTaskEventListener taskEventListener = new LogTaskEventListener(false);
+        addTaskEventListener(taskEventListener);
 
         runtimeManager = createRuntimeManager(IT_REDHAT_DEMO + "user-parent-process.bpmn2", IT_REDHAT_DEMO + "user-sub-process.bpmn2");
         runtimeEngine = getRuntimeEngine();
@@ -58,6 +59,7 @@ public class UserProcessTest extends JbpmJUnitBaseTestCase {
         auditService = runtimeEngine.getAuditService();
 
         listener.setRuntimeManager(runtimeManager);
+        taskEventListener.setRuntimeManager(runtimeManager);
 
     }
 
