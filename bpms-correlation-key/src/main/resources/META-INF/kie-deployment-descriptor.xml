@@ -9,7 +9,7 @@
     <event-listeners>
 		<event-listener>
 			<resolver>mvel</resolver>
-            <identifier>new it.redhat.demo.listener.LogProcessInstanceEventListener(runtimeManager)</identifier>
+            <identifier>new it.redhat.demo.listener.LogPEventListener(runtimeManager, true)</identifier>
 		</event-listener>
 	</event-listeners>
 	<task-event-listeners>

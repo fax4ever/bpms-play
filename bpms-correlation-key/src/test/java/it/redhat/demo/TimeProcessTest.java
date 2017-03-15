@@ -1,8 +1,6 @@
 package it.redhat.demo;
 
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
+import it.redhat.demo.listener.LogPEventListener;
 import org.drools.core.time.impl.PseudoClockScheduler;
 import org.jbpm.test.JbpmJUnitBaseTestCase;
 import org.junit.After;
@@ -19,7 +17,8 @@ import org.kie.internal.process.CorrelationAwareProcessRuntime;
 import org.kie.internal.process.CorrelationKey;
 import org.kie.internal.process.CorrelationKeyFactory;
 
-import it.redhat.demo.listener.LogProcessEventListener;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class TimeProcessTest extends JbpmJUnitBaseTestCase {
 
@@ -41,12 +40,15 @@ public class TimeProcessTest extends JbpmJUnitBaseTestCase {
 	public void before() {
 		
 		System.setProperty("drools.clockType", "pseudo");
-		addProcessEventListener(new LogProcessEventListener());
+		LogPEventListener listener = new LogPEventListener(false);
+		addProcessEventListener(listener);
 		
 		runtimeManager = createRuntimeManager(IT_REDHAT_DEMO + "time-parent-process.bpmn2", IT_REDHAT_DEMO + "time-sub-process.bpmn2");	
 		runtimeEngine = getRuntimeEngine();
 		kieSession = runtimeEngine.getKieSession();
 		auditService = runtimeEngine.getAuditService();
+
+		listener.setRuntimeManager(runtimeManager);
 		
 	}
 	

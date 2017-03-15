@@ -1,7 +1,6 @@
 package it.redhat.demo;
 
-import java.util.List;
-
+import it.redhat.demo.listener.LogPEventListener;
 import org.jbpm.test.JbpmJUnitBaseTestCase;
 import org.junit.After;
 import org.junit.Before;
@@ -17,7 +16,7 @@ import org.kie.internal.process.CorrelationAwareProcessRuntime;
 import org.kie.internal.process.CorrelationKey;
 import org.kie.internal.process.CorrelationKeyFactory;
 
-import it.redhat.demo.listener.LogProcessEventListener;
+import java.util.List;
 
 public class ScriptProcessTest extends JbpmJUnitBaseTestCase {
 	
@@ -37,13 +36,16 @@ public class ScriptProcessTest extends JbpmJUnitBaseTestCase {
 	
 	@Before
 	public void before() {
-		
-		addProcessEventListener(new LogProcessEventListener());
-		
-		runtimeManager = createRuntimeManager(IT_REDHAT_DEMO + "script-parent-process.bpmn2", IT_REDHAT_DEMO + "script-sub-process.bpmn2");	
+
+		LogPEventListener listener = new LogPEventListener(false);
+		addProcessEventListener(listener);
+
+		runtimeManager = createRuntimeManager(IT_REDHAT_DEMO + "script-parent-process.bpmn2", IT_REDHAT_DEMO + "script-sub-process.bpmn2");
 		runtimeEngine = getRuntimeEngine();
 		kieSession = runtimeEngine.getKieSession();
 		auditService = runtimeEngine.getAuditService();
+
+		listener.setRuntimeManager(runtimeManager);
 			
 	}
 	
