@@ -23,7 +23,7 @@ public class LogProcessEventListener extends DefaultProcessEventListener {
 	public void afterVariableChanged(ProcessVariableChangedEvent event) {
 		
 		// using for probing object instance scope
-		log.info("Listener Identity Object Instance: [{}]", System.identityHashCode(this));
+		log.trace("Listener Identity Object Instance: [{}]", System.identityHashCode(this));
 		
 		Object newValue = event.getNewValue();
 
@@ -37,15 +37,15 @@ public class LogProcessEventListener extends DefaultProcessEventListener {
 		String processId = pi.getProcessId();
 		
 		if (!correlationKeys.containsKey(pi.getId())) {
-			log.info("search correlation key for process instance {}", pi.getId());
+			log.trace("search correlation key for process instance {}", pi.getId());
 			addKey(event);
 		} else {
-			log.info("found correlation key for process instance {}", pi.getId());
+			log.trace("found correlation key for process instance {}", pi.getId());
 		}
 		
 		String correlationKey = correlationKeys.get(pi.getId());
 		if (correlationKey == null) {
-			correlationKey = "No Correlation Key";
+			return;
 		}
 	
 		log.info("correlationKey: [{}], processId: [{}], pi: [{}], parent: [{}], variable: [{}], oldValue [{}], newValue: [{}]", 
@@ -56,13 +56,7 @@ public class LogProcessEventListener extends DefaultProcessEventListener {
 	private void addKey(ProcessVariableChangedEvent event) {
 		
 		ProcessInstance currentPi = event.getProcessInstance();
-		ProcessInstanceImpl rootPi = (ProcessInstanceImpl) event.getProcessInstance();
-		
-		try {
-			rootPi = LogProcessEventListener.findRoot(event.getKieRuntime(), (ProcessInstanceImpl) event.getProcessInstance());
-		} catch (Exception e) {
-			log.error(e.getMessage());
-		}
+		ProcessInstanceImpl rootPi = LogProcessEventListener.findRoot(event.getKieRuntime(), (ProcessInstanceImpl) event.getProcessInstance());
 		
 		CorrelationKey correlationKey = (CorrelationKey) rootPi.getMetaData().get("CorrelationKey");
 		if (correlationKey != null) {

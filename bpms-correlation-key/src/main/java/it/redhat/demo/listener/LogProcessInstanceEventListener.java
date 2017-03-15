@@ -10,6 +10,7 @@ import org.kie.api.runtime.manager.audit.AuditService;
 import org.kie.api.runtime.manager.audit.ProcessInstanceLog;
 import org.kie.api.runtime.process.ProcessInstance;
 import org.kie.internal.process.CorrelationKey;
+import org.kie.internal.runtime.manager.SessionNotFoundException;
 import org.kie.internal.runtime.manager.context.ProcessInstanceIdContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +34,7 @@ public class LogProcessInstanceEventListener extends DefaultProcessEventListener
 	public void afterVariableChanged(ProcessVariableChangedEvent event) {
 		
 		// using for probing object instance scope
-		log.info("Listener Identity Object Instance: [{}]", System.identityHashCode(this));
+		log.trace("Listener Identity Object Instance: [{}]", System.identityHashCode(this));
 		
 		Object newValue = event.getNewValue();
 
@@ -47,15 +48,15 @@ public class LogProcessInstanceEventListener extends DefaultProcessEventListener
 		String processId = pi.getProcessId();
 		
 		if (!correlationKeys.containsKey(pi.getId())) {
-			log.info("search correlation key for process instance {}", pi.getId());
+			log.trace("search correlation key for process instance {}", pi.getId());
 			addKey(event);
 		} else {
-			log.info("cache correlation key for process instance {}", pi.getId());
+			log.trace("cache correlation key for process instance {}", pi.getId());
 		}
 		
 		String correlationKey = correlationKeys.get(pi.getId());
 		if (correlationKey == null) {
-			correlationKey = "No Correlation Key";
+			return;
 		}
 	
 		log.info("correlationKey: [{}], processId: [{}], pi: [{}], parent: [{}], variable: [{}], oldValue [{}], newValue: [{}]", 
@@ -66,20 +67,14 @@ public class LogProcessInstanceEventListener extends DefaultProcessEventListener
 	private void addKey(ProcessVariableChangedEvent event) {
 		
 		ProcessInstance currentPi = event.getProcessInstance();
-		ProcessInstanceImpl rootPi = (ProcessInstanceImpl) event.getProcessInstance();
-		
-		try {
-			rootPi = LogProcessInstanceEventListener.findRoot(runtimeManager, (ProcessInstanceImpl) event.getProcessInstance());
-		} catch (Exception e) {
-			log.error("ROOT :: " + e.getMessage());
-		}
+		ProcessInstanceImpl rootPi = LogProcessInstanceEventListener.findRoot(runtimeManager, (ProcessInstanceImpl) event.getProcessInstance());
 		
 		CorrelationKey correlationKey = (CorrelationKey) rootPi.getMetaData().get("CorrelationKey");
 		if (correlationKey == null) {
 			try {
 				tryAuditService(currentPi, rootPi);
-			} catch (Exception e) {
-				log.error("AUDIT :: " + e.getMessage());
+			} catch (SessionNotFoundException e) {
+				log.trace("AUDIT :: {} {}",e.getClass(), e.getMessage());
 			}
 		}
 
