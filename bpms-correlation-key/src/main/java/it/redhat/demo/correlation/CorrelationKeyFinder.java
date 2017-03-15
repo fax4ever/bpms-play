@@ -2,7 +2,7 @@ package it.redhat.demo.correlation;
 
 import org.jbpm.process.audit.ProcessInstanceLog;
 import org.jbpm.process.instance.impl.ProcessInstanceImpl;
-import org.kie.api.event.process.ProcessVariableChangedEvent;
+import org.kie.api.event.process.ProcessEvent;
 import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.manager.RuntimeManager;
 import org.kie.internal.process.CorrelationKey;
@@ -24,13 +24,13 @@ public class CorrelationKeyFinder {
         this.perProcessInstance = perProcessInstance;
     }
 
-    public String findCorrelationKey(ProcessVariableChangedEvent event) {
+    public String findCorrelationKey(ProcessEvent event) {
 
         return (perProcessInstance) ? findCorrelationKeyPis(event) : findCorrelationKeyNotPis(event);
 
     }
 
-    private String findCorrelationKeyNotPis(ProcessVariableChangedEvent event) {
+    private String findCorrelationKeyNotPis(ProcessEvent event) {
 
         // first of all we need to find the root process instance
         ProcessInstanceImpl rootPi = ProcessInstanceHelper.findRoot((ProcessInstanceImpl) event.getProcessInstance(), (KieSession) event.getKieRuntime());
@@ -49,7 +49,7 @@ public class CorrelationKeyFinder {
 
     }
 
-    private String findCorrelationKeyPis(ProcessVariableChangedEvent event) {
+    private String findCorrelationKeyPis(ProcessEvent event) {
 
         // first of all we need to find the root process instance
         ProcessInstanceImpl rootPi = ProcessInstanceHelper.findRoot((ProcessInstanceImpl) event.getProcessInstance(), runtimeManager);

@@ -1,8 +1,7 @@
 package it.redhat.demo.listener;
 
 import it.redhat.demo.correlation.CorrelationKeyFinder;
-import org.kie.api.event.process.DefaultProcessEventListener;
-import org.kie.api.event.process.ProcessVariableChangedEvent;
+import org.kie.api.event.process.*;
 import org.kie.api.runtime.manager.RuntimeManager;
 import org.kie.api.runtime.process.ProcessInstance;
 import org.slf4j.Logger;
@@ -36,6 +35,36 @@ public class LogProcessEventListener extends DefaultProcessEventListener {
         finder = new CorrelationKeyFinder(perProcessInstanceStrategy);
     }
 
+    public void setRuntimeManager(RuntimeManager runtimeManager) {
+        this.finder.setRuntimeManager(runtimeManager);
+    }
+
+    @Override
+    public void beforeProcessStarted(ProcessStartedEvent event) {
+
+        verifyAndFillCKMap(event);
+
+        ProcessInstance pi = event.getProcessInstance();
+        String processId = pi.getProcessId();
+        String correlationKey = correlationKeys.get(pi.getId());
+
+        log.info("Start Process - correlationKey: [{}], processId: [{}], pi: [{}], parent: [{}]", correlationKey, processId, pi.getId(), pi.getParentProcessInstanceId());
+
+    }
+
+    @Override
+    public void afterProcessCompleted(ProcessCompletedEvent event) {
+
+        verifyAndFillCKMap(event);
+
+        ProcessInstance pi = event.getProcessInstance();
+        String processId = pi.getProcessId();
+        String correlationKey = correlationKeys.get(pi.getId());
+
+        log.info("End Process - correlationKey: [{}], processId: [{}], pi: [{}], parent: [{}]", correlationKey, processId, pi.getId(), pi.getParentProcessInstanceId());
+
+    }
+
     @Override
     public void afterVariableChanged(ProcessVariableChangedEvent event) {
         
@@ -50,20 +79,7 @@ public class LogProcessEventListener extends DefaultProcessEventListener {
         ProcessInstance pi = event.getProcessInstance();
         String processId = pi.getProcessId();
 
-        // using for probing object instance scope
-        log.trace("Listener Identity Object Instance: [{}]", System.identityHashCode(this));
-
-        if (!correlationKeys.containsKey(pi.getId())) {
-            log.trace("search correlation key for process instance {}", pi.getId());
-            String correlationKeyPis = finder.findCorrelationKey(event);
-
-            if (correlationKeyPis != null) {
-                correlationKeys.put(pi.getId(), correlationKeyPis);
-            }
-
-        } else {
-            log.trace("cache correlation key for process instance {}", pi.getId());
-        }
+        verifyAndFillCKMap(event);
 
         String correlationKey = correlationKeys.get(pi.getId());
         // skip logging if it is not possible to associate a correlation key
@@ -71,14 +87,26 @@ public class LogProcessEventListener extends DefaultProcessEventListener {
             return;
         }
 
-        log.info("correlationKey: [{}], processId: [{}], pi: [{}], parent: [{}], variable: [{}], oldValue [{}], newValue: [{}]",
+        log.info("Change Variable - correlationKey: [{}], processId: [{}], pi: [{}], parent: [{}], variable: [{}], oldValue [{}], newValue: [{}]",
                 correlationKey, processId, pi.getId(), pi.getParentProcessInstanceId(), variableId, oldValue, newValue);
 
 
     }
 
-    public void setRuntimeManager(RuntimeManager runtimeManager) {
-        this.finder.setRuntimeManager(runtimeManager);
+    private void verifyAndFillCKMap(ProcessEvent event) {
+        long piid = event.getProcessInstance().getId();
+
+        if (!correlationKeys.containsKey(piid)) {
+            log.trace("search correlation key for process instance {}", piid);
+            String correlationKeyPis = finder.findCorrelationKey(event);
+
+            if (correlationKeyPis != null) {
+                correlationKeys.put(piid, correlationKeyPis);
+            }
+
+        } else {
+            log.trace("cache correlation key for process instance {}", piid);
+        }
     }
 
 }
