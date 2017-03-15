@@ -7,7 +7,6 @@ import org.kie.api.runtime.manager.RuntimeEngine;
 import org.kie.api.runtime.manager.RuntimeManager;
 import org.kie.internal.process.CorrelationKey;
 import org.kie.internal.runtime.manager.context.EmptyContext;
-import org.kie.internal.runtime.manager.context.ProcessInstanceIdContext;
 
 /**
  * Created by fabio.ercoli@redhat.com on 15/03/17.
@@ -58,20 +57,7 @@ public class CorrelationKeyTaskFinder {
 
     private String findCorrelationKeyPis(Long processInstanceId) {
 
-        RuntimeEngine runtimeEngine = runtimeManager.getRuntimeEngine(ProcessInstanceIdContext.get(processInstanceId));
-        KieSession kieSession = runtimeEngine.getKieSession();
-
-        ProcessInstanceImpl processInstance = (ProcessInstanceImpl) kieSession.getProcessInstance(processInstanceId);
-
-        // first of all we need to find the root process instance
-        ProcessInstanceImpl rootPi = ProcessInstanceHelper.findRoot(processInstance, runtimeManager);
-
-        CorrelationKey correlationKey = (CorrelationKey) rootPi.getMetaData().get("CorrelationKey");
-        if (correlationKey != null) {
-            return correlationKey.toExternalForm();
-        }
-
-        ProcessInstanceLog rootPiLog = (ProcessInstanceLog) ProcessInstanceHelper.getAuditPerProcessInstance(rootPi.getId(), runtimeManager);
+        ProcessInstanceLog rootPiLog = (ProcessInstanceLog) ProcessInstanceHelper.getRootAuditPerProcessInstance(processInstanceId, runtimeManager);
         if (rootPiLog == null) {
             return null;
         }

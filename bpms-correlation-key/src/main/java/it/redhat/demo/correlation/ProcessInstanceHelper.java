@@ -90,10 +90,28 @@ public class ProcessInstanceHelper {
 
         } catch (SessionNotFoundException ex) {
 
-            log.trace("audit process instance {} does not exist", processInstanceId);
+            log.info("audit process instance {} does not exist", processInstanceId);
             return null;
 
         }
+
+    }
+
+    public static ProcessInstanceLog getRootAuditPerProcessInstance(Long processInstanceId, RuntimeManager runtimeManager) {
+
+        ProcessInstanceLog auditPerProcessInstance = ProcessInstanceHelper.getAuditPerProcessInstance(processInstanceId, runtimeManager);
+
+        if (auditPerProcessInstance == null) {
+
+            log.warn("audit process instance with pid {} not found", auditPerProcessInstance);
+            return null;
+        }
+
+        if (auditPerProcessInstance.getParentProcessInstanceId() <= 0) {
+            return auditPerProcessInstance;
+        }
+
+        return getRootAuditPerProcessInstance(auditPerProcessInstance.getParentProcessInstanceId(), runtimeManager);
 
     }
 
