@@ -50,14 +50,20 @@
 
         <dependency>
             <groupId>org.jbpm</groupId>
-            <artifactId>jbpm-test</artifactId>
-            <scope>test</scope>
+            <artifactId>jbpm-human-task-jpa</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jbpm</groupId>
+            <artifactId>jbpm-test</artifactId>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
