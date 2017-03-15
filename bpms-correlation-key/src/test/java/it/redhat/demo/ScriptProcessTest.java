@@ -1,6 +1,6 @@
 package it.redhat.demo;
 
-import it.redhat.demo.listener.LogPEventListener;
+import it.redhat.demo.listener.LogProcessEventListener;
 import org.jbpm.test.JbpmJUnitBaseTestCase;
 import org.junit.After;
 import org.junit.Before;
@@ -37,7 +37,7 @@ public class ScriptProcessTest extends JbpmJUnitBaseTestCase {
 	@Before
 	public void before() {
 
-		LogPEventListener listener = new LogPEventListener(false);
+		LogProcessEventListener listener = new LogProcessEventListener(false);
 		addProcessEventListener(listener);
 
 		runtimeManager = createRuntimeManager(IT_REDHAT_DEMO + "script-parent-process.bpmn2", IT_REDHAT_DEMO + "script-sub-process.bpmn2");

@@ -1,6 +1,6 @@
 package it.redhat.demo;
 
-import it.redhat.demo.listener.LogPEventListener;
+import it.redhat.demo.listener.LogProcessEventListener;
 import org.drools.core.time.impl.PseudoClockScheduler;
 import org.jbpm.test.JbpmJUnitBaseTestCase;
 import org.junit.After;
@@ -40,7 +40,7 @@ public class TimeProcessTest extends JbpmJUnitBaseTestCase {
 	public void before() {
 		
 		System.setProperty("drools.clockType", "pseudo");
-		LogPEventListener listener = new LogPEventListener(false);
+		LogProcessEventListener listener = new LogProcessEventListener(false);
 		addProcessEventListener(listener);
 		
 		runtimeManager = createRuntimeManager(IT_REDHAT_DEMO + "time-parent-process.bpmn2", IT_REDHAT_DEMO + "time-sub-process.bpmn2");	

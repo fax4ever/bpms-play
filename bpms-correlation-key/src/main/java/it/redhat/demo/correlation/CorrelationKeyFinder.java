@@ -6,17 +6,31 @@ import org.kie.api.event.process.ProcessVariableChangedEvent;
 import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.manager.RuntimeManager;
 import org.kie.internal.process.CorrelationKey;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Created by fabio.ercoli@redhat.com on 15/03/17.
  */
 public class CorrelationKeyFinder {
 
-    private static final Logger log = LoggerFactory.getLogger(CorrelationKeyFinder.class);
+    private boolean perProcessInstance = true;
+    private RuntimeManager runtimeManager;
 
-    public static String findCorrelationKeyNotPis(ProcessVariableChangedEvent event, RuntimeManager runtimeManager) {
+    public CorrelationKeyFinder(boolean perProcessInstance, RuntimeManager runtimeManager) {
+        this.perProcessInstance = perProcessInstance;
+        this.runtimeManager = runtimeManager;
+    }
+
+    public CorrelationKeyFinder(boolean perProcessInstance) {
+        this.perProcessInstance = perProcessInstance;
+    }
+
+    public String findCorrelationKey(ProcessVariableChangedEvent event) {
+
+        return (perProcessInstance) ? findCorrelationKeyPis(event) : findCorrelationKeyNotPis(event);
+
+    }
+
+    private String findCorrelationKeyNotPis(ProcessVariableChangedEvent event) {
 
         // first of all we need to find the root process instance
         ProcessInstanceImpl rootPi = ProcessInstanceHelper.findRoot((ProcessInstanceImpl) event.getProcessInstance(), (KieSession) event.getKieRuntime());
@@ -35,7 +49,7 @@ public class CorrelationKeyFinder {
 
     }
 
-    public static String findCorrelationKeyPis(ProcessVariableChangedEvent event, RuntimeManager runtimeManager) {
+    private String findCorrelationKeyPis(ProcessVariableChangedEvent event) {
 
         // first of all we need to find the root process instance
         ProcessInstanceImpl rootPi = ProcessInstanceHelper.findRoot((ProcessInstanceImpl) event.getProcessInstance(), runtimeManager);
@@ -52,6 +66,10 @@ public class CorrelationKeyFinder {
 
         return rootPiLog.getCorrelationKey();
 
+    }
+
+    public void setRuntimeManager(RuntimeManager runtimeManager) {
+        this.runtimeManager = runtimeManager;
     }
 
 }

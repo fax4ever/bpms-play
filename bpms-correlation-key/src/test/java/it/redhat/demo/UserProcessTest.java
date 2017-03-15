@@ -1,6 +1,6 @@
 package it.redhat.demo;
 
-import it.redhat.demo.listener.LogPEventListener;
+import it.redhat.demo.listener.LogProcessEventListener;
 import it.redhat.demo.listener.LogTaskEventListener;
 import org.jbpm.test.JbpmJUnitBaseTestCase;
 import org.junit.After;
@@ -46,7 +46,7 @@ public class UserProcessTest extends JbpmJUnitBaseTestCase {
     @Before
     public void before() {
 
-        LogPEventListener listener = new LogPEventListener(false);
+        LogProcessEventListener listener = new LogProcessEventListener(false);
         addProcessEventListener(listener);
 
         addTaskEventListener(new LogTaskEventListener());
