@@ -16,6 +16,7 @@ import org.kie.internal.process.CorrelationAwareProcessRuntime;
 import org.kie.internal.process.CorrelationKey;
 import org.kie.internal.process.CorrelationKeyFactory;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class ScriptProcessTest extends JbpmJUnitBaseTestCase {
@@ -59,8 +60,11 @@ public class ScriptProcessTest extends JbpmJUnitBaseTestCase {
 	
 	@Test
 	public void test() {
-		
-		ProcessInstance pi = ((CorrelationAwareProcessRuntime)kieSession).startProcess("it.redhat.demo.script-parent-process", getCorrelationKey(), null);
+
+		HashMap<String, Object> parameters = new HashMap<>();
+		parameters.put("processId", "it.redhat.demo.script-parent-process");
+
+		ProcessInstance pi = ((CorrelationAwareProcessRuntime)kieSession).startProcess("it.redhat.demo.script-parent-process", getCorrelationKey(), parameters);
 		
 		assertProcessInstanceCompleted(pi.getId());
 		assertNodeTriggered(pi.getId(), "StartProcess", "CallSubprocess", "EndProcess");

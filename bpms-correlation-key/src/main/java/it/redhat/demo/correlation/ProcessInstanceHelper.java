@@ -90,7 +90,7 @@ public class ProcessInstanceHelper {
 
         } catch (SessionNotFoundException ex) {
 
-            log.info("audit process instance {} does not exist", processInstanceId);
+            log.trace("audit process instance {} does not exist", processInstanceId);
             return null;
 
         }

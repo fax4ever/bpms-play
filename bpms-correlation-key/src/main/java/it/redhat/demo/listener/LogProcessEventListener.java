@@ -7,8 +7,7 @@ import org.kie.api.runtime.process.ProcessInstance;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by fabio.ercoli@redhat.com on 15/03/17.
@@ -16,6 +15,7 @@ import java.util.Map;
 public class LogProcessEventListener extends DefaultProcessEventListener {
 
     private static final Logger log = LoggerFactory.getLogger(LogProcessEventListener.class);
+    private static final String[] SKIP_CHANGE_ON_THIS_VARIABLES = { "processId", "initiator" };
 
     // local cache for correlation keys
     // key is the process instance ID
@@ -25,7 +25,8 @@ public class LogProcessEventListener extends DefaultProcessEventListener {
     // in the other strategies the listener object will not be shared with other threads
     private volatile Map<Long, String> correlationKeys = new HashMap<>();
 
-    private CorrelationKeyFinder finder;
+    private final CorrelationKeyFinder finder;
+    private final Set<String> skippedVariableSet = new HashSet<>(Arrays.asList(SKIP_CHANGE_ON_THIS_VARIABLES));
 
     public LogProcessEventListener(RuntimeManager runtimeManager, boolean perProcessInstanceStrategy) {
         finder = new CorrelationKeyFinder(perProcessInstanceStrategy, runtimeManager);
@@ -69,13 +70,14 @@ public class LogProcessEventListener extends DefaultProcessEventListener {
     public void afterVariableChanged(ProcessVariableChangedEvent event) {
         
         Object newValue = event.getNewValue();
+        String variableId = event.getVariableId();
+
         // skip logging if the new value is null or an empty String
-        if (newValue == null || newValue.toString().trim().isEmpty()) {
+        if (newValue == null || newValue.toString().trim().isEmpty() || skippedVariableSet.contains(variableId)) {
             return;
         }
 
         Object oldValue = event.getOldValue();
-        String variableId = event.getVariableId();
         ProcessInstance pi = event.getProcessInstance();
         String processId = pi.getProcessId();
 
