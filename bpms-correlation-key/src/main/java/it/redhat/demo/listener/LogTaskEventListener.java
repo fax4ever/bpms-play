@@ -90,7 +90,7 @@ public class LogTaskEventListener extends DefaultTaskEventListener {
 	private void verifyAndFillCKMap(Long piid) {
 
 		if (!correlationKeys.containsKey(piid)) {
-			logger.info("search correlation key for process instance {}", piid);
+			logger.trace("search correlation key for process instance {}", piid);
 			String correlationKeyPis = finder.findCorrelationKey(piid);
 
 			if (correlationKeyPis != null) {
@@ -98,7 +98,7 @@ public class LogTaskEventListener extends DefaultTaskEventListener {
 			}
 
 		} else {
-			logger.info("cache correlation key for process instance {}", piid);
+			logger.trace("cache correlation key for process instance {}", piid);
 		}
 
 	}
