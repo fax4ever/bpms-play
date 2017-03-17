@@ -11,6 +11,8 @@ import org.junit.Test;
 import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.manager.RuntimeEngine;
 import org.kie.api.runtime.manager.RuntimeManager;
+import org.kie.api.runtime.manager.audit.AuditService;
+import org.kie.api.runtime.manager.audit.ProcessInstanceLog;
 import org.kie.api.runtime.process.ProcessInstance;
 import org.kie.api.task.TaskService;
 import org.kie.api.task.model.TaskSummary;
@@ -29,6 +31,7 @@ public class AdvancedQueryTest extends JbpmJUnitBaseTestCase {
     private RuntimeEngine runtimeEngine;
     private KieSession kieSession;
 	private TaskService taskService;
+	private AuditService auditService;
     
     public AdvancedQueryTest() {
         super(true, true);
@@ -42,6 +45,7 @@ public class AdvancedQueryTest extends JbpmJUnitBaseTestCase {
         
         kieSession = runtimeEngine.getKieSession();
         taskService = runtimeEngine.getTaskService();
+        auditService = runtimeEngine.getAuditService();
 
     }
     
@@ -72,7 +76,7 @@ public class AdvancedQueryTest extends JbpmJUnitBaseTestCase {
     	taskService.complete(task.getId(), MACCALLISTER, outputParameters);
     	
     	assertProcessInstanceActive(pi.getId());
-    	assertNodeTriggered(pi.getId(), "choise", "Write Text");
+    	assertNodeTriggered(pi.getId(), "choise", "Write Moment");
     	
     	tasksAssignedAsPotentialOwner = taskService.getTasksAssignedAsPotentialOwner(COLTRINARI, "");
     	Assert.assertEquals(1, tasksAssignedAsPotentialOwner.size());
@@ -87,6 +91,9 @@ public class AdvancedQueryTest extends JbpmJUnitBaseTestCase {
     	
     	assertProcessInstanceCompleted(pi.getId());
     	assertNodeTriggered(pi.getId(), "End Event 1");
+    	
+    	ProcessInstanceLog auditPI = auditService.findProcessInstance(pi.getId());
+    	assertNotNull(auditPI);
     	
     }
 
