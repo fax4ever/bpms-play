@@ -32,6 +32,7 @@
         <module>bpms-correlation-key</module>
         <module>bpms-correlation-async</module>
         <module>bpms-diagram</module>
+        <module>bpms-rest-client</module>
     </modules>
 
     <properties>
