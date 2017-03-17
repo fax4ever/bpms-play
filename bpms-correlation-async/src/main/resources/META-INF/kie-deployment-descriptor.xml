@@ -41,6 +41,12 @@
             <parameters/>
             <name>Rest</name>
         </work-item-handler>
+        <work-item-handler>
+            <resolver>mvel</resolver>
+            <identifier>new it.redhat.demo.LogCorrelationKey(ksession)</identifier>
+            <parameters/>
+            <name>Rest</name>
+        </work-item-handler>
     </work-item-handlers>
     <environment-entries/>
     <configurations/>

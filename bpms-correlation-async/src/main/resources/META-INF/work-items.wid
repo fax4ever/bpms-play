@@ -1,0 +1,10 @@
+import org.drools.core.process.core.datatype.impl.type.StringDataType;
+
+[
+  [
+    "name" : "LogCorrelationKey",
+  	"parameters" : [],
+  	"results" : [],
+    "displayName" : "LogCorrelationKey"
+  ]
+]
