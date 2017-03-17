@@ -31,7 +31,7 @@
         <module>bpms-event-listener</module>
         <module>bpms-correlation-key</module>
         <module>bpms-correlation-async</module>
-        <module>bpms-advanced-query</module>
+        <module>bpms-diagram</module>
     </modules>
 
     <properties>
