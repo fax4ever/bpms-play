@@ -33,6 +33,7 @@
         <module>bpms-correlation-async</module>
         <module>bpms-diagram</module>
         <module>bpms-rest-client</module>
+        <module>bpms-smart-gateway</module>
     </modules>
 
     <properties>
