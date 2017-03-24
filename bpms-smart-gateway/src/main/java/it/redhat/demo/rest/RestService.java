@@ -18,10 +18,8 @@ public class RestService {
 
     @GET
     public String ciao() {
-
         log.info("invoke ciao");
         return "ciao";
-
     }
 
 }
