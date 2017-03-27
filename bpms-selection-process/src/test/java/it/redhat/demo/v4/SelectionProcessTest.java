@@ -28,7 +28,7 @@ public class SelectionProcessTest extends JbpmJUnitBaseTestCase {
 	@Before
 	public void before() {
 		
-		createRuntimeManager("it/redhat/demo/v2/selection-process.bpmn2");
+		createRuntimeManager("it/redhat/demo/v4/selection-process.bpmn2");
 		RuntimeEngine runtimeEngine = getRuntimeEngine();
 		kieSession = runtimeEngine.getKieSession();
 		auditService = runtimeEngine.getAuditService();
