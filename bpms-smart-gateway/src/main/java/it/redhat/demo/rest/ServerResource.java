@@ -4,10 +4,7 @@ import it.redhat.demo.service.ProcessDefinitionService;
 import org.kie.server.api.model.KieServerInfo;
 import org.kie.server.api.model.ServiceResponse;
 import org.kie.server.api.model.definition.ProcessDefinition;
-import org.kie.server.api.model.definition.QueryDefinition;
-import org.kie.server.api.model.instance.ProcessInstance;
 import org.kie.server.client.KieServicesClient;
-import org.kie.server.client.QueryServicesClient;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -28,9 +25,6 @@ public class ServerResource {
 
     @Inject
     private ProcessDefinitionService processDefinitionService;
-
-    @Inject
-    private QueryServicesClient queryServices;
 
     @GET
     public ServiceResponse<KieServerInfo> getServerInfo() {
@@ -60,36 +54,6 @@ public class ServerResource {
     public Long startProcess(@PathParam("processDefinitionId") String processDefintionId) {
 
         return processDefinitionService.startProcess(processDefintionId);
-
-    }
-
-    @GET
-    @Path("queries")
-    public List<QueryDefinition> getQueryDefinitions() {
-
-        return queryServices.getQueries(0, MAX_SIZE);
-
-    }
-
-    @POST
-    @Path("queries")
-    public void registerQuery() {
-
-        QueryDefinition query = new QueryDefinition();
-        query.setName(QueryServicesClient.QUERY_MAP_PI);
-        query.setSource("java:jboss/datasources/ExampleDS");
-        query.setExpression("select * from processinstancelog");
-        query.setTarget("PROCESS");
-
-        queryServices.registerQuery(query);
-
-    }
-
-    @GET
-    @Path("queries/result")
-    public List<ProcessInstance> excetuteQuery() {
-
-        return queryServices.query(QueryServicesClient.QUERY_MAP_PI, QueryServicesClient.QUERY_MAP_PI, 0, 10, ProcessInstance.class);
 
     }
 
