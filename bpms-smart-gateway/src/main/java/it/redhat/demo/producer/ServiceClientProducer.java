@@ -3,6 +3,7 @@ package it.redhat.demo.producer;
 import org.kie.server.client.KieServicesClient;
 import org.kie.server.client.ProcessServicesClient;
 import org.kie.server.client.QueryServicesClient;
+import org.kie.server.client.UserTaskServicesClient;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
@@ -26,6 +27,11 @@ public class ServiceClientProducer {
     @Produces
     public ProcessServicesClient getProcess() {
         return kieServices.getServicesClient(ProcessServicesClient.class);
+    }
+
+    @Produces
+    public UserTaskServicesClient getUser() {
+        return kieServices.getServicesClient(UserTaskServicesClient.class);
     }
 
 }
