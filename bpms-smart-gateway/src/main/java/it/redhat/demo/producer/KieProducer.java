@@ -7,6 +7,9 @@ import org.kie.server.client.KieServicesFactory;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by fabio.ercoli@redhat.com on 27/03/17.
@@ -20,9 +23,13 @@ public class KieProducer {
     @Produces
     public KieServicesClient getServiceClient() {
 
+        Set<Class<?>> extraClasses = new HashSet<Class<?>>();
+        extraClasses.add(Date.class);
+
         KieServicesConfiguration config = KieServicesFactory.newRestConfiguration("http://localhost:8080/kie-server/services/rest/server", "fabio", "fabio$739");
         config.setMarshallingFormat(MarshallingFormat.JSON);
         config.setTimeout(TIMEOUT);
+        config.addJaxbClasses(extraClasses);
 
         KieServicesClient kieServicesClient = KieServicesFactory.newKieServicesClient(config);
         return kieServicesClient;

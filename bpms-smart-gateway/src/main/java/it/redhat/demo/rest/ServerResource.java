@@ -5,6 +5,7 @@ import org.kie.server.api.model.KieServerInfo;
 import org.kie.server.api.model.ServiceResponse;
 import org.kie.server.api.model.definition.ProcessDefinition;
 import org.kie.server.api.model.definition.QueryDefinition;
+import org.kie.server.api.model.instance.ProcessInstance;
 import org.kie.server.client.KieServicesClient;
 import org.kie.server.client.QueryServicesClient;
 
@@ -81,6 +82,14 @@ public class ServerResource {
         query.setTarget("PROCESS");
 
         queryServices.registerQuery(query);
+
+    }
+
+    @GET
+    @Path("queries/result")
+    public List<ProcessInstance> excetuteQuery() {
+
+        return queryServices.query(QueryServicesClient.QUERY_MAP_PI, QueryServicesClient.QUERY_MAP_PI, 0, 10, ProcessInstance.class);
 
     }
 
