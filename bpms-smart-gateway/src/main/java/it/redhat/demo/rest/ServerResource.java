@@ -6,7 +6,6 @@ import org.kie.server.api.model.ServiceResponse;
 import org.kie.server.api.model.definition.ProcessDefinition;
 import org.kie.server.client.KieServicesClient;
 
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -25,11 +24,6 @@ public class ServerResource {
 
     @Inject
     private ProcessDefinitionService processDefinitionService;
-
-    @PostConstruct
-    private void init() {
-
-    }
 
     @GET
     public ServiceResponse<KieServerInfo> getServerInfo() {
@@ -51,6 +45,14 @@ public class ServerResource {
     public List<ProcessDefinition> getProcessDefinitionsByProcessDefinitionId(@PathParam("processDefinitionId") String processDefinitionId) {
 
         return processDefinitionService.getProcessDefinitionsByProcessDefinitionId(processDefinitionId);
+
+    }
+
+    @POST
+    @Path("process/definitions/{processDefinitionId}")
+    public Long startProcess(@PathParam("processDefinitionId") String processDefintionId) {
+
+        return processDefinitionService.startProcess(processDefintionId);
 
     }
 

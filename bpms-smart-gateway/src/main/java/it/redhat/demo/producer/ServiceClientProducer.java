@@ -1,6 +1,7 @@
 package it.redhat.demo.producer;
 
 import org.kie.server.client.KieServicesClient;
+import org.kie.server.client.ProcessServicesClient;
 import org.kie.server.client.QueryServicesClient;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -12,7 +13,7 @@ import javax.inject.Inject;
  */
 
 @ApplicationScoped
-public class QueryProducer {
+public class ServiceClientProducer {
 
     @Inject
     private KieServicesClient kieServices;
@@ -20,6 +21,11 @@ public class QueryProducer {
     @Produces
     public QueryServicesClient getQuery() {
         return kieServices.getServicesClient(QueryServicesClient.class);
+    }
+
+    @Produces
+    public ProcessServicesClient getProcess() {
+        return kieServices.getServicesClient(ProcessServicesClient.class);
     }
 
 }
