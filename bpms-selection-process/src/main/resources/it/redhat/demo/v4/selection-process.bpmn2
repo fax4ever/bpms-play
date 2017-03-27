@@ -4,7 +4,7 @@
   <bpmn2:itemDefinition id="ItemDefinition_1" isCollection="false" structureRef="java.lang.String"/>
   <bpmn2:itemDefinition id="ItemDefinition_2" isCollection="false" structureRef="java.lang.Integer"/>
   <bpmn2:itemDefinition id="ItemDefinition_3" isCollection="false" structureRef="java.lang.Boolean"/>
-  <bpmn2:process id="it.redhat.demo.hiring-process" tns:packageName="it.redhat.demo" tns:version="3.0" name="hiring-process" isExecutable="true" processType="Private">
+  <bpmn2:process id="it.redhat.demo.selection-process" tns:packageName="it.redhat.demo" tns:version="3.0" name="selection-process" isExecutable="true" processType="Private">
     <bpmn2:property id="currilculum" itemSubjectRef="ItemDefinition_1" name="currilculum"/>
     <bpmn2:property id="hrFeedback" itemSubjectRef="ItemDefinition_1" name="hrFeedback"/>
     <bpmn2:property id="managerFeedback" itemSubjectRef="ItemDefinition_1" name="managerFeedback"/>
@@ -16,10 +16,10 @@
       </bpmn2:extensionElements>
       <bpmn2:outgoing>SequenceFlow_1</bpmn2:outgoing>
     </bpmn2:startEvent>
-    <bpmn2:userTask id="UserTask_1" name="HR Interview">
+    <bpmn2:userTask id="UserTask_1" name="Human Resource Interview">
       <bpmn2:extensionElements>
         <tns:metaData name="elementname">
-          <tns:metaValue><![CDATA[HR Interview]]></tns:metaValue>
+          <tns:metaValue><![CDATA[Human Resource Interview]]></tns:metaValue>
         </tns:metaData>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_1</bpmn2:incoming>
@@ -134,10 +134,10 @@
     <bpmn2:sequenceFlow id="SequenceFlow_5" tns:priority="1" name="negative" sourceRef="ExclusiveGateway_1" targetRef="EndEvent_2">
       <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_6" language="http://www.mvel.org/2.0">hrFeedback != 'OK'</bpmn2:conditionExpression>
     </bpmn2:sequenceFlow>
-    <bpmn2:userTask id="UserTask_2" name="MGMT Interview">
+    <bpmn2:userTask id="UserTask_2" name="Manager Interview">
       <bpmn2:extensionElements>
         <tns:metaData name="elementname">
-          <tns:metaValue><![CDATA[MGMT Interview]]></tns:metaValue>
+          <tns:metaValue><![CDATA[Manager Interview]]></tns:metaValue>
         </tns:metaData>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_2</bpmn2:incoming>
@@ -251,7 +251,7 @@
     </bpmn2:sequenceFlow>
   </bpmn2:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_Process_1" bpmnElement="it.redhat.demo.hiring-process">
+    <bpmndi:BPMNPlane id="BPMNPlane_Process_1" bpmnElement="it.redhat.demo.selection-process">
       <bpmndi:BPMNShape id="BPMNShape_StartEvent_1" bpmnElement="StartEvent_1">
         <dc:Bounds height="0.0" width="0.0" x="45.0" y="45.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_1">
@@ -261,7 +261,7 @@
       <bpmndi:BPMNShape id="BPMNShape_UserTask_1" bpmnElement="UserTask_1" isExpanded="true">
         <dc:Bounds height="50.0" width="110.0" x="186.0" y="38.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_2">
-          <dc:Bounds height="11.0" width="52.0" x="215.0" y="57.0"/>
+          <dc:Bounds height="11.0" width="110.0" x="186.0" y="57.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_EndEvent_1" bpmnElement="EndEvent_1">
@@ -285,7 +285,7 @@
       <bpmndi:BPMNShape id="BPMNShape_UserTask_2" bpmnElement="UserTask_2" isExpanded="true">
         <dc:Bounds height="50.0" width="110.0" x="480.0" y="38.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_6">
-          <dc:Bounds height="11.0" width="66.0" x="502.0" y="57.0"/>
+          <dc:Bounds height="11.0" width="75.0" x="497.0" y="57.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_ExclusiveGateway_2" bpmnElement="ExclusiveGateway_2" isMarkerVisible="true">

@@ -136,7 +136,7 @@
 			<id>300</id>
 			<properties>
 				<projectVersion>3.0.0</projectVersion>
-				<process.version.filter>v2</process.version.filter>
+				<process.version.filter>v4</process.version.filter>
 			</properties>
 		</profile>
 	</profiles>
