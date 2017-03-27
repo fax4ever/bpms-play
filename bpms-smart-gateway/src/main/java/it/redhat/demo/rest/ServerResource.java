@@ -1,10 +1,10 @@
 package it.redhat.demo.rest;
 
+import it.redhat.demo.service.ProcessDefinitionService;
 import org.kie.server.api.model.KieServerInfo;
 import org.kie.server.api.model.ServiceResponse;
 import org.kie.server.api.model.definition.ProcessDefinition;
 import org.kie.server.client.KieServicesClient;
-import org.kie.server.client.QueryServicesClient;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -23,6 +23,9 @@ public class ServerResource {
     @Inject
     private KieServicesClient kieServices;
 
+    @Inject
+    private ProcessDefinitionService processDefinitionService;
+
     @PostConstruct
     private void init() {
 
@@ -39,8 +42,7 @@ public class ServerResource {
     @Path("process/definitions")
     public List<ProcessDefinition> getProcessDefinitions() {
 
-        QueryServicesClient query = getQuery();
-        return query.findProcesses(0, 100);
+        return processDefinitionService.getProcessDefinitions();
 
     }
 
@@ -48,13 +50,8 @@ public class ServerResource {
     @Path("process/definitions/{processDefinitionId}")
     public List<ProcessDefinition> getProcessDefinitionsByProcessDefinitionId(@PathParam("processDefinitionId") String processDefinitionId) {
 
-        QueryServicesClient query = getQuery();
-        return query.findProcessesById(processDefinitionId);
+        return processDefinitionService.getProcessDefinitionsByProcessDefinitionId(processDefinitionId);
 
-    }
-
-    private QueryServicesClient getQuery() {
-        return kieServices.getServicesClient(QueryServicesClient.class);
     }
 
 }
