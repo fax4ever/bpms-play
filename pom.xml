@@ -34,6 +34,7 @@
         <module>bpms-diagram</module>
         <module>bpms-rest-client</module>
         <module>bpms-smart-gateway</module>
+        <module>bpms-user-task</module>
     </modules>
 
     <properties>
