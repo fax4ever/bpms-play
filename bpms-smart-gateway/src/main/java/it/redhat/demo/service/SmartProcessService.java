@@ -10,10 +10,7 @@ import org.slf4j.Logger;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static it.redhat.demo.rest.ProcessResource.PROCESS_DEF_ID;
@@ -96,6 +93,13 @@ public class SmartProcessService {
         ).forEach((containerId, processInstanceIds) -> {
             processServices.abortProcessInstances(containerId, processInstanceIds);
         });
+
+    }
+
+    public Map<String, Object> getProcessInstanceVariables(Long processInstanceId) {
+
+        ProcessInstance processInstance = queryServices.findProcessInstanceById(processInstanceId);
+        return processServices.getProcessInstanceVariables(processInstance.getContainerId(), processInstanceId);
 
     }
 

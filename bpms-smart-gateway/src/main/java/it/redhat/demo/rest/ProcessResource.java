@@ -9,6 +9,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by fabio.ercoli@redhat.com on 30/03/17.
@@ -72,6 +73,14 @@ public class ProcessResource {
     public void abortProcessInstance(@PathParam("id") Long id) {
 
         smartProcessService.abortProcessInstance(id);
+
+    }
+
+    @GET
+    @Path("instances/variables/{id}")
+    public Map<String, Object> getProcessInstanceVariables(@PathParam("id") Long processInstanceId) {
+
+        return smartProcessService.getProcessInstanceVariables(processInstanceId);
 
     }
 
