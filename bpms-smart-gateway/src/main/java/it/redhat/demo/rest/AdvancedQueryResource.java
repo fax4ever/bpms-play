@@ -21,6 +21,8 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 public class AdvancedQueryResource {
 
+    public static final int MAX_ROWS = 100000;
+
     @Inject
     private QueryServicesClient queryServices;
 
@@ -41,9 +43,9 @@ public class AdvancedQueryResource {
         QueryDefinition definition = querySelector.selectQuery(query);
 
         if (QueryProducer.PROCESS.equals(definition.getTarget())) {
-            return queryServices.query(query, query, 0, 10, ProcessInstance.class);
+            return queryServices.query(query, query, 0, MAX_ROWS, ProcessInstance.class);
         } else {
-            return queryServices.query(query, query, 0, 10, TaskInstance.class);
+            return queryServices.query(query, query, 0, MAX_ROWS, TaskInstance.class);
         }
 
     }

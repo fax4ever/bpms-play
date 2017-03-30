@@ -26,7 +26,7 @@ public class KieProducer {
         Set<Class<?>> extraClasses = new HashSet<Class<?>>();
         extraClasses.add(Date.class);
 
-        KieServicesConfiguration config = KieServicesFactory.newRestConfiguration("http://localhost:8080/kie-server/services/rest/server", "fabio", "fabio$739");
+        KieServicesConfiguration config = KieServicesFactory.newRestConfiguration("http://localhost:8080/kie-server/services/rest/server", "giacomo", "giacomo$739");
         config.setMarshallingFormat(MarshallingFormat.JSON);
         config.setTimeout(TIMEOUT);
         config.addJaxbClasses(extraClasses);
