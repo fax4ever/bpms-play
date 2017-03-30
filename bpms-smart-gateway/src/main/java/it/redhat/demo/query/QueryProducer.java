@@ -32,6 +32,28 @@ public class QueryProducer {
     }
 
     @Produces
+    @Named(QueryServicesClient.QUERY_MAP_PI_WITH_VARS)
+    public QueryDefinition processInstanceWithVariables() {
+
+        QueryDefinition query = new QueryDefinition();
+        query.setName(QueryServicesClient.QUERY_MAP_PI_WITH_VARS);
+        query.setSource("java:jboss/datasources/ExampleDS");
+
+        query.setExpression("select pil.*, v.variableId, v.value " +
+                "from ProcessInstanceLog pil " +
+                "INNER JOIN (select vil.processInstanceId ,vil.variableId, MAX(vil.ID) maxvilid  FROM VariableInstanceLog vil " +
+                "GROUP BY vil.processInstanceId, vil.variableId ORDER BY vil.processInstanceId)  x " +
+                "ON (v.variableId = x.variableId  AND v.id = x.maxvilid )" +
+                "INNER JOIN VariableInstanceLog v " +
+                "ON (v.processInstanceId = pil.processInstanceId)");
+
+        query.setTarget(PROCESS);
+
+        return query;
+
+    }
+
+    @Produces
     @Named(QueryServicesClient.QUERY_MAP_TASK_WITH_VARS)
     public QueryDefinition getQueryDefinition() {
 
