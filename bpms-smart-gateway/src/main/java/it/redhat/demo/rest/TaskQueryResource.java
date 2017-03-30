@@ -9,8 +9,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
-import static it.redhat.demo.rest.ServerResource.MAX_SIZE;
-
 /**
  * Created by fabio.ercoli@redhat.com on 27/03/17.
  */
@@ -26,7 +24,7 @@ public class TaskQueryResource {
     @GET
     public List<QueryDefinition> getQueryDefinitions() {
 
-        return queryServices.getQueries(0, MAX_SIZE);
+        return queryServices.getQueries(0, 10000);
 
     }
 
