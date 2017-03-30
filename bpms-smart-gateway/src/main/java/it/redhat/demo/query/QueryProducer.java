@@ -14,6 +14,9 @@ import javax.inject.Named;
 @ApplicationScoped
 public class QueryProducer {
 
+    public static final String PROCESS = "PROCESS";
+    public static final String TASK = "TASK";
+
     @Produces
     @Named(QueryServicesClient.QUERY_MAP_PI)
     public QueryDefinition processInstance() {
@@ -22,7 +25,7 @@ public class QueryProducer {
         query.setName(QueryServicesClient.QUERY_MAP_PI);
         query.setSource("java:jboss/datasources/ExampleDS");
         query.setExpression("select * from processinstancelog");
-        query.setTarget("CUSTOM");
+        query.setTarget(PROCESS);
 
         return query;
 
@@ -36,11 +39,10 @@ public class QueryProducer {
         query.setName(QueryServicesClient.QUERY_MAP_TASK_WITH_VARS);
         query.setSource("java:jboss/datasources/ExampleDS");
         query.setExpression("select ti.*, mv.name as TVNAME, mv.value as TVVALUE from AuditTaskImpl ti inner join TaskVariableImpl mv on (mv.taskid = ti.taskId)");
-        query.setTarget("CUSTOM");
+        query.setTarget(TASK);
+
         return query;
 
     }
-
-
 
 }

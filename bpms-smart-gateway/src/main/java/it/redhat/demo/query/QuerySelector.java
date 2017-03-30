@@ -1,5 +1,6 @@
 package it.redhat.demo.query;
 
+import it.redhat.demo.exception.QueryDefinitionNotFoundException;
 import org.kie.server.api.model.definition.QueryDefinition;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -21,7 +22,11 @@ public class QuerySelector {
     public QueryDefinition selectQuery(String name) {
 
         Instance<QueryDefinition> queryDefinition = queryDefinitions.select(new NamedLiteral(name));
-        return queryDefinition.isUnsatisfied() ? null : queryDefinition.get();
+        if (queryDefinition.isUnsatisfied()) {
+            throw new QueryDefinitionNotFoundException(name);
+        }
+
+        return queryDefinition.get();
 
     }
 

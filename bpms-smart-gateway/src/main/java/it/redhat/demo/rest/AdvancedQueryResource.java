@@ -1,8 +1,10 @@
 package it.redhat.demo.rest;
 
+import it.redhat.demo.query.QueryProducer;
 import it.redhat.demo.query.QuerySelector;
 import org.kie.server.api.model.definition.QueryDefinition;
 import org.kie.server.api.model.instance.ProcessInstance;
+import org.kie.server.api.model.instance.TaskInstance;
 import org.kie.server.client.QueryServicesClient;
 
 import javax.inject.Inject;
@@ -32,27 +34,17 @@ public class AdvancedQueryResource {
 
     }
 
-    @POST
-    @Path("{query}")
-    public void registerQuery(@PathParam("query") String query) {
-
-        queryServices.registerQuery(querySelector.selectQuery(query));
-
-    }
-
-    @PUT
-    @Path("{query}")
-    public void replaceQuery(@PathParam("query") String query) {
-
-        queryServices.replaceQuery(querySelector.selectQuery(query));
-
-    }
-
     @GET
     @Path("{query}")
-    public List<ProcessInstance> executeQuery(@PathParam("query") String query) {
+    public List executeQuery(@PathParam("query") String query) {
 
-        return queryServices.query(query, query, 0, 10, ProcessInstance.class);
+        QueryDefinition definition = querySelector.selectQuery(query);
+
+        if (QueryProducer.PROCESS.equals(definition.getTarget())) {
+            return queryServices.query(query, query, 0, 10, ProcessInstance.class);
+        } else {
+            return queryServices.query(query, query, 0, 10, TaskInstance.class);
+        }
 
     }
 
