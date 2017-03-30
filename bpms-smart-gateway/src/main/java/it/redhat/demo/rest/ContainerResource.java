@@ -11,8 +11,6 @@ import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
-import static com.sun.imageio.plugins.jpeg.JPEG.version;
-
 /**
  * Created by fabio.ercoli@redhat.com on 27/03/17.
  */
@@ -57,7 +55,7 @@ public class ContainerResource {
     }
 
     @DELETE
-    public ServiceResponse<Void> disposeContainer() {
+    public ServiceResponse<Void> disposeContainer(@PathParam("version") String version) {
 
         KieContainerResource container = lookupContainer(version);
         return kieServices.disposeContainer(container.getContainerId());

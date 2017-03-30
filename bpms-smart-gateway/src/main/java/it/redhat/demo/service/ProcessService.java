@@ -3,6 +3,7 @@ package it.redhat.demo.service;
 import it.redhat.demo.compatator.LastVersionComparator;
 import it.redhat.demo.exception.SmartGatewayException;
 import org.kie.server.api.model.definition.ProcessDefinition;
+import org.kie.server.api.model.instance.ProcessInstance;
 import org.kie.server.client.ProcessServicesClient;
 import org.kie.server.client.QueryServicesClient;
 import org.slf4j.Logger;
@@ -17,7 +18,7 @@ import java.util.Optional;
  */
 
 @Stateless
-public class ProcessDefinitionService {
+public class ProcessService {
 
     private static final int MAX_RESULT = 100;
 
@@ -55,6 +56,12 @@ public class ProcessDefinitionService {
         log.info("starting process definition {} on container {}", processDefinitionId, containerId);
 
         return processServices.startProcess(containerId, processDefinitionId);
+
+    }
+
+    public List<ProcessInstance> findProcessInstances() {
+
+        return queryServices.findProcessInstances(0, MAX_RESULT);
 
     }
 

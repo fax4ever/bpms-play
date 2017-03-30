@@ -1,7 +1,8 @@
 package it.redhat.demo.rest;
 
-import it.redhat.demo.service.ProcessDefinitionService;
+import it.redhat.demo.service.ProcessService;
 import org.kie.server.api.model.definition.ProcessDefinition;
+import org.kie.server.api.model.instance.ProcessInstance;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -18,7 +19,7 @@ import java.util.List;
 public class ProcessResource {
 
     @Inject
-    private ProcessDefinitionService processDefinitionService;
+    private ProcessService processDefinitionService;
 
     @GET
     @Path("definitions")
@@ -41,6 +42,14 @@ public class ProcessResource {
     public Long startProcess(@PathParam("processDefinitionId") String processDefintionId) {
 
         return processDefinitionService.startProcess(processDefintionId);
+
+    }
+
+    @GET
+    @Path("instances")
+    public List<ProcessInstance> getProcessInstances() {
+
+        return processDefinitionService.findProcessInstances();
 
     }
 
