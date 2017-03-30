@@ -60,7 +60,10 @@ public class QueryProducer {
         QueryDefinition query = new QueryDefinition();
         query.setName(QueryServicesClient.QUERY_MAP_TASK_WITH_VARS);
         query.setSource("java:jboss/datasources/ExampleDS");
-        query.setExpression("select ti.*, mv.name as TVNAME, mv.value as TVVALUE from AuditTaskImpl ti inner join TaskVariableImpl mv on (mv.taskid = ti.taskId)");
+        query.setExpression("select ti.*, tv.name tvname, tv.value tvvalue "+
+                "from AuditTaskImpl ti " +
+                "inner join (select tv.taskId, tv.name, tv.value from TaskVariableImpl tv where tv.type = 0 ) tv "+
+                "on (tv.taskId = ti.taskId)");
         query.setTarget(TASK);
 
         return query;
