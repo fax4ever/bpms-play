@@ -22,6 +22,7 @@
         <maven.compiler.source>1.8</maven.compiler.source>
 
         <!-- EAP -->
+        <version.javaee6>3.0.2.Final-redhat-15</version.javaee6>
         <version.jboss.eap>6.4.11.GA</version.jboss.eap>
 
         <!-- BPMS -->
@@ -34,6 +35,14 @@
 
     <dependencyManagement>
         <dependencies>
+
+            <dependency>
+                <groupId>org.jboss.spec</groupId>
+                <artifactId>jboss-javaee-6.0</artifactId>
+                <version>${version.javaee6}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
 
             <dependency>
                 <groupId>org.jboss.bom.eap</groupId>
@@ -51,6 +60,12 @@
         <dependency>
             <groupId>javax.enterprise</groupId>
             <artifactId>cdi-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
             <scope>provided</scope>
         </dependency>
 

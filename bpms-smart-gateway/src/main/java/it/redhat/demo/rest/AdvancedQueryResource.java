@@ -1,6 +1,6 @@
 package it.redhat.demo.rest;
 
-import it.redhat.demo.qualifier.PI;
+import it.redhat.demo.query.QuerySelector;
 import org.kie.server.api.model.definition.QueryDefinition;
 import org.kie.server.api.model.instance.ProcessInstance;
 import org.kie.server.client.QueryServicesClient;
@@ -22,8 +22,8 @@ public class AdvancedQueryResource {
     @Inject
     private QueryServicesClient queryServices;
 
-    @Inject @PI
-    private QueryDefinition processInstanceQuery;
+    @Inject
+    private QuerySelector querySelector;
 
     @GET
     public List<QueryDefinition> getQueryDefinitions() {
@@ -33,24 +33,26 @@ public class AdvancedQueryResource {
     }
 
     @POST
-    public void registerQuery() {
+    @Path("{query}")
+    public void registerQuery(@PathParam("query") String query) {
 
-        queryServices.registerQuery(processInstanceQuery);
+        queryServices.registerQuery(querySelector.selectQuery(query));
 
     }
 
     @PUT
-    public void replaceQuery() {
+    @Path("{query}")
+    public void replaceQuery(@PathParam("query") String query) {
 
-        queryServices.replaceQuery(processInstanceQuery);
+        queryServices.replaceQuery(querySelector.selectQuery(query));
 
     }
 
     @GET
-    @Path("result")
-    public List<ProcessInstance> excetuteQuery() {
+    @Path("{query}")
+    public List<ProcessInstance> excetuteQuery(@PathParam("query") String query) {
 
-        return queryServices.query(processInstanceQuery.getName(), QueryServicesClient.QUERY_MAP_PI, 0, 10, ProcessInstance.class);
+        return queryServices.query(query, QueryServicesClient.QUERY_MAP_PI, 0, 10, ProcessInstance.class);
 
     }
 

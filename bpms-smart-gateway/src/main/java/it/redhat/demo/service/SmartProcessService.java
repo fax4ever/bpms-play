@@ -1,7 +1,8 @@
 package it.redhat.demo.service;
 
 import it.redhat.demo.compatator.LastVersionComparator;
-import it.redhat.demo.exception.SmartGatewayException;
+import it.redhat.demo.exception.ProcessDefinitionNotFoundException;
+import it.redhat.demo.exception.ProcessInstanceNotFoundException;
 import org.kie.server.api.model.definition.ProcessDefinition;
 import org.kie.server.api.model.instance.ProcessInstance;
 import org.kie.server.client.ProcessServicesClient;
@@ -51,7 +52,7 @@ public class SmartProcessService {
         Optional<ProcessDefinition> lastProcessDefinition = definitions.stream().sorted(new LastVersionComparator()).findFirst();
 
         if (!lastProcessDefinition.isPresent()) {
-            throw new SmartGatewayException("process definition id not present: " + processDefinitionId);
+            throw new ProcessDefinitionNotFoundException(processDefinitionId);
         }
 
         String containerId = lastProcessDefinition.get().getContainerId();
@@ -75,7 +76,7 @@ public class SmartProcessService {
 
         ProcessInstance processInstance = queryServices.findProcessInstanceById(processInstanceId);
         if (processInstance == null) {
-            throw new SmartGatewayException("process instance id not present: " + processInstanceId);
+            throw new ProcessInstanceNotFoundException(processInstanceId);
         }
 
         processServices.abortProcessInstance(processInstance.getContainerId(), processInstanceId);

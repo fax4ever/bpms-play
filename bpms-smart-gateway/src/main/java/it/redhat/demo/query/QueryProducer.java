@@ -1,21 +1,21 @@
-package it.redhat.demo.producer;
+package it.redhat.demo.query;
 
-import it.redhat.demo.qualifier.PI;
 import org.kie.server.api.model.definition.QueryDefinition;
 import org.kie.server.client.QueryServicesClient;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
+import javax.inject.Named;
 
 /**
  * Created by fabio.ercoli@redhat.com on 30/03/17.
  */
 
 @ApplicationScoped
-public class QueryDefinitionProducer {
+public class QueryProducer {
 
     @Produces
-    @PI
+    @Named(QueryServicesClient.QUERY_MAP_PI)
     public QueryDefinition processInstance() {
 
         QueryDefinition query = new QueryDefinition();
