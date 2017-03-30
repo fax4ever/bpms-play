@@ -1,5 +1,6 @@
 package it.redhat.demo.rest;
 
+import it.redhat.demo.qualifier.PI;
 import org.kie.server.api.model.definition.QueryDefinition;
 import org.kie.server.api.model.instance.ProcessInstance;
 import org.kie.server.client.QueryServicesClient;
@@ -21,6 +22,9 @@ public class AdvancedQueryResource {
     @Inject
     private QueryServicesClient queryServices;
 
+    @Inject @PI
+    private QueryDefinition processInstanceQuery;
+
     @GET
     public List<QueryDefinition> getQueryDefinitions() {
 
@@ -31,13 +35,14 @@ public class AdvancedQueryResource {
     @POST
     public void registerQuery() {
 
-        QueryDefinition query = new QueryDefinition();
-        query.setName(QueryServicesClient.QUERY_MAP_TASK_WITH_VARS);
-        query.setSource("java:jboss/datasources/ExampleDS");
-        query.setExpression("select * from processinstancelog");
-        query.setTarget("PROCESS");
+        queryServices.registerQuery(processInstanceQuery);
 
-        queryServices.registerQuery(query);
+    }
+
+    @PUT
+    public void replaceQuery() {
+
+        queryServices.replaceQuery(processInstanceQuery);
 
     }
 
@@ -45,7 +50,7 @@ public class AdvancedQueryResource {
     @Path("result")
     public List<ProcessInstance> excetuteQuery() {
 
-        return queryServices.query(QueryServicesClient.QUERY_MAP_PI, QueryServicesClient.QUERY_MAP_PI, 0, 10, ProcessInstance.class);
+        return queryServices.query(processInstanceQuery.getName(), QueryServicesClient.QUERY_MAP_PI, 0, 10, ProcessInstance.class);
 
     }
 
