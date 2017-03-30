@@ -23,10 +23,18 @@ public class KieProducer {
     @Produces
     public KieServicesClient getServiceClient() {
 
-        Set<Class<?>> extraClasses = new HashSet<Class<?>>();
+        return getServiceClient("fabio");
+
+    }
+
+    public KieServicesClient getServiceClient(String username) {
+
+        String password = username + "$739";
+
+        Set<Class<?>> extraClasses = new HashSet<>();
         extraClasses.add(Date.class);
 
-        KieServicesConfiguration config = KieServicesFactory.newRestConfiguration("http://localhost:8080/kie-server/services/rest/server", "giacomo", "giacomo$739");
+        KieServicesConfiguration config = KieServicesFactory.newRestConfiguration("http://localhost:8080/kie-server/services/rest/server", username, password);
         config.setMarshallingFormat(MarshallingFormat.JSON);
         config.setTimeout(TIMEOUT);
         config.addJaxbClasses(extraClasses);
