@@ -50,9 +50,9 @@ public class AdvancedQueryResource {
 
     @GET
     @Path("{query}")
-    public List<ProcessInstance> excetuteQuery(@PathParam("query") String query) {
+    public List<ProcessInstance> executeQuery(@PathParam("query") String query) {
 
-        return queryServices.query(query, QueryServicesClient.QUERY_MAP_PI, 0, 10, ProcessInstance.class);
+        return queryServices.query(query, query, 0, 10, ProcessInstance.class);
 
     }
 

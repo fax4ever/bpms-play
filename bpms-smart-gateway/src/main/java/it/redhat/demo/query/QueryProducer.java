@@ -28,6 +28,19 @@ public class QueryProducer {
 
     }
 
+    @Produces
+    @Named(QueryServicesClient.QUERY_MAP_TASK_WITH_VARS)
+    public QueryDefinition getQueryDefinition() {
+
+        QueryDefinition query = new QueryDefinition();
+        query.setName(QueryServicesClient.QUERY_MAP_TASK_WITH_VARS);
+        query.setSource("java:jboss/datasources/ExampleDS");
+        query.setExpression("select ti.*, mv.name as TVNAME, mv.value as TVVALUE from AuditTaskImpl ti inner join TaskVariableImpl mv on (mv.taskid = ti.taskId)");
+        query.setTarget("CUSTOM");
+        return query;
+
+    }
+
 
 
 }
