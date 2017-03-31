@@ -48,6 +48,14 @@ public class SmartTaskService {
 
     }
 
+    public void claimTask(String username, Long taskId) {
+
+        UserTaskServicesClient taskService = getTaskServiceImpersonateUser(username);
+        TaskInstance taskInstance = taskService.findTaskById(taskId);
+        taskServicesClient.claimTask(taskInstance.getContainerId(), taskId, username);
+
+    }
+
     private UserTaskServicesClient getTaskServiceImpersonateUser(String username) {
 
         KieServicesClient kieServices = kieProducer.getServiceClient(username);
