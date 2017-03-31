@@ -1,10 +1,7 @@
 package it.redhat.demo.rest;
 
-import it.redhat.demo.producer.KieProducer;
-import org.kie.server.api.model.instance.TaskInstance;
+import it.redhat.demo.service.SmartTaskService;
 import org.kie.server.api.model.instance.TaskSummary;
-import org.kie.server.client.KieServicesClient;
-import org.kie.server.client.UserTaskServicesClient;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -24,17 +21,13 @@ public class TaskResource {
     private static final int MAX_SIZE = 10000;
 
     @Inject
-    private KieProducer kieProducer;
-
-    @Inject
-    private UserTaskServicesClient taskServicesClient;
+    private SmartTaskService taskService;
 
     @GET
     @Path("{user}")
     public List<TaskSummary> getPotential(@PathParam("user") String username) {
 
-        UserTaskServicesClient taskService = getTaskServiceImpersonateUser(username);
-        return taskService.findTasksAssignedAsPotentialOwner(username, 0, MAX_SIZE);
+        return taskService.getPotential(username);
 
     }
 
@@ -42,8 +35,7 @@ public class TaskResource {
     @GET
     public List<TaskSummary> getOwned(@PathParam("user") String username) {
 
-        UserTaskServicesClient taskService = getTaskServiceImpersonateUser(username);
-        return taskService.findTasksOwned(username, 0, MAX_SIZE);
+        return taskService.getOwned(username);
 
     }
 
@@ -51,15 +43,7 @@ public class TaskResource {
     @GET
     public Map<String, Object> getTaskInputContentByTaskId(@PathParam("taskId") Long taskId) {
 
-        TaskInstance taskInstance = taskServicesClient.findTaskById(taskId);
-        return taskServicesClient.getTaskInputContentByTaskId(taskInstance.getContainerId(), taskId);
-
-    }
-
-    private UserTaskServicesClient getTaskServiceImpersonateUser(String username) {
-
-        KieServicesClient kieServices = kieProducer.getServiceClient(username);
-        return kieServices.getServicesClient(UserTaskServicesClient.class);
+        return taskService.getTaskInputContentByTaskId(taskId);
 
     }
 
