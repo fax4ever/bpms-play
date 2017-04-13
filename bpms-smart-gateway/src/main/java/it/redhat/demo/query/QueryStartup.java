@@ -20,6 +20,8 @@ import javax.inject.Inject;
 @Startup
 public class QueryStartup {
 
+    private final static boolean REPLACE_ALWAYS = true;
+    
     @Inject
     @Any
     private Instance<QueryDefinition> anyQueryDefinition;
@@ -35,20 +37,30 @@ public class QueryStartup {
 
         for (QueryDefinition definition : anyQueryDefinition) {
 
-            try {
-
-                queryServices.getQuery(definition.getName());
-
-            } catch (KieServicesException ex) {
-
-                log.info("Not found query definition {}", definition.getName());
+            if (REPLACE_ALWAYS) {
                 queryServices.replaceQuery(definition);
-                log.info("Register or replace query definition {}", definition.getName());
-
-            }
-
+            } else {
+                defineUnknown(definition);
+            }    
+            
         }
 
+    }
+
+    private void defineUnknown(QueryDefinition definition) {
+        
+        try {
+
+            queryServices.getQuery(definition.getName());
+
+        } catch (KieServicesException ex) {
+
+            log.info("Not found query definition {}", definition.getName());
+            queryServices.replaceQuery(definition);
+            log.info("Register or replace query definition {}", definition.getName());
+
+        }
+        
     }
 
 }

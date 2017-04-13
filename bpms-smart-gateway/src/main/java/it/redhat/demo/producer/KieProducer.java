@@ -24,6 +24,8 @@ public class KieProducer {
 
     public static final int TIMEOUT = 180000;
     public static final String SERVER_URL = "http://localhost:8080/kie-server/services/rest/server";
+    public static final int SLEEP = 0;
+    public static final int RETRIES = 20;
 
     @Inject
     private Logger log;
@@ -54,9 +56,9 @@ public class KieProducer {
     private KieServicesClient tryGetKieServiceClient(KieServicesConfiguration config) {
         KieServicesClient result = null;
 
-        int retry = 20;
+        int retry = RETRIES;
         int loopCount = 0;
-        int sleep = 5000;
+        int sleep = SLEEP;
 
         while (result == null && loopCount < retry) {
             try {

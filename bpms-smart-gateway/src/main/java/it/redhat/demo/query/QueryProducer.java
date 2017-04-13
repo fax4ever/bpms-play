@@ -16,7 +16,7 @@ public class QueryProducer {
 
     public static final String PROCESS = "PROCESS";
     public static final String TASK = "TASK";
-    public static final String SOURCE = "java:jboss/datasources/ExampleDS";
+    public static final String SOURCE = "java:jboss/datasources/jbpm";
 
     @Produces
     @Named(QueryServicesClient.QUERY_MAP_PI)
@@ -38,7 +38,7 @@ public class QueryProducer {
 
         QueryDefinition query = new QueryDefinition();
         query.setName(QueryServicesClient.QUERY_MAP_PI_WITH_VARS);
-        query.setSource("java:jboss/datasources/ExampleDS");
+        query.setSource(SOURCE);
 
         query.setExpression("select pil.*, v.variableId, v.value " +
                 "from ProcessInstanceLog pil " +
@@ -60,7 +60,7 @@ public class QueryProducer {
 
         QueryDefinition query = new QueryDefinition();
         query.setName(QueryServicesClient.QUERY_MAP_TASK_WITH_VARS);
-        query.setSource("java:jboss/datasources/ExampleDS");
+        query.setSource(SOURCE);
         query.setExpression("select ti.*, tv.name tvname, tv.value tvvalue "+
                 "from AuditTaskImpl ti " +
                 "inner join (select tv.taskId, tv.name, tv.value from TaskVariableImpl tv where tv.type = 0 ) tv "+
