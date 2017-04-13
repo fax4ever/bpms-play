@@ -1,12 +1,12 @@
 package it.redhat.demo.customtask;
 
-import java.util.HashMap;
-
 import org.kie.api.runtime.process.WorkItem;
 import org.kie.api.runtime.process.WorkItemHandler;
 import org.kie.api.runtime.process.WorkItemManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.HashMap;
 
 public class WaitTask implements WorkItemHandler {
 	
@@ -17,7 +17,7 @@ public class WaitTask implements WorkItemHandler {
 		try {
 			Thread.sleep(3000);
 		} catch (InterruptedException e) {
-			log.error(e.getMessage(), e);
+			Thread.currentThread().interrupt();
 		}
 		
 		manager.completeWorkItem(workItem.getId(), new HashMap<>());

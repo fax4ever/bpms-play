@@ -6,6 +6,7 @@ import org.kie.server.api.model.instance.TaskSummary;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -39,6 +40,14 @@ public class TaskResource {
 
     }
 
+    @Path("{user}/all")
+    @GET
+    public List<TaskSummary> getAll(@PathParam("user") String username) {
+
+        return taskService.getAllOwned(username);
+
+    }
+
     @Path("input/{taskId}")
     @GET
     public Map<String, Object> getTaskInputContentByTaskId(@PathParam("taskId") Long taskId) {
@@ -47,5 +56,23 @@ public class TaskResource {
 
     }
 
+    @Path("{taskId}/user/{user}/claim")
+    @POST
+    public void claim(@PathParam("taskId") Long taskId, @PathParam("user") String username) {
+
+        taskService.claimTask(username, taskId);
+
+    }
+
+    @Path("{taskId}/user/{user}/complete/{feedback : OK|KO}")
+    @POST
+    public void complete(@PathParam("taskId") Long taskId, @PathParam("user") String username, @PathParam("feedback") String feedback) {
+
+        HashMap<String, Object> outputParams = new HashMap<>();
+        outputParams.put("feedback", feedback);
+
+        taskService.startAndCompleteTask(username, taskId, outputParams);
+
+    }
 
 }
