@@ -1,12 +1,16 @@
 package it.redhat.demo.producer;
 
+import it.redhat.demo.exception.InitGatewayException;
 import org.kie.server.api.marshalling.MarshallingFormat;
 import org.kie.server.client.KieServicesClient;
 import org.kie.server.client.KieServicesConfiguration;
+import org.kie.server.client.KieServicesException;
 import org.kie.server.client.KieServicesFactory;
+import org.slf4j.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
+import javax.inject.Inject;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -19,6 +23,10 @@ import java.util.Set;
 public class KieProducer {
 
     public static final int TIMEOUT = 180000;
+    public static final String SERVER_URL = "http://localhost:8080/kie-server/services/rest/server";
+
+    @Inject
+    private Logger log;
 
     @Produces
     public KieServicesClient getServiceClient() {
@@ -34,13 +42,44 @@ public class KieProducer {
         Set<Class<?>> extraClasses = new HashSet<>();
         extraClasses.add(Date.class);
 
-        KieServicesConfiguration config = KieServicesFactory.newRestConfiguration("http://localhost:8080/kie-server/services/rest/server", username, password);
+        KieServicesConfiguration config = KieServicesFactory.newRestConfiguration(SERVER_URL, username, password);
         config.setMarshallingFormat(MarshallingFormat.JSON);
         config.setTimeout(TIMEOUT);
         config.addJaxbClasses(extraClasses);
 
-        KieServicesClient kieServicesClient = KieServicesFactory.newKieServicesClient(config);
-        return kieServicesClient;
+        return tryGetKieServiceClient(config);
+
+    }
+
+    private KieServicesClient tryGetKieServiceClient(KieServicesConfiguration config) {
+        KieServicesClient result = null;
+
+        int retry = 20;
+        int loopCount = 0;
+        int sleep = 5000;
+
+        while (result == null && loopCount < retry) {
+            try {
+                result = KieServicesFactory.newKieServicesClient(config);
+            } catch (KieServicesException ex) {
+
+                loopCount++;
+                log.warn("Error on establishing connection with remote process server. Retry {}. Loop Count {}. Sleep {}", retry, loopCount, sleep);
+
+                try {
+                    Thread.sleep(sleep);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+
+            }
+        }
+
+        if (result == null) {
+            throw new InitGatewayException(retry, loopCount, sleep);
+        }
+
+        return result;
 
     }
 

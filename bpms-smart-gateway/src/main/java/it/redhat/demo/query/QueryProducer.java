@@ -16,6 +16,7 @@ public class QueryProducer {
 
     public static final String PROCESS = "PROCESS";
     public static final String TASK = "TASK";
+    public static final String SOURCE = "java:jboss/datasources/ExampleDS";
 
     @Produces
     @Named(QueryServicesClient.QUERY_MAP_PI)
@@ -23,7 +24,7 @@ public class QueryProducer {
 
         QueryDefinition query = new QueryDefinition();
         query.setName(QueryServicesClient.QUERY_MAP_PI);
-        query.setSource("java:jboss/datasources/ExampleDS");
+        query.setSource(SOURCE);
         query.setExpression("select * from processinstancelog");
         query.setTarget(PROCESS);
 
