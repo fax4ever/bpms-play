@@ -40,13 +40,17 @@ public class QueryProducer {
         query.setName(QueryServicesClient.QUERY_MAP_PI_WITH_VARS);
         query.setSource(SOURCE);
 
-        query.setExpression("select pil.*, v.variableId, v.value " +
-                "from ProcessInstanceLog pil " +
-                "INNER JOIN (select vil.processInstanceId ,vil.variableId, MAX(vil.ID) maxvilid  FROM VariableInstanceLog vil " +
-                "GROUP BY vil.processInstanceId, vil.variableId ORDER BY vil.processInstanceId)  x " +
-                "ON (v.variableId = x.variableId  AND v.id = x.maxvilid )" +
-                "INNER JOIN VariableInstanceLog v " +
-                "ON (v.processInstanceId = pil.processInstanceId)");
+        query.setExpression(" select pil.*, v.variableId, v.value " +
+                " from ProcessInstanceLog pil " +
+                " INNER JOIN VariableInstanceLog v " +
+                " ON (v.processInstanceId = pil.processInstanceId) " +
+                " INNER JOIN ( " +
+                " 	select vil.processInstanceId ,vil.variableId, MAX(vil.ID) maxvilid " +
+                " 	FROM VariableInstanceLog vil " +
+                " 	GROUP BY vil.processInstanceId, vil.variableId " +
+                " 	ORDER BY vil.processInstanceId " +
+                " ) x " +
+                " ON (v.variableId = x.variableId  AND v.id = x.maxvilid) ");
 
         query.setTarget(PROCESS);
 
