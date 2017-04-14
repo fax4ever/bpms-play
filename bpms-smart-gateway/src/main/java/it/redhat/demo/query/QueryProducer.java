@@ -23,6 +23,8 @@ public class QueryProducer {
     // custom advanced queries
     public static final String ACTIVE_TASKS_ON_COMPLETED_TASKS = "activeTasksOnCompletedTasks";
     public static final String ACTIVE_TASKS_ON_COMPLETED_TASKS_WITH_VARIABLES = "activeTasksOnCompletedTasksWithVariables";
+    public static final String ACTIVE_TASKS_ON_COMPLETED_TASKS_WITH_CUSTOM_VARIABLES = "activeTasksOnCompletedTasksWithCustomVariables";
+    public static final String WAIT_TASK_FOR_USER_PROCESS_INSTANCE = "waitTaskForUserProcessInstance";
 
     @Produces
     @Named(QueryServicesClient.QUERY_MAP_PI)
@@ -130,6 +132,55 @@ public class QueryProducer {
         query.setTarget(CUSTOM);
 
         return query;
+    }
+
+    @Produces
+    @Named(ACTIVE_TASKS_ON_COMPLETED_TASKS_WITH_CUSTOM_VARIABLES)
+    public QueryDefinition activeTasksOnCompletedTasksWithCustomVariables() {
+        String expression =
+        " select t.*, a.actualowner originalowner " +
+        " from audittaskimpl a " +
+        " inner join audittaskimpl t " +
+        " on a.processinstanceid = t.processinstanceid " +
+        " and a.status = 'Completed' " +
+        " and not t.status = 'Completed' ";
+
+        QueryDefinition query = new QueryDefinition();
+        query.setName(ACTIVE_TASKS_ON_COMPLETED_TASKS_WITH_CUSTOM_VARIABLES);
+        query.setSource(SOURCE);
+        query.setExpression(expression);
+        query.setTarget(CUSTOM);
+
+        return query;
+    }
+
+    @Produces
+    @Named(WAIT_TASK_FOR_USER_PROCESS_INSTANCE)
+    public QueryDefinition waitTaskForUserProcessInstance() {
+
+        String expression =
+            " select t.*, a.actualowner originalowner, tv.groupid " +
+            " from audittaskimpl a " +
+            " inner join audittaskimpl t " +
+            " on a.processinstanceid = t.processinstanceid " +
+            " inner join ( " +
+            " 	select tv.taskId, tv.value groupid " +
+            " 	from taskvariableimpl tv  " +
+            " 	where tv.type = 0 " +
+            " 	and tv.name = 'GroupId' " +
+            " ) tv  " +
+            " on (tv.taskId = t.taskId) " +
+            " where a.status = 'Completed' " +
+            " and not t.status = 'Completed' ";
+
+        QueryDefinition query = new QueryDefinition();
+        query.setName(WAIT_TASK_FOR_USER_PROCESS_INSTANCE);
+        query.setSource(SOURCE);
+        query.setExpression(expression);
+        query.setTarget(CUSTOM);
+
+        return query;
+
     }
 
 }

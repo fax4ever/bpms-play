@@ -64,10 +64,30 @@ public class AdvancedQueryResource {
                     .notEqualsTo("actualowner", "giacomo")
                     .get();
 
-
             // active task on completed task with variables
             return queryServices.query(QueryProducer.ACTIVE_TASKS_ON_COMPLETED_TASKS_WITH_VARIABLES,
                     QueryServicesClient.QUERY_MAP_TASK_WITH_VARS, queryFilterSpec, 0, MAX_ROWS, TaskInstance.class);
+
+        } else if (QueryProducer.ACTIVE_TASKS_ON_COMPLETED_TASKS_WITH_CUSTOM_VARIABLES.equals(query)) {
+
+            QueryFilterSpec queryFilterSpec = new QueryFilterSpecBuilder()
+                    .equalsTo("originalowner", "giacomo")
+                    .addColumnMapping("originalowner", "string")
+                    .get();
+
+            return queryServices.query(QueryProducer.ACTIVE_TASKS_ON_COMPLETED_TASKS_WITH_CUSTOM_VARIABLES,
+                    QueryServicesClient.QUERY_MAP_TASK_WITH_CUSTOM_VARS, queryFilterSpec, 0, MAX_ROWS, TaskInstance.class);
+
+        } else if (QueryProducer.WAIT_TASK_FOR_USER_PROCESS_INSTANCE.equals(query)) {
+
+            QueryFilterSpec queryFilterSpec = new QueryFilterSpecBuilder()
+                    .equalsTo("originalowner", "giacomo")
+                    .addColumnMapping("originalowner", "string")
+                    .addColumnMapping("groupid", "string")
+                    .get();
+
+            return queryServices.query(QueryProducer.WAIT_TASK_FOR_USER_PROCESS_INSTANCE,
+                    QueryServicesClient.QUERY_MAP_TASK_WITH_CUSTOM_VARS, queryFilterSpec, 0, MAX_ROWS, TaskInstance.class);
 
         }
 
