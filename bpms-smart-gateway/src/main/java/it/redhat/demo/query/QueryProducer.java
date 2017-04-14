@@ -22,6 +22,7 @@ public class QueryProducer {
 
     // custom advanced queries
     public static final String ACTIVE_TASKS_ON_COMPLETED_TASKS = "activeTasksOnCompletedTasks";
+    public static final String ACTIVE_TASKS_ON_COMPLETED_TASKS_WITH_VARIABLES = "activeTasksOnCompletedTasksWithVariables";
 
     @Produces
     @Named(QueryServicesClient.QUERY_MAP_PI)
@@ -86,7 +87,7 @@ public class QueryProducer {
         String expression =
             " select t.* " +
             " from audittaskimpl a " +
-            " inner join task t " +
+            " inner join audittaskimpl t " +
             " on a.processinstanceid = t.processinstanceid " +
             " where a.actualowner = 'giacomo' " +
             " and a.status = 'Completed' " +
@@ -94,6 +95,36 @@ public class QueryProducer {
 
         QueryDefinition query = new QueryDefinition();
         query.setName(ACTIVE_TASKS_ON_COMPLETED_TASKS);
+        query.setSource(SOURCE);
+        query.setExpression(expression);
+        query.setTarget(CUSTOM);
+
+        return query;
+    }
+
+    @Produces
+    @Named(ACTIVE_TASKS_ON_COMPLETED_TASKS_WITH_VARIABLES)
+    public QueryDefinition activeTasksOnCompletedTasksWithVariables() {
+        String expression =
+            " select ti.*, tv.name tvname, tv.value tvvalue " +
+            " from ( " +
+            " 	select t.* " +
+            " 	from audittaskimpl a " +
+            " 	inner join audittaskimpl t " +
+            " 	on a.processinstanceid = t.processinstanceid " +
+            " 	where a.actualowner = 'giacomo' " +
+            " 	and a.status = 'Completed' " +
+            " 	and not t.status = 'Completed' " +
+            " ) ti  " +
+            " inner join ( " +
+            " 	select tv.taskId, tv.name, tv.value  " +
+            " 	from taskvariableimpl tv  " +
+            " 	where tv.type = 0  " +
+            " ) tv  " +
+            " on (tv.taskId = ti.taskId) ";
+
+        QueryDefinition query = new QueryDefinition();
+        query.setName(ACTIVE_TASKS_ON_COMPLETED_TASKS_WITH_VARIABLES);
         query.setSource(SOURCE);
         query.setExpression(expression);
         query.setTarget(CUSTOM);

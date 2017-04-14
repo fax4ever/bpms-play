@@ -56,6 +56,11 @@ public class AdvancedQueryResource {
             // active task on completed task
             return queryServices.query(QueryProducer.ACTIVE_TASKS_ON_COMPLETED_TASKS, QueryServicesClient.QUERY_MAP_TASK, 0, MAX_ROWS, TaskInstance.class);
 
+        } else if (QueryProducer.ACTIVE_TASKS_ON_COMPLETED_TASKS_WITH_VARIABLES.equals(query)) {
+
+            // active task on completed task with variables
+            return queryServices.query(QueryProducer.ACTIVE_TASKS_ON_COMPLETED_TASKS_WITH_VARIABLES, QueryServicesClient.QUERY_MAP_TASK_WITH_VARS, 0, MAX_ROWS, TaskInstance.class);
+
         }
 
         throw new QueryDefinitionNotFoundException(query);
