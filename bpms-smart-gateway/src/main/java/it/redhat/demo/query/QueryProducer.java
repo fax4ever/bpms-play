@@ -16,7 +16,12 @@ public class QueryProducer {
 
     public static final String PROCESS = "PROCESS";
     public static final String TASK = "TASK";
+    public static final String CUSTOM = "CUSTOM";
+
     public static final String SOURCE = "java:jboss/datasources/jbpm";
+
+    // custom advanced queries
+    public static final String ACTIVE_TASKS_ON_COMPLETED_TASKS = "activeTasksOnCompletedTasks";
 
     @Produces
     @Named(QueryServicesClient.QUERY_MAP_PI)
@@ -73,6 +78,27 @@ public class QueryProducer {
 
         return query;
 
+    }
+
+    @Produces
+    @Named(ACTIVE_TASKS_ON_COMPLETED_TASKS)
+    public QueryDefinition activeTasksOnCompletedTasks() {
+        String expression =
+            " select t.* " +
+            " from audittaskimpl a " +
+            " inner join task t " +
+            " on a.processinstanceid = t.processinstanceid " +
+            " where a.actualowner = 'giacomo' " +
+            " and a.status = 'Completed' " +
+            " and not t.status = 'Completed' ";
+
+        QueryDefinition query = new QueryDefinition();
+        query.setName(ACTIVE_TASKS_ON_COMPLETED_TASKS);
+        query.setSource(SOURCE);
+        query.setExpression(expression);
+        query.setTarget(CUSTOM);
+
+        return query;
     }
 
 }

@@ -1,5 +1,6 @@
 package it.redhat.demo.rest;
 
+import it.redhat.demo.exception.QueryDefinitionNotFoundException;
 import it.redhat.demo.query.QueryProducer;
 import it.redhat.demo.query.QuerySelector;
 import org.kie.server.api.model.definition.QueryDefinition;
@@ -43,10 +44,21 @@ public class AdvancedQueryResource {
         QueryDefinition definition = querySelector.selectQuery(query);
 
         if (QueryProducer.PROCESS.equals(definition.getTarget())) {
+
             return queryServices.query(query, query, 0, MAX_ROWS, ProcessInstance.class);
-        } else {
+
+        } else if (QueryProducer.TASK.equals(definition.getTarget())) {
+
             return queryServices.query(query, query, 0, MAX_ROWS, TaskInstance.class);
+
+        } else if (QueryProducer.ACTIVE_TASKS_ON_COMPLETED_TASKS.equals(query)) {
+
+            // active task on completed task
+            return queryServices.query(QueryProducer.ACTIVE_TASKS_ON_COMPLETED_TASKS, QueryServicesClient.QUERY_MAP_TASK, 0, MAX_ROWS, TaskInstance.class);
+
         }
+
+        throw new QueryDefinitionNotFoundException(query);
 
     }
 
