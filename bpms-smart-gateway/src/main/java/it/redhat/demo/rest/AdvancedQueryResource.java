@@ -60,8 +60,6 @@ public class AdvancedQueryResource {
 
         } else if (QueryProducer.ACTIVE_TASKS_ON_COMPLETED_TASKS_WITH_VARIABLES.equals(query)) {
 
-            QueryFilterSpecBuilder queryFilterSpecBuilder = new QueryFilterSpecBuilder();
-
             QueryFilterSpec queryFilterSpec = new QueryFilterSpecBuilder()
                     .notEqualsTo("actualowner", "giacomo")
                     .get();
