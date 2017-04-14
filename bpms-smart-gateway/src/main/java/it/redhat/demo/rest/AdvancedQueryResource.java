@@ -4,8 +4,10 @@ import it.redhat.demo.exception.QueryDefinitionNotFoundException;
 import it.redhat.demo.query.QueryProducer;
 import it.redhat.demo.query.QuerySelector;
 import org.kie.server.api.model.definition.QueryDefinition;
+import org.kie.server.api.model.definition.QueryFilterSpec;
 import org.kie.server.api.model.instance.ProcessInstance;
 import org.kie.server.api.model.instance.TaskInstance;
+import org.kie.server.api.util.QueryFilterSpecBuilder;
 import org.kie.server.client.QueryServicesClient;
 
 import javax.inject.Inject;
@@ -58,8 +60,16 @@ public class AdvancedQueryResource {
 
         } else if (QueryProducer.ACTIVE_TASKS_ON_COMPLETED_TASKS_WITH_VARIABLES.equals(query)) {
 
+            QueryFilterSpecBuilder queryFilterSpecBuilder = new QueryFilterSpecBuilder();
+
+            QueryFilterSpec queryFilterSpec = new QueryFilterSpecBuilder()
+                    .notEqualsTo("actualowner", "giacomo")
+                    .get();
+
+
             // active task on completed task with variables
-            return queryServices.query(QueryProducer.ACTIVE_TASKS_ON_COMPLETED_TASKS_WITH_VARIABLES, QueryServicesClient.QUERY_MAP_TASK_WITH_VARS, 0, MAX_ROWS, TaskInstance.class);
+            return queryServices.query(QueryProducer.ACTIVE_TASKS_ON_COMPLETED_TASKS_WITH_VARIABLES,
+                    QueryServicesClient.QUERY_MAP_TASK_WITH_VARS, queryFilterSpec, 0, MAX_ROWS, TaskInstance.class);
 
         }
 
