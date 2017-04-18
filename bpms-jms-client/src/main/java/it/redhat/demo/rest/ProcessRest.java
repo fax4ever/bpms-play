@@ -1,7 +1,6 @@
 package it.redhat.demo.rest;
 
-import it.redhat.demo.stateless.KieServiceClientStateless;
-import org.kie.server.client.KieServicesClient;
+import it.redhat.demo.stateless.ProcessStateless;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -15,7 +14,7 @@ import javax.ws.rs.Path;
 public class ProcessRest {
 
     @Inject
-    private KieServiceClientStateless service;
+    private ProcessStateless service;
 
     @GET
     public String ciao() {
@@ -26,11 +25,9 @@ public class ProcessRest {
 
     @GET
     @Path("test")
-    public String test() {
+    public Long test() {
 
-        KieServicesClient client = service.getClient();
-
-        return "test";
+        return service.startProcess();
 
     }
 
