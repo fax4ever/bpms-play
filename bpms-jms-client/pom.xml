@@ -21,6 +21,9 @@
         <!-- EAP 6.4.14 -->
         <version.jboss.eap>6.4.14.GA</version.jboss.eap>
 
+        <!-- JBoss Client -->
+        <jboss.client.bom>7.5.7.Final-redhat-3</jboss.client.bom>
+
         <!-- BPMS 6.4.2 -->
         <version.org.brms-bpmsuite>6.4.2.GA-redhat-2</version.org.brms-bpmsuite>
 
@@ -47,6 +50,14 @@
                 <groupId>org.jboss.bom.eap</groupId>
                 <artifactId>jboss-javaee-6.0-with-tools</artifactId>
                 <version>${version.jboss.eap}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jboss.as</groupId>
+                <artifactId>jboss-as-jms-client-bom</artifactId>
+                <version>${jboss.client.bom}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -116,6 +127,7 @@
 
     <dependencies>
 
+        <!-- JEE -->
         <dependency>
             <groupId>javax.enterprise</groupId>
             <artifactId>cdi-api</artifactId>
@@ -153,9 +165,28 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- Process Server Client Api -->
         <dependency>
             <groupId>org.kie.server</groupId>
             <artifactId>kie-server-client</artifactId>
+        </dependency>
+
+        <!-- Remote JMS Client -->
+        <dependency>
+            <groupId>org.jboss</groupId>
+            <artifactId>jboss-remote-naming</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.xnio</groupId>
+            <artifactId>xnio-nio</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hornetq</groupId>
+            <artifactId>hornetq-jms-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hornetq</groupId>
+            <artifactId>hornetq-commons</artifactId>
         </dependency>
 
     </dependencies>
