@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.jms.*;
+import java.util.Enumeration;
 import java.util.UUID;
 
 /**
@@ -37,76 +38,68 @@ public class CustomProcessStateless {
 
         // for request
         String corrId = UUID.randomUUID().toString();
-
         // for response
         String selector = "JMSCorrelationID = '" + corrId + "'";
 
         Connection connection = null;
         Session session = null;
-        MessageProducer messageProducer = null;
-        MessageConsumer messageConsumer = null;
 
         try {
 
-            try {
+            connection = connectionFactory.createConnection();
+            session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+            MessageProducer messageProducer = session.createProducer(requestQueue);
+            MessageConsumer messageConsumer = session.createConsumer(responseQueue, selector);
+            connection.start();
 
-                connection = connectionFactory.createConnection();
-                session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-                messageProducer = session.createProducer(requestQueue);
-                messageConsumer = session.createConsumer(responseQueue, selector);
-                connection.start();
+            TextMessage requestMessage = session.createTextMessage(startProcessPayload);
 
-            } catch (JMSException ex) {
+            requestMessage.setJMSCorrelationID(corrId);
+            requestMessage.setIntProperty("serialization_format", 2);
+            requestMessage.setIntProperty("kie_interaction_pattern", 1);
+            requestMessage.setStringProperty("kie_class_type", "org.kie.server.api.commands.DescriptorCommand");
+            requestMessage.setStringProperty("kie_target_capability", "BPM");
+            requestMessage.setStringProperty("container_id", "main");
 
-                throw new RuntimeException("unable to create connection", ex);
+            logMessage("sending message", requestMessage);
+            messageProducer.send(requestMessage);
 
-            }
+            TextMessage responseMessage = (TextMessage) messageConsumer.receive(TIME_OUT);
+            logMessage("received message", responseMessage);
 
-            LOG.info("sending message - payolad : {}", startProcessPayload);
+            return responseMessage.getText();
 
-            try {
+        } catch (JMSException ex) {
 
-                TextMessage textMessage = session.createTextMessage(startProcessPayload);
-
-                textMessage.setJMSCorrelationID(corrId);
-                textMessage.setIntProperty("serialization_format", 2);
-                textMessage.setIntProperty("kie_interaction_pattern", 1);
-                textMessage.setStringProperty("kie_class_type", "org.kie.server.api.commands.DescriptorCommand");
-                textMessage.setStringProperty("kie_target_capability", "BPM");
-                textMessage.setStringProperty("container_id", "main");
-
-                messageProducer.send(textMessage);
-
-            } catch (JMSException ex) {
-
-                throw new RuntimeException("error on sending message", ex);
-            }
-
-
-            try {
-                TextMessage response = (TextMessage) messageConsumer.receive(TIME_OUT);
-                return response.getText();
-            } catch (JMSException ex) {
-
-                throw new RuntimeException("Unable to receive or retrieve the JMS response.", ex);
-
-            }
+            throw new RuntimeException(ex.getMessage(), ex);
 
         } finally {
 
-            if( connection != null ) {
+            if (connection != null) {
                 try {
                     connection.close();
-                    if( session != null ) {
+                    if (session != null) {
                         session.close();
                     }
-                } catch( JMSException ex ) {
+                } catch (JMSException ex) {
                     LOG.warn("Unable to close connection or session!", ex);
                 }
             }
 
         }
 
+    }
+
+    private void logMessage(String action, TextMessage textMessage) throws JMSException {
+
+        LOG.info("{}\n{}",action, textMessage.getText());
+
+        Enumeration srcProperties = textMessage.getPropertyNames();
+        while (srcProperties.hasMoreElements()) {
+            String propertyName = (String)srcProperties.nextElement ();
+            Object propertyValue = textMessage.getObjectProperty(propertyName);
+            LOG.info("property name {} - value {}", propertyName, propertyValue);
+        }
 
     }
 
