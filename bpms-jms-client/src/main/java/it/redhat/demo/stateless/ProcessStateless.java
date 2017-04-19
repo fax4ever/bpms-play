@@ -1,6 +1,6 @@
 package it.redhat.demo.stateless;
 
-import it.redhat.demo.qualifier.JmsRemote;
+import it.redhat.demo.qualifier.JmsVM;
 import org.kie.server.client.KieServicesClient;
 import org.kie.server.client.ProcessServicesClient;
 
@@ -15,8 +15,8 @@ import javax.inject.Inject;
 public class ProcessStateless {
 
     @Inject
-    //@JmsVM
-    @JmsRemote
+    @JmsVM
+    //@JmsRemote
     private KieServicesClient gateway;
 
     public Long startProcess() {

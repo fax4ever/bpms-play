@@ -1,6 +1,7 @@
 package it.redhat.demo.producer;
 
 import it.redhat.demo.qualifier.JmsVM;
+import org.kie.server.api.marshalling.MarshallingFormat;
 import org.kie.server.client.KieServicesClient;
 import org.kie.server.client.KieServicesConfiguration;
 import org.kie.server.client.KieServicesFactory;
@@ -32,6 +33,8 @@ public class KieServiceClientProducer {
     public KieServicesClient getClient() {
 
         KieServicesConfiguration jmsConf = KieServicesFactory.newJMSConfiguration(connectionFactory, requestQueue, responseQueue);
+        jmsConf.setMarshallingFormat(MarshallingFormat.JSON);
+
         return KieServicesFactory.newKieServicesClient(jmsConf);
 
     }

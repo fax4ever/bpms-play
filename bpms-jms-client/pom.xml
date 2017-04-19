@@ -68,10 +68,6 @@
                 <version>${version.org.kie}</version>
                 <exclusions>
                     <exclusion>
-                        <artifactId>jackson-core-asl</artifactId>
-                        <groupId>org.codehaus.jackson</groupId>
-                    </exclusion>
-                    <exclusion>
                         <artifactId>jaxrs-api</artifactId>
                         <groupId>org.jboss.resteasy</groupId>
                     </exclusion>
@@ -86,14 +82,6 @@
                     <exclusion>
                         <artifactId>jaxb-core</artifactId>
                         <groupId>com.sun.xml.bind</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>jackson-mapper-asl</artifactId>
-                        <groupId>org.codehaus.jackson</groupId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>jackson-xc</artifactId>
-                        <groupId>org.codehaus.jackson</groupId>
                     </exclusion>
                     <exclusion>
                         <artifactId>drools-compiler</artifactId>
