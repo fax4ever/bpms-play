@@ -1,0 +1,11 @@
+{
+  "commands" : [ {
+    "descriptor-command" : {
+      "service" : "ProcessService",
+      "method" : "startProcess",
+      "arguments" : [ "main", "it.redhat.demo.diagram" ],
+      "payload" : "{ }",
+      "marshaller-format" : "json"
+    }
+  } ]
+}

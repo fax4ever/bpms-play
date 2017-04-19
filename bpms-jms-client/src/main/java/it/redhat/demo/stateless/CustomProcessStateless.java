@@ -1,7 +1,10 @@
 package it.redhat.demo.stateless;
 
+import it.redhat.demo.qualifier.StartProcess;
+
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.jms.*;
 import java.util.UUID;
 
@@ -21,6 +24,10 @@ public class CustomProcessStateless {
     @Resource(mappedName = "java:/queue/KIE.SERVER.RESPONSE")
     private Queue responseQueue;
 
+    @Inject
+    @StartProcess
+    private String startProcessPayload;
+
     public Long startProcess() {
 
         String corrId = UUID.randomUUID().toString();
@@ -35,7 +42,6 @@ public class CustomProcessStateless {
             MessageProducer messageProducer = session.createProducer(requestQueue);
             MessageProducer messageConsumer = session.createProducer(requestQueue);
             connection.start();
-
 
         }  catch( JMSException jmse ) {
 
