@@ -5,6 +5,7 @@ import org.kie.server.api.marshalling.MarshallingFormat;
 import org.kie.server.client.KieServicesClient;
 import org.kie.server.client.KieServicesConfiguration;
 import org.kie.server.client.KieServicesFactory;
+import org.kie.server.client.jms.FireAndForgetResponseHandler;
 
 import javax.annotation.Resource;
 import javax.enterprise.context.ApplicationScoped;
@@ -19,13 +20,13 @@ import javax.jms.Queue;
 @ApplicationScoped
 public class KieServiceRAProducer {
 
-    @Resource(mappedName = "java:/MQConnectionFactory")
+    @Resource(mappedName = "java:/ConnectionFactory")
     private ConnectionFactory connectionFactory;
 
-    @Resource(mappedName = "java:/mqRequest")
+    @Resource(mappedName = "java:/queue/KIE.SERVER.REQUEST")
     private Queue requestQueue;
 
-    @Resource(mappedName = "java:/mqResponse")
+    @Resource(mappedName = "java:/queue/KIE.SERVER.RESPONSE")
     private Queue responseQueue;
 
     @Produces
@@ -34,6 +35,8 @@ public class KieServiceRAProducer {
 
         KieServicesConfiguration jmsConf = KieServicesFactory.newJMSConfiguration(connectionFactory, requestQueue, responseQueue);
         jmsConf.setMarshallingFormat(MarshallingFormat.JSON);
+        jmsConf.setJmsTransactional(true);
+        jmsConf.setResponseHandler(new FireAndForgetResponseHandler());
 
         return KieServicesFactory.newKieServicesClient(jmsConf);
 

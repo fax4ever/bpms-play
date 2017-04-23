@@ -19,15 +19,15 @@ import java.util.UUID;
 public class CustomProcessStateless {
 
     private static final Logger LOG = LoggerFactory.getLogger(CustomProcessStateless.class);
-    public static final long TIME_OUT = 360000;
+    public static final long TIME_OUT = 30000;
 
-    @Resource(mappedName = "java:/ConnectionFactory")
+    @Resource(mappedName = "java:/MQConnectionFactory")
     private ConnectionFactory connectionFactory;
 
-    @Resource(mappedName = "java:/queue/KIE.SERVER.REQUEST")
+    @Resource(mappedName = "java:/mqRequest")
     private Queue requestQueue;
 
-    @Resource(mappedName = "java:/queue/KIE.SERVER.RESPONSE")
+    @Resource(mappedName = "java:/mqResponse")
     private Queue responseQueue;
 
     @Inject
@@ -49,7 +49,7 @@ public class CustomProcessStateless {
             connection = connectionFactory.createConnection();
             session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
             MessageProducer messageProducer = session.createProducer(requestQueue);
-            MessageConsumer messageConsumer = session.createConsumer(responseQueue, selector);
+            MessageConsumer messageConsumer = session.createConsumer(responseQueue);
             connection.start();
 
             TextMessage requestMessage = session.createTextMessage(startProcessPayload);
@@ -65,6 +65,11 @@ public class CustomProcessStateless {
             messageProducer.send(requestMessage);
 
             TextMessage responseMessage = (TextMessage) messageConsumer.receive(TIME_OUT);
+
+            if (responseMessage == null) {
+                return "Timeout";
+            }
+
             logMessage("received message", responseMessage);
 
             return responseMessage.getText();
@@ -92,7 +97,10 @@ public class CustomProcessStateless {
 
     private void logMessage(String action, TextMessage textMessage) throws JMSException {
 
+        String jmsCorrelationID = textMessage.getJMSCorrelationID();
+
         LOG.info("{}\n{}",action, textMessage.getText());
+        LOG.info("correlation ID {}", jmsCorrelationID);
 
         Enumeration srcProperties = textMessage.getPropertyNames();
         while (srcProperties.hasMoreElements()) {

@@ -21,7 +21,7 @@ import java.util.Properties;
 @ApplicationScoped
 public class KieServiceRemoteProducer {
 
-    private static final String REMOTING_URL = new String("remote://localhost:4447");
+    private static final String REMOTING_URL = new String("remote://localhost:4547");
     private static final String USER = "guest";
     private static final String PASSWORD = "guest$739";
     private static final String INITIAL_CONTEXT_FACTORY = new String("org.jboss.naming.remote.client.InitialContextFactory");
