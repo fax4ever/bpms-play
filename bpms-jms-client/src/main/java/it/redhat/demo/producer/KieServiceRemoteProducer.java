@@ -1,6 +1,7 @@
 package it.redhat.demo.producer;
 
 import it.redhat.demo.qualifier.JmsRemote;
+import org.kie.server.api.marshalling.MarshallingFormat;
 import org.kie.server.client.KieServicesClient;
 import org.kie.server.client.KieServicesConfiguration;
 import org.kie.server.client.KieServicesFactory;
@@ -53,6 +54,9 @@ public class KieServiceRemoteProducer {
         }
 
         KieServicesConfiguration jmsConf = KieServicesFactory.newJMSConfiguration(connectionFactory, requestQueue, responseQueue, USER, PASSWORD);
+        jmsConf.setMarshallingFormat(MarshallingFormat.JSON);
+        jmsConf.setJmsTransactional(false);
+
         return KieServicesFactory.newKieServicesClient(jmsConf);
 
     }

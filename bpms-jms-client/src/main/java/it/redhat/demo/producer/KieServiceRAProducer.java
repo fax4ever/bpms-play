@@ -20,13 +20,13 @@ import javax.jms.Queue;
 @ApplicationScoped
 public class KieServiceRAProducer {
 
-    @Resource(mappedName = "java:/ConnectionFactory")
+    @Resource(mappedName = "java:/MQConnectionFactory")
     private ConnectionFactory connectionFactory;
 
-    @Resource(mappedName = "java:/queue/KIE.SERVER.REQUEST")
+    @Resource(mappedName = "java:/mqRequest")
     private Queue requestQueue;
 
-    @Resource(mappedName = "java:/queue/KIE.SERVER.RESPONSE")
+    @Resource(mappedName = "java:/mqResponse")
     private Queue responseQueue;
 
     @Produces

@@ -1,22 +1,19 @@
 package it.redhat.demo.stateless;
 
-import it.redhat.demo.qualifier.StartProcess;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Resource;
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
+import javax.ejb.Stateless;
 import javax.jms.*;
 import java.util.Enumeration;
-import java.util.UUID;
 
 /**
- * Created by fabio.ercoli@redhat.com on 19/04/17.
+ * Created by fabio.ercoli@redhat.com on 24/04/17.
  */
 
-@ApplicationScoped
-public class CustomProcessStateless {
+@Stateless
+public class ClearQueue {
 
     private static final Logger LOG = LoggerFactory.getLogger(CustomProcessStateless.class);
     public static final long TIME_OUT = 10000;
@@ -30,50 +27,41 @@ public class CustomProcessStateless {
     @Resource(mappedName = "java:/mqResponse")
     private Queue responseQueue;
 
-    @Inject
-    @StartProcess
-    private String startProcessPayload;
+    public int purgeResponse() {
+        return purge(requestQueue);
+    }
 
-    public String startProcess() {
+    public int purgeRequest() {
+        return purge(responseQueue);
+    }
 
-        // for request
-        String corrId = UUID.randomUUID().toString();
-        // for response
-        String selector = "JMSCorrelationID = '" + corrId + "'";
+    private int purge(Queue queue) {
 
         Connection connection = null;
         Session session = null;
+        int result = 0;
 
         try {
 
             connection = connectionFactory.createConnection();
             session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-            MessageProducer messageProducer = session.createProducer(requestQueue);
-            connection.start();
 
-            TextMessage requestMessage = session.createTextMessage(startProcessPayload);
+            MessageConsumer messageConsumer = session.createConsumer(queue);
 
-            requestMessage.setJMSCorrelationID(corrId);
-            requestMessage.setIntProperty("serialization_format", 2);
-            requestMessage.setIntProperty("kie_interaction_pattern", 1);
-            requestMessage.setStringProperty("kie_class_type", "org.kie.server.api.commands.DescriptorCommand");
-            requestMessage.setStringProperty("kie_target_capability", "BPM");
-            requestMessage.setStringProperty("container_id", "main");
+            while (true) {
 
-            logMessage("sending message", requestMessage, requestQueue);
+                Message message = messageConsumer.receive(TIME_OUT);
+                if (message == null) {
+                    return result;
+                }
 
-            messageProducer.send(requestMessage);
+                result++;
+                if (message instanceof TextMessage) {
+                    logMessage("remove message", (TextMessage) message, queue);
+                }
 
-            MessageConsumer messageConsumer = session.createConsumer(responseQueue);
-            TextMessage responseMessage = (TextMessage) messageConsumer.receive(TIME_OUT);
-
-            if (responseMessage == null) {
-                return "Timeout";
             }
 
-            logMessage("received message", responseMessage, responseQueue);
-
-            return responseMessage.getText();
 
         } catch (JMSException ex) {
 
@@ -112,6 +100,5 @@ public class CustomProcessStateless {
         }
 
     }
-
 
 }
