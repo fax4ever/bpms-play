@@ -55,7 +55,7 @@ public class CustomProcessStateless {
 
             requestMessage.setJMSCorrelationID(corrId);
             requestMessage.setIntProperty("serialization_format", 2);
-            requestMessage.setIntProperty("kie_interaction_pattern", 1);
+            requestMessage.setIntProperty("kie_interaction_pattern", 2);
             requestMessage.setStringProperty("kie_class_type", "org.kie.server.api.commands.DescriptorCommand");
             requestMessage.setStringProperty("kie_target_capability", "BPM");
             requestMessage.setStringProperty("container_id", "main");

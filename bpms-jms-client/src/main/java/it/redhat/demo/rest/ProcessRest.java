@@ -2,6 +2,7 @@ package it.redhat.demo.rest;
 
 import it.redhat.demo.stateless.ClearQueue;
 import it.redhat.demo.stateless.CustomProcessStateless;
+import it.redhat.demo.stateless.OneWayProcessStateless;
 import it.redhat.demo.stateless.ProcessStateless;
 
 import javax.inject.Inject;
@@ -21,6 +22,9 @@ public class ProcessRest {
 
     @Inject
     private CustomProcessStateless custom;
+
+    @Inject
+    private OneWayProcessStateless one;
 
     @Inject
     private ClearQueue clearQueue;
@@ -48,6 +52,17 @@ public class ProcessRest {
         return custom.startProcess();
 
     }
+
+    @GET
+    @Path("one")
+    @Produces("application/json")
+    public String one() {
+
+        one.startProcess();
+        return "ok";
+
+    }
+
 
     @GET
     @Path("clear/request")

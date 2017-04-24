@@ -1,22 +1,23 @@
 package it.redhat.demo.stateless;
 
+import it.redhat.demo.qualifier.StartProcess;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Resource;
-import javax.ejb.Stateless;
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.jms.*;
 import java.util.Enumeration;
 
 /**
- * Created by fabio.ercoli@redhat.com on 24/04/17.
+ * Created by fabio.ercoli@redhat.com on 19/04/17.
  */
 
-@Stateless
-public class ClearQueue {
+@ApplicationScoped
+public class OneWayProcessStateless {
 
-    private static final Logger LOG = LoggerFactory.getLogger(CustomProcessStateless.class);
-    public static final long TIME_OUT = 10000;
+    private static final Logger LOG = LoggerFactory.getLogger(OneWayProcessStateless.class);
 
     @Resource(mappedName = "java:/MQConnectionFactory")
     private ConnectionFactory connectionFactory;
@@ -24,44 +25,31 @@ public class ClearQueue {
     @Resource(mappedName = "java:/mqRequest")
     private Queue requestQueue;
 
-    @Resource(mappedName = "java:/mqResponse")
-    private Queue responseQueue;
+    @Inject
+    @StartProcess
+    private String startProcessPayload;
 
-    public int purgeRequest() {
-        return purge(requestQueue);
-    }
-
-    public int purgeResponse() {
-        return purge(responseQueue);
-    }
-
-    private int purge(Queue queue) {
+    public void startProcess() {
 
         Connection connection = null;
         Session session = null;
-        int result = 0;
 
         try {
 
             connection = connectionFactory.createConnection();
-            session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+            session = connection.createSession(true, Session.SESSION_TRANSACTED);
+            MessageProducer messageProducer = session.createProducer(requestQueue);
+            connection.start();
 
-            MessageConsumer messageConsumer = session.createConsumer(queue);
+            TextMessage requestMessage = session.createTextMessage(startProcessPayload);
+            requestMessage.setIntProperty("serialization_format", 2);
+            requestMessage.setIntProperty("kie_interaction_pattern", 2);
+            requestMessage.setStringProperty("kie_class_type", "org.kie.server.api.commands.DescriptorCommand");
+            requestMessage.setStringProperty("kie_target_capability", "BPM");
+            requestMessage.setStringProperty("container_id", "main");
 
-            while (true) {
-
-                Message message = messageConsumer.receive(TIME_OUT);
-                if (message == null) {
-                    return result;
-                }
-
-                result++;
-                if (message instanceof TextMessage) {
-                    logMessage("remove message", (TextMessage) message, queue);
-                }
-
-            }
-
+            messageProducer.send(requestMessage);
+            logMessage("sending message", requestMessage, requestQueue);
 
         } catch (JMSException ex) {
 
@@ -90,6 +78,7 @@ public class ClearQueue {
 
         LOG.info("{}\n{}",action, textMessage.getText());
         LOG.info("from queue {}", queue);
+        LOG.info("message id {}", textMessage.getJMSMessageID());
         LOG.info("correlation ID {}", jmsCorrelationID);
 
         Enumeration srcProperties = textMessage.getPropertyNames();
@@ -100,5 +89,6 @@ public class ClearQueue {
         }
 
     }
+
 
 }
