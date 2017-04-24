@@ -60,9 +60,9 @@ public class CustomProcessStateless {
             requestMessage.setStringProperty("kie_target_capability", "BPM");
             requestMessage.setStringProperty("container_id", "main");
 
-            logMessage("sending message", requestMessage, requestQueue);
 
             messageProducer.send(requestMessage);
+            logMessage("sending message", requestMessage, requestQueue);
 
             MessageConsumer messageConsumer = session.createConsumer(responseQueue);
             TextMessage responseMessage = (TextMessage) messageConsumer.receive(TIME_OUT);
@@ -102,6 +102,7 @@ public class CustomProcessStateless {
 
         LOG.info("{}\n{}",action, textMessage.getText());
         LOG.info("from queue {}", queue);
+        LOG.info("message id {}", textMessage.getJMSMessageID());
         LOG.info("correlation ID {}", jmsCorrelationID);
 
         Enumeration srcProperties = textMessage.getPropertyNames();
