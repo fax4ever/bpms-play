@@ -1,0 +1,11 @@
+{
+  "commands" : [ {
+    "descriptor-command" : {
+      "service" : "ProcessService",
+      "method" : "startProcess",
+      "arguments" : [ "{{container}}", "{{definition}}" ],
+      "payload" : "{{payload}}",
+      "marshaller-format" : "json"
+    }
+  } ]
+}

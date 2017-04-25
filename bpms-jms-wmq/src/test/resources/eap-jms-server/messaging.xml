@@ -1,0 +1,123 @@
+<subsystem xmlns="urn:jboss:domain:messaging:1.4">
+    <hornetq-server>
+        <persistence-enabled>true</persistence-enabled>
+        <journal-type>NIO</journal-type>
+        <journal-min-files>2</journal-min-files>
+
+        <connectors>
+            <netty-connector name="netty" socket-binding="messaging"/>
+            <netty-connector name="netty-throughput" socket-binding="messaging-throughput">
+                <param key="batch-delay" value="50"/>
+            </netty-connector>
+            <in-vm-connector name="in-vm" server-id="0"/>
+        </connectors>
+
+        <acceptors>
+            <netty-acceptor name="netty" socket-binding="messaging"/>
+            <netty-acceptor name="netty-throughput" socket-binding="messaging-throughput">
+                <param key="batch-delay" value="50"/>
+                <param key="direct-deliver" value="false"/>
+            </netty-acceptor>
+            <in-vm-acceptor name="in-vm" server-id="0"/>
+        </acceptors>
+
+        <security-settings>
+            <security-setting match="#">
+                <permission type="send" roles="guest"/>
+                <permission type="consume" roles="guest"/>
+                <permission type="createNonDurableQueue" roles="guest"/>
+                <permission type="deleteNonDurableQueue" roles="guest"/>
+            </security-setting>
+        </security-settings>
+
+        <address-settings>
+            <address-setting match="#">
+                <dead-letter-address>jms.queue.DLQ</dead-letter-address>
+                <expiry-address>jms.queue.ExpiryQueue</expiry-address>
+                <redelivery-delay>0</redelivery-delay>
+                <max-size-bytes>10485760</max-size-bytes>
+                <page-size-bytes>2097152</page-size-bytes>
+                <address-full-policy>PAGE</address-full-policy>
+                <message-counter-history-day-limit>10</message-counter-history-day-limit>
+            </address-setting>
+        </address-settings>
+
+        <jms-connection-factories>
+            <connection-factory name="InVmConnectionFactory">
+                <connectors>
+                    <connector-ref connector-name="in-vm"/>
+                </connectors>
+                <entries>
+                    <entry name="java:/ConnectionFactory"/>
+                </entries>
+            </connection-factory>
+            <connection-factory name="RemoteConnectionFactory">
+                <connectors>
+                    <connector-ref connector-name="netty"/>
+                </connectors>
+                <entries>
+                    <entry name="java:jboss/exported/jms/RemoteConnectionFactory"/>
+                </entries>
+            </connection-factory>
+            <connection-factory name="RemoteXAConnectionFactory">
+                <factory-type>XA_GENERIC</factory-type>
+                <connectors>
+                    <connector-ref connector-name="in-vm"/>
+                </connectors>
+                <entries>
+                    <entry name="java:/JMS"/>
+                </entries>
+            </connection-factory>
+            <pooled-connection-factory name="hornetq-ra">
+                <transaction mode="xa"/>
+                <connectors>
+                    <connector-ref connector-name="in-vm"/>
+                </connectors>
+                <entries>
+                    <entry name="java:/JmsXA"/>
+                </entries>
+            </pooled-connection-factory>
+        </jms-connection-factories>
+
+        <jms-destinations>
+            <jms-queue name="ExpiryQueue">
+                <entry name="java:/jms/queue/ExpiryQueue"/>
+            </jms-queue>
+            <jms-queue name="DLQ">
+                <entry name="java:/jms/queue/DLQ"/>
+            </jms-queue>
+        </jms-destinations>
+    </hornetq-server>
+    <jms-bridge name="requestBridge">
+        <source>
+            <connection-factory name="java:/MQConnectionFactory"/>
+            <destination name="java:/mqRequest"/>
+        </source>
+        <target>
+            <connection-factory name="java:/ConnectionFactory"/>
+            <destination name="java:/queue/KIE.SERVER.REQUEST"/>
+        </target>
+        <quality-of-service>AT_MOST_ONCE</quality-of-service>
+        <failure-retry-interval>500</failure-retry-interval>
+        <max-retries>1</max-retries>
+        <max-batch-size>500</max-batch-size>
+        <max-batch-time>500</max-batch-time>
+        <add-messageID-in-header>false</add-messageID-in-header>
+    </jms-bridge>
+    <jms-bridge name="responseBridge">
+        <source>
+            <connection-factory name="java:/ConnectionFactory"/>
+            <destination name="java:/queue/KIE.SERVER.RESPONSE"/>
+        </source>
+        <target>
+            <connection-factory name="java:/MQConnectionFactory"/>
+            <destination name="java:/mqResponse"/>
+        </target>
+        <quality-of-service>AT_MOST_ONCE</quality-of-service>
+        <failure-retry-interval>500</failure-retry-interval>
+        <max-retries>1</max-retries>
+        <max-batch-size>500</max-batch-size>
+        <max-batch-time>500</max-batch-time>
+        <add-messageID-in-header>true</add-messageID-in-header>
+    </jms-bridge>
+</subsystem>

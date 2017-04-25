@@ -1,0 +1,10 @@
+<system-properties>
+    <property name="wmq.hostName" value="mpebtx01.customer.it"/>
+    <property name="wmq.port" value="11421"/>
+    <property name="wmq.transportType" value="CLIENT"/>
+    <property name="wmq.queueManager" value="QS1XXLZ1"/>
+    <property name="wmq.channel" value="QS1XXLZ1.SC.WAS"/>
+    <property name="wmq.destination.request" value="BPMS.LAB.REQUEST"/>
+    <property name="wmq.destination.response" value="BPMS.LAB.RESPONSE"/>
+    <property name="com.ibm.mq.connector.performJavaEEContainerChecks" value="false"/>
+</system-properties>

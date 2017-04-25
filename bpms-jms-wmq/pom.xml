@@ -28,9 +28,7 @@
 
         <!-- EAP 6.4.14 -->
         <version.jboss.eap>6.4.14.GA</version.jboss.eap>
-
-        <!-- JBoss Client -->
-        <jboss.client.bom>7.5.7.Final-redhat-3</jboss.client.bom>
+        <version.jboss.ejb.ext>2.1.0.redhat-1</version.jboss.ejb.ext>
 
         <!-- SLFJ -->
         <version.org.slf4j>1.7.2.redhat-3</version.org.slf4j>
@@ -83,6 +81,13 @@
         <dependency>
             <groupId>org.jboss.spec.javax.ejb</groupId>
             <artifactId>jboss-ejb-api_3.1_spec</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.ejb3</groupId>
+            <artifactId>jboss-ejb3-ext-api</artifactId>
+            <version>${version.jboss.ejb.ext}</version>
             <scope>provided</scope>
         </dependency>
 
