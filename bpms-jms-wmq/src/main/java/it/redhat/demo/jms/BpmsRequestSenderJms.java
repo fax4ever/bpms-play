@@ -8,7 +8,6 @@ import javax.annotation.Resource;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.jms.*;
-import java.util.Enumeration;
 
 /**
  * Created by fabio.ercoli@redhat.com on 25/04/17.
@@ -60,7 +59,7 @@ public class BpmsRequestSenderJms {
             requestMessage.setStringProperty("container_id", container);
 
             producer.send(requestMessage);
-            logMessage("sent message", requestMessage, requestQueue);
+            JmsUtil.logMessage(LOG, "sent message", requestMessage, requestQueue.getQueueName());
 
         } catch (JMSException ex) {
 
@@ -93,24 +92,6 @@ public class BpmsRequestSenderJms {
                 }
             }
 
-        }
-
-    }
-
-    private void logMessage(String action, TextMessage textMessage, Queue queue) throws JMSException {
-
-        String jmsCorrelationID = textMessage.getJMSCorrelationID();
-
-        LOG.info("{}\n{}",action, textMessage.getText());
-        LOG.info("from queue {}", queue.getQueueName());
-        LOG.info("message id {}", textMessage.getJMSMessageID());
-        LOG.info("correlation ID {}", jmsCorrelationID);
-
-        Enumeration srcProperties = textMessage.getPropertyNames();
-        while (srcProperties.hasMoreElements()) {
-            String propertyName = (String)srcProperties.nextElement ();
-            Object propertyValue = textMessage.getObjectProperty(propertyName);
-            LOG.info("property name {} - value {}", propertyName, propertyValue);
         }
 
     }

@@ -1,4 +1,4 @@
-package it.redhat.demo.stateless;
+package it.redhat.demo.jms;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -6,7 +6,6 @@ import org.slf4j.LoggerFactory;
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
 import javax.jms.*;
-import java.util.Enumeration;
 
 /**
  * Created by fabio.ercoli@redhat.com on 24/04/17.
@@ -15,8 +14,8 @@ import java.util.Enumeration;
 @Stateless
 public class ClearQueue {
 
-    private static final Logger LOG = LoggerFactory.getLogger(CustomProcessStateless.class);
-    public static final long TIME_OUT = 10000;
+    private static final Logger LOG = LoggerFactory.getLogger(ClearQueue.class);
+    public static final long TIME_OUT = 7000;
 
     @Resource(mappedName = "java:/MQConnectionFactory")
     private ConnectionFactory connectionFactory;
@@ -39,25 +38,26 @@ public class ClearQueue {
 
         Connection connection = null;
         Session session = null;
+        MessageConsumer consumer = null;
+
         int result = 0;
 
         try {
 
             connection = connectionFactory.createConnection();
             session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-
-            MessageConsumer messageConsumer = session.createConsumer(queue);
+            consumer = session.createConsumer(queue);
 
             while (true) {
 
-                Message message = messageConsumer.receive(TIME_OUT);
+                Message message = consumer.receive(TIME_OUT);
                 if (message == null) {
                     return result;
                 }
 
                 result++;
                 if (message instanceof TextMessage) {
-                    logMessage("remove message", (TextMessage) message, queue);
+                    JmsUtil.logMessage(LOG, "remove message", (TextMessage) message, queue.getQueueName());
                 }
 
             }
@@ -69,14 +69,28 @@ public class ClearQueue {
 
         } finally {
 
-            if (connection != null) {
+            // Close objects
+            if(consumer != null) {
+                try {
+                    consumer.close();
+                } catch (JMSException ex) {
+                    LOG.warn("Unable to close consumer", ex);
+                }
+            }
+
+            if(session != null) {
+                try {
+                    session.close();
+                } catch (JMSException ex) {
+                    LOG.warn("Unable to close session", ex);
+                }
+            }
+
+            if(connection != null) {
                 try {
                     connection.close();
-                    if (session != null) {
-                        session.close();
-                    }
                 } catch (JMSException ex) {
-                    LOG.warn("Unable to close connection or session!", ex);
+                    LOG.warn("Unable to close connection", ex);
                 }
             }
 
@@ -84,21 +98,6 @@ public class ClearQueue {
 
     }
 
-    private void logMessage(String action, TextMessage textMessage, Queue queue) throws JMSException {
 
-        String jmsCorrelationID = textMessage.getJMSCorrelationID();
-
-        LOG.info("{}\n{}",action, textMessage.getText());
-        LOG.info("from queue {}", queue);
-        LOG.info("correlation ID {}", jmsCorrelationID);
-
-        Enumeration srcProperties = textMessage.getPropertyNames();
-        while (srcProperties.hasMoreElements()) {
-            String propertyName = (String)srcProperties.nextElement ();
-            Object propertyValue = textMessage.getObjectProperty(propertyName);
-            LOG.info("property name {} - value {}", propertyName, propertyValue);
-        }
-
-    }
 
 }

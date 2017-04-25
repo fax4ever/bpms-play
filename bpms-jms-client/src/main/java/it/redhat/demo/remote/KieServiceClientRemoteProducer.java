@@ -1,6 +1,5 @@
-package it.redhat.demo.producer;
+package it.redhat.demo.remote;
 
-import it.redhat.demo.qualifier.JmsRemote;
 import org.kie.server.api.marshalling.MarshallingFormat;
 import org.kie.server.client.KieServicesClient;
 import org.kie.server.client.KieServicesConfiguration;
@@ -20,7 +19,7 @@ import java.util.Properties;
  */
 
 @ApplicationScoped
-public class KieServiceRemoteProducer {
+public class KieServiceClientRemoteProducer {
 
     private static final String REMOTING_URL = new String("remote://localhost:4547");
     private static final String USER = "guest";

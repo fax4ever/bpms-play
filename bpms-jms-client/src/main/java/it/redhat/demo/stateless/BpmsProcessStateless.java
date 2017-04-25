@@ -1,27 +1,28 @@
 package it.redhat.demo.stateless;
 
-import it.redhat.demo.qualifier.JmsRA;
+import it.redhat.demo.invm.JmsInVM;
 import org.kie.server.client.KieServicesClient;
 import org.kie.server.client.ProcessServicesClient;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import java.util.Map;
 
 /**
  * Created by fabio.ercoli@redhat.com on 18/04/17.
  */
 
 @Stateless
-public class ProcessStateless {
+public class BpmsProcessStateless {
 
     @Inject
-    @JmsRA
+    @JmsInVM
     private KieServicesClient gateway;
 
-    public Long startProcess() {
+    public Long startProcess(String container, String definition, Map<String, Object> params) {
 
         ProcessServicesClient processService = gateway.getServicesClient(ProcessServicesClient.class);
-        return processService.startProcess("main", "it.redhat.demo.diagram");
+        return processService.startProcess(container, definition, params);
 
     }
 

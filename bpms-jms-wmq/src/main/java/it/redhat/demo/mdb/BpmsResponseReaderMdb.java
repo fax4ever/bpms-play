@@ -1,5 +1,6 @@
 package it.redhat.demo.mdb;
 
+import it.redhat.demo.jms.JmsUtil;
 import org.jboss.ejb3.annotation.ResourceAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +32,8 @@ public class BpmsResponseReaderMdb implements MessageListener {
 
         try {
             text = textMessage.getText();
+            String queueName = System.getProperty("wmq.destination.response");
+            JmsUtil.logMessage(LOG, "remove message", (TextMessage) message, queueName);
         } catch (JMSException e) {
             throw new RuntimeException(e);
         }

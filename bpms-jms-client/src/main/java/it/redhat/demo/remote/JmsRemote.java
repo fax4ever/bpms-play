@@ -1,4 +1,4 @@
-package it.redhat.demo.qualifier;
+package it.redhat.demo.remote;
 
 import javax.inject.Qualifier;
 import java.lang.annotation.ElementType;
@@ -13,4 +13,4 @@ import java.lang.annotation.Target;
 @Qualifier
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD, ElementType.FIELD})
-public @interface StartProcess {}
+public @interface JmsRemote {}
