@@ -3,7 +3,7 @@
     "descriptor-command" : {
       "service" : "ProcessService",
       "method" : "startProcess",
-      "arguments" : [ "{{container}}", "{{definition}}" ],
+      "arguments" : [ "{{container}}", "{{definition}}", "{{correlationKey}}" ],
       "payload" : "{{payload}}",
       "marshaller-format" : "json"
     }

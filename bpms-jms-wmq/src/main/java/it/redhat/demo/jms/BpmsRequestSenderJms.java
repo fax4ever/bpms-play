@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.jms.*;
+import java.util.UUID;
 
 /**
  * Created by fabio.ercoli@redhat.com on 25/04/17.
@@ -33,7 +34,8 @@ public class BpmsRequestSenderJms {
         String jsonCommand = startProcessTemplate
                 .replace("{{container}}", container)
                 .replace("{{definition}}", definition)
-                .replace("{{payload}}", payload);
+                .replace("{{payload}}", payload)
+                .replace("{{correlationKey}}", UUID.randomUUID().toString());
 
         Connection connection = null;
         Session session = null;

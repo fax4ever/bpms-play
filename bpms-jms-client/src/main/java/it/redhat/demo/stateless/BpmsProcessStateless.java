@@ -1,6 +1,6 @@
 package it.redhat.demo.stateless;
 
-import it.redhat.demo.invm.JmsInVM;
+import it.redhat.demo.remote.JmsRemote;
 import org.kie.server.client.KieServicesClient;
 import org.kie.server.client.ProcessServicesClient;
 import org.slf4j.Logger;
@@ -21,7 +21,7 @@ public class BpmsProcessStateless {
     private static final Logger LOGG = LoggerFactory.getLogger(BpmsProcessStateless.class);
 
     @Inject
-    @JmsInVM
+    @JmsRemote
     private KieServicesClient gateway;
 
     public Long startProcess(String container, String definition, Map<String, Object> params) {
