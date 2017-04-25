@@ -3,10 +3,13 @@ package it.redhat.demo.stateless;
 import it.redhat.demo.invm.JmsInVM;
 import org.kie.server.client.KieServicesClient;
 import org.kie.server.client.ProcessServicesClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * Created by fabio.ercoli@redhat.com on 18/04/17.
@@ -14,6 +17,8 @@ import java.util.Map;
 
 @Stateless
 public class BpmsProcessStateless {
+    
+    private static final Logger LOGG = LoggerFactory.getLogger(BpmsProcessStateless.class);
 
     @Inject
     @JmsInVM
@@ -21,8 +26,13 @@ public class BpmsProcessStateless {
 
     public Long startProcess(String container, String definition, Map<String, Object> params) {
 
+        String correlation = UUID.randomUUID().toString();
+        SimpleCorrelationKey correlationKey = new SimpleCorrelationKey(correlation);
+
+        LOGG.info("starting process using correlation key {}", correlation);
+
         ProcessServicesClient processService = gateway.getServicesClient(ProcessServicesClient.class);
-        return processService.startProcess(container, definition, params);
+        return processService.startProcess(container, definition, correlationKey, params);
 
     }
 
