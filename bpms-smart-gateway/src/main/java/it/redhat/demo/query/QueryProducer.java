@@ -189,14 +189,14 @@ public class QueryProducer {
     public QueryDefinition activeTasksForGroup() {
 
         String expression =
-            " select ti.*, tv.name tvname, tv.value tvvalue " +
+            " select ti.*, tv.name tvname, tv.value tvvalue, pot.entity_id gg, ex.entity_id exclowner " +
             " from AuditTaskImpl ti " +
             " inner join (select tv.taskId, tv.name, tv.value from TaskVariableImpl tv where tv.type = 0 ) tv " +
             " on (tv.taskId = ti.taskId) " +
             " inner join peopleassignments_potowners pot " +
             " on (pot.task_id = ti.taskId) " +
-            " where ti.status in ('Created', 'Ready', 'Reserved', 'InProgress', 'Suspended') " +
-            " and pot.entity_id in ('Manager') " ;
+            " left join peopleassignments_exclowners ex " +
+            " on (ex.task_id = ti.taskId) ";
 
         QueryDefinition query = new QueryDefinition();
         query.setName(ACTIVE_TASKS_FOR_GROUP);
