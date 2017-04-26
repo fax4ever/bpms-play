@@ -122,9 +122,9 @@ public class AdvancedQueryResource {
         String[] validGroups = {"Manager"};
 
         QueryFilterSpec queryFilterSpec = new QueryFilterSpecBuilder()
-            .addColumnMapping("gg", "string")
+            .addColumnMapping("potowner", "string")
 
-            .in("gg", Arrays.asList(validGroups))
+            .in("potowner", Arrays.asList(validGroups))
             .in("status", Arrays.asList(validStatus))
             .oderBy("id", false)
 

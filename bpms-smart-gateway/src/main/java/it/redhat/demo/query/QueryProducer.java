@@ -189,7 +189,7 @@ public class QueryProducer {
     public QueryDefinition activeTasksForGroup() {
 
         String expression =
-            " select ti.*, tv.name tvname, tv.value tvvalue, pot.entity_id gg, ex.entity_id exclowner " +
+            " select ti.*, tv.name tvname, tv.value tvvalue, pot.entity_id potowner, ex.entity_id exclowner " +
             " from AuditTaskImpl ti " +
             " inner join (select tv.taskId, tv.name, tv.value from TaskVariableImpl tv where tv.type = 0 ) tv " +
             " on (tv.taskId = ti.taskId) " +
