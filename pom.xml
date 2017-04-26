@@ -33,7 +33,6 @@
         <module>bpms-user-task</module>
         <module>bpms-jms-client</module>
         <module>bpms-wmq-client</module>
-        <module>bpms-wmq-gateway</module>
     </modules>
 
     <properties>
