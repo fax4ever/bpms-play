@@ -2,6 +2,8 @@ package it.redhat.demo.queryparam;
 
 import org.dashbuilder.dataset.filter.ColumnFilter;
 import org.jbpm.services.api.query.QueryParamBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Map;
@@ -13,19 +15,7 @@ import static org.dashbuilder.dataset.filter.FilterFactory.*;
  */
 public class UserTaskFilter implements QueryParamBuilder<ColumnFilter> {
 
-    /*
-        # Task is owned by the user or is not owned by anyone
-        (actualOwner = :userId or t.taskData.actualOwner is null)
-        and
-        # The status is active
-        t.taskData.status in (:status)
-        and
-        # Is assigned direct on user or by group
-        (potentialOwners.id  = :userId or potentialOwners.id in (:groupIds))
-        and
-        # The user is not excluded
-        (t.peopleAssignments.excludedOwners is empty or excludedOwners.id != :userId)
-     */
+    private static final Logger LOG = LoggerFactory.getLogger(UserTaskFilter.class);
 
     private Map<String, Object> parameters;
     private boolean built = false;
@@ -45,6 +35,10 @@ public class UserTaskFilter implements QueryParamBuilder<ColumnFilter> {
         String user = (String) parameters.get("user");
         List<String> status = (List<String>) parameters.get("status");
         List<String> groups = (List<String>) parameters.get("groups");
+
+        LOG.info("user: {}", user);
+        LOG.info("status: {}", status);
+        LOG.info("groups: {}", groups);
 
         // actualOwner == :user
         ColumnFilter actualOwnerIsTheUser = equalsTo("actualOwner", user);
@@ -66,6 +60,8 @@ public class UserTaskFilter implements QueryParamBuilder<ColumnFilter> {
 
         // exclOwnerIsTheUser == user
         ColumnFilter exclOwnerIsTheUser = equalsTo("exclOwner", user);
+
+        built = true;
 
         return AND(
             OR(actualOwnerIsTheUser, actualOwnerIsNull),
