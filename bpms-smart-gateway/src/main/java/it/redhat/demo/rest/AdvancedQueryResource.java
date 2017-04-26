@@ -14,6 +14,7 @@ import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import static it.redhat.demo.query.QueryProducer.*;
@@ -121,16 +122,12 @@ public class AdvancedQueryResource {
         String[] validStatus = {"Created", "Ready", "Reserved", "InProgress", "Suspended"};
         String[] validGroups = {"Manager"};
 
-        QueryFilterSpec queryFilterSpec = new QueryFilterSpecBuilder()
-            .addColumnMapping("potowner", "string")
+        HashMap<String, Object> parameters = new HashMap<>();
+        parameters.put("user", "michele");
+        parameters.put("status", Arrays.asList(validStatus));
+        parameters.put("groups", Arrays.asList(validGroups));
 
-            .in("potowner", Arrays.asList(validGroups))
-            .in("status", Arrays.asList(validStatus))
-            .oderBy("id", false)
-
-            .get();
-
-        return queryServices.query(ACTIVE_TASKS_FOR_GROUP, QUERY_MAP_TASK_WITH_VARS, queryFilterSpec, 0, MAX_ROWS, TaskInstance.class);
+        return queryServices.query(ACTIVE_TASKS_FOR_GROUP, QUERY_MAP_TASK_WITH_VARS, "userTaskFilter", parameters, 0, MAX_ROWS, TaskInstance.class);
 
     }
 
