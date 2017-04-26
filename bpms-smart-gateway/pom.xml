@@ -31,6 +31,9 @@
         <!-- SLFJ -->
         <version.org.slf4j>1.7.2.redhat-3</version.org.slf4j>
 
+        <!-- JBoss JACC -->
+        <version.jboss.jacc>1.0.3.Final</version.jboss.jacc>
+
     </properties>
 
     <dependencyManagement>
@@ -147,6 +150,13 @@
                     <groupId>com.thoughtworks.xstream</groupId>
                 </exclusion>
             </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.spec.javax.security.jacc</groupId>
+            <artifactId>jboss-jacc-api_1.4_spec</artifactId>
+            <version>${version.jboss.jacc}</version>
+            <scope>provided</scope>
         </dependency>
 
     </dependencies>
