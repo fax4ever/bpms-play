@@ -25,6 +25,7 @@ public class QueryProducer {
     public static final String ACTIVE_TASKS_ON_COMPLETED_TASKS_WITH_VARIABLES = "activeTasksOnCompletedTasksWithVariables";
     public static final String ACTIVE_TASKS_ON_COMPLETED_TASKS_WITH_CUSTOM_VARIABLES = "activeTasksOnCompletedTasksWithCustomVariables";
     public static final String WAIT_TASK_FOR_USER_PROCESS_INSTANCE = "waitTaskForUserProcessInstance";
+    public static final String ACTIVE_TASKS_FOR_GROUP = "activeTasksForGroup";
 
     @Produces
     @Named(QueryServicesClient.QUERY_MAP_PI)
@@ -175,6 +176,30 @@ public class QueryProducer {
 
         QueryDefinition query = new QueryDefinition();
         query.setName(WAIT_TASK_FOR_USER_PROCESS_INSTANCE);
+        query.setSource(SOURCE);
+        query.setExpression(expression);
+        query.setTarget(CUSTOM);
+
+        return query;
+
+    }
+
+    @Produces
+    @Named(ACTIVE_TASKS_FOR_GROUP)
+    public QueryDefinition activeTasksForGroup() {
+
+        String expression =
+            " select ti.*, tv.name tvname, tv.value tvvalue " +
+            " from AuditTaskImpl ti " +
+            " inner join (select tv.taskId, tv.name, tv.value from TaskVariableImpl tv where tv.type = 0 ) tv " +
+            " on (tv.taskId = ti.taskId) " +
+            " inner join peopleassignments_potowners pot " +
+            " on (pot.task_id = ti.taskId) " +
+            " where ti.status in ('Created', 'Ready', 'Reserved', 'InProgress', 'Suspended') " +
+            " and pot.entity_id in ('Manager') " ;
+
+        QueryDefinition query = new QueryDefinition();
+        query.setName(ACTIVE_TASKS_FOR_GROUP);
         query.setSource(SOURCE);
         query.setExpression(expression);
         query.setTarget(CUSTOM);

@@ -15,6 +15,9 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
+import static it.redhat.demo.query.QueryProducer.ACTIVE_TASKS_FOR_GROUP;
+import static org.kie.server.client.QueryServicesClient.QUERY_MAP_TASK_WITH_VARS;
+
 /**
  * Created by fabio.ercoli@redhat.com on 27/03/17.
  */
@@ -66,7 +69,7 @@ public class AdvancedQueryResource {
 
             // active task on completed task with variables
             return queryServices.query(QueryProducer.ACTIVE_TASKS_ON_COMPLETED_TASKS_WITH_VARIABLES,
-                    QueryServicesClient.QUERY_MAP_TASK_WITH_VARS, queryFilterSpec, 0, MAX_ROWS, TaskInstance.class);
+                    QUERY_MAP_TASK_WITH_VARS, queryFilterSpec, 0, MAX_ROWS, TaskInstance.class);
 
         } else if (QueryProducer.ACTIVE_TASKS_ON_COMPLETED_TASKS_WITH_CUSTOM_VARIABLES.equals(query)) {
 
@@ -94,5 +97,15 @@ public class AdvancedQueryResource {
         throw new QueryDefinitionNotFoundException(query);
 
     }
+
+    @Path("name/" + ACTIVE_TASKS_FOR_GROUP)
+    @GET
+    public List activeTasksForGroup() {
+
+        return queryServices.query(ACTIVE_TASKS_FOR_GROUP, QUERY_MAP_TASK_WITH_VARS, 0, MAX_ROWS, TaskInstance.class);
+
+    }
+
+
 
 }
