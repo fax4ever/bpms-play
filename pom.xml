@@ -10,10 +10,6 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>brms-simple</module>
-        <module>brms-simple-war</module>
-        <module>bpms-simple</module>
-        <module>bpms-embedded-in-war</module>
         <module>bpms-process-rule</module>
         <module>bpms-process</module>
         <module>bpms-kie-process</module>
