@@ -31,17 +31,17 @@ public class BpmsServiceRest {
 
     @DELETE
     @Path("request")
-    public void clearRequestQueue() {
+    public int clearRequestQueue() {
 
-        clearQueue.purgeRequest();
+        return clearQueue.purgeRequest();
 
     }
 
     @DELETE
     @Path("response")
-    public void clearResponseQueue() {
+    public int clearResponseQueue() {
 
-        clearQueue.purgeResponse();
+        return clearQueue.purgeResponse();
 
     }
 

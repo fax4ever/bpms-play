@@ -15,7 +15,7 @@ import javax.jms.*;
 public class ClearQueue {
 
     private static final Logger LOG = LoggerFactory.getLogger(ClearQueue.class);
-    public static final long TIME_OUT = 7000;
+    public static final long TIME_OUT = 3000;
 
     @Resource(mappedName = "java:/MQConnectionFactory")
     private ConnectionFactory connectionFactory;
@@ -57,7 +57,7 @@ public class ClearQueue {
 
                 result++;
                 if (message instanceof TextMessage) {
-                    JmsUtil.logMessage(LOG, "remove message", (TextMessage) message, queue.getQueueName());
+                    JmsUtil.logMessage(LOG, ":: CLEAR MESSAGE ::", (TextMessage) message, queue.getQueueName());
                 }
 
             }

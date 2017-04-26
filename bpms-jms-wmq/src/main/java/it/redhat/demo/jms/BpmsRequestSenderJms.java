@@ -61,7 +61,7 @@ public class BpmsRequestSenderJms {
             requestMessage.setStringProperty("container_id", container);
 
             producer.send(requestMessage);
-            JmsUtil.logMessage(LOG, "sent message", requestMessage, requestQueue.getQueueName());
+            JmsUtil.logMessage(LOG, ":: SEND MESSAGE ::", requestMessage, requestQueue.getQueueName());
 
         } catch (JMSException ex) {
 

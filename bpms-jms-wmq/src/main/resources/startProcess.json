@@ -2,7 +2,7 @@
   "commands" : [ {
     "descriptor-command" : {
       "service" : "ProcessService",
-      "method" : "startProcess",
+      "method" : "startProcessWithCorrelation",
       "arguments" : [ "{{container}}", "{{definition}}", "{{correlationKey}}" ],
       "payload" : "{{payload}}",
       "marshaller-format" : "json"

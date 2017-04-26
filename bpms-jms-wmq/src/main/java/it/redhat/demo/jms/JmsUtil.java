@@ -16,7 +16,7 @@ public class JmsUtil {
         String jmsCorrelationID = textMessage.getJMSCorrelationID();
 
         logger.info("{}\n{}",action, textMessage.getText());
-        logger.info("from queue {}", queueName);
+        logger.info("queue {}", queueName);
         logger.info("correlation ID {}", jmsCorrelationID);
 
         Enumeration srcProperties = textMessage.getPropertyNames();
