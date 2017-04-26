@@ -43,8 +43,8 @@ public class UserTaskFilter implements QueryParamBuilder<ColumnFilter> {
         // actualOwner == :user
         ColumnFilter actualOwnerIsTheUser = equalsTo("actualOwner", user);
 
-        // actualOwner == null
-        ColumnFilter actualOwnerIsNull = isNull("actualOwner");
+        // actualOwner == ''
+        ColumnFilter actualOwnerIsNull = equalsTo("actualOwner", "");
 
         // status in :status
         ColumnFilter statusIsOk = in("status", status);
