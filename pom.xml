@@ -36,7 +36,8 @@
         <module>bpms-smart-gateway</module>
         <module>bpms-user-task</module>
         <module>bpms-jms-client</module>
-        <module>bpms-jms-wmq</module>
+        <module>bpms-wmq-client</module>
+        <module>bpms-wmq-gateway</module>
     </modules>
 
     <properties>
