@@ -67,7 +67,6 @@ public class SignalProcessTest extends JbpmJUnitBaseTestCase {
     	VariableInstanceLog variableInstanceLog = variables.get(0);
     	
     	assertEquals("This is the event content!", variableInstanceLog.getValue());
-    	
 		
 	}
 	
