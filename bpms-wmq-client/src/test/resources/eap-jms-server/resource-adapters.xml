@@ -55,11 +55,6 @@
                         ${wmq.destination.request}
                     </config-property>
                 </admin-object>
-                <admin-object class-name="com.ibm.mq.connector.outbound.MQQueueProxy" jndi-name="java:/PlayQueue" pool-name="PlayQueue">
-                    <config-property name="baseQueueName">
-                        ${wmq.destination.INPUT}
-                    </config-property>
-                </admin-object>
                 <admin-object class-name="com.ibm.mq.connector.outbound.MQQueueProxy" jndi-name="java:/mqResponse" pool-name="mqResponse">
                     <config-property name="baseQueueName">
                         ${wmq.destination.response}
