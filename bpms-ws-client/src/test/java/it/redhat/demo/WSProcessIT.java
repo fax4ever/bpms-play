@@ -15,7 +15,7 @@ import org.kie.api.runtime.manager.audit.AuditService;
 import org.kie.api.runtime.manager.audit.VariableInstanceLog;
 import org.kie.api.runtime.process.ProcessInstance;
 
-public class WSProcessTest extends JbpmJUnitBaseTestCase {
+public class WSProcessIT extends JbpmJUnitBaseTestCase {
 	
 	private static final String IT_REDHAT_DEMO = "it/redhat/demo/";
 	
@@ -24,7 +24,7 @@ public class WSProcessTest extends JbpmJUnitBaseTestCase {
     private KieSession kieSession;
 	private AuditService auditService;
 	
-	public WSProcessTest() {
+	public WSProcessIT() {
 		super(true, true);
 	}
 	
@@ -52,12 +52,12 @@ public class WSProcessTest extends JbpmJUnitBaseTestCase {
 	@Test
 	public void test() {
 		
-		String[] request = { "Fabio" };
+		String request = "Fabio";
 		
 		HashMap<String,Object> params = new HashMap<>();
 		params.put("request", request);
 		
-		ProcessInstance pi = kieSession.startProcess("it.redhat.demo.ws-client");
+		ProcessInstance pi = kieSession.startProcess("it.redhat.demo.ws-client", params);
 		assertProcessInstanceCompleted(pi.getId());
     	assertNodeTriggered(pi.getId(), "StartProcess", "WebService", "EndProcess");
     	
@@ -78,11 +78,7 @@ public class WSProcessTest extends JbpmJUnitBaseTestCase {
     			
     		}
     		
-    	}
-    	
-    	VariableInstanceLog variableInstanceLog = variables.get(0);
-    	
-    	assertEquals("This is the event content!", variableInstanceLog.getValue());
+    	} 
 		
 	}
 	
