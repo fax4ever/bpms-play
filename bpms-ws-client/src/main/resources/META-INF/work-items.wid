@@ -1,0 +1,22 @@
+import org.drools.core.process.core.datatype.impl.type.StringDataType;
+import org.drools.core.process.core.datatype.impl.type.ListDataType;
+import org.drools.core.process.core.datatype.impl.type.ObjectDataType;
+
+[
+  [
+    "name" : "WebService",
+  	 "parameters" : [
+  	 	 "Endpoint" : new StringDataType(),
+         "Interface" : new StringDataType(),
+         "Operation" : new StringDataType(),
+         "Parameter" : new ListDataType(),
+         "Mode" : new StringDataType(),
+         "Url" : new StringDataType(),
+  	 	 "Namespace" : new StringDataType()
+      ],
+  	"results" : [
+        "Result" : new ObjectDataType()
+     ],
+    "displayName" : "WebService"
+  ]
+]

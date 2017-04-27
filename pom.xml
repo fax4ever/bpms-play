@@ -35,6 +35,7 @@
         <module>bpms-wmq-client</module>
         <module>bpms-query-paramters</module>
         <module>bpms-signal</module>
+        <module>bpms-ws-client</module>
     </modules>
 
     <properties>
