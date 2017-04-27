@@ -42,7 +42,7 @@ public class FileContentProducer {
     }
 
     @Produces
-    @StartProcess
+    @SendSignal
     public String sendSignal() {
 
         return sendSignal;
