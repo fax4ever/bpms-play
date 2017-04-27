@@ -1,0 +1,11 @@
+{
+  "commands" : [ {
+    "descriptor-command" : {
+      "service" : "ProcessService",
+      "method" : "signalProcessInstance",
+      "arguments" : [ "{{container}}", {{processInstance}}, "{{name}}" ],
+      "payload" : "{{payload}}",
+      "marshaller-format" : "json"
+    }
+  } ]
+}

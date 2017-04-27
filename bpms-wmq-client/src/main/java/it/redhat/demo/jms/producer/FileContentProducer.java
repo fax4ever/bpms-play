@@ -23,19 +23,29 @@ public class FileContentProducer {
     private static final Logger LOG = LoggerFactory.getLogger(FileContentProducer.class);
 
     private String startProcess = null;
+    private String sendSignal = null;
 
     @PostConstruct
     public void init() {
 
         startProcess = loadFile("startProcess.json");
+        sendSignal = loadFile("sendSignal.json");
 
     }
 
     @Produces
     @StartProcess
-    public String getContent() {
+    public String startProcess() {
 
         return startProcess;
+
+    }
+
+    @Produces
+    @StartProcess
+    public String sendSignal() {
+
+        return sendSignal;
 
     }
 

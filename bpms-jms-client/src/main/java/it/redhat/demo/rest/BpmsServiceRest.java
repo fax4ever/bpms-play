@@ -26,4 +26,12 @@ public class BpmsServiceRest {
 
     }
 
+    @PUT
+    @Path("{container}/{processInstance}/{signalName}")
+    public void sendSignal(@PathParam("container") String container, @PathParam("processInstance") Long pi, @PathParam("signalName") String name, String value) {
+
+        service.sendSignal(container, pi, name, value);
+
+    }
+
 }

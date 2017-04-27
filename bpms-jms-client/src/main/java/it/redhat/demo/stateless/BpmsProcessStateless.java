@@ -36,4 +36,11 @@ public class BpmsProcessStateless {
 
     }
 
+    public void sendSignal(String container, Long pi, String name, String value) {
+
+        ProcessServicesClient processService = gateway.getServicesClient(ProcessServicesClient.class);
+        processService.signalProcessInstance(container, pi, name, value);
+
+    }
+
 }

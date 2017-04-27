@@ -8,16 +8,15 @@ import javax.annotation.Resource;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.jms.*;
-import java.util.UUID;
 
 /**
  * Created by fabio.ercoli@redhat.com on 25/04/17.
  */
 
 @ApplicationScoped
-public class BpmsRequestSenderJms {
+public class BpmsJmsGateway {
 
-    private static final Logger LOG = LoggerFactory.getLogger(BpmsRequestSenderJms.class);
+    private static final Logger LOG = LoggerFactory.getLogger(BpmsJmsGateway.class);
 
     @Resource(mappedName = "java:/MQConnectionFactory")
     private ConnectionFactory connectionFactory;
@@ -29,13 +28,7 @@ public class BpmsRequestSenderJms {
     @StartProcess
     private String startProcessTemplate;
 
-    public void startProcess(String container, String definition, String payload) {
-
-        String jsonCommand = startProcessTemplate
-                .replace("{{container}}", container)
-                .replace("{{definition}}", definition)
-                .replace("{{payload}}", payload)
-                .replace("{{correlationKey}}", UUID.randomUUID().toString());
+    public void send(String container, String jsonCommand) {
 
         Connection connection = null;
         Session session = null;
