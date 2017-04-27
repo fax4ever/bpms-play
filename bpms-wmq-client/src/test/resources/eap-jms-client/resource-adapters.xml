@@ -7,7 +7,7 @@
             <transaction-support>XATransaction</transaction-support>
             <config-property name="connectionConcurrency">
                 1
-            </config-property>
+            </config-property>   
             <config-property name="reconnectionRetryCount">
                 1000
             </config-property>
