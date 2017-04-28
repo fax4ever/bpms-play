@@ -1,12 +1,10 @@
 package it.redhat.demo.jms;
 
-import it.redhat.demo.jms.producer.StartProcess;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Resource;
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 import javax.jms.*;
 
 /**
@@ -23,10 +21,6 @@ public class BpmsJmsGateway {
 
     @Resource(mappedName = "java:/mqRequest")
     private Queue requestQueue;
-
-    @Inject
-    @StartProcess
-    private String startProcessTemplate;
 
     public void send(String container, String jsonCommand) {
 
@@ -47,7 +41,7 @@ public class BpmsJmsGateway {
             requestMessage.setIntProperty("serialization_format", 2);
 
             // 2 --> async interaction
-            requestMessage.setIntProperty("kie_interaction_pattern", 2);
+            requestMessage.setIntProperty("kie_interaction_pattern", 101);
 
             requestMessage.setStringProperty("kie_class_type", "org.kie.server.api.commands.DescriptorCommand");
             requestMessage.setStringProperty("kie_target_capability", "BPM");
