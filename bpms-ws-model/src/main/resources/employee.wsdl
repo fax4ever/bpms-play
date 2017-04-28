@@ -1,0 +1,76 @@
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://ws.demo.redhat.it/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="EmployeeServiceService" targetNamespace="http://ws.demo.redhat.it/">
+    <wsdl:types>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://ws.demo.redhat.it/" elementFormDefault="unqualified" targetNamespace="http://ws.demo.redhat.it/" version="1.0">
+            <xs:element name="findExpenses" type="tns:findExpenses"/>
+            <xs:element name="findExpensesResponse" type="tns:findExpensesResponse"/>
+            <xs:complexType name="findExpenses">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="tns:expenseRequest"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="expenseRequest">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="employeeCode" type="xs:string"/>
+                    <xs:element minOccurs="0" name="from" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="to" type="xs:dateTime"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="findExpensesResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="tns:expenseResponse"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="expenseResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="employee" type="tns:employee"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="expenses" type="tns:expense"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="employee">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="birth" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="code" type="xs:string"/>
+                    <xs:element minOccurs="0" name="name" type="xs:string"/>
+                    <xs:element minOccurs="0" name="rank" type="xs:int"/>
+                    <xs:element minOccurs="0" name="surname" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="expense">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="amount" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="day" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="type" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="findExpensesResponse">
+        <wsdl:part element="tns:findExpensesResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="findExpenses">
+        <wsdl:part element="tns:findExpenses" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="EmployeeService">
+        <wsdl:operation name="findExpenses">
+            <wsdl:input message="tns:findExpenses" name="findExpenses"></wsdl:input>
+            <wsdl:output message="tns:findExpensesResponse" name="findExpensesResponse"></wsdl:output>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="EmployeeServiceServiceSoapBinding" type="tns:EmployeeService">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="findExpenses">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="findExpenses">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="findExpensesResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="EmployeeServiceService">
+        <wsdl:port binding="tns:EmployeeServiceServiceSoapBinding" name="EmployeeServicePort">
+            <soap:address location="http://localhost:8080/eap7-ws-jaxb/EmployeeService"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

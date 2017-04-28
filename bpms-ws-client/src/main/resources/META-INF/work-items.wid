@@ -18,5 +18,15 @@ import org.drools.core.process.core.datatype.impl.type.ObjectDataType;
         "Result" : new ObjectDataType()
      ],
     "displayName" : "WebService"
+  ],
+  [
+    "name" : "ManageResponse",
+  	 "parameters" : [
+  	 	 "response" : new ObjectDataType()
+      ],
+  	"results" : [
+        "response" : new ObjectDataType()
+     ],
+    "displayName" : "ManageResponse"
   ]
 ]

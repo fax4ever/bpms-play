@@ -1,0 +1,47 @@
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://ws.demo.redhat.it/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="CiaoService" targetNamespace="http://ws.demo.redhat.it/">
+    <wsdl:types>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://ws.demo.redhat.it/" elementFormDefault="unqualified" targetNamespace="http://ws.demo.redhat.it/" version="1.0">
+            <xs:element name="ciao" type="tns:ciao"/>
+            <xs:element name="ciaoResponse" type="tns:ciaoResponse"/>
+            <xs:complexType name="ciao">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="ciaoResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="ciaoResponse">
+        <wsdl:part element="tns:ciaoResponse" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="ciao">
+        <wsdl:part element="tns:ciao" name="parameters"></wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="CiaoWS">
+        <wsdl:operation name="ciao">
+            <wsdl:input message="tns:ciao" name="ciao"></wsdl:input>
+            <wsdl:output message="tns:ciaoResponse" name="ciaoResponse"></wsdl:output>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="CiaoServiceSoapBinding" type="tns:CiaoWS">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="ciao">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="ciao">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="ciaoResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="CiaoService">
+        <wsdl:port binding="tns:CiaoServiceSoapBinding" name="Ciao">
+            <soap:address location="http://localhost:8080/eap7-ws/CiaoService"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
