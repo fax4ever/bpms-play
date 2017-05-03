@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import javax.annotation.Resource;
 import javax.enterprise.context.ApplicationScoped;
 import javax.jms.*;
+import java.util.UUID;
 
 /**
  * Created by fabio.ercoli@redhat.com on 25/04/17.
@@ -28,6 +29,9 @@ public class BpmsJmsGateway {
         Session session = null;
         MessageProducer producer = null;
 
+        // for request
+        String corrId = UUID.randomUUID().toString();
+
         try {
 
             connection = connectionFactory.createConnection();
@@ -37,11 +41,13 @@ public class BpmsJmsGateway {
 
             TextMessage requestMessage = session.createTextMessage(jsonCommand);
 
+            requestMessage.setJMSCorrelationID(corrId);
+
             // 2 --> json format
             requestMessage.setIntProperty("serialization_format", 2);
 
             // 2 --> async interaction
-            requestMessage.setIntProperty("kie_interaction_pattern", 101);
+            requestMessage.setIntProperty("kie_interaction_pattern", 2);
 
             requestMessage.setStringProperty("kie_class_type", "org.kie.server.api.commands.DescriptorCommand");
             requestMessage.setStringProperty("kie_target_capability", "BPM");
