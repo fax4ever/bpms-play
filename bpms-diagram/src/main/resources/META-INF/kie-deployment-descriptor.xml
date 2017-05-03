@@ -5,11 +5,13 @@
     <audit-mode>JPA</audit-mode>
     <persistence-mode>JPA</persistence-mode>
     <runtime-strategy>PER_PROCESS_INSTANCE</runtime-strategy>
-    <marshalling-strategy>
-        <resolver>mvel</resolver>
-        <identifier>new org.drools.persistence.jpa.marshaller.JPAPlaceholderResolverStrategy("test-jpa", classLoader)</identifier>
-        <parameters/>
-    </marshalling-strategy>
+    <marshalling-strategies>
+	    <marshalling-strategy>
+	        <resolver>mvel</resolver>
+	        <identifier>new org.drools.persistence.jpa.marshaller.JPAPlaceholderResolverStrategy("test-jpa", classLoader)</identifier>
+	        <parameters/>
+	    </marshalling-strategy>
+    </marshalling-strategies>
     <event-listeners />
 	<task-event-listeners />
     <globals>
