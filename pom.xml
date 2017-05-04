@@ -37,6 +37,7 @@
         <module>bpms-signal</module>
         <module>bpms-ws-client</module>
         <module>bpms-ws-model</module>
+        <module>bpms-jpa</module>
     </modules>
 
     <properties>
