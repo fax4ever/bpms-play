@@ -1,11 +1,13 @@
 package it.redhat.demo.entity;
 
+import org.drools.persistence.jpa.marshaller.VariableEntity;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-public class MemoryEntity implements Serializable {
+public class MemoryEntity extends VariableEntity implements Serializable {
 
 	/**
 	 * 
