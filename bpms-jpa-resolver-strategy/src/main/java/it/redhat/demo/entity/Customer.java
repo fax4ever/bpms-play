@@ -30,10 +30,17 @@ public class Customer extends VariableEntity {
 	public Customer() {
 	}
 	
-	public Customer(Long id, String name, Boolean premium) {
-		this.id = id;
+	public Customer(String name, Boolean premium) {
 		this.name = name;
 		this.premium = premium;
+	}
+	
+	public Long getId() {
+		return this.id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getName() {
@@ -55,14 +62,6 @@ public class Customer extends VariableEntity {
 	@Override
 	public String toString() {
 		return "Customer [name=" + name + ", premium=" + premium + "]";
-	}
-
-	public Long getId() {
-		return this.id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 }
