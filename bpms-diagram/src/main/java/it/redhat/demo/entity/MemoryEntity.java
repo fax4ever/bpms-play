@@ -1,19 +1,12 @@
 package it.redhat.demo.entity;
 
-import java.io.Serializable;
-import java.util.Date;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
 import org.drools.persistence.jpa.marshaller.VariableEntity;
 
+import javax.persistence.*;
+import java.util.Date;
+
 @Entity
-public class MemoryEntity extends VariableEntity implements Serializable {
+public class MemoryEntity extends VariableEntity {
 
 	/**
 	 * 
