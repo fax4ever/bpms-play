@@ -20,7 +20,7 @@ import it.redhat.demo.entity.Customer;
 /**
  * Created by fabio.ercoli@redhat.com on 17/03/17.
  */
-public class ProcessTest extends JbpmJUnitBaseTestCase {
+public class CustomerIOTest extends JbpmJUnitBaseTestCase {
 
 	private static final String MACCALLISTER = "maccallister";
 
@@ -31,7 +31,7 @@ public class ProcessTest extends JbpmJUnitBaseTestCase {
     private KieSession kieSession;
 	private TaskService taskService;
     
-    public ProcessTest() {
+    public CustomerIOTest() {
         super(true, true);
     }
     
