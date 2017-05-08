@@ -4,17 +4,24 @@
     <audit-persistence-unit>org.jbpm.domain</audit-persistence-unit>
     <audit-mode>JPA</audit-mode>
     <persistence-mode>JPA</persistence-mode>
-    <runtime-strategy>SINGLETON</runtime-strategy>
+    <runtime-strategy>PER_PROCESS_INSTANCE</runtime-strategy>
     <marshalling-strategies>
         <marshalling-strategy>
             <resolver>mvel</resolver>
-            <identifier>new org.drools.persistence.jpa.marshaller.JPAPlaceholderResolverStrategy("example:simple-project:1.0-SNAPSHOT", classLoader)</identifier>
+            <identifier>new org.drools.persistence.jpa.marshaller.JPAPlaceholderResolverStrategy("kmodulepu", classLoader)</identifier>
             <parameters/>
         </marshalling-strategy>
     </marshalling-strategies>
     <event-listeners/>
     <task-event-listeners/>
-    <globals/>
+    <globals>
+        <global>
+            <resolver>mvel</resolver>
+            <identifier></identifier>
+            <parameters/>
+            <name>it.redhat.demo</name>
+        </global>
+    </globals>
     <work-item-handlers>
         <work-item-handler>
             <resolver>mvel</resolver>
