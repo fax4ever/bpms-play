@@ -28,7 +28,6 @@
         <module>bpms-correlation-key</module>
         <module>bpms-correlation-async</module>
         <module>bpms-diagram</module>
-        <module>bpms-rest-client</module>
         <module>bpms-smart-gateway</module>
         <module>bpms-user-task</module>
         <module>bpms-jms-client</module>
