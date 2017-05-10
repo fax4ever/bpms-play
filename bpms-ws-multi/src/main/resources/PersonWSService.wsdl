@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://ws.demo.redhat.it/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="PersonWSService" targetNamespace="http://ws.demo.redhat.it/">
+  <wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://ws.demo.redhat.it/" elementFormDefault="unqualified" targetNamespace="http://ws.demo.redhat.it/" version="1.0">
+
+  <xs:element name="printInfos" type="tns:printInfos"/>
+
+  <xs:element name="printInfosResponse" type="tns:printInfosResponse"/>
+
+  <xs:complexType name="printInfos">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="arg0" type="tns:person"/>
+      <xs:element minOccurs="0" name="arg1" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="arg2" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="person">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="birth" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="jobTitle" type="xs:string"/>
+      <xs:element minOccurs="0" name="name" type="xs:string"/>
+      <xs:element minOccurs="0" name="salary" type="xs:int"/>
+      <xs:element minOccurs="0" name="surname" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="printInfosResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="printInfosResponse">
+    <wsdl:part element="tns:printInfosResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="printInfos">
+    <wsdl:part element="tns:printInfos" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="PersonWS">
+    <wsdl:operation name="printInfos">
+      <wsdl:input message="tns:printInfos" name="printInfos">
+    </wsdl:input>
+      <wsdl:output message="tns:printInfosResponse" name="printInfosResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="PersonWSServiceSoapBinding" type="tns:PersonWS">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="printInfos">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="printInfos">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="printInfosResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="PersonWSService">
+    <wsdl:port binding="tns:PersonWSServiceSoapBinding" name="PersonWSPort">
+      <soap:address location="http://localhost:8080/eap6-ws/PersonWS"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

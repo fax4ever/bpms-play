@@ -38,6 +38,7 @@
         <module>bpms-ws-model</module>
         <module>bpms-jpa-resolver-strategy</module>
         <module>bpms-business-case</module>
+        <module>bpms-ws-multi</module>
     </modules>
 
     <properties>
