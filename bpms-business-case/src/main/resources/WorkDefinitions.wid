@@ -56,5 +56,15 @@ import org.drools.core.process.core.datatype.impl.type.ObjectDataType;
     ],
     "displayName" : "REST",
     "icon" : "defaultservicenodeicon.png"
+  ],
+
+  [
+    "name" : "CreateProposal",
+    "parameters" : [],
+    "results" : [
+        "proposal" : new ObjectDataType(),
+    ],
+    "displayName" : "CreateProposal",
+    "icon" : "defaultservicenodeicon.png"
   ]
 ]
