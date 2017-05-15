@@ -47,6 +47,12 @@
             <parameters/>
             <name>Rest</name>
         </work-item-handler>
+        <work-item-handler>
+            <resolver>mvel</resolver>
+            <identifier>new it.redhat.demo.wid.CreateProposal(classLoader)</identifier>
+            <parameters/>
+            <name>CreateProposal</name>
+        </work-item-handler>
     </work-item-handlers>
     <environment-entries/>
     <configurations/>
