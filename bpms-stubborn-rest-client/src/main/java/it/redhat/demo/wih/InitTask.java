@@ -12,7 +12,7 @@ public class InitTask implements WorkItemHandler {
 	private static final String INITIAL_DELAY_IN_SECONDS_PROPERTY = "it.redhat.demo.stubborn.rest.client.initialDelayInSeconds";
 
 	private static final int MAX_ATTEMPTS_DEFAULT = 5;
-	private static final int INITIAL_DELAY_IN_SECONDS_DEFAULT = 50;
+	private static final int INITIAL_DELAY_IN_SECONDS_DEFAULT = 5;
 	private static final String CONTENT_TYPE_DEFAULT = "application/json";
 	
 	@Override

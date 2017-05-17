@@ -92,6 +92,7 @@ public class StubbornRestClientTest extends JbpmJUnitBaseTestCase {
 		command.setValue(739);
 		command.setOption(false);
 		
+		//{"name":"Fabio M.","value":739,"option":false}
 		String json = new ObjectMapper().writer().writeValueAsString(command);
 		
 		HashMap<String,Object> params = new HashMap<>();
