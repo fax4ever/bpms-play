@@ -2,6 +2,7 @@ package it.redhat.demo.process;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import org.codehaus.jackson.map.ObjectMapper;
@@ -136,13 +137,22 @@ public class StubbornRestClientTest extends JbpmJUnitBaseTestCase {
 		
 		TaskSummary taskSummary = tasksAssignedAsPotentialOwner.get(0);
 		
+		Map<String, Object> taskContent = taskService.getTaskContent(taskSummary.getId());
+		Object input = taskContent.get("inContent");
+		
+		assertNotNull(input);
+		
 		taskService.claim(taskSummary.getId(), MACCALLISTER);
 		
 		// register happy path stub
 		kieSession.getWorkItemManager().registerWorkItemHandler("Rest", new HappyRestStub());
 		
 		taskService.start(taskSummary.getId(), MACCALLISTER);
-		taskService.complete(taskSummary.getId(), MACCALLISTER, new HashMap<>());
+		
+		HashMap<String, Object> output = new HashMap<>();
+		output.put("outContent", input);
+		
+		taskService.complete(taskSummary.getId(), MACCALLISTER, output);
 		
 		assertProcessInstanceCompleted(pi.getId());
 		assertNodeTriggered(pi.getId(), "Rest Call OK");

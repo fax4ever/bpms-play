@@ -254,6 +254,8 @@ logger.info(&quot;backoffice user release retry&quot;);</tns:script>
         <bpmn2:dataInput id="DataInput_22" itemSubjectRef="ItemDefinition_865" name="Content"/>
         <bpmn2:dataInput id="DataInput_23" itemSubjectRef="ItemDefinition_865" name="Locale"/>
         <bpmn2:dataInput id="DataInput_24" itemSubjectRef="ItemDefinition_865" name="CreatedBy"/>
+        <bpmn2:dataInput id="DataInput_13" itemSubjectRef="ItemDefinition_1" name="inContent"/>
+        <bpmn2:dataOutput id="DataOutput_8" itemSubjectRef="ItemDefinition_1" name="outContent"/>
         <bpmn2:inputSet id="_InputSet_5">
           <bpmn2:dataInputRefs>DataInput_16</bpmn2:dataInputRefs>
           <bpmn2:dataInputRefs>DataInput_17</bpmn2:dataInputRefs>
@@ -264,13 +266,16 @@ logger.info(&quot;backoffice user release retry&quot;);</tns:script>
           <bpmn2:dataInputRefs>DataInput_22</bpmn2:dataInputRefs>
           <bpmn2:dataInputRefs>DataInput_23</bpmn2:dataInputRefs>
           <bpmn2:dataInputRefs>DataInput_24</bpmn2:dataInputRefs>
+          <bpmn2:dataInputRefs>DataInput_13</bpmn2:dataInputRefs>
         </bpmn2:inputSet>
-        <bpmn2:outputSet id="OutputSet_1" name="Output Set"/>
+        <bpmn2:outputSet id="OutputSet_1" name="Output Set">
+          <bpmn2:dataOutputRefs>DataOutput_8</bpmn2:dataOutputRefs>
+        </bpmn2:outputSet>
       </bpmn2:ioSpecification>
       <bpmn2:dataInputAssociation id="DataInputAssociation_1">
         <bpmn2:targetRef>DataInput_16</bpmn2:targetRef>
         <bpmn2:assignment id="Assignment_1">
-          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_1">Task Name</bpmn2:from>
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_1">WaitUser</bpmn2:from>
           <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_2">DataInput_16</bpmn2:to>
         </bpmn2:assignment>
       </bpmn2:dataInputAssociation>
@@ -314,6 +319,14 @@ logger.info(&quot;backoffice user release retry&quot;);</tns:script>
       <bpmn2:dataInputAssociation id="DataInputAssociation_9">
         <bpmn2:targetRef>DataInput_24</bpmn2:targetRef>
       </bpmn2:dataInputAssociation>
+      <bpmn2:dataInputAssociation id="DataInputAssociation_10">
+        <bpmn2:sourceRef>content</bpmn2:sourceRef>
+        <bpmn2:targetRef>DataInput_13</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:dataOutputAssociation id="DataOutputAssociation_2">
+        <bpmn2:sourceRef>DataOutput_8</bpmn2:sourceRef>
+        <bpmn2:targetRef>content</bpmn2:targetRef>
+      </bpmn2:dataOutputAssociation>
     </bpmn2:userTask>
     <bpmn2:sequenceFlow id="SequenceFlow_7" tns:priority="1" name="user" sourceRef="ExclusiveGateway_2" targetRef="UserTask_1">
       <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_29" language="http://www.mvel.org/2.0">numAttempts >= maxAttempts</bpmn2:conditionExpression>

@@ -1,0 +1,89 @@
+
+<form id="88104507">
+<property name="name" value="it.redhat.demo.stubborn-rest-client-taskform.form"/>
+<property name="displayMode" value="default"/>
+<property name="status" value="0"/>
+<field position="9" name="url" type="InputText" id="1142777804">
+<property name="fieldRequired" value="false"/>
+<property name="label" value="quot;enquot;,quot;url (url)quot;"/>
+<property name="readonly" value="false"/>
+<property name="outputBinding" value="url"/>
+<property name="fieldClass" value="java.lang.String"/>
+</field>
+<field position="0" name="contentType" type="InputText" id="186733122">
+<property name="fieldRequired" value="false"/>
+<property name="label" value="quot;enquot;,quot;contentType (contentType)quot;"/>
+<property name="readonly" value="false"/>
+<property name="outputBinding" value="contentType"/>
+<property name="fieldClass" value="java.lang.String"/>
+</field>
+<field position="4" name="method" type="InputText" id="578973329">
+<property name="fieldRequired" value="false"/>
+<property name="label" value="quot;enquot;,quot;method (method)quot;"/>
+<property name="readonly" value="false"/>
+<property name="outputBinding" value="method"/>
+<property name="fieldClass" value="java.lang.String"/>
+</field>
+<field position="6" name="resultClass" type="InputText" id="1251207776">
+<property name="fieldRequired" value="false"/>
+<property name="label" value="quot;enquot;,quot;resultClass (resultClass)quot;"/>
+<property name="readonly" value="false"/>
+<property name="outputBinding" value="resultClass"/>
+<property name="fieldClass" value="java.lang.String"/>
+</field>
+<field position="1" name="delayAttempts" type="InputText" id="661270672">
+<property name="fieldRequired" value="false"/>
+<property name="label" value="quot;enquot;,quot;delayAttempts (delayAttempts)quot;"/>
+<property name="readonly" value="false"/>
+<property name="outputBinding" value="delayAttempts"/>
+<property name="fieldClass" value="java.lang.String"/>
+</field>
+<field position="3" name="maxAttempts" type="InputTextInteger" id="2101877666">
+<property name="fieldRequired" value="false"/>
+<property name="label" value="quot;enquot;,quot;maxAttempts (maxAttempts)quot;"/>
+<property name="readonly" value="false"/>
+<property name="outputBinding" value="maxAttempts"/>
+<property name="fieldClass" value="java.lang.Integer"/>
+</field>
+<field position="7" name="status" type="InputTextInteger" id="1877977941">
+<property name="fieldRequired" value="false"/>
+<property name="label" value="quot;enquot;,quot;status (status)quot;"/>
+<property name="readonly" value="false"/>
+<property name="outputBinding" value="status"/>
+<property name="fieldClass" value="java.lang.Integer"/>
+</field>
+<field position="5" name="numAttempts" type="InputTextInteger" id="1365081185">
+<property name="fieldRequired" value="false"/>
+<property name="label" value="quot;enquot;,quot;numAttempts (numAttempts)quot;"/>
+<property name="readonly" value="false"/>
+<property name="outputBinding" value="numAttempts"/>
+<property name="fieldClass" value="java.lang.Integer"/>
+</field>
+<field position="2" name="initialDelayInSeconds" type="InputTextInteger" id="1775300655">
+<property name="fieldRequired" value="false"/>
+<property name="label" value="quot;enquot;,quot;initialDelayInSeconds (initialDelayInSeconds)quot;"/>
+<property name="readonly" value="false"/>
+<property name="outputBinding" value="initialDelayInSeconds"/>
+<property name="fieldClass" value="java.lang.Integer"/>
+</field>
+<field position="8" name="statusMsg" type="InputText" id="1351400659">
+<property name="fieldRequired" value="false"/>
+<property name="label" value="quot;enquot;,quot;statusMsg (statusMsg)quot;"/>
+<property name="readonly" value="false"/>
+<property name="outputBinding" value="statusMsg"/>
+<property name="fieldClass" value="java.lang.String"/>
+</field>
+<dataHolder inputId="" name="#0000A0" type="className" outId="content" value="java.lang.Object" id="content"/>
+<dataHolder inputId="" name="#9BCAFA" type="basicType" outId="contentType" value="java.lang.String" id="contentType"/>
+<dataHolder inputId="" name="#B29FE4" type="basicType" outId="delayAttempts" value="java.lang.String" id="delayAttempts"/>
+<dataHolder inputId="" name="#FBB767" type="className" outId="exception" value="java.lang.Exception" id="exception"/>
+<dataHolder inputId="" name="#BBBBBB" type="basicType" outId="initialDelayInSeconds" value="java.lang.Integer" id="initialDelayInSeconds"/>
+<dataHolder inputId="" name="#E9E371" type="basicType" outId="maxAttempts" value="java.lang.Integer" id="maxAttempts"/>
+<dataHolder inputId="" name="#FF8881" type="basicType" outId="method" value="java.lang.String" id="method"/>
+<dataHolder inputId="" name="#FF54A7" type="basicType" outId="numAttempts" value="java.lang.Integer" id="numAttempts"/>
+<dataHolder inputId="" name="#E9E371" type="className" outId="result" value="java.lang.Object" id="result"/>
+<dataHolder inputId="" name="#000000" type="basicType" outId="resultClass" value="java.lang.String" id="resultClass"/>
+<dataHolder inputId="" name="#BBBBBB" type="basicType" outId="status" value="java.lang.Integer" id="status"/>
+<dataHolder inputId="" name="#FF54A7" type="basicType" outId="statusMsg" value="java.lang.String" id="statusMsg"/>
+<dataHolder inputId="" name="#A7E690" type="basicType" outId="url" value="java.lang.String" id="url"/>
+</form>
