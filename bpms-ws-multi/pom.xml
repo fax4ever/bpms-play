@@ -54,35 +54,4 @@
 		</dependency>
 	</dependencies>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>jaxws-maven-plugin</artifactId>
-				<version>2.4.1</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>wsimport</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<wsdlDirectory>${basedir}/src/main/resources</wsdlDirectory>
-					<wsdlFiles>
-						<wsdlFile>PersonWSService.wsdl</wsdlFile>
-					</wsdlFiles>
-					<bindingFiles>
-						<bindingFile>${basedir}/src/main/resources/jaxb/jaxb-bindings.xml</bindingFile>
-					</bindingFiles>
-					<keep>true</keep>
-					<packageName>it.redhat.demo.ws</packageName>
-					<vmArgs>
-						<vmArg>-Djavax.xml.accessExternalSchema=all</vmArg>
-					</vmArgs>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
-
 </project>
