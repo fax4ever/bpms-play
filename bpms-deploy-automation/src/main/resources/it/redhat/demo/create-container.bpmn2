@@ -710,10 +710,10 @@ logger.info(&quot;Server Response:-&quot;+kcontext.getVariable(&quot;verifyBCdep
     <bpmn2:sequenceFlow id="SequenceFlow_10" tns:priority="1" sourceRef="Task_7" targetRef="Task_8"/>
     <bpmn2:sequenceFlow id="SequenceFlow_11" tns:priority="1" sourceRef="Task_8" targetRef="ExclusiveGateway_4"/>
     <bpmn2:sequenceFlow id="SequenceFlow_12" tns:priority="1" name="NOT DEPLOYED" sourceRef="ExclusiveGateway_4" targetRef="ExclusiveGateway_3">
-      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_33" language="http://www.mvel.org/2.0">!verifyBCdeploy.contains(&quot;DEPLOYED&quot;)</bpmn2:conditionExpression>
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_33" language="http://www.mvel.org/2.0">!verifyBCdeploy.contains(&quot;DEPLOYED&quot;) || verifyBCdeploy.contains(&quot;UNDEPLOYED&quot;)</bpmn2:conditionExpression>
     </bpmn2:sequenceFlow>
     <bpmn2:sequenceFlow id="SequenceFlow_14" tns:priority="1" name="DEPLOYED" sourceRef="ExclusiveGateway_4" targetRef="ParallelGateway_4">
-      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_32" language="http://www.mvel.org/2.0">verifyBCdeploy.contains(&quot;DEPLOYED&quot;)</bpmn2:conditionExpression>
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_32" language="http://www.mvel.org/2.0">verifyBCdeploy.contains(&quot;DEPLOYED&quot;) &amp;&amp; !verifyBCdeploy.contains(&quot;UNDEPLOYED&quot;) </bpmn2:conditionExpression>
     </bpmn2:sequenceFlow>
   </bpmn2:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
