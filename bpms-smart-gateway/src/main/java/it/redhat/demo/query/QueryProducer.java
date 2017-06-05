@@ -26,6 +26,7 @@ public class QueryProducer {
     public static final String ACTIVE_TASKS_ON_COMPLETED_TASKS_WITH_CUSTOM_VARIABLES = "activeTasksOnCompletedTasksWithCustomVariables";
     public static final String WAIT_TASK_FOR_USER_PROCESS_INSTANCE = "waitTaskForUserProcessInstance";
     public static final String ACTIVE_TASKS_FOR_GROUP = "activeTasksForGroup";
+    public static final String ACTIVE_TASKS_FOR_GROUP_INPUT_PARAM_CONTENT_FILTERED = "activeTasksForGroupInputParamContentFiltered";
 
     @Produces
     @Named(QueryServicesClient.QUERY_MAP_PI)
@@ -200,6 +201,32 @@ public class QueryProducer {
 
         QueryDefinition query = new QueryDefinition();
         query.setName(ACTIVE_TASKS_FOR_GROUP);
+        query.setSource(SOURCE);
+        query.setExpression(expression);
+        query.setTarget(CUSTOM);
+
+        return query;
+
+    }
+
+    @Produces
+    @Named(ACTIVE_TASKS_FOR_GROUP_INPUT_PARAM_CONTENT_FILTERED)
+    public QueryDefinition activeTasksForGroupInputParamContentFiltered() {
+
+        String expression =
+                " select ti.*, tv.name tvname, tv.value tvvalue, pot.entity_id potowner, ex.entity_id exclowner, x.name xname, x.value xvalue " +
+                " from AuditTaskImpl ti " +
+                " inner join (select tv.taskId, tv.name, tv.value from TaskVariableImpl tv where tv.type = 0 ) tv " +
+                " on (tv.taskId = ti.taskId) " +
+                " inner join peopleassignments_potowners pot " +
+                " on (pot.task_id = ti.taskId) " +
+                " left join peopleassignments_exclowners ex " +
+                " on (ex.task_id = ti.taskId) " +
+                " inner join (select tv.taskId, tv.name, tv.value from TaskVariableImpl tv where tv.type = 0 ) x " +
+                " on (x.taskId = ti.taskId) ";
+
+        QueryDefinition query = new QueryDefinition();
+        query.setName(ACTIVE_TASKS_FOR_GROUP_INPUT_PARAM_CONTENT_FILTERED);
         query.setSource(SOURCE);
         query.setExpression(expression);
         query.setTarget(CUSTOM);

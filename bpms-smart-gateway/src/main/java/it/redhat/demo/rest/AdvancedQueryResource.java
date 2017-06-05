@@ -131,6 +131,43 @@ public class AdvancedQueryResource {
 
     }
 
+    @Path("name/" + ACTIVE_TASKS_FOR_GROUP_INPUT_PARAM_CONTENT_FILTERED)
+    @GET
+    public List activeTasksForGroupInputParamContentFiltered() {
+
+        String[] validStatus = {"Created", "Ready", "Reserved", "InProgress", "Suspended"};
+        String[] validGroups = {"HR"};
+
+        HashMap<String, Object> parameters = new HashMap<>();
+        parameters.put("user", "giacomo");
+        parameters.put("status", Arrays.asList(validStatus));
+        parameters.put("groups", Arrays.asList(validGroups));
+        parameters.put("paramName", "curriculum");
+        parameters.put("paramValue", "f739");
+
+        return queryServices.query(ACTIVE_TASKS_FOR_GROUP, QUERY_MAP_TASK_WITH_VARS, "userTaskFilter", parameters, 0, MAX_ROWS, TaskInstance.class);
+
+    }
+
+    @Path("name/" + ACTIVE_TASKS_FOR_GROUP_INPUT_PARAM_CONTENT_FILTERED + "/in")
+    @GET
+    public List activeTasksForGroupInputParamContentFilteredIn() {
+
+        String[] validStatus = {"Created", "Ready", "Reserved", "InProgress", "Suspended"};
+        String[] validGroups = {"HR"};
+        String[] possibleParamValues = {"f739", "f731", "f733"};
+
+        HashMap<String, Object> parameters = new HashMap<>();
+        parameters.put("user", "giacomo");
+        parameters.put("status", Arrays.asList(validStatus));
+        parameters.put("groups", Arrays.asList(validGroups));
+        parameters.put("paramName", "curriculum");
+        parameters.put("paramValue", possibleParamValues);
+
+        return queryServices.query(ACTIVE_TASKS_FOR_GROUP, QUERY_MAP_TASK_WITH_VARS, "userTaskFilter", parameters, 0, MAX_ROWS, TaskInstance.class);
+
+    }
+
 
 
 }

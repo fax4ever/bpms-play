@@ -10,19 +10,19 @@ import java.util.Map;
 /**
  * Created by fabio.ercoli@redhat.com on 26/04/17.
  */
-public class UserTaskFilterFactory implements QueryParamBuilderFactory {
+public class UserTaskContentFilterFactory implements QueryParamBuilderFactory {
 
-    private static final Logger LOG = LoggerFactory.getLogger(UserTaskFilterFactory.class);
-    public static final String USER_TASK_FILTER = "userTaskFilter";
+    private static final Logger LOG = LoggerFactory.getLogger(UserTaskContentFilterFactory.class);
+    public static final String USER_TASK_CONTENT_FILTER = "userTaskContentFilter";
 
     @Override
     public boolean accept(String id) {
-        return USER_TASK_FILTER.equalsIgnoreCase(id);
+        return USER_TASK_CONTENT_FILTER.equalsIgnoreCase(id);
     }
 
     @Override
     public QueryParamBuilder<?> newInstance(Map<String, Object> parameters) {
-        LOG.info("register query parameter builder --> {}", USER_TASK_FILTER);
+        LOG.info("register query parameter builder --> {}", USER_TASK_CONTENT_FILTER);
 
         return new UserTaskFilter(parameters);
     }
