@@ -120,10 +120,10 @@ public class AdvancedQueryResource {
     public List activeTasksForGroup() {
 
         String[] validStatus = {"Created", "Ready", "Reserved", "InProgress", "Suspended"};
-        String[] validGroups = {"Manager"};
+        String[] validGroups = {"HR"};
 
         HashMap<String, Object> parameters = new HashMap<>();
-        parameters.put("user", "michele");
+        parameters.put("user", "giacomo");
         parameters.put("status", Arrays.asList(validStatus));
         parameters.put("groups", Arrays.asList(validGroups));
 
@@ -145,7 +145,7 @@ public class AdvancedQueryResource {
         parameters.put("paramName", "curriculum");
         parameters.put("paramValue", "f739");
 
-        return queryServices.query(ACTIVE_TASKS_FOR_GROUP, QUERY_MAP_TASK_WITH_VARS, "userTaskFilter", parameters, 0, MAX_ROWS, TaskInstance.class);
+        return queryServices.query(ACTIVE_TASKS_FOR_GROUP_INPUT_PARAM_CONTENT_FILTERED, QUERY_MAP_TASK_WITH_VARS, "userTaskContentFilter", parameters, 0, MAX_ROWS, TaskInstance.class);
 
     }
 
@@ -164,7 +164,7 @@ public class AdvancedQueryResource {
         parameters.put("paramName", "curriculum");
         parameters.put("paramValue", possibleParamValues);
 
-        return queryServices.query(ACTIVE_TASKS_FOR_GROUP, QUERY_MAP_TASK_WITH_VARS, "userTaskContentFilter", parameters, 0, MAX_ROWS, TaskInstance.class);
+        return queryServices.query(ACTIVE_TASKS_FOR_GROUP_INPUT_PARAM_CONTENT_FILTERED, QUERY_MAP_TASK_WITH_VARS, "userTaskContentFilter", parameters, 0, MAX_ROWS, TaskInstance.class);
 
     }
 

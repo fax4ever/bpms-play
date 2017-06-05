@@ -48,6 +48,8 @@ public class UserTaskContentFilter implements QueryParamBuilder<ColumnFilter> {
         LOG.info("user: {}", user);
         LOG.info("status: {}", status);
         LOG.info("groups: {}", groups);
+        LOG.info("paramName: {}", paramName);
+        LOG.info("paramValue: {}", paramValue);
 
         // actualOwner == :user
         ColumnFilter actualOwnerIsTheUser = equalsTo("actualOwner", user);
