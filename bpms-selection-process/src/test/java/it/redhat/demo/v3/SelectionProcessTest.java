@@ -2,6 +2,7 @@ package it.redhat.demo.v3;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.jbpm.test.JbpmJUnitBaseTestCase;
 import org.junit.Before;
@@ -48,6 +49,11 @@ public class SelectionProcessTest extends JbpmJUnitBaseTestCase {
 		List<Long> taskIds = taskService.getTasksByProcessInstanceId(pi.getId());
 		assertEquals(1, taskIds.size());
 		Long taskId = taskIds.get(0);
+		
+		Map<String, Object> taskContent = taskService.getTaskContent(taskId);
+		
+		String curriculumParam = (String) taskContent.get("curriculum");
+		assertEquals("/curriculum/path/redhat/fercoli", curriculumParam);
 		
 		// find task by pot owners
 		List<TaskSummary> tasksAssignedAsPotentialOwner = taskService.getTasksAssignedAsPotentialOwner("trionfera", "en-UK");
