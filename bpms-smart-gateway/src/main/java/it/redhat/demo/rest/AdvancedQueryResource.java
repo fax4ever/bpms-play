@@ -164,7 +164,7 @@ public class AdvancedQueryResource {
         parameters.put("paramName", "curriculum");
         parameters.put("paramValue", possibleParamValues);
 
-        return queryServices.query(ACTIVE_TASKS_FOR_GROUP, QUERY_MAP_TASK_WITH_VARS, "userTaskFilter", parameters, 0, MAX_ROWS, TaskInstance.class);
+        return queryServices.query(ACTIVE_TASKS_FOR_GROUP, QUERY_MAP_TASK_WITH_VARS, "userTaskContentFilter", parameters, 0, MAX_ROWS, TaskInstance.class);
 
     }
 
