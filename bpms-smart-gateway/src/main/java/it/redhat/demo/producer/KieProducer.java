@@ -23,7 +23,7 @@ import java.util.Set;
 public class KieProducer {
 
     public static final int TIMEOUT = 180000;
-    public static final String SERVER_URL = "http://localhost:8080/kie-server/services/rest/server";
+    public static final String SERVER_URL = "http://localhost:8680/kie-server/services/rest/server";
     public static final int SLEEP = 0;
     public static final int RETRIES = 20;
 
