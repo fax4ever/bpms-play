@@ -168,6 +168,13 @@ public class AdvancedQueryResource {
 
     }
 
+    @Path("name/getAllTaskInputInstancesWithVariables/{page}/{pageSize}")
+    @GET
+    public List getAllTaskInputInstancesWithVariables(@PathParam("page") Integer page, @PathParam("pageSize") Integer pageSize) {
 
+        return queryServices.query(GET_ALL_TASK_INPUT_INSTANCES_WITH_VARIABLES,
+                QUERY_MAP_TASK_WITH_VARS, page, pageSize, TaskInstance.class);
+
+    }
 
 }

@@ -27,6 +27,7 @@ public class QueryProducer {
     public static final String WAIT_TASK_FOR_USER_PROCESS_INSTANCE = "waitTaskForUserProcessInstance";
     public static final String ACTIVE_TASKS_FOR_GROUP = "activeTasksForGroup";
     public static final String ACTIVE_TASKS_FOR_GROUP_INPUT_PARAM_CONTENT_FILTERED = "activeTasksForGroupInputParamContentFiltered";
+    public static final String GET_ALL_TASK_INPUT_INSTANCES_WITH_VARIABLES = "getAllTaskInputInstancesWithVariables";
 
     @Produces
     @Named(QueryServicesClient.QUERY_MAP_PI)
@@ -229,6 +230,23 @@ public class QueryProducer {
         query.setName(ACTIVE_TASKS_FOR_GROUP_INPUT_PARAM_CONTENT_FILTERED);
         query.setSource(SOURCE);
         query.setExpression(expression);
+        query.setTarget(CUSTOM);
+
+        return query;
+
+    }
+
+    @Produces
+    @Named(GET_ALL_TASK_INPUT_INSTANCES_WITH_VARIABLES)
+    public QueryDefinition getAllTaskInputInstancesWithVariables() {
+
+        QueryDefinition query = new QueryDefinition();
+        query.setName(GET_ALL_TASK_INPUT_INSTANCES_WITH_VARIABLES);
+        query.setSource(SOURCE);
+        query.setExpression("select ti.*, tv.name tvname, tv.value tvvalue "+
+                "from AuditTaskImpl ti " +
+                "inner join (select tv.taskId, tv.name, tv.value from TaskVariableImpl tv where tv.type = 0 ) tv "+
+                "on (tv.taskId = ti.taskId)");
         query.setTarget(CUSTOM);
 
         return query;
