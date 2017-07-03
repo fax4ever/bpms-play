@@ -24,7 +24,7 @@ public class UserTaskMapContentFilterFactory implements QueryParamBuilderFactory
     public QueryParamBuilder<?> newInstance(Map<String, Object> parameters) {
         LOG.info("register query parameter builder --> {}", FILTER_NAME);
 
-        return new UserTaskContentFilter(parameters);
+        return new UserTaskMapContentFilter(parameters);
     }
 
 }

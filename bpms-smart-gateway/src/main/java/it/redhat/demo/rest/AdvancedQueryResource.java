@@ -13,6 +13,7 @@ import org.kie.server.client.QueryServicesClient;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -165,6 +166,36 @@ public class AdvancedQueryResource {
         parameters.put("paramValue", possibleParamValues);
 
         return queryServices.query(ACTIVE_TASKS_FOR_GROUP_INPUT_PARAM_CONTENT_FILTERED, QUERY_MAP_TASK_WITH_VARS, "userTaskContentFilter", parameters, 0, MAX_ROWS, TaskInstance.class);
+
+    }
+
+    @Path("name/" + ACTIVE_TASKS_FOR_GROUP_INPUT_PARAM_CONTENT_FILTERED + "/map")
+    @GET
+    public List activeTasksForGroupInputParamContentFilteredMap() {
+
+        String[] validStatus = {"Created", "Ready", "Reserved", "InProgress", "Suspended"};
+        String[] validGroups = {"HR"};
+
+        List<String> values1 = new ArrayList<>();
+        values1.add("f739");
+
+        List<String> values2 = new ArrayList<>();
+        values2.add("ciao");
+        values2.add("ciaone");
+
+        HashMap<String, List<String>> paramMap = new HashMap<>();
+
+        paramMap.put("curriculum", values1);
+        paramMap.put("babusca", values2);
+
+        HashMap<String, Object> parameters = new HashMap<>();
+        parameters.put("user", "giacomo");
+        parameters.put("status", Arrays.asList(validStatus));
+        parameters.put("groups", Arrays.asList(validGroups));
+        parameters.put("paramMap", paramMap);
+
+        return queryServices.query(ACTIVE_TASKS_FOR_GROUP_INPUT_PARAM_CONTENT_FILTERED, QUERY_MAP_TASK_WITH_VARS, "userTaskMapContentFilter", parameters, 0, MAX_ROWS, TaskInstance.class);
+
 
     }
 
