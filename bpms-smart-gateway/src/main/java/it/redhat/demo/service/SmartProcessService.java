@@ -14,8 +14,6 @@ import javax.inject.Inject;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static it.redhat.demo.rest.ProcessResource.PROCESS_DEF_ID;
-
 /**
  * Created by fabio.ercoli@redhat.com on 27/03/17.
  */
@@ -85,7 +83,7 @@ public class SmartProcessService {
 
     public void abortAllProcessInstances(String processDefinitionId) {
 
-        List<ProcessInstance> processInstances = findProcessInstances(PROCESS_DEF_ID);
+        List<ProcessInstance> processInstances = findProcessInstances(processDefinitionId);
 
         processInstances.stream().collect(
             Collectors.groupingBy(ProcessInstance::getContainerId,
