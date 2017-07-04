@@ -261,7 +261,7 @@ public class QueryProducer {
         QueryDefinition query = new QueryDefinition();
         query.setName(POT_OWNED_TASKS_BY_VARIABLES_AND_PARAMS);
         query.setSource(SOURCE);
-        query.setExpression(" select task.*, param.name paramname, param.value paramvalue, variable.variableid variablename, variable.value variablevalue, pot.entity_id potowner, ex.entity_id exclowner " +
+        query.setExpression(" select task.taskid, task.actualowner, task.status, param.name paramname, param.value paramvalue, variable.variableid variablename, variable.value variablevalue, pot.entity_id potowner, ex.entity_id exclowner " +
                 " from audittaskimpl task " +
                 " inner join ( " +
                 "       select param.taskid, param.name, param.value  " +

@@ -11,9 +11,6 @@ import org.slf4j.Logger;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Created by fabio.ercoli@redhat.com on 27/03/17.
@@ -41,13 +38,9 @@ public class KieProducer {
 
         String password = username + "$739";
 
-        Set<Class<?>> extraClasses = new HashSet<>();
-        extraClasses.add(Date.class);
-
         KieServicesConfiguration config = KieServicesFactory.newRestConfiguration(SERVER_URL, username, password);
         config.setMarshallingFormat(MarshallingFormat.JSON);
         config.setTimeout(TIMEOUT);
-        config.addJaxbClasses(extraClasses);
 
         return tryGetKieServiceClient(config);
 

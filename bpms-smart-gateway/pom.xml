@@ -95,7 +95,7 @@
         <dependency>
             <groupId>org.kie.server</groupId>
             <artifactId>kie-server-client</artifactId>
-            <version>6.4.0.Final-redhat-10</version>
+            <version>6.5.0.Final-redhat-9</version>
             <exclusions>
                 <exclusion>
                     <artifactId>jackson-core-asl</artifactId>
