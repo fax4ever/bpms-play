@@ -218,13 +218,12 @@ public class AdvancedQueryResource {
         values1.add("f711");
 
         List<String> values2 = new ArrayList<>();
-        values2.add("ciao");
-        values2.add("ciaone");
+        values2.add("true");
 
         HashMap<String, List<String>> paramsMap = new HashMap<>();
 
         paramsMap.put("curriculum", values1);
-        paramsMap.put("bella", values2);
+        paramsMap.put("Skippable", values2);
 
         HashMap<String, Object> parameters = new HashMap<>();
         parameters.put("user", "giacomo");
