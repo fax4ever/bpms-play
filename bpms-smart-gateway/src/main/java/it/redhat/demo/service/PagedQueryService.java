@@ -53,7 +53,7 @@ public class PagedQueryService {
         List<TaskInstance> taskWithDuplicates = queryServices.query(POT_OWNED_TASKS_BY_VARIABLES_AND_PARAMS, QUERY_MAP_TASK, "potOwnedTasksByVariablesAndParamsFilter", parameters, 0, ARBITRARY_LONG_VALUE, TaskInstance.class);
         log.trace("taskWithDuplicates: {}", taskWithDuplicates);
 
-        List<Long> ids = taskWithDuplicates.stream().map(taskInstance -> taskInstance.getId()).distinct().collect(Collectors.toList());
+        List<Long> ids = taskWithDuplicates.stream().map(taskInstance -> taskInstance.getId()).distinct().sorted().collect(Collectors.toList());
         log.trace("ids: {}", ids);
 
         int size = ids.size();
