@@ -58,13 +58,13 @@ public class PagedQueryService {
 
         int size = ids.size();
         int offset = page * pageSize;
-        int max = (page + 1) * pageSize;
+        int limit = (page + 1) * pageSize;
 
         if (offset >= size) {
             return new Page<>(size);
         }
 
-        ids = ids.subList(offset, Math.min(max, size));
+        ids = ids.subList(offset, Math.min(limit, size));
 
         QueryFilterSpec queryFilterSpec = new QueryFilterSpecBuilder()
                 .in("taskid", ids)
