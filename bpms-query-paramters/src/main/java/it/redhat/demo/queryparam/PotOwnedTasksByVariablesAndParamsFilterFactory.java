@@ -7,6 +7,8 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
+import static it.redhat.demo.queryparam.UserTaskContentFilterFactory.USER_TASK_CONTENT_FILTER;
+
 /**
  * Created by fabio.ercoli@redhat.com on 04/07/2017.
  */
@@ -22,6 +24,7 @@ public class PotOwnedTasksByVariablesAndParamsFilterFactory implements QueryPara
 
     @Override
     public QueryParamBuilder<?> newInstance(Map<String, Object> parameters) {
+        LOG.info("register query parameter builder --> {}", FILTER_NAME);
         return new PotOwnedTasksByVariablesAndParamsFilter(parameters);
     }
 
