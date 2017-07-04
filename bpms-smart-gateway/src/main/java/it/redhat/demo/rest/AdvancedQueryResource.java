@@ -3,6 +3,7 @@ package it.redhat.demo.rest;
 import it.redhat.demo.exception.QueryDefinitionNotFoundException;
 import it.redhat.demo.query.QueryProducer;
 import it.redhat.demo.query.QuerySelector;
+import it.redhat.demo.service.PagedQueryService;
 import org.kie.server.api.model.definition.QueryDefinition;
 import org.kie.server.api.model.definition.QueryFilterSpec;
 import org.kie.server.api.model.instance.ProcessInstance;
@@ -37,6 +38,9 @@ public class AdvancedQueryResource {
 
     @Inject
     private QuerySelector querySelector;
+
+    @Inject
+    private PagedQueryService pagedQueryService;
 
     @GET
     public List<QueryDefinition> getQueryDefinitions() {
@@ -232,6 +236,28 @@ public class AdvancedQueryResource {
         parameters.put("paramsMap", paramsMap);
 
         return queryServices.query(POT_OWNED_TASKS_BY_VARIABLES_AND_PARAMS, QUERY_MAP_TASK, "potOwnedTasksByVariablesAndParamsFilter", parameters, offset, size, TaskInstance.class);
+
+    }
+
+    @Path("paged/{offset}/{size}")
+    @GET
+    public List paged(@PathParam("offset") Integer offset, @PathParam("size") Integer size) {
+
+        String[] validGroups = {"HR"};
+        String[] validStatus = {"Created", "Ready", "Reserved", "InProgress", "Suspended"};
+
+        List<String> values1 = new ArrayList<>();
+        values1.add("f711");
+
+        List<String> values2 = new ArrayList<>();
+        values2.add("true");
+
+        HashMap<String, List<String>> paramsMap = new HashMap<>();
+
+        paramsMap.put("curriculum", values1);
+        paramsMap.put("Skippable", values2);
+
+        return pagedQueryService.potOwnedTasksByVariablesAndParams("giacomo", Arrays.asList(validGroups), Arrays.asList(validStatus), paramsMap, null, offset, size);
 
     }
 
