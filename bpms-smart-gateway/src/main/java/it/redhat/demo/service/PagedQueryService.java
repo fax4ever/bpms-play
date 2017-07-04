@@ -68,6 +68,7 @@ public class PagedQueryService {
 
         QueryFilterSpec queryFilterSpec = new QueryFilterSpecBuilder()
                 .in("taskid", ids)
+                .oderBy("taskid", true)
                 .get();
 
         List<TaskInstance> taskInstances = queryServices.query(GET_ALL_TASK_INPUT_INSTANCES_WITH_VARIABLES,
