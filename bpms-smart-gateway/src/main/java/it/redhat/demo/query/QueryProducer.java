@@ -28,6 +28,7 @@ public class QueryProducer {
     public static final String ACTIVE_TASKS_FOR_GROUP = "activeTasksForGroup";
     public static final String ACTIVE_TASKS_FOR_GROUP_INPUT_PARAM_CONTENT_FILTERED = "activeTasksForGroupInputParamContentFiltered";
     public static final String GET_ALL_TASK_INPUT_INSTANCES_WITH_VARIABLES = "getAllTaskInputInstancesWithVariables";
+    public static final String POT_OWNED_TASKS_BY_VARIABLES_AND_PARAMS = "potOwnedTasksByVariablesAndParams";
 
     @Produces
     @Named(QueryServicesClient.QUERY_MAP_PI)
@@ -247,6 +248,40 @@ public class QueryProducer {
                 "from AuditTaskImpl ti " +
                 "inner join (select tv.taskId, tv.name, tv.value from TaskVariableImpl tv where tv.type = 0 ) tv "+
                 "on (tv.taskId = ti.taskId)");
+        query.setTarget(CUSTOM);
+
+        return query;
+
+    }
+
+    @Produces
+    @Named(POT_OWNED_TASKS_BY_VARIABLES_AND_PARAMS)
+    public QueryDefinition potOwnedTasksByVariablesAndParams() {
+
+        QueryDefinition query = new QueryDefinition();
+        query.setName(POT_OWNED_TASKS_BY_VARIABLES_AND_PARAMS);
+        query.setSource(SOURCE);
+        query.setExpression(" select task.*, param.name paramname, param.value paramvalue, variable.variableid variablename, variable.value variablevalue, pot.entity_id potowner, ex.entity_id exclowner " +
+                " from audittaskimpl task " +
+                " inner join ( " +
+                "       select param.taskid, param.name, param.value  " +
+                "       from taskvariableimpl param  " +
+                "       where param.type = 0  " +
+                " ) param " +
+                " on (param.taskid = task.taskid) " +
+                " inner join peopleassignments_potowners pot " +
+                " on (pot.task_id = task.taskid) " +
+                " left join peopleassignments_exclowners ex " +
+                " on (ex.task_id = task.taskid) " +
+                " inner join variableinstancelog variable " +
+                " on (variable.processinstanceid = task.processinstanceid) " +
+                " inner join ( " +
+                "       select vil.processinstanceid ,vil.variableid, max(vil.id) maxvilid " +
+                "       from variableinstancelog vil " +
+                "       group by vil.processinstanceid, vil.variableid " +
+                "       order by vil.processinstanceid " +
+                " ) x " +
+                " on (variable.variableid = x.variableid and variable.id = x.maxvilid) ");
         query.setTarget(CUSTOM);
 
         return query;
