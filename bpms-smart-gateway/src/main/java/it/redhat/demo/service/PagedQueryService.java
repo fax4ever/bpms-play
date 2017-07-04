@@ -32,7 +32,7 @@ public class PagedQueryService {
     @Inject
     private Logger log;
 
-    public List<TaskInstance> potOwnedTasksByVariablesAndParams(String user, List<String> groups, List<String> status, Map<String, List<String>> paramsMap, Map<String, List<String>> variablesMap, Integer page, Integer pageSize) {
+    public Page<TaskInstance> potOwnedTasksByVariablesAndParams(String user, List<String> groups, List<String> status, Map<String, List<String>> paramsMap, Map<String, List<String>> variablesMap, Integer page, Integer pageSize) {
 
         HashMap<String, Object> parameters = new HashMap<>();
         parameters.put("user", user);
@@ -51,17 +51,29 @@ public class PagedQueryService {
         }
 
         List<TaskInstance> taskWithDuplicates = queryServices.query(POT_OWNED_TASKS_BY_VARIABLES_AND_PARAMS, QUERY_MAP_TASK, "potOwnedTasksByVariablesAndParamsFilter", parameters, 0, ARBITRARY_LONG_VALUE, TaskInstance.class);
-        log.info("taskWithDuplicates: {}", taskWithDuplicates);
+        log.trace("taskWithDuplicates: {}", taskWithDuplicates);
 
         List<Long> ids = taskWithDuplicates.stream().map(taskInstance -> taskInstance.getId()).distinct().collect(Collectors.toList());
-        log.info("ids: {}", ids);
+        log.trace("ids: {}", ids);
+
+        int size = ids.size();
+        int offset = page * pageSize;
+        int max = (page + 1) * pageSize;
+
+        if (offset >= size) {
+            return new Page<>(size);
+        }
+
+        ids = ids.subList(offset, Math.min(max, size));
 
         QueryFilterSpec queryFilterSpec = new QueryFilterSpecBuilder()
                 .in("taskid", ids)
                 .get();
 
-        return queryServices.query(GET_ALL_TASK_INPUT_INSTANCES_WITH_VARIABLES,
-                QUERY_MAP_TASK_WITH_VARS, queryFilterSpec, 0, 10000, TaskInstance.class);
+        List<TaskInstance> taskInstances = queryServices.query(GET_ALL_TASK_INPUT_INSTANCES_WITH_VARIABLES,
+                QUERY_MAP_TASK_WITH_VARS, queryFilterSpec, 0, ARBITRARY_LONG_VALUE, TaskInstance.class);
+
+        return new Page<>(size, taskInstances);
 
     }
 

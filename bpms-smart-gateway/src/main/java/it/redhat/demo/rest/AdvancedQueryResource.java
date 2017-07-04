@@ -3,6 +3,7 @@ package it.redhat.demo.rest;
 import it.redhat.demo.exception.QueryDefinitionNotFoundException;
 import it.redhat.demo.query.QueryProducer;
 import it.redhat.demo.query.QuerySelector;
+import it.redhat.demo.service.Page;
 import it.redhat.demo.service.PagedQueryService;
 import org.kie.server.api.model.definition.QueryDefinition;
 import org.kie.server.api.model.definition.QueryFilterSpec;
@@ -241,7 +242,7 @@ public class AdvancedQueryResource {
 
     @Path("paged/{offset}/{size}")
     @GET
-    public List paged(@PathParam("offset") Integer offset, @PathParam("size") Integer size) {
+    public Page paged(@PathParam("offset") Integer offset, @PathParam("size") Integer size) {
 
         String[] validGroups = {"HR"};
         String[] validStatus = {"Created", "Ready", "Reserved", "InProgress", "Suspended"};
@@ -257,7 +258,11 @@ public class AdvancedQueryResource {
         paramsMap.put("curriculum", values1);
         paramsMap.put("Skippable", values2);
 
-        return pagedQueryService.potOwnedTasksByVariablesAndParams("giacomo", Arrays.asList(validGroups), Arrays.asList(validStatus), paramsMap, null, offset, size);
+        HashMap<String, List<String>> variablesMap = new HashMap<>();
+
+        variablesMap.put("curriculum", values1);
+
+        return pagedQueryService.potOwnedTasksByVariablesAndParams("giacomo", Arrays.asList(validGroups), Arrays.asList(validStatus), paramsMap, variablesMap, offset, size);
 
     }
 
