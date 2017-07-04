@@ -9,16 +9,27 @@ import java.util.List;
 public class Page<T> {
 
     private int total;
-    private List<T> items;
+    private int page;
+    private int pageSize;
+    private List<T> items = new ArrayList<>();
 
-    public Page(int total) {
+    public Page(int total, int page, int pageSize) {
         this.total = total;
-        this.items = new ArrayList<>();
+        this.page = page;
+        this.pageSize = pageSize;
     }
 
-    public Page(int total, List<T> items) {
-        this.total = total;
+    public Page(int total, int page, int pageSize, List<T> items) {
+        this(total, page, pageSize);
         this.items = items;
+    }
+
+    public int getPage() {
+        return page;
+    }
+
+    public int getPageSize() {
+        return pageSize;
     }
 
     public int getTotal() {

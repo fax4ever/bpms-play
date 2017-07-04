@@ -56,15 +56,15 @@ public class PagedQueryService {
         List<Long> ids = taskWithDuplicates.stream().map(taskInstance -> taskInstance.getId()).distinct().sorted().collect(Collectors.toList());
         log.trace("ids: {}", ids);
 
-        int size = ids.size();
+        int total = ids.size();
         int offset = page * pageSize;
         int limit = (page + 1) * pageSize;
 
-        if (offset >= size) {
-            return new Page<>(size);
+        if (offset >= total) {
+            return new Page<>(total, page, pageSize);
         }
 
-        ids = ids.subList(offset, Math.min(limit, size));
+        ids = ids.subList(offset, Math.min(limit, total));
 
         QueryFilterSpec queryFilterSpec = new QueryFilterSpecBuilder()
                 .in("taskid", ids)
@@ -74,7 +74,7 @@ public class PagedQueryService {
         List<TaskInstance> taskInstances = queryServices.query(GET_ALL_TASK_INPUT_INSTANCES_WITH_VARIABLES,
                 QUERY_MAP_TASK_WITH_VARS, queryFilterSpec, 0, ARBITRARY_LONG_VALUE, TaskInstance.class);
 
-        return new Page<>(size, taskInstances);
+        return new Page<>(total, page, pageSize, taskInstances);
 
     }
 
