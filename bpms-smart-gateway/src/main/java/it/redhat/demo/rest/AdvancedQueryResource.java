@@ -196,7 +196,6 @@ public class AdvancedQueryResource {
 
         return queryServices.query(ACTIVE_TASKS_FOR_GROUP_INPUT_PARAM_CONTENT_FILTERED, QUERY_MAP_TASK_WITH_VARS, "userTaskMapContentFilter", parameters, 0, MAX_ROWS, TaskInstance.class);
 
-
     }
 
     @Path("name/getAllTaskInputInstancesWithVariables/{page}/{pageSize}")
@@ -205,6 +204,35 @@ public class AdvancedQueryResource {
 
         return queryServices.query(GET_ALL_TASK_INPUT_INSTANCES_WITH_VARIABLES,
                 QUERY_MAP_TASK_WITH_VARS, page, pageSize, TaskInstance.class);
+
+    }
+
+    @Path("name/potOwnedTasksByVariablesAndParams/{offset}/{size}")
+    @GET
+    public List potOwnedTasksByVariablesAndParams(@PathParam("offset") Integer offset, @PathParam("size") Integer size) {
+
+        String[] validStatus = {"Created", "Ready", "Reserved", "InProgress", "Suspended"};
+        String[] validGroups = {"HR"};
+
+        List<String> values1 = new ArrayList<>();
+        values1.add("f711");
+
+        List<String> values2 = new ArrayList<>();
+        values2.add("ciao");
+        values2.add("ciaone");
+
+        HashMap<String, List<String>> paramsMap = new HashMap<>();
+
+        paramsMap.put("curriculum", values1);
+        paramsMap.put("bella", values2);
+
+        HashMap<String, Object> parameters = new HashMap<>();
+        parameters.put("user", "giacomo");
+        parameters.put("status", Arrays.asList(validStatus));
+        parameters.put("groups", Arrays.asList(validGroups));
+        parameters.put("paramsMap", paramsMap);
+
+        return queryServices.query(POT_OWNED_TASKS_BY_VARIABLES_AND_PARAMS, QUERY_MAP_TASK, "potOwnedTasksByVariablesAndParamsFilter", parameters, offset, size, TaskInstance.class);
 
     }
 
