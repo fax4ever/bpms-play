@@ -296,15 +296,15 @@ public class QueryProducer {
         QueryDefinition query = new QueryDefinition();
         query.setName(NOT_POT_OWNED_TASKS_FOR_WORKED_PROCESS_INSTANCE);
         query.setSource(SOURCE);
-        query.setExpression(" select task.taskid, task.status, task.actualowner, pot.entity_id potowner, " +
-                " other.taskid otaskid, other.status ostatus, other.actualowner oactualowner, opot.entity_id opotowner " +
+        query.setExpression(" select task.taskid, task.status, task.actualowner, pot.entity_id potowner, ex.entity_id exclowner, " +
+                " other.status ostatus, other.actualowner oactualowner " +
                 " from audittaskimpl task " +
                 " inner join audittaskimpl other " +
                 " on task.processinstanceid = other.processinstanceid " +
                 " inner join peopleassignments_potowners pot " +
                 " on pot.task_id = task.taskid " +
-                " inner join peopleassignments_potowners opot " +
-                " on opot.task_id = other.taskid ");
+                " left join peopleassignments_exclowners ex  " +
+                " on ex.task_id = task.taskid ");
         query.setTarget(CUSTOM);
 
         return query;
