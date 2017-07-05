@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static it.redhat.demo.query.QueryProducer.GET_ALL_TASK_INPUT_INSTANCES_WITH_VARIABLES;
+import static it.redhat.demo.query.QueryProducer.NOT_POT_OWNED_TASKS_FOR_WORKED_PROCESS_INSTANCE;
 import static it.redhat.demo.query.QueryProducer.POT_OWNED_TASKS_BY_VARIABLES_AND_PARAMS;
 import static org.kie.server.client.QueryServicesClient.QUERY_MAP_TASK;
 import static org.kie.server.client.QueryServicesClient.QUERY_MAP_TASK_WITH_VARS;
@@ -56,6 +57,36 @@ public class PagedQueryService {
         List<TaskInstance> taskWithDuplicates = queryServices.query(POT_OWNED_TASKS_BY_VARIABLES_AND_PARAMS, QUERY_MAP_TASK, "potOwnedTasksByVariablesAndParamsFilter", parameters, 0, ARBITRARY_LONG_VALUE, TaskInstance.class);
         log.trace("taskWithDuplicates: {}", taskWithDuplicates);
 
+        return getTaskInstancePage(pageSize, page, asc, taskWithDuplicates);
+
+    }
+
+    public Page<TaskInstance> potOwnedTasksByParam(String user, List<String> groups, String paramName, String paramValue, Integer page, Integer pageSize, boolean asc) {
+
+        ArrayList<String> paramValues = new ArrayList<>();
+        paramValues.add(paramValue);
+
+        HashMap<String, List<String>> paramsMap = new HashMap<>();
+        paramsMap.put(paramName, paramValues);
+
+        return potOwnedTasksByVariablesAndParams(user, groups, paramsMap, null, page, pageSize, asc);
+
+    }
+
+    public Page<TaskInstance> notPotOwnedTasksForWorkedProcessInstance(String user, List<String> groups, Integer page, Integer pageSize, boolean asc) {
+
+        HashMap<String, Object> parameters = new HashMap<>();
+        parameters.put("user", user);
+        parameters.put("groups", groups);
+
+        List<TaskInstance> taskWithDuplicates = queryServices.query(NOT_POT_OWNED_TASKS_FOR_WORKED_PROCESS_INSTANCE, QUERY_MAP_TASK, "notPotOwnedTasksForWorkedProcessInstanceFilter", parameters, 0, ARBITRARY_LONG_VALUE, TaskInstance.class);
+        log.trace("taskWithDuplicates: {}", taskWithDuplicates);
+
+        return getTaskInstancePage(pageSize, page, asc, taskWithDuplicates);
+
+    }
+
+    private Page<TaskInstance> getTaskInstancePage(Integer pageSize, Integer page, boolean asc, List<TaskInstance> taskWithDuplicates) {
         Stream<Long> distinct = taskWithDuplicates.stream().map(taskInstance -> taskInstance.getId()).distinct();
         List<Long> ids = (asc) ?
                 distinct.sorted().collect(Collectors.toList()) :
@@ -82,19 +113,6 @@ public class PagedQueryService {
                 QUERY_MAP_TASK_WITH_VARS, queryFilterSpec, 0, ARBITRARY_LONG_VALUE, TaskInstance.class);
 
         return new Page<>(total, page, pageSize, asc, taskInstances);
-
-    }
-
-    public Page<TaskInstance> potOwnedTasksByParam(String user, List<String> groups, String paramName, String paramValue, Integer page, Integer pageSize, boolean asc) {
-
-        ArrayList<String> paramValues = new ArrayList<>();
-        paramValues.add(paramValue);
-
-        HashMap<String, List<String>> paramsMap = new HashMap<>();
-        paramsMap.put(paramName, paramValues);
-
-        return potOwnedTasksByVariablesAndParams(user, groups, paramsMap, null, page, pageSize, asc);
-
     }
 
 }
