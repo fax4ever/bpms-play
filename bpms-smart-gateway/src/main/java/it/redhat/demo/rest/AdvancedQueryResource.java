@@ -242,7 +242,7 @@ public class AdvancedQueryResource {
 
     @Path("paged/{offset}/{size}")
     @GET
-    public Page paged(@PathParam("offset") Integer offset, @PathParam("size") Integer size) {
+    public Page paged(@PathParam("offset") Integer offset, @PathParam("size") Integer size, @QueryParam("asc") Boolean asc) {
 
         String[] validGroups = {"HR"};
         String[] validStatus = {"Created", "Ready", "Reserved", "InProgress", "Suspended"};
@@ -262,7 +262,7 @@ public class AdvancedQueryResource {
 
         variablesMap.put("curriculum", values1);
 
-        return pagedQueryService.potOwnedTasksByVariablesAndParams("giacomo", Arrays.asList(validGroups), Arrays.asList(validStatus), paramsMap, variablesMap, offset, size);
+        return pagedQueryService.potOwnedTasksByVariablesAndParams("giacomo", Arrays.asList(validGroups), Arrays.asList(validStatus), paramsMap, variablesMap, offset, size, asc);
 
     }
 

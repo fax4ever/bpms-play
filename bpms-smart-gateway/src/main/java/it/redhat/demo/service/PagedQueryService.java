@@ -8,10 +8,9 @@ import org.slf4j.Logger;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static it.redhat.demo.query.QueryProducer.GET_ALL_TASK_INPUT_INSTANCES_WITH_VARIABLES;
 import static it.redhat.demo.query.QueryProducer.POT_OWNED_TASKS_BY_VARIABLES_AND_PARAMS;
@@ -32,7 +31,7 @@ public class PagedQueryService {
     @Inject
     private Logger log;
 
-    public Page<TaskInstance> potOwnedTasksByVariablesAndParams(String user, List<String> groups, List<String> status, Map<String, List<String>> paramsMap, Map<String, List<String>> variablesMap, Integer page, Integer pageSize) {
+    public Page<TaskInstance> potOwnedTasksByVariablesAndParams(String user, List<String> groups, List<String> status, Map<String, List<String>> paramsMap, Map<String, List<String>> variablesMap, Integer page, Integer pageSize, Boolean asc) {
 
         HashMap<String, Object> parameters = new HashMap<>();
         parameters.put("user", user);
@@ -50,10 +49,18 @@ public class PagedQueryService {
             parameters.put("variablesMap", variablesMap);
         }
 
+        if (asc == null) {
+            asc = Boolean.TRUE;
+        }
+
         List<TaskInstance> taskWithDuplicates = queryServices.query(POT_OWNED_TASKS_BY_VARIABLES_AND_PARAMS, QUERY_MAP_TASK, "potOwnedTasksByVariablesAndParamsFilter", parameters, 0, ARBITRARY_LONG_VALUE, TaskInstance.class);
         log.trace("taskWithDuplicates: {}", taskWithDuplicates);
 
-        List<Long> ids = taskWithDuplicates.stream().map(taskInstance -> taskInstance.getId()).distinct().sorted().collect(Collectors.toList());
+        Stream<Long> distinct = taskWithDuplicates.stream().map(taskInstance -> taskInstance.getId()).distinct();
+        List<Long> ids = (asc) ?
+                distinct.sorted().collect(Collectors.toList()) :
+                distinct.sorted(Collections.reverseOrder()).collect(Collectors.toList());
+
         log.trace("ids: {}", ids);
 
         int total = ids.size();
@@ -61,20 +68,20 @@ public class PagedQueryService {
         int limit = (page + 1) * pageSize;
 
         if (offset >= total) {
-            return new Page<>(total, page, pageSize);
+            return new Page<>(total, page, pageSize, asc);
         }
 
         ids = ids.subList(offset, Math.min(limit, total));
 
         QueryFilterSpec queryFilterSpec = new QueryFilterSpecBuilder()
                 .in("taskid", ids)
-                .oderBy("taskid", true)
+                .oderBy("taskid", asc)
                 .get();
 
         List<TaskInstance> taskInstances = queryServices.query(GET_ALL_TASK_INPUT_INSTANCES_WITH_VARIABLES,
                 QUERY_MAP_TASK_WITH_VARS, queryFilterSpec, 0, ARBITRARY_LONG_VALUE, TaskInstance.class);
 
-        return new Page<>(total, page, pageSize, taskInstances);
+        return new Page<>(total, page, pageSize, asc, taskInstances);
 
     }
 
