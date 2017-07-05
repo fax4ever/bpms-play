@@ -24,22 +24,22 @@ import static org.kie.server.client.QueryServicesClient.QUERY_MAP_TASK_WITH_VARS
 @Stateless
 public class PagedQueryService {
 
+    public static final String[] POT_OWNED_STATUS = {"Created", "Ready", "Reserved", "InProgress", "Suspended"};
     public static final int ARBITRARY_LONG_VALUE = 10000;
+
     @Inject
     private QueryServicesClient queryServices;
 
     @Inject
     private Logger log;
 
-    public Page<TaskInstance> potOwnedTasksByVariablesAndParams(String user, List<String> groups, List<String> status, Map<String, List<String>> paramsMap, Map<String, List<String>> variablesMap, Integer page, Integer pageSize, Boolean asc) {
+    public Page<TaskInstance> potOwnedTasksByVariablesAndParams(String user, List<String> groups, Map<String, List<String>> paramsMap, Map<String, List<String>> variablesMap, Integer page, Integer pageSize, Boolean asc) {
 
         HashMap<String, Object> parameters = new HashMap<>();
         parameters.put("user", user);
         parameters.put("groups", groups);
 
-        if (status != null) {
-            parameters.put("status", status);
-        }
+        parameters.put("status", Arrays.asList(POT_OWNED_STATUS));
 
         if (paramsMap != null) {
             parameters.put("paramsMap", paramsMap);
@@ -82,6 +82,18 @@ public class PagedQueryService {
                 QUERY_MAP_TASK_WITH_VARS, queryFilterSpec, 0, ARBITRARY_LONG_VALUE, TaskInstance.class);
 
         return new Page<>(total, page, pageSize, asc, taskInstances);
+
+    }
+
+    public Page<TaskInstance> potOwnedTasksByParam(String user, List<String> groups, String paramName, String paramValue, Integer page, Integer pageSize, boolean asc) {
+
+        ArrayList<String> paramValues = new ArrayList<>();
+        paramValues.add(paramValue);
+
+        HashMap<String, List<String>> paramsMap = new HashMap<>();
+        paramsMap.put(paramName, paramValues);
+
+        return potOwnedTasksByVariablesAndParams(user, groups, paramsMap, null, page, pageSize, asc);
 
     }
 
