@@ -41,9 +41,9 @@ public class PotOwnedTasksByVariablesAndParamsFilter implements QueryParamBuilde
         // base filter based on common pot owner criteria
         ColumnFilter potOwnerFilter = AND(
             OR(equalsTo("actualOwner", user), equalsTo("actualOwner", "")),
-            OR(equalsTo("potOwner", user), in("potOwner", groups),
+            OR(equalsTo("potOwner", user), in("potOwner", groups)),
             OR(isNull("exclOwner"), NOT(equalsTo("exclOwner", user)))
-        ));
+        );
 
         // extract optional parameters
         List<String> status = (List<String>) parameters.get("status");
