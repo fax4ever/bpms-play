@@ -29,6 +29,7 @@ public class QueryProducer {
     public static final String ACTIVE_TASKS_FOR_GROUP_INPUT_PARAM_CONTENT_FILTERED = "activeTasksForGroupInputParamContentFiltered";
     public static final String GET_ALL_TASK_INPUT_INSTANCES_WITH_VARIABLES = "getAllTaskInputInstancesWithVariables";
     public static final String POT_OWNED_TASKS_BY_VARIABLES_AND_PARAMS = "potOwnedTasksByVariablesAndParams";
+    public static final String NOT_POT_OWNED_TASKS_FOR_WORKED_PROCESS_INSTANCE = "notPotOwnedTasksForWorkedProcessInstance";
 
     @Produces
     @Named(QueryServicesClient.QUERY_MAP_PI)
@@ -282,6 +283,28 @@ public class QueryProducer {
                 "       order by vil.processinstanceid " +
                 " ) x " +
                 " on (variable.variableid = x.variableid and variable.id = x.maxvilid) ");
+        query.setTarget(CUSTOM);
+
+        return query;
+
+    }
+
+    @Produces
+    @Named(NOT_POT_OWNED_TASKS_FOR_WORKED_PROCESS_INSTANCE)
+    public QueryDefinition notPotOwnedTasksForWorkedProcessInstance() {
+
+        QueryDefinition query = new QueryDefinition();
+        query.setName(NOT_POT_OWNED_TASKS_FOR_WORKED_PROCESS_INSTANCE);
+        query.setSource(SOURCE);
+        query.setExpression(" select task.taskid, task.status, task.actualowner, pot.entity_id potowner, " +
+                " other.taskid otaskid, other.status ostatus, other.actualowner oactualowner, opot.entity_id opotowner " +
+                " from audittaskimpl task " +
+                " inner join audittaskimpl other " +
+                " on task.processinstanceid = other.processinstanceid " +
+                " inner join peopleassignments_potowners pot " +
+                " on pot.task_id = task.taskid " +
+                " inner join peopleassignments_potowners opot " +
+                " on opot.task_id = other.taskid ");
         query.setTarget(CUSTOM);
 
         return query;
