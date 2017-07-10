@@ -3,6 +3,7 @@ package it.redhat.demo.rest;
 import it.redhat.demo.qualifier.ContaierV1;
 import it.redhat.demo.qualifier.ContaierV2;
 import it.redhat.demo.qualifier.ContaierV3;
+import it.redhat.demo.qualifier.ContaierV5;
 import org.kie.server.api.model.KieContainerResource;
 import org.kie.server.api.model.ServiceResponse;
 import org.kie.server.api.model.definition.ProcessDefinition;
@@ -34,6 +35,9 @@ public class ContainerResource {
     @Inject @ContaierV3
     private KieContainerResource kieContainerV3;
 
+    @Inject @ContaierV5
+    private KieContainerResource kieContainerV5;
+
     @Inject
     private QueryServicesClient queryServices;
 
@@ -41,12 +45,13 @@ public class ContainerResource {
 
         return  ("v1".equals(version)) ? kieContainerV1 :
                 ("v2".equals(version)) ? kieContainerV2 :
-                kieContainerV3;
+                ("v2".equals(version)) ? kieContainerV3 :
+                kieContainerV5;
 
     }
 
     @GET
-    @Path("{version : v[1-3]}")
+    @Path("{version : v[1-5]}")
     public ServiceResponse<KieContainerResource> getContainer(@PathParam("version") String version) {
 
         return kieServices.getContainerInfo(lookupContainer(version).getContainerId());
@@ -55,7 +60,7 @@ public class ContainerResource {
 
 
     @POST
-    @Path("{version : v[1-3]}")
+    @Path("{version : v[1-5]}")
     public ServiceResponse<KieContainerResource> deployContainer(@PathParam("version") String version) {
 
         KieContainerResource container = lookupContainer(version);
@@ -64,7 +69,7 @@ public class ContainerResource {
     }
 
     @DELETE
-    @Path("{version : v[1-3]}")
+    @Path("{version : v[1-5]}")
     public ServiceResponse<Void> disposeContainer(@PathParam("version") String version) {
 
         KieContainerResource container = lookupContainer(version);

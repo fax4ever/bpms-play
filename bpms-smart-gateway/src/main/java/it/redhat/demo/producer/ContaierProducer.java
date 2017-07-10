@@ -3,6 +3,7 @@ package it.redhat.demo.producer;
 import it.redhat.demo.qualifier.ContaierV1;
 import it.redhat.demo.qualifier.ContaierV2;
 import it.redhat.demo.qualifier.ContaierV3;
+import it.redhat.demo.qualifier.ContaierV5;
 import org.kie.server.api.model.KieContainerResource;
 import org.kie.server.api.model.ReleaseId;
 
@@ -20,6 +21,8 @@ public class ContaierProducer {
     public static final String V_1 = "1.0.0";
     public static final String V_2 = "2.0.0";
     public static final String V_3 = "3.0.0";
+    public static final String V_5 = "5.0.0";
+
 
     @Produces
     @ContaierV1
@@ -37,6 +40,12 @@ public class ContaierProducer {
     @ContaierV3
     public KieContainerResource produceV3() {
         return produce(V_3);
+    }
+
+    @Produces
+    @ContaierV5
+    public KieContainerResource produceV5() {
+        return produce(V_5);
     }
 
     private KieContainerResource produce(String version) {

@@ -67,6 +67,8 @@ public class PotOwnedTasksByVariablesAndParamsFilter implements QueryParamBuilde
         }
 
         built = true;
+
+        LOG.debug("filter instance: {}", potOwnerFilter);
         return potOwnerFilter;
     }
 
