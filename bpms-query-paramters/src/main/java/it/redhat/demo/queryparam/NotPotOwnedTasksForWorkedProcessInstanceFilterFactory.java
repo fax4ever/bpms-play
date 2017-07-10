@@ -22,7 +22,7 @@ public class NotPotOwnedTasksForWorkedProcessInstanceFilterFactory implements Qu
 
     @Override
     public QueryParamBuilder<?> newInstance(Map<String, Object> parameters) {
-        LOG.info("register query parameter builder --> {}", FILTER_NAME);
+        LOG.debug("register query parameter builder --> {}", FILTER_NAME);
         return new NotPotOwnedTasksForWorkedProcessInstanceFilter(parameters);
     }
 

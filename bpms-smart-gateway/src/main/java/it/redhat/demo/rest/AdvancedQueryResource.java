@@ -275,4 +275,14 @@ public class AdvancedQueryResource {
 
     }
 
+    @Path("notowned/{offset}/{size}")
+    @GET
+    public Page notPotOwnedTasksForWorkedProcessInstance(@PathParam("offset") Integer offset, @PathParam("size") Integer size, @QueryParam("asc") Boolean asc) {
+
+        String[] validGroups = {"HR"};
+
+        return pagedQueryService.notPotOwnedTasksForWorkedProcessInstance("giacomo", Arrays.asList(validGroups), offset, size, asc);
+
+    }
+
 }

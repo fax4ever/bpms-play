@@ -22,7 +22,7 @@ public class UserTaskContentFilterFactory implements QueryParamBuilderFactory {
 
     @Override
     public QueryParamBuilder<?> newInstance(Map<String, Object> parameters) {
-        LOG.info("register query parameter builder --> {}", USER_TASK_CONTENT_FILTER);
+        LOG.debug("register query parameter builder --> {}", USER_TASK_CONTENT_FILTER);
 
         return new UserTaskContentFilter(parameters);
     }

@@ -45,7 +45,7 @@ public class NotPotOwnedTasksForWorkedProcessInstanceFilter implements QueryPara
             OR(isNull("exclOwner"), NOT(equalsTo("exclOwner", user)))
         );
 
-        AND(
+        potOwnerFilter = AND(
             NOT(potOwnerFilter),
             NOT(equalsTo("status", "Completed")),
             equalsTo("ostatus", "Completed"),
@@ -53,6 +53,9 @@ public class NotPotOwnedTasksForWorkedProcessInstanceFilter implements QueryPara
         );
 
         built = true;
+
+        LOG.debug("filter instance: {}", potOwnerFilter);
+
         return potOwnerFilter;
 
     }
