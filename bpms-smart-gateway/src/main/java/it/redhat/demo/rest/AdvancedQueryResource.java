@@ -247,15 +247,11 @@ public class AdvancedQueryResource {
         String[] validGroups = {"HR"};
 
         List<String> values1 = new ArrayList<>();
-        values1.add("f711");
-
-        List<String> values2 = new ArrayList<>();
-        values2.add("true");
+        values1.add("f731");
 
         HashMap<String, List<String>> paramsMap = new HashMap<>();
 
         paramsMap.put("curriculum", values1);
-        paramsMap.put("Skippable", values2);
 
         HashMap<String, List<String>> variablesMap = new HashMap<>();
 
@@ -271,7 +267,7 @@ public class AdvancedQueryResource {
 
         String[] validGroups = {"HR"};
 
-        return pagedQueryService.potOwnedTasksByParam("giacomo", Arrays.asList(validGroups), "curriculum", "f711", offset, size, asc);
+        return pagedQueryService.potOwnedTasksByParam("giacomo", Arrays.asList(validGroups), "curriculum", "f731", offset, size, asc);
 
     }
 
