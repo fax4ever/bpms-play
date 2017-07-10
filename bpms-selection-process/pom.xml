@@ -139,6 +139,13 @@
 				<process.version.filter>v4</process.version.filter>
 			</properties>
 		</profile>
+		<profile>
+			<id>500</id>
+			<properties>
+				<projectVersion>5.0.0</projectVersion>
+				<process.version.filter>v5</process.version.filter>
+			</properties>
+		</profile>
 	</profiles>
 
 </project>
