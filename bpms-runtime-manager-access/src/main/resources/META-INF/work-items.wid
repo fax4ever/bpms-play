@@ -1,0 +1,16 @@
+import org.drools.core.process.core.datatype.impl.type.StringDataType;
+import org.drools.core.process.core.datatype.impl.type.ObjectDataType;
+import org.drools.core.process.core.datatype.impl.type.BooleanDataType;
+
+[
+  [
+    "name" : "LogProcessInstances",
+  	"parameters" : [
+  		"containerId" : new StringDataType()
+  	],
+  	"results" : [
+        "processInstanceIds" : new ObjectDataType()
+     ],
+    "displayName" : "LogProcessInstances"
+  ]
+]
