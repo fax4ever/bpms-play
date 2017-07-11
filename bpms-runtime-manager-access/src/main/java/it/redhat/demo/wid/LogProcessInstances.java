@@ -11,7 +11,7 @@ import org.kie.api.runtime.process.WorkItem;
 import org.kie.api.runtime.process.WorkItemHandler;
 import org.kie.api.runtime.process.WorkItemManager;
 import org.kie.internal.runtime.manager.RuntimeManagerRegistry;
-import org.kie.internal.runtime.manager.context.EmptyContext;
+import org.kie.internal.runtime.manager.context.ProcessInstanceIdContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,12 +30,12 @@ public class LogProcessInstances implements WorkItemHandler {
 		String containerId = (String) workitem.getParameter("containerId");
 		
 		RuntimeManager runtimeManager = RuntimeManagerRegistry.get().getManager(containerId);
-		RuntimeEngine runtimeEngine = runtimeManager.getRuntimeEngine(EmptyContext.get());
+		RuntimeEngine runtimeEngine = runtimeManager.getRuntimeEngine(ProcessInstanceIdContext.get());
 		
 		AuditService auditService = runtimeEngine.getAuditService();
+		
 		List<Long> ids = auditService.findProcessInstances().stream()
-			.map(pi -> pi.getProcessId())
-			.map(stringId -> Long.parseLong(stringId))
+			.map(pi -> pi.getProcessInstanceId())
 			.collect(Collectors.toList());
 		
 		LOG.info("process instance ids: {}", ids);
