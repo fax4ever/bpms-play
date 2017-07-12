@@ -11,7 +11,6 @@
 
     <modules>
         <module>bpms-process-rule</module>
-        <module>bpms-process</module>
         <module>bpms-kie-process</module>
         <module>bpms-rest-task</module>
         <module>bpms-jndi-lookup</module>
