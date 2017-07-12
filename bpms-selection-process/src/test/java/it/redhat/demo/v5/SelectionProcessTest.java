@@ -234,5 +234,64 @@ public class SelectionProcessTest extends JbpmJUnitBaseTestCase {
 		assertProcessInstanceCompleted(pi.getId());
 		
 	}
+	
+	@Test
+	public void test_promoted_promoted_promoted_byManager() {
+		
+		HashMap<String,Object> params = new HashMap<>();
+		params.put("curriculum", "/curriculum/path/redhat/fercoli");
+		ProcessInstance pi = kieSession.startProcess("it.redhat.demo.selection-process", params);
+		assertProcessInstanceActive(pi.getId());
+		
+		// find task by pot owners
+		List<TaskSummary> hrTasks = taskService.getTasksAssignedAsPotentialOwner("coppellardi", "en-UK");
+		assertEquals(1, hrTasks.size());
+		TaskSummary hrTask = hrTasks.get(0);
+		assertEquals(Status.Ready, hrTask.getStatus());
+		
+		// the HR coppellardi approve the candidate
+		taskService.claim(hrTask.getId(), "coppellardi");
+		taskService.start(hrTask.getId(), "coppellardi");
+		HashMap<String,Object> coppellardiParams = new HashMap<String, Object>();
+		coppellardiParams.put("feedback", "OK");
+		taskService.complete(hrTask.getId(), "coppellardi", coppellardiParams);
+		
+		assertNodeTriggered(pi.getId(), "StartProcess", "Human Resource Interview", "Verify HR", "Manager Interview");
+		assertProcessInstanceActive(pi.getId());
+		
+		List<TaskSummary> managerTasks = taskService.getTasksAssignedAsPotentialOwner("burgalassi", "en-UK");
+		assertEquals(1, managerTasks.size());
+		TaskSummary managerTask = managerTasks.get(0);
+		assertEquals(Status.Ready, managerTask.getStatus());
+		
+		// the Manager burgalassi reject the candidate
+		taskService.claim(managerTask.getId(), "burgalassi");
+		taskService.start(managerTask.getId(), "burgalassi");
+		HashMap<String,Object> burgalassiParams = new HashMap<String, Object>();
+		burgalassiParams.put("feedback", "OK");
+		taskService.complete(managerTask.getId(), "burgalassi", burgalassiParams);
+		
+		assertNodeTriggered(pi.getId(), "Verify Manager");
+		assertProcessInstanceActive(pi.getId());
+		
+		// find task by pot owners
+		hrTasks = taskService.getTasksAssignedAsPotentialOwner("burgalassi", "en-UK");
+		assertEquals(1, hrTasks.size());
+		hrTask = hrTasks.get(0);
+		assertEquals(Status.Ready, hrTask.getStatus());
+		
+		taskService.claim(hrTask.getId(), "burgalassi");
+		taskService.start(hrTask.getId(), "burgalassi");
+		
+		HashMap<String,Object> taskResults = new HashMap<String, Object>();
+		taskResults.put("feedback", "OK");
+		
+		// the HR trionfera reject the candidate
+		taskService.complete(hrTask.getId(), "burgalassi", taskResults);
+		
+		assertNodeTriggered(pi.getId(), "Human Resource Proposal", "Hired");
+		assertProcessInstanceCompleted(pi.getId());
+		
+	}
 
 }

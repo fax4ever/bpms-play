@@ -297,7 +297,7 @@
       <bpmn2:dataInputAssociation id="DataInputAssociation_25">
         <bpmn2:targetRef>DataInput_25</bpmn2:targetRef>
         <bpmn2:assignment id="Assignment_15">
-          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_30">HR</bpmn2:from>
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_30">HR, Manager</bpmn2:from>
           <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_34">DataInput_25</bpmn2:to>
         </bpmn2:assignment>
       </bpmn2:dataInputAssociation>
@@ -408,25 +408,25 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_UserTask_3" bpmnElement="UserTask_3" isExpanded="true">
         <dc:Bounds height="50.0" width="110.0" x="820.0" y="38.0"/>
-        <bpmndi:BPMNLabel>
+        <bpmndi:BPMNLabel id="BPMNLabel_3">
           <dc:Bounds height="11.0" width="109.0" x="820.0" y="57.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_ExclusiveGateway_3" bpmnElement="ExclusiveGateway_3" isMarkerVisible="true">
         <dc:Bounds height="50.0" width="50.0" x="960.0" y="38.0"/>
-        <bpmndi:BPMNLabel>
+        <bpmndi:BPMNLabel id="BPMNLabel_9">
           <dc:Bounds height="11.0" width="63.0" x="954.0" y="88.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_EndEvent_4" bpmnElement="EndEvent_4">
         <dc:Bounds height="36.0" width="36.0" x="1078.0" y="45.0"/>
-        <bpmndi:BPMNLabel>
+        <bpmndi:BPMNLabel id="BPMNLabel_10">
           <dc:Bounds height="11.0" width="21.0" x="1085.0" y="81.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_EndEvent_5" bpmnElement="EndEvent_5">
         <dc:Bounds height="36.0" width="36.0" x="967.0" y="146.0"/>
-        <bpmndi:BPMNLabel>
+        <bpmndi:BPMNLabel id="BPMNLabel_11">
           <dc:Bounds height="22.0" width="56.0" x="957.0" y="182.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
@@ -476,7 +476,7 @@
         <di:waypoint xsi:type="dc:Point" x="715.0" y="63.0"/>
         <di:waypoint xsi:type="dc:Point" x="767.0" y="63.0"/>
         <di:waypoint xsi:type="dc:Point" x="820.0" y="63.0"/>
-        <bpmndi:BPMNLabel>
+        <bpmndi:BPMNLabel id="BPMNLabel_13">
           <dc:Bounds height="11.0" width="32.0" x="753.0" y="64.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
@@ -484,13 +484,13 @@
         <di:waypoint xsi:type="dc:Point" x="930.0" y="63.0"/>
         <di:waypoint xsi:type="dc:Point" x="945.0" y="63.0"/>
         <di:waypoint xsi:type="dc:Point" x="960.0" y="63.0"/>
-        <bpmndi:BPMNLabel/>
+        <bpmndi:BPMNLabel id="BPMNLabel_14"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_10" bpmnElement="SequenceFlow_10" sourceElement="BPMNShape_ExclusiveGateway_3" targetElement="BPMNShape_EndEvent_4">
         <di:waypoint xsi:type="dc:Point" x="1010.0" y="63.0"/>
         <di:waypoint xsi:type="dc:Point" x="1044.0" y="63.0"/>
         <di:waypoint xsi:type="dc:Point" x="1078.0" y="63.0"/>
-        <bpmndi:BPMNLabel>
+        <bpmndi:BPMNLabel id="BPMNLabel_15">
           <dc:Bounds height="11.0" width="32.0" x="1029.0" y="64.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
@@ -498,7 +498,7 @@
         <di:waypoint xsi:type="dc:Point" x="985.0" y="88.0"/>
         <di:waypoint xsi:type="dc:Point" x="985.0" y="117.0"/>
         <di:waypoint xsi:type="dc:Point" x="985.0" y="146.0"/>
-        <bpmndi:BPMNLabel>
+        <bpmndi:BPMNLabel id="BPMNLabel_16">
           <dc:Bounds height="11.0" width="35.0" x="968.0" y="118.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
