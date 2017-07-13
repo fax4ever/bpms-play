@@ -78,9 +78,6 @@ public class PagedQueryService {
         parameters.put("user", user);
 
         QueryFilterSpec queryFilterSpec = new QueryFilterSpecBuilder()
-                .addColumnMapping("potOwner", "string")
-                .addColumnMapping("ostatus", "string")
-                .addColumnMapping("oactualOwner", "string")
                 .notEqualsTo("actualOwner", user)
                 .notEqualsTo("potOwner", user)
                 .notEqualsTo("status", "Completed")
@@ -88,23 +85,23 @@ public class PagedQueryService {
                 .equalsTo("oactualOwner", user)
                 .get();
 
-        List<TaskInstance> query = queryServices.query(NOT_POT_OWNED_TASKS_FOR_WORKED_PROCESS_INSTANCE, QUERY_MAP_TASK_WITH_CUSTOM_VARS, queryFilterSpec, 0, ARBITRARY_LONG_VALUE, TaskInstance.class);
+        List<List> query = queryServices.query(NOT_POT_OWNED_TASKS_FOR_WORKED_PROCESS_INSTANCE, "RawList7", queryFilterSpec, 0, ARBITRARY_LONG_VALUE, List.class);
 
-        log.info("query {}", query);
+        // we need to exclude all tasks potentially owned by group membership
+        Set<Long> taskOwnedByGroupMembership = query.stream().filter(taskItems -> {
+
+            String actualOwner = (String) taskItems.get(2);
+            String potOwner = (String) taskItems.get(3);
+
+            return (actualOwner == "" && groups.contains(potOwner));
+        })
+        .map(taskItems -> ((Double) taskItems.get(0)).longValue())
+        .collect(Collectors.toSet());
 
         List<Long> ids = query.stream()
-            .filter(task -> {
-
-                if (task.getActualOwner() != "") {
-                    return true;
-                }
-
-                String groupIdString = (String) task.getInputData().get("potOwner");
-                return !Arrays.asList(groupIdString.split(",")).stream().anyMatch(gr -> groups.contains(gr));
-
-            })
-            .map(taskItem -> taskItem.getId())
+                .map(taskItems -> ((Double) taskItems.get(0)).longValue())
             .distinct()
+                .filter(id -> !taskOwnedByGroupMembership.contains(id))
             .collect(Collectors.toList());
 
         log.debug("tasks: {}", ids);
