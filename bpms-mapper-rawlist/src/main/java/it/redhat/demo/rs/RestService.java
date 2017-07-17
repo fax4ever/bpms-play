@@ -1,5 +1,6 @@
 package it.redhat.demo.rs;
 
+import it.redhat.demo.bpms.QueryStartup;
 import org.kie.server.api.model.definition.QueryFilterSpec;
 import org.kie.server.api.util.QueryFilterSpecBuilder;
 import org.kie.server.client.KieServicesClient;
@@ -39,7 +40,7 @@ public class RestService {
 
         QueryFilterSpec queryFilterSpec = new QueryFilterSpecBuilder().get();
 
-        List<List> result = queryServicesClient.query("ProcessInstances", "RawList", queryFilterSpec, 0, 10000, List.class);
+        List<List> result = queryServicesClient.query(QueryStartup.ALL_PROCESS_INSTANCES, QueryServicesClient.QUERY_MAP_RAW, queryFilterSpec, 0, 10000, List.class);
 
         log.info("query result: {}", result);
 
