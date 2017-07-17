@@ -39,6 +39,7 @@
         <module>bpms-business-case</module>
         <module>bpms-ws-multi</module>
         <module>bpms-runtime-manager-access</module>
+        <module>bpms-mapper-rawlist</module>
     </modules>
 
     <properties>
