@@ -256,7 +256,12 @@ public class AdvancedQueryResource {
 
         String[] validGroups = {"HR"};
 
-        return pagedQueryService.potOwnedTasksByVariablesAndParamsWithVariablesAndParams("giacomo", Arrays.asList(validGroups), null, null, offset, size, asc);
+        HashMap<String, List<String>> filterMap = new HashMap<>();
+        ArrayList<String> values = new ArrayList<>();
+        values.add("f731");
+        filterMap.put("curriculum", values);
+
+        return pagedQueryService.potOwnedTasksByVariablesAndParamsWithVariablesAndParams("giacomo", Arrays.asList(validGroups), filterMap, filterMap, offset, size, asc);
 
     }
 

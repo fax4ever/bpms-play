@@ -51,6 +51,11 @@ public class PagedQueryService {
         }
 
         List<Long> pageIds = pagedService.extractPage(pageSize, page, asc, taskIds);
+
+        if (pageIds.isEmpty()) {
+            return new Page<>(taskIds.size(), page, pageSize, asc, new ArrayList<>());
+        }
+
         List<TaskInstance> tasksWithParams = queryService.getAllTaskInputInstancesWithVariables(pageIds, asc);
 
         List<Long> processIds = tasksWithParams.stream().map(taskInstance -> taskInstance.getProcessInstanceId()).distinct().collect(Collectors.toList());
@@ -74,6 +79,11 @@ public class PagedQueryService {
         }
 
         List<Long> pageIds = pagedService.extractPage(pageSize, page, asc, taskIds);
+
+        if (pageIds.isEmpty()) {
+            return new Page<>(taskIds.size(), page, pageSize, asc, new ArrayList<>());
+        }
+
         List<TaskInstance> tasksWithParams = queryService.getAllTaskInputInstancesWithVariables(pageIds, asc);
 
         return new Page<>(taskIds.size(), page, pageSize, asc, tasksWithParams);
@@ -83,7 +93,17 @@ public class PagedQueryService {
     public Page<TaskInstance> notPotOwnedTasksForWorkedProcessInstance(String user, List<String> groups, Integer page, Integer pageSize, boolean asc) {
 
         List<Long> taskIds = queryService.notPotOwnedTasksForWorkedProcessInstance(user, groups);
+
+        if (taskIds.isEmpty()) {
+            return new Page<>(0, page, pageSize, asc, new ArrayList<>());
+        }
+
         List<Long> pageIds = pagedService.extractPage(pageSize, page, asc, taskIds);
+
+        if (pageIds.isEmpty()) {
+            return new Page<>(taskIds.size(), page, pageSize, asc, new ArrayList<>());
+        }
+
         List<TaskInstance> tasksWithParams = queryService.getAllTaskInputInstancesWithVariables(pageIds, asc);
 
         return new Page<>(taskIds.size(), page, pageSize, asc, tasksWithParams);
