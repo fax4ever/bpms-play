@@ -1,4 +1,4 @@
-package it.redhat.demo.service;
+package it.redhat.demo.model;
 
 import java.util.ArrayList;
 import java.util.List;

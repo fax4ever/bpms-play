@@ -3,7 +3,7 @@ package it.redhat.demo.rest;
 import it.redhat.demo.exception.QueryDefinitionNotFoundException;
 import it.redhat.demo.query.QueryProducer;
 import it.redhat.demo.query.QuerySelector;
-import it.redhat.demo.service.Page;
+import it.redhat.demo.model.Page;
 import it.redhat.demo.service.PagedQueryService;
 import org.kie.server.api.model.definition.QueryDefinition;
 import org.kie.server.api.model.definition.QueryFilterSpec;
@@ -247,6 +247,16 @@ public class AdvancedQueryResource {
         String[] validGroups = {"HR"};
 
         return pagedQueryService.potOwnedTasksByVariablesAndParams("giacomo", Arrays.asList(validGroups), null, null, offset, size, asc);
+
+    }
+
+    @Path("full/{offset}/{size}")
+    @GET
+    public Page full(@PathParam("offset") Integer offset, @PathParam("size") Integer size, @QueryParam("asc") Boolean asc) {
+
+        String[] validGroups = {"HR"};
+
+        return pagedQueryService.potOwnedTasksByVariablesAndParamsWithVariablesAndParams("giacomo", Arrays.asList(validGroups), null, null, offset, size, asc);
 
     }
 
