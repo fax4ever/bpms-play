@@ -40,6 +40,7 @@
         <module>bpms-ws-multi</module>
         <module>bpms-runtime-manager-access</module>
         <module>bpms-mapper-rawlist</module>
+        <module>bpms-business-admin</module>
     </modules>
 
     <properties>
