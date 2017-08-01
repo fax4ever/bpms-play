@@ -25,7 +25,7 @@ public class BusinessAdminSpecProcessTest extends JbpmJUnitBaseTestCase {
 
 	private static final String USER_HR2 = "pgarzone";
 
-	private static final String USER_ADMINISTRATOR = "Administrator";
+	private static final String USER_ADMINISTRATOR = "aercoli";
 
 	private static final String THE_MANAGER_FEEDBACK = "the Manager feedback!";
 
