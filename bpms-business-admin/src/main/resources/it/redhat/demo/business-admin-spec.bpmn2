@@ -105,7 +105,7 @@
       <bpmn2:dataInputAssociation id="DataInputAssociation_22">
         <bpmn2:targetRef>DataInput_22</bpmn2:targetRef>
         <bpmn2:assignment id="Assignment_3">
-          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_7">Director</bpmn2:from>
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_7">Director,Developer</bpmn2:from>
           <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_5">DataInput_22</bpmn2:to>
         </bpmn2:assignment>
       </bpmn2:dataInputAssociation>
