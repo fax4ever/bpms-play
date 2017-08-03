@@ -41,6 +41,9 @@
         <module>bpms-runtime-manager-access</module>
         <module>bpms-mapper-rawlist</module>
         <module>bpms-business-admin</module>
+        <module>bpms-model</module>
+        <module>bpms-model-rule</module>
+        <module>bpms-model-process</module>
     </modules>
 
     <properties>
