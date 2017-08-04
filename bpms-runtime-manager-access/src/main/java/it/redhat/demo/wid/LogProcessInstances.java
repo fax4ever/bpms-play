@@ -1,5 +1,10 @@
 package it.redhat.demo.wid;
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.manager.RuntimeEngine;
 import org.kie.api.runtime.manager.RuntimeManager;
@@ -12,11 +17,6 @@ import org.kie.internal.runtime.manager.RuntimeManagerRegistry;
 import org.kie.internal.runtime.manager.context.ProcessInstanceIdContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class LogProcessInstances implements WorkItemHandler {
 	
@@ -31,7 +31,7 @@ public class LogProcessInstances implements WorkItemHandler {
 	public void executeWorkItem(WorkItem workitem, WorkItemManager manager) {
 		
 		String containerId = (String) workitem.getParameter("containerId");
-		
+
 		RuntimeManager runtimeManager = RuntimeManagerRegistry.get().getManager(containerId);
 		RuntimeEngine runtimeEngine = runtimeManager.getRuntimeEngine(ProcessInstanceIdContext.get());
 
