@@ -30,6 +30,10 @@ import org.kie.api.runtime.manager.audit.ProcessInstanceLog;
 import org.kie.api.runtime.process.ProcessInstance;
 import org.kie.api.task.TaskService;
 import org.kie.api.task.model.TaskSummary;
+import org.kie.internal.KieInternalServices;
+import org.kie.internal.process.CorrelationAwareProcessRuntime;
+import org.kie.internal.process.CorrelationKey;
+import org.kie.internal.process.CorrelationKeyFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,6 +53,8 @@ public class MultiStartProcessTest extends JbpmJUnitBaseTestCase {
     private KieSession kieSession;
 	private TaskService taskService;
 	private AuditService auditService;
+	
+	private CorrelationKeyFactory factory;
     
     public MultiStartProcessTest() {
         super(true, true);
@@ -62,6 +68,8 @@ public class MultiStartProcessTest extends JbpmJUnitBaseTestCase {
         kieSession = runtimeEngine.getKieSession();
         taskService = runtimeEngine.getTaskService();
         auditService = runtimeEngine.getAuditService();
+        
+        factory = KieInternalServices.Factory.get().newCorrelationKeyFactory();
 
     }
     
@@ -105,7 +113,7 @@ public class MultiStartProcessTest extends JbpmJUnitBaseTestCase {
     @Test
     public void start_event() {
     	
-    	ProcessInstance originalProcessInstance = kieSession.startProcess("it.redhat.demo.bpms.process.multi-start", new HashMap<>());
+    	ProcessInstance originalProcessInstance = ((CorrelationAwareProcessRuntime)kieSession).startProcess("it.redhat.demo.bpms.process.multi-start", getCorrelationKey(), new HashMap<>());
     	long originalProcessInstanceId = originalProcessInstance.getId();
     	
     	assertProcessInstanceActive(originalProcessInstanceId);
@@ -136,6 +144,10 @@ public class MultiStartProcessTest extends JbpmJUnitBaseTestCase {
     	assertProcessInstanceCompleted(newProcessInstanceId);
     	assertNodeTriggered(newProcessInstanceId, "End Event 1");
     	
+    }
+    
+    private CorrelationKey getCorrelationKey() {
+        return factory.newCorrelationKey("mybusinesskey");
     }
 	
 }
