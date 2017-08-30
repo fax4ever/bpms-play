@@ -118,7 +118,23 @@ public class MultiStartProcessTest extends JbpmJUnitBaseTestCase {
     	assertEquals(2, processInstances.size());
     	
     	assertProcessInstanceAborted(originalProcessInstanceId);
-    	assertProcessInstanceActive(originalProcessInstanceId + 1);	
+    	assertNodeTriggered(originalProcessInstanceId, "Event Handler", "Start Event 3", "Script Task 1", "End Event 3");
+    	
+    	long newProcessInstanceId = originalProcessInstanceId + 1;
+    	
+		assertProcessInstanceActive(newProcessInstanceId);
+		assertNodeTriggered(newProcessInstanceId, "Start Event 5", "Exclusive Gateway 1", "User Task 2");
+		
+		List<TaskSummary> marcoTaskList = taskService.getTasksAssignedAsPotentialOwner(DEVELOPER_USER, null);
+		
+		LOG.info("Task List: {}", marcoTaskList);
+    	assertEquals(1, marcoTaskList.size());
+    	
+    	taskService.start(marcoTaskList.get(0).getId(), DEVELOPER_USER);
+    	taskService.complete(marcoTaskList.get(0).getId(), DEVELOPER_USER, new HashMap<>());
+    	
+    	assertProcessInstanceCompleted(newProcessInstanceId);
+    	assertNodeTriggered(newProcessInstanceId, "End Event 1");
     	
     }
 	
