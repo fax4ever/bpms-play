@@ -15,8 +15,111 @@
 */
 package it.redhat.demo.bpms.it;
 
+import java.util.HashMap;
+import java.util.List;
+
+import org.jbpm.test.JbpmJUnitBaseTestCase;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.kie.api.runtime.KieSession;
+import org.kie.api.runtime.manager.RuntimeEngine;
+import org.kie.api.runtime.manager.RuntimeManager;
+import org.kie.api.runtime.manager.audit.AuditService;
+import org.kie.api.runtime.manager.audit.ProcessInstanceLog;
+import org.kie.api.runtime.process.ProcessInstance;
+import org.kie.api.task.TaskService;
+import org.kie.api.task.model.TaskSummary;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * @author Fabio Massimo Ercoli (C) 2017 Red Hat Inc.
  */
-public class MultiStartProcessTest {
+public class MultiStartProcessTest extends JbpmJUnitBaseTestCase {
+	
+	private static final String DEVELOPER_USER = "marco";
+
+	private final static Logger LOG = LoggerFactory.getLogger(MultiStartProcessTest.class);
+	
+	private static final String PROCESS_FOLDER = "it/redhat/demo/bpms/process/";
+	
+	private RuntimeManager runtimeManager;
+    private RuntimeEngine runtimeEngine;
+    private KieSession kieSession;
+	private TaskService taskService;
+	private AuditService auditService;
+    
+    public MultiStartProcessTest() {
+        super(true, true);
+    }
+    
+    @Before
+    public void before() {
+
+        runtimeManager = createRuntimeManager(PROCESS_FOLDER + "multi-start.bpmn2");
+        runtimeEngine = getRuntimeEngine();
+        kieSession = runtimeEngine.getKieSession();
+        taskService = runtimeEngine.getTaskService();
+        auditService = runtimeEngine.getAuditService();
+
+    }
+    
+    @After
+    public void after() {
+
+        runtimeManager.disposeRuntimeEngine(runtimeEngine);
+        runtimeManager.close();
+
+    }
+    
+    @Test
+	public void test_baseCase() {
+    	
+    	ProcessInstance pi = kieSession.startProcess("it.redhat.demo.bpms.process.multi-start", new HashMap<>());
+    	long id = pi.getId();
+    	
+    	assertProcessInstanceActive(id);
+    	assertNodeTriggered(id, "StartProcess", "User Task 1");
+    	
+    	List<TaskSummary> marcoTaskList = taskService.getTasksAssignedAsPotentialOwner(DEVELOPER_USER, null);
+    	assertEquals(1, marcoTaskList.size());
+    	
+    	taskService.start(marcoTaskList.get(0).getId(), DEVELOPER_USER);
+    	taskService.complete(marcoTaskList.get(0).getId(), DEVELOPER_USER, new HashMap<>());
+    	
+    	assertProcessInstanceActive(id);
+    	assertNodeTriggered(id, "User Task 2");
+    	
+    	marcoTaskList = taskService.getTasksAssignedAsPotentialOwner(DEVELOPER_USER, null);
+    	assertEquals(1, marcoTaskList.size());
+    	
+    	taskService.start(marcoTaskList.get(0).getId(), DEVELOPER_USER);
+    	taskService.complete(marcoTaskList.get(0).getId(), DEVELOPER_USER, new HashMap<>());
+    	
+    	assertProcessInstanceCompleted(id);
+    	assertNodeTriggered(id, "End Event 1");
+    	
+    }
+    
+    @Test
+    public void start_event() {
+    	
+    	ProcessInstance originalProcessInstance = kieSession.startProcess("it.redhat.demo.bpms.process.multi-start", new HashMap<>());
+    	long originalProcessInstanceId = originalProcessInstance.getId();
+    	
+    	assertProcessInstanceActive(originalProcessInstanceId);
+    	assertNodeTriggered(originalProcessInstanceId, "StartProcess", "User Task 1");
+    	
+    	kieSession.signalEvent("start", "GOGOGO");
+    	
+    	List<? extends ProcessInstanceLog> processInstances = auditService.findProcessInstances();
+    	LOG.info("Process Instances: {}", processInstances);
+    	assertEquals(2, processInstances.size());
+    	
+    	assertProcessInstanceAborted(originalProcessInstanceId);
+    	assertProcessInstanceActive(originalProcessInstanceId + 1);	
+    	
+    }
+	
 }
