@@ -61,7 +61,7 @@ public class MultiStartProcessTest extends JbpmJUnitBaseTestCase {
     }
     
     @Before
-    public void before() {
+	public void before() {
 
         runtimeManager = createRuntimeManager(PROCESS_FOLDER + "multi-start.bpmn2");
         runtimeEngine = getRuntimeEngine();
@@ -74,7 +74,7 @@ public class MultiStartProcessTest extends JbpmJUnitBaseTestCase {
     }
     
     @After
-    public void after() {
+	public void after() {
 
         runtimeManager.disposeRuntimeEngine(runtimeEngine);
         runtimeManager.close();
@@ -84,7 +84,7 @@ public class MultiStartProcessTest extends JbpmJUnitBaseTestCase {
     @Test
 	public void test_baseCase() {
     	
-    	ProcessInstance pi = kieSession.startProcess("it.redhat.demo.bpms.process.multi-start", new HashMap<>());
+    	ProcessInstance pi = kieSession.startProcess("it.redhat.demo.bpms.process.multi-start", buildStartingVariableMap());
     	long id = pi.getId();
     	
     	assertProcessInstanceActive(id);
@@ -94,7 +94,7 @@ public class MultiStartProcessTest extends JbpmJUnitBaseTestCase {
     	assertEquals(1, marcoTaskList.size());
     	
     	taskService.start(marcoTaskList.get(0).getId(), DEVELOPER_USER);
-    	taskService.complete(marcoTaskList.get(0).getId(), DEVELOPER_USER, new HashMap<>());
+    	taskService.complete(marcoTaskList.get(0).getId(), DEVELOPER_USER, buildStartingVariableMap());
     	
     	assertProcessInstanceActive(id);
     	assertNodeTriggered(id, "User Task 2");
@@ -103,7 +103,7 @@ public class MultiStartProcessTest extends JbpmJUnitBaseTestCase {
     	assertEquals(1, marcoTaskList.size());
     	
     	taskService.start(marcoTaskList.get(0).getId(), DEVELOPER_USER);
-    	taskService.complete(marcoTaskList.get(0).getId(), DEVELOPER_USER, new HashMap<>());
+    	taskService.complete(marcoTaskList.get(0).getId(), DEVELOPER_USER, buildStartingVariableMap());
     	
     	assertProcessInstanceCompleted(id);
     	assertNodeTriggered(id, "End Event 1");
@@ -113,7 +113,7 @@ public class MultiStartProcessTest extends JbpmJUnitBaseTestCase {
     @Test
     public void start_event() {
     	
-    	ProcessInstance originalProcessInstance = ((CorrelationAwareProcessRuntime)kieSession).startProcess("it.redhat.demo.bpms.process.multi-start", getCorrelationKey(), new HashMap<>());
+    	ProcessInstance originalProcessInstance = ((CorrelationAwareProcessRuntime)kieSession).startProcess("it.redhat.demo.bpms.process.multi-start", getCorrelationKey(), buildStartingVariableMap());
     	long originalProcessInstanceId = originalProcessInstance.getId();
     	
     	assertProcessInstanceActive(originalProcessInstanceId);
@@ -139,7 +139,7 @@ public class MultiStartProcessTest extends JbpmJUnitBaseTestCase {
     	assertEquals(1, marcoTaskList.size());
     	
     	taskService.start(marcoTaskList.get(0).getId(), DEVELOPER_USER);
-    	taskService.complete(marcoTaskList.get(0).getId(), DEVELOPER_USER, new HashMap<>());
+    	taskService.complete(marcoTaskList.get(0).getId(), DEVELOPER_USER, buildStartingVariableMap());
     	
     	assertProcessInstanceCompleted(newProcessInstanceId);
     	assertNodeTriggered(newProcessInstanceId, "End Event 1");
@@ -149,5 +149,15 @@ public class MultiStartProcessTest extends JbpmJUnitBaseTestCase {
     private CorrelationKey getCorrelationKey() {
         return factory.newCorrelationKey("mybusinesskey");
     }
+    
+    private HashMap<String, Object> buildStartingVariableMap() {
+		HashMap<String, Object> result = new HashMap<>();
+		
+		result.put("dataA", "A");
+		result.put("dataB", "B");
+		result.put("dataC", "C");
+		
+		return result;
+	}
 	
 }
