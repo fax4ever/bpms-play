@@ -44,6 +44,7 @@
         <module>bpms-model</module>
         <module>bpms-model-rule</module>
         <module>bpms-model-process</module>
+        <module>bpms-multi-start</module>
     </modules>
 
     <properties>
