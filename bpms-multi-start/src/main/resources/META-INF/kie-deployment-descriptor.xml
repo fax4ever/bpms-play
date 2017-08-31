@@ -53,6 +53,12 @@
             <parameters/>
             <name>UnwrapVariables</name>
         </work-item-handler>
+        <work-item-handler>
+            <resolver>mvel</resolver>
+            <identifier>new it.redhat.demo.bpms.wid.RestartProcessInstance(ksession, new it.redhat.demo.bpms.strategy.ChooseCheckpointStrategy())</identifier>
+            <parameters/>
+            <name>RestartProcessInstance</name>
+        </work-item-handler>
     </work-item-handlers>
     <environment-entries/>
     <configurations/>

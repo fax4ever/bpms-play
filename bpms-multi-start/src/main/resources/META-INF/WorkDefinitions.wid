@@ -87,6 +87,18 @@ import org.drools.core.process.core.datatype.impl.type.IntegerDataType;
     ],
     "displayName" : "Unwrap Variables",
     "icon" : "defaultservicenodeicon.png"
+  ],
+  
+  [
+    "name" : "RestartProcessInstance",
+    "parameters" : [
+        "dataA" : new StringDataType(),
+        "dataB" : new StringDataType(),
+        "dataC" : new StringDataType()
+    ],
+    "results" : [],
+    "displayName" : "Restart Process Instance",
+    "icon" : "defaultservicenodeicon.png"
   ]
   
 ]

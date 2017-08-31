@@ -23,8 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import it.redhat.demo.bpms.strategy.ChooseCheckpointStrategy;
-import it.redhat.demo.bpms.wid.UnwrapVariables;
-import it.redhat.demo.bpms.wid.WrapVariables;
+import it.redhat.demo.bpms.wid.RestartProcessInstance;
 
 public class CheckpointStartProcessTest extends JbpmJUnitBaseTestCase {
 	
@@ -59,8 +58,7 @@ public class CheckpointStartProcessTest extends JbpmJUnitBaseTestCase {
         
         factory = KieInternalServices.Factory.get().newCorrelationKeyFactory();
         
-        kieSession.getWorkItemManager().registerWorkItemHandler("WrapVariables", new WrapVariables(new ChooseCheckpointStrategy()));
-        kieSession.getWorkItemManager().registerWorkItemHandler("UnwrapVariables", new UnwrapVariables());
+        kieSession.getWorkItemManager().registerWorkItemHandler("WrapVariables", new RestartProcessInstance(kieSession, new ChooseCheckpointStrategy()));
 
     }
     
