@@ -1,27 +1,30 @@
 package it.redhat.demo.bpms.model;
 
-public class VariablesWrapper {
+import java.io.Serializable;
+import java.util.Map;
+
+/**
+ * Process Instance Variables Immutable Wrapper
+ * 
+ * @author fabio
+ *
+ */
+public final class VariablesWrapper implements Serializable {
 	
-	private final String dataA;
-	private final String dataB;
-	private final String dataC;
+	private static final long serialVersionUID = 4992936447883433384L;
+	private final Map<String, Object> variables;
 	
-	public VariablesWrapper(String dataA, String dataB, String dataC) {
-		this.dataA = dataA;
-		this.dataB = dataB;
-		this.dataC = dataC;
+	public VariablesWrapper(Map<String, Object> parameters) {
+		this.variables = parameters;
+	}
+	
+	public Map<String, Object> getParameters() {
+		return variables;
 	}
 
-	public String getDataA() {
-		return dataA;
-	}
-
-	public String getDataB() {
-		return dataB;
-	}
-
-	public String getDataC() {
-		return dataC;
+	@Override
+	public String toString() {
+		return "VariablesWrapper [variables=" + variables + "]";
 	}
 	
 }

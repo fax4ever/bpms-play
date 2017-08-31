@@ -41,6 +41,18 @@
             <parameters/>
             <name>Rest</name>
         </work-item-handler>
+        <work-item-handler>
+            <resolver>mvel</resolver>
+            <identifier>new it.redhat.demo.bpms.wid.WrapVariables(new it.redhat.demo.bpms.strategy.ChooseCheckpointStrategy())</identifier>
+            <parameters/>
+            <name>WrapVariables</name>
+        </work-item-handler>
+        <work-item-handler>
+            <resolver>mvel</resolver>
+            <identifier>new it.redhat.demo.bpms.wid.UnwrapVariables()</identifier>
+            <parameters/>
+            <name>UnwrapVariables</name>
+        </work-item-handler>
     </work-item-handlers>
     <environment-entries/>
     <configurations/>
