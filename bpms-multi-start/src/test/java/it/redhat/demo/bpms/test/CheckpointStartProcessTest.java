@@ -58,7 +58,7 @@ public class CheckpointStartProcessTest extends JbpmJUnitBaseTestCase {
         
         factory = KieInternalServices.Factory.get().newCorrelationKeyFactory();
         
-        kieSession.getWorkItemManager().registerWorkItemHandler("WrapVariables", new RestartProcessInstance(kieSession, new ChooseCheckpointStrategy()));
+        kieSession.getWorkItemManager().registerWorkItemHandler("RestartProcessInstance", new RestartProcessInstance(kieSession, new ChooseCheckpointStrategy()));
 
     }
     
@@ -120,6 +120,28 @@ public class CheckpointStartProcessTest extends JbpmJUnitBaseTestCase {
     	assertEquals(MY_BUSINESS_KEY, piLog.getCorrelationKey());
     	
     	LOG.info("{} :: [{} {} {}]", piLog.getCorrelationKey(), dataAVariableLogs, dataBVariableLogs, dataCVariableLogs);
+    	
+    }
+    
+    @Test
+    public void restart_from_checkpoint_1() {
+    	
+    	ProcessInstance pi = ((CorrelationAwareProcessRuntime)kieSession).startProcess("it.redhat.demo.bpms.process.checkpoint-start", getCorrelationKey(), Collections.singletonMap("dataA", "--A--"));
+    	long id = pi.getId();
+    	
+    	assertProcessInstanceActive(id);
+    	assertNodeTriggered(id, "StartProcess", "Gateway 0", "User Task 1");
+    	
+    	List<TaskSummary> marcoTaskList = taskService.getTasksAssignedAsPotentialOwner(DEVELOPER_USER, null);
+    	assertEquals(1, marcoTaskList.size());
+    	taskService.start(marcoTaskList.get(0).getId(), DEVELOPER_USER);
+    	taskService.complete(marcoTaskList.get(0).getId(), DEVELOPER_USER, Collections.singletonMap("dataB", "--B--"));
+    	
+    	assertProcessInstanceActive(id);
+    	assertNodeTriggered(id, "Gateway 1", "User Task 2");
+    	
+    	kieSession.signalEvent("restart", "..A..");
+    	
     	
     }
     
