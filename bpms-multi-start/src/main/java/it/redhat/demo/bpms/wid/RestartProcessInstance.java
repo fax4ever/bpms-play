@@ -1,5 +1,6 @@
 package it.redhat.demo.bpms.wid;
 
+import java.util.Collections;
 import java.util.Map;
 
 import org.kie.api.runtime.KieSession;
@@ -46,6 +47,8 @@ public class RestartProcessInstance implements WorkItemHandler {
 		ProcessInstance newProcessInstance = ((CorrelationAwareProcessRuntime)kieSession).startProcess("it.redhat.demo.bpms.process.checkpoint-start", newCorrelationKey, parameters);
 		
 		LOG.debug("Restart process instance {}. New process instance {} starts from checkpoint {}", workItem.getId(), newProcessInstance.getId());
+		
+		manager.completeWorkItem(workItem.getId(), Collections.emptyMap());
 		
 	}
 
