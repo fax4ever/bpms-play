@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
 */
-package it.redhat.demo.bpms.it;
+package it.redhat.demo.bpms.test;
 
 import java.util.Collections;
 import java.util.List;
