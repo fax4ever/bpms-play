@@ -64,6 +64,20 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
+    
+    <build>
+    	<plugins>
+    		<plugin>
+	    		<groupId>org.kie.server</groupId>
+	            <artifactId>kie-server-maven-plugin</artifactId>
+	            <version>7.3.0.Final</version>
+	            <configuration>
+	                <username>fabio</username>
+	                <password>fabio$739</password>
+	                <container>info</container>
+	            </configuration>
+            </plugin>
+    	</plugins>
+    </build>
 
 </project>

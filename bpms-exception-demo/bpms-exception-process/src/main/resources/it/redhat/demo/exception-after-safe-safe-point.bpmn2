@@ -59,7 +59,7 @@
       <bpmn2:dataInputAssociation id="_DataInputAssociation_11">
         <bpmn2:targetRef>DataInput_1</bpmn2:targetRef>
         <bpmn2:assignment id="Assignment_1">
-          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_3">http://localhost:8080/bpms-exception-service</bpmn2:from>
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_3">http://localhost:8080/bpms-exception-service/1</bpmn2:from>
           <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_1">DataInput_1</bpmn2:to>
         </bpmn2:assignment>
       </bpmn2:dataInputAssociation>
@@ -166,7 +166,7 @@
       <bpmn2:dataInputAssociation id="DataInputAssociation_1">
         <bpmn2:targetRef>DataInput_28</bpmn2:targetRef>
         <bpmn2:assignment id="Assignment_3">
-          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_2">http://localhost:8080/bpms-exception-service</bpmn2:from>
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_2">http://localhost:8080/bpms-exception-service/2</bpmn2:from>
           <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_5">DataInput_1</bpmn2:to>
         </bpmn2:assignment>
       </bpmn2:dataInputAssociation>
@@ -255,7 +255,7 @@
       <bpmn2:dataInputAssociation id="DataInputAssociation_10">
         <bpmn2:targetRef>DataInput_37</bpmn2:targetRef>
         <bpmn2:assignment id="Assignment_5">
-          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_9">http://localhost:8080/bpms-exception-service</bpmn2:from>
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_9">http://localhost:8080/bpms-exception-service/3</bpmn2:from>
           <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_10">DataInput_1</bpmn2:to>
         </bpmn2:assignment>
       </bpmn2:dataInputAssociation>
