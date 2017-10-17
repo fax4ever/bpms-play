@@ -1,0 +1,30 @@
+import org.drools.core.process.core.datatype.impl.type.StringDataType;
+
+[
+  [
+    "name" : "RuntimeException",
+  	"parameters" : [],
+  	"results" : [],
+    "displayName" : "RuntimeException"
+  ],
+  [
+    "name" : "Rest",
+  	 "parameters" : [
+         "Url" : new StringDataType(),
+         "Method" : new StringDataType(),
+         "HandleResponseErrors" : new StringDataType(),
+         "ResultClass" : new StringDataType(),
+         "ContentType" : new StringDataType(),
+         "Content" : new ObjectDataType(),
+         "AuthType" : new StringDataType(),
+         "ConnectTimeout" : new StringDataType(),
+         "ReadTimeout" : new StringDataType()
+      ],
+  	"results" : [
+        "Result" : new ObjectDataType(),
+        "StatusMsg" : new StringDataType(),
+        "Status" : new StringDataType()
+     ],
+    "displayName" : "Rest"
+  ],
+]
