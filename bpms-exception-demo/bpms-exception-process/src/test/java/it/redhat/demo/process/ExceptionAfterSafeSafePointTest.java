@@ -10,7 +10,7 @@ import org.kie.api.runtime.manager.RuntimeEngine;
 import org.kie.api.runtime.manager.RuntimeManager;
 
 import it.redhat.demo.RuntimeExceptionWIH;
-import stub.RESTWorkItemHandlerStub;
+import stub.RestSmartStub;
 
 public class ExceptionAfterSafeSafePointTest extends JbpmJUnitBaseTestCase {
 	
@@ -31,7 +31,7 @@ public class ExceptionAfterSafeSafePointTest extends JbpmJUnitBaseTestCase {
 		runtimeEngine = getRuntimeEngine();
 
 		kieSession = runtimeEngine.getKieSession();
-		this.kieSession.getWorkItemManager().registerWorkItemHandler("Rest", new RESTWorkItemHandlerStub());
+		this.kieSession.getWorkItemManager().registerWorkItemHandler("Rest", new RestSmartStub());
 		kieSession.getWorkItemManager().registerWorkItemHandler("RuntimeException", new RuntimeExceptionWIH());
 	}
 

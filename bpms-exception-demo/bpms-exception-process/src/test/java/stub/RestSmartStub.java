@@ -3,14 +3,20 @@ package stub;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.jbpm.bpmn2.handler.WorkItemHandlerRuntimeException;
 import org.kie.api.runtime.process.WorkItem;
 import org.kie.api.runtime.process.WorkItemHandler;
 import org.kie.api.runtime.process.WorkItemManager;
 
-public class RESTWorkItemHandlerStub implements WorkItemHandler {
+public class RestSmartStub implements WorkItemHandler {
 
 	@Override
 	public void executeWorkItem(WorkItem workItem, WorkItemManager manager) {
+		
+		String url = (String) workItem.getParameter("Url");
+		if (url.contains("error") || url.contains("slow")) {
+			throw new WorkItemHandlerRuntimeException(new RuntimeException(), "Error on remote service invocation");
+		}
 		
 		Map<String, Object> parameters = workItem.getParameters();
 		

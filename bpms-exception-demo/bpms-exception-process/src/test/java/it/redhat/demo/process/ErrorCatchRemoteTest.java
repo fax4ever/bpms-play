@@ -1,16 +1,15 @@
 package it.redhat.demo.process;
 
-import org.jbpm.bpmn2.handler.WorkItemHandlerRuntimeException;
 import org.jbpm.test.JbpmJUnitBaseTestCase;
-import org.jbpm.workflow.instance.WorkflowRuntimeException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.manager.RuntimeEngine;
 import org.kie.api.runtime.manager.RuntimeManager;
+import org.kie.api.runtime.process.ProcessInstance;
 
-import stub.WIRuntimeExceptionThrowerWid;
+import stub.RestSmartStub;
 
 public class ErrorCatchRemoteTest extends JbpmJUnitBaseTestCase {
 	
@@ -31,7 +30,7 @@ public class ErrorCatchRemoteTest extends JbpmJUnitBaseTestCase {
 		runtimeEngine = getRuntimeEngine();
 
 		kieSession = runtimeEngine.getKieSession();
-		kieSession.getWorkItemManager().registerWorkItemHandler("Rest", new WIRuntimeExceptionThrowerWid());
+		kieSession.getWorkItemManager().registerWorkItemHandler("Rest", new RestSmartStub());
 	}
 
 	@After
@@ -45,20 +44,10 @@ public class ErrorCatchRemoteTest extends JbpmJUnitBaseTestCase {
 	@Test
 	public void test() {
 		
-		Throwable cause = null;
+		ProcessInstance pi = kieSession.startProcess("it.redhat.demo.error-catch-remote-service");
 		
-		try {
-		
-			kieSession.startProcess("it.redhat.demo.error-catch-remote-service");
-			
-		} catch (WorkflowRuntimeException e) {
-			
-			cause = e.getCause();
-			
-		}
-		
-		assertNotNull(cause);
-		assertEquals(WorkItemHandlerRuntimeException.class, cause.getClass());
+		assertProcessInstanceCompleted(pi.getId());
+		assertNodeTriggered(pi.getId(), "StartProcess", "Rest1", "RestError", "RestCatch", "Rest2", "End Event 2");
 		
 	}
 

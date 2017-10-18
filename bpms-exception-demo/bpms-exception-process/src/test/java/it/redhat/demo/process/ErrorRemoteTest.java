@@ -1,6 +1,5 @@
 package it.redhat.demo.process;
 
-import org.jbpm.bpmn2.handler.WorkItemHandlerRuntimeException;
 import org.jbpm.test.JbpmJUnitBaseTestCase;
 import org.jbpm.workflow.instance.WorkflowRuntimeException;
 import org.junit.After;
@@ -10,7 +9,7 @@ import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.manager.RuntimeEngine;
 import org.kie.api.runtime.manager.RuntimeManager;
 
-import stub.WIRuntimeExceptionThrowerWid;
+import stub.RestSmartStub;
 
 public class ErrorRemoteTest extends JbpmJUnitBaseTestCase {
 	
@@ -31,7 +30,7 @@ public class ErrorRemoteTest extends JbpmJUnitBaseTestCase {
 		runtimeEngine = getRuntimeEngine();
 
 		kieSession = runtimeEngine.getKieSession();
-		kieSession.getWorkItemManager().registerWorkItemHandler("Rest", new WIRuntimeExceptionThrowerWid());
+		kieSession.getWorkItemManager().registerWorkItemHandler("Rest", new RestSmartStub());
 	}
 
 	@After
@@ -58,7 +57,7 @@ public class ErrorRemoteTest extends JbpmJUnitBaseTestCase {
 		}
 		
 		assertNotNull(cause);
-		assertEquals(WorkItemHandlerRuntimeException.class, cause.getClass());
+		assertEquals(WorkflowRuntimeException.class, cause.getClass());
 		
 	}
 
