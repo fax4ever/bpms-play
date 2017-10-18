@@ -177,6 +177,10 @@
       </bpmn2:dataInputAssociation>
       <bpmn2:dataInputAssociation id="DataInputAssociation_3">
         <bpmn2:targetRef>DataInput_30</bpmn2:targetRef>
+        <bpmn2:assignment id="Assignment_11">
+          <bpmn2:from xsi:type="bpmn2:tFormalExpression" id="FormalExpression_23">true</bpmn2:from>
+          <bpmn2:to xsi:type="bpmn2:tFormalExpression" id="FormalExpression_18">DataInput_30</bpmn2:to>
+        </bpmn2:assignment>
       </bpmn2:dataInputAssociation>
       <bpmn2:dataInputAssociation id="DataInputAssociation_4">
         <bpmn2:targetRef>DataInput_31</bpmn2:targetRef>
