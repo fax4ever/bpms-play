@@ -44,19 +44,19 @@ public class RestServer {
     @Path("slow")
     @GET
     public String ciaoSlow() throws InterruptedException {
-        log.info("ciao 3 slow start");
+        log.info("ciao slow start");
         
         Thread.sleep(10000l);
         
         log.info("ciao 3 slow end");
-        return "ciao 3";
+        return "ciao slow";
     }
     
     @Path("error")
     @GET
     public String ciaoError() {
     	
-    	log.info("ciao 3 error");
+    	log.info("ciao error");
     	throw new RuntimeException();
     	
     }
