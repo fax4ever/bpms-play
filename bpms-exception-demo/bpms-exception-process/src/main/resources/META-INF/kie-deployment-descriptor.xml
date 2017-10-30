@@ -6,8 +6,18 @@
     <persistence-mode>JPA</persistence-mode>
     <runtime-strategy>PER_PROCESS_INSTANCE</runtime-strategy>
     <marshalling-strategies/>
-    <event-listeners />
-	<task-event-listeners />
+    <event-listeners>
+		<event-listener>
+			<resolver>mvel</resolver>
+            <identifier>new it.redhat.demo.listener.LogProcessEventListener(runtimeManager, true)</identifier>
+		</event-listener>
+	</event-listeners>
+	<task-event-listeners>
+		<task-event-listener>
+			<resolver>mvel</resolver>
+			<identifier>new it.redhat.demo.listener.LogTaskEventListener(runtimeManager, true)</identifier>
+		</task-event-listener>
+	</task-event-listeners>
     <globals>
         <global>
             <resolver>mvel</resolver>
