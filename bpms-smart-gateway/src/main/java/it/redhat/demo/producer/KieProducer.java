@@ -1,16 +1,17 @@
 package it.redhat.demo.producer;
 
+import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Produces;
+import javax.inject.Inject;
+
+import org.slf4j.Logger;
+
 import it.redhat.demo.exception.InitGatewayException;
 import org.kie.server.api.marshalling.MarshallingFormat;
 import org.kie.server.client.KieServicesClient;
 import org.kie.server.client.KieServicesConfiguration;
 import org.kie.server.client.KieServicesException;
 import org.kie.server.client.KieServicesFactory;
-import org.slf4j.Logger;
-
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.Produces;
-import javax.inject.Inject;
 
 /**
  * Created by fabio.ercoli@redhat.com on 27/03/17.
@@ -20,7 +21,7 @@ import javax.inject.Inject;
 public class KieProducer {
 
     public static final int TIMEOUT = 180000;
-    public static final String SERVER_URL = "http://localhost:8680/kie-server/services/rest/server";
+    public static final String SERVER_URL = "http://localhost:8080/kie-server/services/rest/server";
     public static final int SLEEP = 0;
     public static final int RETRIES = 20;
 

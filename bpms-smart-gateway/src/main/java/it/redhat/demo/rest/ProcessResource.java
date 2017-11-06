@@ -1,15 +1,22 @@
 package it.redhat.demo.rest;
 
-import it.redhat.demo.service.SmartProcessService;
-import org.kie.server.api.model.definition.ProcessDefinition;
-import org.kie.server.api.model.instance.ProcessInstance;
-
-import javax.inject.Inject;
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.inject.Inject;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
+
+import it.redhat.demo.service.SmartProcessService;
+import org.kie.server.api.model.definition.ProcessDefinition;
+import org.kie.server.api.model.instance.ProcessInstance;
 
 /**
  * Created by fabio.ercoli@redhat.com on 30/03/17.
@@ -49,6 +56,22 @@ public class ProcessResource {
         params.put("curriculum", curriculum);
 
         return smartProcessService.startProcess(PROCESS_DEF_ID, params);
+
+    }
+
+    @POST
+    @Path("definitions/selection/{times}")
+    @Consumes(MediaType.TEXT_PLAIN)
+    public Integer startProcessTimes(@QueryParam("curriculum") String curriculum, @PathParam("times") Integer times) {
+
+        for (int i=0; i<times; i++) {
+            HashMap<String, Object> params = new HashMap<>();
+            params.put("curriculum", curriculum + "-" + i);
+
+            smartProcessService.startProcess(PROCESS_DEF_ID, params);
+        }
+
+        return times;
 
     }
 
