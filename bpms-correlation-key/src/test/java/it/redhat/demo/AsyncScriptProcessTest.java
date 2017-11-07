@@ -65,7 +65,7 @@ public class AsyncScriptProcessTest extends JbpmJUnitBaseTestCase {
 		HashMap<String, Object> parameters = new HashMap<>();
 		parameters.put("processId", "it.redhat.demo.script-parent-process");
 
-		ProcessInstance pi = ((CorrelationAwareProcessRuntime)kieSession).startProcess("it.redhat.demo.script-parent-process", getCorrelationKey(), parameters);
+		ProcessInstance pi = ((CorrelationAwareProcessRuntime)kieSession).startProcess("it.redhat.demo.async-script-parent-process", getCorrelationKey(), parameters);
 		
 		assertProcessInstanceCompleted(pi.getId());
 		assertNodeTriggered(pi.getId(), "StartProcess", "CallSubprocess", "EndProcess");
