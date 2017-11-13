@@ -1,0 +1,65 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>it.redhat.demo.bpm.solution</groupId>
+	<artifactId>bpms-profile-visibility</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<modules>
+		<module>bpms-profile-visibility-process</module>
+		<module>bpms-profile-visibility-query</module>
+		<module>bpms-profile-visibility-filter</module>
+	</modules>
+
+	<properties>
+
+		<!-- JAVA -->
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven.compiler.source>1.8</maven.compiler.source>
+
+		<!-- BPMS 6.4.2 -->
+		<version.org.brms-bpmsuite>6.4.4.GA-redhat-3</version.org.brms-bpmsuite>
+
+		<version.org.slf4j>1.7.15</version.org.slf4j>
+
+	</properties>
+
+	<repositories>
+		<repository>
+			<id>jboss-ga</id>
+			<url>https://maven.repository.redhat.com/ga</url>
+		</repository>
+		<repository>
+			<id>jboss-public-repository-group</id>
+			<url>https://repository.jboss.org/nexus/content/groups/public-jboss</url>
+		</repository>
+	</repositories>
+
+	<pluginRepositories>
+  	<pluginRepository>
+    	<id>jboss-public-repository-group</id>
+      <url>https://repository.jboss.org/nexus/content/groups/public-jboss</url>
+		</pluginRepository>
+  </pluginRepositories>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.jboss.bom.brms</groupId>
+				<artifactId>jboss-brms-bpmsuite-platform-bom</artifactId>
+				<type>pom</type>
+				<version>${version.org.brms-bpmsuite}</version>
+				<scope>import</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-simple</artifactId>
+				<version>${version.org.slf4j}</version>
+				<scope>test</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+</project>
