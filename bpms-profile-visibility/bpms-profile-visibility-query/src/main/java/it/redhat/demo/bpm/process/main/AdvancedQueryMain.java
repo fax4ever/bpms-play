@@ -49,25 +49,25 @@ public class AdvancedQueryMain {
         advancedQueryService.registerAdvancedQuery();
 
         // queries
-        List<TaskInstance> result = advancedQueryService.potOwnedByCip("marco", Collections.singletonList("AXAGEXTAGD_123456"), "A007", 0, 10);
+        List<TaskInstance> result = advancedQueryService.potOwnedByCip("marco", Collections.singletonList("INSURANCE_AGENT_ROLE_123456"), "A007", 0, 10);
         LOG.info("Query result: {}", result);
 
-        result = advancedQueryService.potOwnedByCip("diego", Collections.singletonList("AXAGEXTAGD_123456"), "B003", 0, 10);
+        result = advancedQueryService.potOwnedByCip("diego", Collections.singletonList("INSURANCE_AGENT_ROLE_123456"), "B003", 0, 10);
         LOG.info("Query result: {}", result);
 
-        result = advancedQueryService.potOwnedByCip("dario", Collections.singletonList("AXAGEXTAGD_234567"), "B003", 0, 10);
+        result = advancedQueryService.potOwnedByCip("dario", Collections.singletonList("INSURANCE_AGENT_ROLE_234567"), "B003", 0, 10);
         LOG.info("Query result: {}", result);
 
         advancedQueryService.changeCip(pid, "B003");
 
         // queries
-        result = advancedQueryService.potOwnedByCip("marco", Collections.singletonList("AXAGEXTAGD_123456"), "A007", 0, 10);
+        result = advancedQueryService.potOwnedByCip("marco", Collections.singletonList("INSURANCE_AGENT_ROLE_123456"), "A007", 0, 10);
         LOG.info("Query result: {}", result);
 
-        result = advancedQueryService.potOwnedByCip("diego", Collections.singletonList("AXAGEXTAGD_123456"), "B003", 0, 10);
+        result = advancedQueryService.potOwnedByCip("diego", Collections.singletonList("INSURANCE_AGENT_ROLE_123456"), "B003", 0, 10);
         LOG.info("Query result: {}", result);
 
-        result = advancedQueryService.potOwnedByCip("dario", Collections.singletonList("AXAGEXTAGD_234567"), "B003", 0, 10);
+        result = advancedQueryService.potOwnedByCip("dario", Collections.singletonList("INSURANCE_AGENT_ROLE_234567"), "B003", 0, 10);
         LOG.info("Query result: {}", result);
 
         advancedQueryService.endConversation();

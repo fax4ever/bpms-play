@@ -37,7 +37,7 @@ public class Ownership extends VariableEntity {
 
 	@Transient
 	public String getGroup() {
-		return "AXAGEXTAGD_"+agency;
+		return "INSURANCE_AGENT_ROLE_"+agency;
 	}
 
 	public String getCip() {

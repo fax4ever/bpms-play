@@ -80,7 +80,7 @@ public class TeskOwnershipProcessTest extends JbpmJUnitBaseTestCase {
     	
     	List<OrganizationalEntity> potentialOwners = agentTask.getPeopleAssignments().getPotentialOwners();
 		assertEquals(1, potentialOwners.size());
-		assertEquals("AXAGEXTAGD_123456", potentialOwners.get(0).getId());
+		assertEquals("INSURANCE_AGENT_ROLE_123456", potentialOwners.get(0).getId());
 		
 		assertEquals(Status.Ready, agentTask.getTaskData().getStatus());
     	
@@ -153,7 +153,7 @@ public class TeskOwnershipProcessTest extends JbpmJUnitBaseTestCase {
     	logTaskInfo(agentTask);
     	
     	List<OrganizationalEntity> potentialOwners = agentTask.getPeopleAssignments().getPotentialOwners();
-		assertEquals("AXAGEXTAGD_123456", potentialOwners.get(0).getId());
+		assertEquals("INSURANCE_AGENT_ROLE_123456", potentialOwners.get(0).getId());
 		
 		assertEquals(Status.Ready, agentTask.getTaskData().getStatus());
     	
@@ -239,7 +239,7 @@ public class TeskOwnershipProcessTest extends JbpmJUnitBaseTestCase {
     	logTaskInfo(agentTask);
     	
     	List<OrganizationalEntity> potentialOwners = agentTask.getPeopleAssignments().getPotentialOwners();
-		assertEquals("AXAGEXTAGD_123456", potentialOwners.get(0).getId());
+		assertEquals("INSURANCE_AGENT_ROLE_123456", potentialOwners.get(0).getId());
 		
 		assertEquals(Status.Ready, agentTask.getTaskData().getStatus());
     	
