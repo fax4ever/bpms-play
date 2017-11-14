@@ -8,16 +8,18 @@ import org.slf4j.LoggerFactory;
 
 import it.redhat.demo.bpm.process.exception.SignalNotAvilableException;
 import org.kie.server.api.marshalling.MarshallingFormat;
+import org.kie.server.api.model.instance.ProcessInstance;
 import org.kie.server.client.KieServicesClient;
 import org.kie.server.client.KieServicesConfiguration;
 import org.kie.server.client.KieServicesFactory;
 import org.kie.server.client.ProcessServicesClient;
+import org.kie.server.client.QueryServicesClient;
 
 public class SignalService {
 
 	private static final Logger LOG = LoggerFactory.getLogger(SignalService.class);
 
-	public static final String CONTAINER_ID = "it.redhat.demo.bpm.solution:profile-visibility-process:0.0.1-SNAPSHOT";
+	public static final String CONTAINER_ID = "it.redhat.demo:bpms-invoke-signal-process:1.0.0-SNAPSHOT";
 
 	private final KieServicesConfiguration config;
 
@@ -62,6 +64,12 @@ public class SignalService {
 		
 		client.getServicesClient(ProcessServicesClient.class).signalProcessInstance(CONTAINER_ID, processInstanceId, signalName, signalContent);
 		
+	}
+
+	public ProcessInstance getProcessInstance(long processInstanceId) {
+
+		return client.getServicesClient( QueryServicesClient.class ).findProcessInstanceById( processInstanceId );
+
 	}
 
 }

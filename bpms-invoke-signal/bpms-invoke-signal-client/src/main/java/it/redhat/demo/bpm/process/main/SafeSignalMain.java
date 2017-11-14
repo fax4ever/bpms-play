@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import it.redhat.demo.bpm.process.exception.SignalNotAvilableException;
 import it.redhat.demo.bpm.process.query.GatewaySettings;
 import it.redhat.demo.bpm.process.query.SignalService;
+import org.kie.server.api.model.instance.ProcessInstance;
 
 public class SafeSignalMain {
 
@@ -33,6 +34,11 @@ public class SafeSignalMain {
         assert(exceptionRised);
         
         signalService.sendSignalSafe(processInstanceId, "mySignal", "mySignalContent");
+
+		ProcessInstance processInstance = signalService.getProcessInstance( processInstanceId );
+
+		Integer state = processInstance.getState();
+		LOG.info( "state after 1 signals {}", state);
         
         try {
         	signalService.sendSignalSafe(processInstanceId, "mySignal", "mySignalContent2");
@@ -43,6 +49,11 @@ public class SafeSignalMain {
         assert(exceptionRised);
         
         signalService.sendSignalSafe(processInstanceId, "anotherSignal", "anotherSignalContent");
+
+		processInstance = signalService.getProcessInstance( processInstanceId );
+
+		state = processInstance.getState();
+		LOG.info( "state after 2 signals {}", state);
 
 	}
 
