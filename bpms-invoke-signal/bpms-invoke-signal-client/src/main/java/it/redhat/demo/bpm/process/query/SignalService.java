@@ -3,15 +3,15 @@ package it.redhat.demo.bpm.process.query;
 import java.util.HashMap;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import it.redhat.demo.bpm.process.exception.SignalNotAvilableException;
 import org.kie.server.api.marshalling.MarshallingFormat;
 import org.kie.server.client.KieServicesClient;
 import org.kie.server.client.KieServicesConfiguration;
 import org.kie.server.client.KieServicesFactory;
 import org.kie.server.client.ProcessServicesClient;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import it.redhat.demo.bpm.process.exception.SignalNotAvilableException;
 
 public class SignalService {
 

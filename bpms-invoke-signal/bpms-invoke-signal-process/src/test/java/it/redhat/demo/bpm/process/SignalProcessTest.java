@@ -2,10 +2,11 @@ package it.redhat.demo.bpm.process;
 
 import java.util.HashMap;
 
-import org.jbpm.test.JbpmJUnitBaseTestCase;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import org.jbpm.test.JbpmJUnitBaseTestCase;
 import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.manager.RuntimeEngine;
 import org.kie.api.runtime.manager.RuntimeManager;

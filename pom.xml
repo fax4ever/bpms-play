@@ -46,6 +46,8 @@
         <module>bpms-model-process</module>
         <module>bpms-multi-start</module>
         <module>bpms-exception-demo</module>
+        <module>bpms-profile-visibility</module>
+        <module>bpms-invoke-signal</module>
     </modules>
 
     <properties>

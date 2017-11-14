@@ -9,7 +9,7 @@ import it.redhat.demo.bpm.process.query.SignalService;
 
 public class SafeSignalMain {
 
-	private static final Logger LOG = LoggerFactory.getLogger(AdvancedQueryMain.class);
+	private static final Logger LOG = LoggerFactory.getLogger(SafeSignalMain.class);
 
 	public static void main(String[] args) {
 		
