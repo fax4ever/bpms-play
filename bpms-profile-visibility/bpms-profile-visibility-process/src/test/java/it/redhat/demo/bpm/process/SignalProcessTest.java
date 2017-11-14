@@ -51,11 +51,11 @@ public class SignalProcessTest extends JbpmJUnitBaseTestCase {
     	
     	kieSession.signalEvent("mySignal", "mySignalContent", pi.getId());
     	
+    	kieSession.signalEvent("anotherSignal", "anotherSignalContent", pi.getId());
+    	
     	assertProcessInstanceCompleted(pi.getId());
     	assertNodeTriggered(pi.getId(), "EndProcess");
 		
-    	// a second signal is fine too, but have no effect on process instance
-    	kieSession.signalEvent("mySignal", "mySignalContent 2", pi.getId());
     	
 	}
 
