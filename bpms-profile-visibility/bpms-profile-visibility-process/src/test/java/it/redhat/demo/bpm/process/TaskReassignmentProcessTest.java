@@ -118,7 +118,7 @@ public class TaskReassignmentProcessTest extends JbpmJUnitBaseTestCase {
     	agentTask = taskService.getTaskById(processInstanceTasks.get(0));
     	logTaskInfo(agentTask);
     	
-		taskService.complete(agentTask.getId(), "zuzu", new HashMap<>());
+		taskService.complete(agentTask.getId(), "marco", new HashMap<>());
     	
     	assertProcessInstanceCompleted(pi.getId());
     	assertNodeTriggered(pi.getId(), "EndProcess");

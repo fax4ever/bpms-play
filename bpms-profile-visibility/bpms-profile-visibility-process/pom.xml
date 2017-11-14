@@ -23,6 +23,18 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.jbpm</groupId>
+			<artifactId>jbpm-human-task-jpa</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.kie</groupId>
+			<artifactId>kie-internal</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 			<scope>provided</scope>
@@ -50,12 +62,12 @@
 				<version>8.0.0-SNAPSHOT</version>
 				<configuration>
 					<templateId>${kie-server-template-id}</templateId>
-        			<controllerUsername>${controller-username}</controllerUsername>
-        			<controllerPassword>${controller-pwd}</controllerPassword>
-        			<port>${controller-port}</port>
-        			<username>${kieserver-username}</username>
-        			<password>${kieserver-pwd}</password>
-    				<runtimeStrategy>PER_PROCESS_INSTANCE</runtimeStrategy>
+					<controllerUsername>${controller-username}</controllerUsername>
+					<controllerPassword>${controller-pwd}</controllerPassword>
+					<port>${controller-port}</port>
+					<username>${kieserver-username}</username>
+					<password>${kieserver-pwd}</password>
+					<runtimeStrategy>PER_PROCESS_INSTANCE</runtimeStrategy>
 				</configuration>
 			</plugin>
 
