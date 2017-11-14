@@ -53,6 +53,12 @@
             <parameters/>
             <name>ChangeOwnership</name>
         </work-item-handler>
+        <work-item-handler>
+            <resolver>mvel</resolver>
+            <identifier>new it.redhat.demo.bpm.process.wid.RevokingTask(runtimeManager)</identifier>
+            <parameters/>
+            <name>RevokingTask</name>
+        </work-item-handler>
     </work-item-handlers>
     <environment-entries/>
     <configurations/>

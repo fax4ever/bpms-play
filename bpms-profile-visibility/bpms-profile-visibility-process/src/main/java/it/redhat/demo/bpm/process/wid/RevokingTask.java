@@ -1,6 +1,5 @@
 package it.redhat.demo.bpm.process.wid;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
