@@ -69,5 +69,16 @@ import org.drools.core.process.core.datatype.impl.type.ObjectDataType;
     ],
     "displayName" : "Change Ownership",
     "icon" : "defaultservicenodeicon.png"
+  ],
+  
+  [
+    "name" : "RevokingTask",
+    "parameters" : [
+        "agency" : new StringDataType()
+    ],
+    "results" : [],
+    "displayName" : "RevokingTask",
+    "icon" : "defaultservicenodeicon.png"
   ]
+  
 ]
