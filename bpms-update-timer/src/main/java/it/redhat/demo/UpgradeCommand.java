@@ -50,7 +50,7 @@ public class UpgradeCommand implements GenericCommand<Object> {
 			updateStateBasedNode(ni, timerManager, wfp);
 		}
 		for (TimerNodeInstance ni : timers) {
-			//updateTimerNode(ni, timerManager, wfp);
+			updateTimerNode(ni, timerManager, wfp);
 		}
 		
 		
@@ -83,11 +83,12 @@ public class UpgradeCommand implements GenericCommand<Object> {
 		taskNodeInstance.internalSetTimerInstances(newTimerInstances);
 	}
 	
-	public void updateTimerNode(TimerNodeInstance taskNodeInstance, TimerManager timerManager, RuleFlowProcessInstance wfp) {
-		long timerInstanceId = taskNodeInstance.getId();
-		
+	public void updateTimerNode(TimerNodeInstance timerNodeInstance, TimerManager timerManager, RuleFlowProcessInstance wfp) {
+		long timerInstanceId = timerNodeInstance.getTimerId();
+
 		LOG.info("Found timer {}", timerInstanceId);
-		TimerInstance oldTimerInstance = taskNodeInstance.getTimerInstance();
+		
+		TimerInstance oldTimerInstance = timerManager.getTimerMap().get(timerInstanceId);
 		
 		// remove old timer
 		timerManager.cancelTimer(timerInstanceId);
@@ -99,10 +100,12 @@ public class UpgradeCommand implements GenericCommand<Object> {
 		newTimerInstance.setPeriod(0);
 		newTimerInstance.setTimerId(oldTimerInstance.getTimerId());
 		
-		
 		// register new timer
-		taskNodeInstance.internalSetTimerId(oldTimerInstance.getTimerId());
+		timerManager.registerTimer(newTimerInstance, wfp);
 		
 		LOG.info("Register new time! {}", delay);
+		
+		timerNodeInstance.internalSetTimerId(newTimerInstance.getId());
+		
 	}
 }

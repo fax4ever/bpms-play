@@ -51,7 +51,9 @@ public class TimerParallelTest extends JbpmJUnitBaseTestCase {
 		ksession.execute(new UpgradeCommand(processInstance.getId()));
 		Thread.sleep(2000);
 		
-		assertNodeTriggered(processInstance.getId(), "Timer 1", "Timer 2", "Intermediate Catch Event 1", "Intermediate Catch Event 2", "Exclusive Gateway 1", "Exclusive Gateway 2", "Parallel Gateway 2", "End Event 2");
+		assertNodeTriggered(processInstance.getId(), "Timer 1", "Timer 2", "Intermediate Catch Event 1", "Intermediate Catch Event 2");
+		assertNodeTriggered(processInstance.getId(), "Exclusive Gateway 1", "Exclusive Gateway 2", "Parallel Gateway 2");
+		assertNodeTriggered(processInstance.getId(), "End Event 2");
 		assertProcessInstanceCompleted(processInstance.getId());
 		
 	}
