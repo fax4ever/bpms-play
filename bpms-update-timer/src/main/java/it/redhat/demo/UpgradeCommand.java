@@ -2,6 +2,7 @@ package it.redhat.demo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.drools.core.command.impl.GenericCommand;
 import org.drools.core.command.impl.KnowledgeCommandContext;
@@ -23,10 +24,12 @@ public class UpgradeCommand implements GenericCommand<Object> {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private long processInstanceId;
+	private final long processInstanceId;
+	private final Set<String> filter;
 	
-	public UpgradeCommand(long processInstanceId) {
+	public UpgradeCommand(long processInstanceId, Set<String> filter) {
 		this.processInstanceId = processInstanceId;
+		this.filter = filter;
 	}
 	
 	public Object execute(org.kie.internal.command.Context context) {
@@ -38,6 +41,14 @@ public class UpgradeCommand implements GenericCommand<Object> {
 		List<TimerNodeInstance> timers = new ArrayList<>();
 		
 		for (NodeInstance nodeInstance: wfp.getNodeInstances()) {
+			
+			String nodeName = nodeInstance.getNodeName();
+			LOG.info(nodeName);
+			
+			/*if (!filter.contains(nodeName)) {
+				continue;
+			}*/
+			
 			if (nodeInstance instanceof TimerNodeInstance) {
 				timers.add((TimerNodeInstance) nodeInstance);
 			} else if (nodeInstance instanceof StateBasedNodeInstance) {

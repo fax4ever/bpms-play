@@ -1,5 +1,7 @@
 package it.redhat.demo.test;
 
+import java.util.HashSet;
+
 import org.jbpm.test.JbpmJUnitBaseTestCase;
 import org.junit.After;
 import org.junit.Before;
@@ -48,7 +50,13 @@ public class TimerParallelTest extends JbpmJUnitBaseTestCase {
 		assertProcessInstanceActive(processInstance.getId());
 		assertNodeTriggered(processInstance.getId(), "StartProcess", "Parallel Gateway 1", "User Task 1", "Intermediate Catch Event 1", "Intermediate Catch Event 2", "Sub Process 1");
 		
-		ksession.execute(new UpgradeCommand(processInstance.getId()));
+		HashSet<String> filter = new HashSet<>();
+		filter.add("User Task 1");
+		filter.add("User Task 2");
+		filter.add("Intermediate Catch Event 1");
+		filter.add("Sub Process 1");
+		
+		ksession.execute(new UpgradeCommand(processInstance.getId(), filter));
 		Thread.sleep(2000);
 		
 		assertNodeTriggered(processInstance.getId(), "Timer 1", "Timer 2", "Intermediate Catch Event 1", "Intermediate Catch Event 2");

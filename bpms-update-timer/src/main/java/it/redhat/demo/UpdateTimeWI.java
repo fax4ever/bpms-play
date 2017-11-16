@@ -1,6 +1,7 @@
 package it.redhat.demo;
 
 import java.util.HashMap;
+import java.util.HashSet;
 
 import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.manager.RuntimeEngine;
@@ -22,7 +23,7 @@ public class UpdateTimeWI implements WorkItemHandler {
 		RuntimeEngine engine = runtimeManager.getRuntimeEngine(null);
 		KieSession ksession = engine.getKieSession();
 		
-		ksession.execute(new UpgradeCommand(workItem.getProcessInstanceId()));
+		ksession.execute(new UpgradeCommand(workItem.getProcessInstanceId(), new HashSet<>()));
 		
 		workItemManager.completeWorkItem(workItem.getId(), new HashMap<>());
 	}

@@ -1,5 +1,7 @@
 package it.redhat.demo.test;
 
+import java.util.HashSet;
+
 import org.jbpm.test.JbpmJUnitBaseTestCase;
 import org.junit.After;
 import org.junit.Before;
@@ -48,7 +50,10 @@ public class TimerTest extends JbpmJUnitBaseTestCase {
 		assertProcessInstanceActive(processInstance.getId());
 		assertNodeTriggered(processInstance.getId(), "StartProcess", "User Task 1");
 		
-		ksession.execute(new UpgradeCommand(processInstance.getId()));
+		HashSet<String> filter = new HashSet<>();
+		filter.add("User Task 1");
+		
+		ksession.execute(new UpgradeCommand(processInstance.getId(), filter));
 		Thread.sleep(2000);
 		
 		assertProcessInstanceCompleted(processInstance.getId());
