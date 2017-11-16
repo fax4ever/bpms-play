@@ -2,21 +2,18 @@ package it.redhat.demo.bpm.process;
 
 import java.util.HashMap;
 
+import org.jbpm.test.JbpmJUnitBaseTestCase;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import org.jbpm.test.JbpmJUnitBaseTestCase;
 import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.manager.RuntimeEngine;
-import org.kie.api.runtime.manager.RuntimeManager;
 import org.kie.api.runtime.process.ProcessInstance;
 
 public class SignalProcessTest extends JbpmJUnitBaseTestCase {
 	
 	private static final String PROCESS_FOLDER = "it/redhat/demo/bpm/process/";
 
-	private RuntimeManager runtimeManager;
 	private RuntimeEngine runtimeEngine;
 	private KieSession kieSession;
 	
@@ -27,7 +24,7 @@ public class SignalProcessTest extends JbpmJUnitBaseTestCase {
 	@Before
 	public void before() {
 
-		runtimeManager = createRuntimeManager(PROCESS_FOLDER + "signal.bpmn2");
+		createRuntimeManager(PROCESS_FOLDER + "signal.bpmn2");
 		runtimeEngine = getRuntimeEngine();
 		kieSession = runtimeEngine.getKieSession();
 
@@ -36,8 +33,8 @@ public class SignalProcessTest extends JbpmJUnitBaseTestCase {
 	@After
 	public void after() {
 
-		runtimeManager.disposeRuntimeEngine(runtimeEngine);
-		runtimeManager.close();
+		manager.disposeRuntimeEngine(runtimeEngine);
+		manager.close();
 
 	}
 	
