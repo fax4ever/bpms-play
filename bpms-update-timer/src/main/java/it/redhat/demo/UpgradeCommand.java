@@ -10,7 +10,8 @@ import org.jbpm.process.instance.InternalProcessRuntime;
 import org.jbpm.process.instance.timer.TimerInstance;
 import org.jbpm.process.instance.timer.TimerManager;
 import org.jbpm.ruleflow.instance.RuleFlowProcessInstance;
-import org.jbpm.workflow.instance.node.HumanTaskNodeInstance;
+import org.jbpm.workflow.instance.node.StateBasedNodeInstance;
+import org.jbpm.workflow.instance.node.TimerNodeInstance;
 import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.process.NodeInstance;
 import org.slf4j.Logger;
@@ -33,15 +34,30 @@ public class UpgradeCommand implements GenericCommand<Object> {
 		RuleFlowProcessInstance wfp = (RuleFlowProcessInstance) 
 			ksession.getProcessInstance(processInstanceId);
 		
-		HumanTaskNodeInstance taskNodeInstance = null;
+		List<StateBasedNodeInstance> stateBasedNodeInstance = new ArrayList<>();
+		List<TimerNodeInstance> timers = new ArrayList<>();
+		
 		for (NodeInstance nodeInstance: wfp.getNodeInstances()) {
-			if (nodeInstance instanceof HumanTaskNodeInstance) {
-				taskNodeInstance = (HumanTaskNodeInstance) nodeInstance;
+			if (nodeInstance instanceof TimerNodeInstance) {
+				timers.add((TimerNodeInstance) nodeInstance);
+			} else if (nodeInstance instanceof StateBasedNodeInstance) {
+				stateBasedNodeInstance.add((StateBasedNodeInstance) nodeInstance);
 			}
 		}
 		
 		TimerManager timerManager = ((InternalProcessRuntime) ((InternalKnowledgeRuntime) ksession).getProcessRuntime()).getTimerManager();
+		for (StateBasedNodeInstance ni : stateBasedNodeInstance) {
+			updateStateBasedNode(ni, timerManager, wfp);
+		}
+		for (TimerNodeInstance ni : timers) {
+			//updateTimerNode(ni, timerManager, wfp);
+		}
 		
+		
+		return null;
+	}
+	
+	public void updateStateBasedNode(StateBasedNodeInstance taskNodeInstance, TimerManager timerManager, RuleFlowProcessInstance wfp) {
 		List<Long> newTimerInstances = new ArrayList<Long>();
 		for (long timerInstanceId: taskNodeInstance.getTimerInstances()) {
 			LOG.info("Found timer {}", timerInstanceId);
@@ -65,6 +81,28 @@ public class UpgradeCommand implements GenericCommand<Object> {
 			newTimerInstances.add(newTimerInstance.getId());
 		}
 		taskNodeInstance.internalSetTimerInstances(newTimerInstances);
-		return null;
+	}
+	
+	public void updateTimerNode(TimerNodeInstance taskNodeInstance, TimerManager timerManager, RuleFlowProcessInstance wfp) {
+		long timerInstanceId = taskNodeInstance.getId();
+		
+		LOG.info("Found timer {}", timerInstanceId);
+		TimerInstance oldTimerInstance = taskNodeInstance.getTimerInstance();
+		
+		// remove old timer
+		timerManager.cancelTimer(timerInstanceId);
+		
+		TimerInstance newTimerInstance = new TimerInstance();
+		long delay = 1l;
+		
+		newTimerInstance.setDelay(delay);
+		newTimerInstance.setPeriod(0);
+		newTimerInstance.setTimerId(oldTimerInstance.getTimerId());
+		
+		
+		// register new timer
+		taskNodeInstance.internalSetTimerId(oldTimerInstance.getTimerId());
+		
+		LOG.info("Register new time! {}", delay);
 	}
 }
