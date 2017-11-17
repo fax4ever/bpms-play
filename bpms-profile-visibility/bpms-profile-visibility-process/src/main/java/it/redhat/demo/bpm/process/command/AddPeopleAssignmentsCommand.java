@@ -21,9 +21,11 @@ import java.util.Arrays;
 import org.jbpm.services.task.commands.TaskContext;
 import org.jbpm.services.task.commands.UserGroupCallbackTaskCommand;
 import org.kie.api.task.model.OrganizationalEntity;
+import org.kie.api.task.model.Status;
 import org.kie.api.task.model.Task;
 import org.kie.internal.command.Context;
 import org.kie.internal.task.api.model.InternalPeopleAssignments;
+import org.kie.internal.task.api.model.InternalTaskData;
 
 
 public class AddPeopleAssignmentsCommand extends UserGroupCallbackTaskCommand<Void> {
@@ -38,9 +40,8 @@ public class AddPeopleAssignmentsCommand extends UserGroupCallbackTaskCommand<Vo
     private OrganizationalEntity[] entities;
     private boolean removeExisting;
 
-    public AddPeopleAssignmentsCommand(String userId, long taskId, int type, OrganizationalEntity[] entities, boolean removeExisting) {
+    public AddPeopleAssignmentsCommand(long taskId, int type, OrganizationalEntity[] entities, boolean removeExisting) {
         super();
-        setUserId(userId);
         setTaskId(taskId);
         this.type = type;
         this.entities = entities;
@@ -52,10 +53,7 @@ public class AddPeopleAssignmentsCommand extends UserGroupCallbackTaskCommand<Vo
         TaskContext context = (TaskContext) cntxt;
         
         Task task = context.getTaskQueryService().getTaskInstanceById( taskId);
-        // security check
-        /*if (!isBusinessAdmin(userId, task.getPeopleAssignments().getBusinessAdministrators(), context)) {
-            throw new PermissionDeniedException( "User " + userId + " is not business admin of task " + taskId);
-        }*/
+
         switch (type) {
             case POT_OWNER:
                 if (removeExisting) {
@@ -80,6 +78,10 @@ public class AddPeopleAssignmentsCommand extends UserGroupCallbackTaskCommand<Vo
                 break;
         }
         doCallbackOperationForPeopleAssignments( ((InternalPeopleAssignments)task.getPeopleAssignments()), context);
+
+        // reset task status too!
+        ((InternalTaskData) task.getTaskData()).setStatus( Status.Ready );
+
         return null;
     }
 

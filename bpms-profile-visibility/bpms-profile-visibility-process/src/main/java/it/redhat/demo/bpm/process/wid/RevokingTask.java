@@ -43,7 +43,7 @@ public class RevokingTask implements WorkItemHandler {
 		OrganizationalEntity[] entities = new OrganizationalEntity[1];
 		entities[0] = group;
 
-		taskService.execute( new AddPeopleAssignmentsCommand( "zuzu", task.getId(), AddPeopleAssignmentsCommand.POT_OWNER, entities, true ) );
+		taskService.execute( new AddPeopleAssignmentsCommand(task.getId(), AddPeopleAssignmentsCommand.POT_OWNER, entities, true ) );
 		manager.completeWorkItem(workItem.getId(), new HashMap<>());
 		
 	}

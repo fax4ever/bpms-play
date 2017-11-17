@@ -119,7 +119,7 @@ public class TaskRevokingProcessTest extends JbpmJUnitBaseTestCase {
 		OrganizationalEntity[] entities = new OrganizationalEntity[1];
 		entities[0] = group;
 
-		taskService.execute( new AddPeopleAssignmentsCommand( "zuzu", agentTask.getId(), AddPeopleAssignmentsCommand.POT_OWNER, entities, true ) );
+		taskService.execute( new AddPeopleAssignmentsCommand( agentTask.getId(), AddPeopleAssignmentsCommand.POT_OWNER, entities, true ) );
 
 		processInstanceTasks = taskService.getTasksByProcessInstanceId(pi.getId());
 		assertEquals(1, processInstanceTasks.size());
@@ -179,6 +179,50 @@ public class TaskRevokingProcessTest extends JbpmJUnitBaseTestCase {
     	assertProcessInstanceCompleted(pi.getId());
     	assertNodeTriggered(pi.getId(), "EndProcess");
 		
+	}
+
+	@Test
+	public void test_revoking_afterClaim() {
+
+		HashMap<String, Object> parameters = new HashMap<>();
+		parameters.put("agency", "123456");
+
+		ProcessInstance pi = kieSession.startProcess("it.redhat.demo.bpm.process.task-revoking", parameters);
+
+		assertProcessInstanceActive(pi.getId());
+		assertNodeTriggered(pi.getId(), "StartProcess", "Agent Task");
+
+		List<Long> processInstanceTasks = taskService.getTasksByProcessInstanceId(pi.getId());
+		assertEquals(1, processInstanceTasks.size());
+		Task agentTask = taskService.getTaskById(processInstanceTasks.get(0));
+		logTaskInfo(agentTask);
+
+		List<OrganizationalEntity> potentialOwners = agentTask.getPeopleAssignments().getPotentialOwners();
+		assertEquals(1, potentialOwners.size());
+		assertEquals("INSURANCE_AGENT_ROLE_123456", potentialOwners.get(0).getId());
+
+		assertEquals(Status.Ready, agentTask.getTaskData().getStatus());
+
+		taskService.claim(agentTask.getId(), "diego");
+
+		kieSession.signalEvent("changeAgency", "234567");
+
+		processInstanceTasks = taskService.getTasksByProcessInstanceId(pi.getId());
+		assertEquals(1, processInstanceTasks.size());
+		agentTask = taskService.getTaskById(processInstanceTasks.get(0));
+		logTaskInfo(agentTask);
+
+		potentialOwners = agentTask.getPeopleAssignments().getPotentialOwners();
+		assertEquals(1, potentialOwners.size());
+		assertEquals("INSURANCE_AGENT_ROLE_234567", potentialOwners.get(0).getId());
+
+		taskService.claim(agentTask.getId(), "samuele");
+		taskService.start(agentTask.getId(), "samuele");
+		taskService.complete(agentTask.getId(), "samuele", new HashMap<>());
+
+		assertProcessInstanceCompleted(pi.getId());
+		assertNodeTriggered(pi.getId(), "EndProcess");
+
 	}
 	
 	private void logTaskInfo(Task task) {
