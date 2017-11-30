@@ -15,15 +15,20 @@
 */
 package it.redhat.demo.bpm.process.query;
 
-import org.kie.server.api.marshalling.MarshallingFormat;
-import org.kie.server.api.model.definition.QueryDefinition;
-import org.kie.server.api.model.instance.TaskInstance;
-import org.kie.server.client.*;
+import java.util.HashMap;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashMap;
-import java.util.List;
+import org.kie.server.api.marshalling.MarshallingFormat;
+import org.kie.server.api.model.definition.QueryDefinition;
+import org.kie.server.api.model.instance.TaskInstance;
+import org.kie.server.client.KieServicesClient;
+import org.kie.server.client.KieServicesConfiguration;
+import org.kie.server.client.KieServicesFactory;
+import org.kie.server.client.ProcessServicesClient;
+import org.kie.server.client.QueryServicesClient;
 
 import static org.kie.server.client.QueryServicesClient.QUERY_MAP_TASK;
 

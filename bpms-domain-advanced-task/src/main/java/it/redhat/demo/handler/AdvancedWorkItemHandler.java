@@ -27,7 +27,7 @@ public class AdvancedWorkItemHandler implements WorkItemHandler {
 	public void executeWorkItem(WorkItem workItem, WorkItemManager manager) {
 		
 		// get runtime engine on executeWorkItem method body "never in the constructor"
-		RuntimeEngine runtimeEngine = runtimeManager.getRuntimeEngine(ProcessInstanceIdContext.get());
+		RuntimeEngine runtimeEngine = runtimeManager.getRuntimeEngine(ProcessInstanceIdContext.get(workItem.getProcessInstanceId()));
 		
 		KieSession kieSession = runtimeEngine.getKieSession();
 		TaskService taskService = runtimeEngine.getTaskService();
