@@ -49,9 +49,9 @@ public class SignalService {
 
     }
 	
-	public Long startProcess() {
+	public Long startProcess(String processDefinition) {
 
-        return client.getServicesClient(ProcessServicesClient.class).startProcess(CONTAINER_ID, "it.redhat.demo.bpm.process.signal", new HashMap<>());
+        return client.getServicesClient(ProcessServicesClient.class).startProcess(CONTAINER_ID, processDefinition, new HashMap<>());
 
     }
 	
