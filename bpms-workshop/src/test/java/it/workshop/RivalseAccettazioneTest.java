@@ -36,7 +36,7 @@ public class RivalseAccettazioneTest extends JbpmJUnitBaseTestCase {
 	@Before
 	public void before() {
 
-		runtimeManager = createRuntimeManager(PROCESS_FOLDER + "rivalse.bpmn2");
+		runtimeManager = createRuntimeManager(PROCESS_FOLDER + "rivalse.bpmn2", PROCESS_FOLDER + "recupero.bpmn2", PROCESS_FOLDER + "incasso.bpmn2");
 		runtimeEngine = getRuntimeEngine();
 		kieSession = runtimeEngine.getKieSession();
 		taskService = runtimeEngine.getTaskService();
@@ -73,7 +73,6 @@ public class RivalseAccettazioneTest extends JbpmJUnitBaseTestCase {
 		
 		ArrayList<Object> soggettiDebitori = new ArrayList<>();
 		soggettiDebitori.add(new SoggettoDebitore("1234567F", "Luigi", "Rossi", 1000));
-		soggettiDebitori.add(new SoggettoDebitore("1234568G", "Andrea", "Bianchi", 400));
 		
 		paramters.clear();
 		paramters.put("accettazione", true);
@@ -86,7 +85,26 @@ public class RivalseAccettazioneTest extends JbpmJUnitBaseTestCase {
 		
 		// go inside Recupero!
 		List<? extends ProcessInstanceLog> subProcs = auditService.findSubProcessInstances(processInstance.getId());
-		assertEquals(1, subProcs);
+		assertEquals(1, subProcs.size());
+		Long subId = subProcs.get(0).getProcessInstanceId();
+		
+		assertProcessInstanceActive(subId);
+		assertNodeTriggered(subId, "Start Recupero", "Restart", "Abbandono / Recupero");
+		
+		marcoTasks = taskService.getTasksAssignedAsPotentialOwner("marco", null);
+		assertEquals(1, marcoTasks.size());
+		task = marcoTasks.get(0);
+		
+		taskService.claim(task.getId(), "marco");
+		taskService.start(task.getId(), "marco");
+		
+		paramters.clear();
+		paramters.put("recupero", false);
+		
+		taskService.complete(task.getId(), "marco", paramters);
+		
+		
+		
 		
 	}
 
