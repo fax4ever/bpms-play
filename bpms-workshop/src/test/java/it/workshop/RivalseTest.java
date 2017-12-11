@@ -120,8 +120,8 @@ public class RivalseTest extends JbpmJUnitBaseTestCase {
 		taskService.start(task.getId(), "marco");
 		
 		ArrayList<Object> soggettiDebitori = new ArrayList<>();
-		soggettiDebitori.add(new SoggettoDebitore("1234567F", "Luigi", "Rossi"));
-		soggettiDebitori.add(new SoggettoDebitore("1234568G", "Andrea", "Bianchi"));
+		soggettiDebitori.add(new SoggettoDebitore("1234567F", "Luigi", "Rossi", 1000));
+		soggettiDebitori.add(new SoggettoDebitore("1234568G", "Andrea", "Bianchi", 400));
 		
 		paramters.clear();
 		paramters.put("accettazione", true);
