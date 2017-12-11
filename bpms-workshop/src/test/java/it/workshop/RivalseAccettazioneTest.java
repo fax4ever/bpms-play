@@ -11,6 +11,8 @@ import org.junit.Test;
 import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.manager.RuntimeEngine;
 import org.kie.api.runtime.manager.RuntimeManager;
+import org.kie.api.runtime.manager.audit.AuditService;
+import org.kie.api.runtime.manager.audit.ProcessInstanceLog;
 import org.kie.api.runtime.process.ProcessInstance;
 import org.kie.api.task.TaskService;
 import org.kie.api.task.model.TaskSummary;
@@ -25,6 +27,7 @@ public class RivalseAccettazioneTest extends JbpmJUnitBaseTestCase {
 	private RuntimeEngine runtimeEngine;
 	private KieSession kieSession;
 	private TaskService taskService;
+	private AuditService auditService;
 	
 	public RivalseAccettazioneTest() {
 		super(true, true);
@@ -37,6 +40,7 @@ public class RivalseAccettazioneTest extends JbpmJUnitBaseTestCase {
 		runtimeEngine = getRuntimeEngine();
 		kieSession = runtimeEngine.getKieSession();
 		taskService = runtimeEngine.getTaskService();
+		auditService = runtimeEngine.getAuditService();
 
 	}
 	
@@ -48,6 +52,7 @@ public class RivalseAccettazioneTest extends JbpmJUnitBaseTestCase {
 
 	}
 	
+	@Test
 	public void test_accettazione() {
 		
 		HashMap<String, Object> paramters = new HashMap<>();
@@ -76,8 +81,12 @@ public class RivalseAccettazioneTest extends JbpmJUnitBaseTestCase {
 		
 		taskService.complete(task.getId(), "marco", paramters);
 		
-		assertProcessInstanceCompleted(processInstance.getId());
-		assertNodeTriggered(processInstance.getId(), "accettazione / rifiuto", "Lavorazione Soggetto Debitore", "End Accettazione");
+		assertProcessInstanceActive(processInstance.getId());
+		assertNodeTriggered(processInstance.getId(), "accettazione / rifiuto", "Lavorazione Soggetto Debitore", "Start Lavorazione", "Recupero");
+		
+		// go inside Recupero!
+		List<? extends ProcessInstanceLog> subProcs = auditService.findSubProcessInstances(processInstance.getId());
+		assertEquals(1, subProcs);
 		
 	}
 
