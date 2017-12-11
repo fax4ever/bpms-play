@@ -103,8 +103,26 @@ public class RivalseAccettazioneTest extends JbpmJUnitBaseTestCase {
 		
 		taskService.complete(task.getId(), "marco", paramters);
 		
+		assertProcessInstanceActive(subId);
+		assertNodeTriggered(subId, "Verifica Autonomia", "Approvazione");
 		
+		List<TaskSummary> taskList = taskService.getTasksAssignedAsPotentialOwner("dario", null);
+		assertEquals(1, taskList.size());
+		task = taskList.get(0);
 		
+		taskService.claim(task.getId(), "dario");
+		taskService.start(task.getId(), "dario");
+		
+		paramters.clear();
+		paramters.put("approvazione", true);
+		
+		taskService.complete(task.getId(), "dario", paramters);
+		
+		assertProcessInstanceCompleted(subId);
+		assertNodeTriggered(subId, "End Approvato");
+		
+		assertProcessInstanceCompleted(processInstance.getId());
+		assertNodeTriggered(processInstance.getId(), "recupero / abbandono", "End Abbandono");
 		
 	}
 
