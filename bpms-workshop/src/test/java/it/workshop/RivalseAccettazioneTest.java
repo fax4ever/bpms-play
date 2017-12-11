@@ -1,5 +1,6 @@
 package it.workshop;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -14,7 +15,9 @@ import org.kie.api.runtime.process.ProcessInstance;
 import org.kie.api.task.TaskService;
 import org.kie.api.task.model.TaskSummary;
 
-public class RivalseTest extends JbpmJUnitBaseTestCase {
+import it.workshop.model.SoggettoDebitore;
+
+public class RivalseAccettazioneTest extends JbpmJUnitBaseTestCase {
 	
 	private static final String PROCESS_FOLDER = "it/workshop/";
 	
@@ -23,7 +26,7 @@ public class RivalseTest extends JbpmJUnitBaseTestCase {
 	private KieSession kieSession;
 	private TaskService taskService;
 	
-	public RivalseTest() {
+	public RivalseAccettazioneTest() {
 		super(true, true);
 	}
 	
@@ -45,26 +48,7 @@ public class RivalseTest extends JbpmJUnitBaseTestCase {
 
 	}
 	
-	@Test
-	public void test_revoca() {
-		
-		HashMap<String, Object> paramters = new HashMap<>();
-		paramters.put("idPratica", "ID1234567");
-		
-		ProcessInstance processInstance = kieSession.startProcess("it.workshop.rivalse", paramters);
-		
-		assertProcessInstanceActive(processInstance.getId());
-		assertNodeTriggered(processInstance.getId(), "StartProcess", "Presa In Carico");
-		
-		kieSession.signalEvent("revoca", "Pratica non lavorabile. Codice 232.");
-		
-		assertProcessInstanceAborted(processInstance.getId());
-		assertNodeTriggered(processInstance.getId(), "Revoca Pratica", "Start Revoca", "End Revoca");
-		
-	}
-	
-	@Test
-	public void test_rifiuto() {
+	public void test_accettazione() {
 		
 		HashMap<String, Object> paramters = new HashMap<>();
 		paramters.put("idPratica", "ID1234567");
@@ -82,18 +66,18 @@ public class RivalseTest extends JbpmJUnitBaseTestCase {
 		taskService.claim(task.getId(), "marco");
 		taskService.start(task.getId(), "marco");
 		
+		ArrayList<Object> soggettiDebitori = new ArrayList<>();
+		soggettiDebitori.add(new SoggettoDebitore("1234567F", "Luigi", "Rossi", 1000));
+		soggettiDebitori.add(new SoggettoDebitore("1234568G", "Andrea", "Bianchi", 400));
+		
 		paramters.clear();
-		paramters.put("accettazione", false);
+		paramters.put("accettazione", true);
+		paramters.put("soggettiDebitori", soggettiDebitori);
 		
 		taskService.complete(task.getId(), "marco", paramters);
 		
-		assertProcessInstanceActive(processInstance.getId());
-		assertNodeTriggered(processInstance.getId(), "accettazione / rifiuto", "Conferma Rifiuto");
-		
-		kieSession.signalEvent("rifiuto", "Rifiuto accordato. Codice 121.");
-		
 		assertProcessInstanceCompleted(processInstance.getId());
-		assertNodeTriggered(processInstance.getId(), "End Rifiuto");
+		assertNodeTriggered(processInstance.getId(), "accettazione / rifiuto", "Lavorazione Soggetto Debitore", "End Accettazione");
 		
 	}
 
