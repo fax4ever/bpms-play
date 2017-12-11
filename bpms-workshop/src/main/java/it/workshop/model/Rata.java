@@ -5,12 +5,22 @@ import java.util.Date;
 
 public class Rata implements Serializable {
 
-	private boolean last;
+	private Boolean last;
 	private Integer amount;
-	private Long dueDate;
 
-	public boolean isLast() {
+	public Rata() {}
+
+	public Rata(boolean last, Integer amount) {
+		this.last = last;
+		this.amount = amount;
+	}
+
+	public Boolean getLast() {
 		return last;
+	}
+
+	public void setLast(Boolean last) {
+		this.last = last;
 	}
 
 	public void setLast(boolean last) {
@@ -23,24 +33,6 @@ public class Rata implements Serializable {
 
 	public void setAmount(Integer amount) {
 		this.amount = amount;
-	}
-
-	public Long getDueDate() {
-		return dueDate;
-	}
-
-	public void setDueDate(Long dueDate) {
-		this.dueDate = dueDate;
-	}
-
-	public String getTimeToWait() {
-		
-		long now = new Date().getTime();
-		long millisToWait = dueDate - now;
-		long secondToWait = millisToWait / 1000;
-		
-		return secondToWait + "s";
-		
 	}
 
 }
