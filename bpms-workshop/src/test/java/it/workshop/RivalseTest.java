@@ -1,5 +1,6 @@
 package it.workshop;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -13,6 +14,8 @@ import org.kie.api.runtime.manager.RuntimeManager;
 import org.kie.api.runtime.process.ProcessInstance;
 import org.kie.api.task.TaskService;
 import org.kie.api.task.model.TaskSummary;
+
+import it.workshop.model.SoggettoDebitore;
 
 public class RivalseTest extends JbpmJUnitBaseTestCase {
 	
@@ -94,6 +97,40 @@ public class RivalseTest extends JbpmJUnitBaseTestCase {
 		
 		assertProcessInstanceCompleted(processInstance.getId());
 		assertNodeTriggered(processInstance.getId(), "End Rifiuto");
+		
+	}
+	
+	@Test
+	public void test_accettazione() {
+		
+		HashMap<String, Object> paramters = new HashMap<>();
+		paramters.put("idPratica", "ID1234567");
+		
+		ProcessInstance processInstance = kieSession.startProcess("it.workshop.rivalse", paramters);
+		
+		assertProcessInstanceActive(processInstance.getId());
+		assertNodeTriggered(processInstance.getId(), "StartProcess", "Presa In Carico");
+		
+		List<TaskSummary> marcoTasks = taskService.getTasksAssignedAsPotentialOwner("marco", null);
+		assertEquals(1, marcoTasks.size());
+		
+		TaskSummary task = marcoTasks.get(0);
+		
+		taskService.claim(task.getId(), "marco");
+		taskService.start(task.getId(), "marco");
+		
+		ArrayList<Object> soggettiDebitori = new ArrayList<>();
+		soggettiDebitori.add(new SoggettoDebitore("1234567F", "Luigi", "Rossi"));
+		soggettiDebitori.add(new SoggettoDebitore("1234568G", "Andrea", "Bianchi"));
+		
+		paramters.clear();
+		paramters.put("accettazione", true);
+		paramters.put("soggettiDebitori", soggettiDebitori);
+		
+		taskService.complete(task.getId(), "marco", paramters);
+		
+		assertProcessInstanceCompleted(processInstance.getId());
+		assertNodeTriggered(processInstance.getId(), "accettazione / rifiuto", "Lavorazione Soggetto Debitore", "End Accettazione");
 		
 	}
 

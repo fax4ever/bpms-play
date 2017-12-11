@@ -1,10 +1,20 @@
 package it.workshop.model;
 
-public class SoggettoDebitore {
+import java.io.Serializable;
+
+public class SoggettoDebitore implements Serializable {
 
 	private String fiscalCode;
 	private String firstName;
 	private String lastName;
+	
+	public SoggettoDebitore() {}
+
+	public SoggettoDebitore(String fiscalCode, String firstName, String lastName) {
+		this.fiscalCode = fiscalCode;
+		this.firstName = firstName;
+		this.lastName = lastName;
+	}
 
 	public String getFiscalCode() {
 		return fiscalCode;
