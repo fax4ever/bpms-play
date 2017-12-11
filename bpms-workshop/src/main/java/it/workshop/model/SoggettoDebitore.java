@@ -49,5 +49,9 @@ public class SoggettoDebitore implements Serializable {
 	public void setAmount(Integer amount) {
 		this.amount = amount;
 	}
+	
+	public boolean isHighAmount() {
+		return this.amount > 500;
+	}
 
 }

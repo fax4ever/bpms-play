@@ -237,7 +237,7 @@
       </bpmn2:dataOutputAssociation>
     </bpmn2:userTask>
     <bpmn2:sequenceFlow id="SequenceFlow_4" tns:priority="1" name="non autonomo" sourceRef="ExclusiveGateway_2" targetRef="UserTask_2">
-      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_55" language="http://www.mvel.org/2.0">!recupero || soggettoDebitore.amount > 500</bpmn2:conditionExpression>
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_55" language="http://www.mvel.org/2.0">!recupero || soggettoDebitore.highAmount</bpmn2:conditionExpression>
     </bpmn2:sequenceFlow>
     <bpmn2:endEvent id="EndEvent_1" name="End Autonomo">
       <bpmn2:extensionElements>
@@ -248,7 +248,7 @@
       <bpmn2:incoming>SequenceFlow_6</bpmn2:incoming>
     </bpmn2:endEvent>
     <bpmn2:sequenceFlow id="SequenceFlow_6" tns:priority="1" name="autonomo" sourceRef="ExclusiveGateway_2" targetRef="EndEvent_1">
-      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_56" language="http://www.mvel.org/2.0">recupero &amp;&amp; soggettoDebitore.amount &lt;= 500</bpmn2:conditionExpression>
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="FormalExpression_56" language="http://www.mvel.org/2.0">recupero &amp;&amp; !soggettoDebitore.HighAmount</bpmn2:conditionExpression>
     </bpmn2:sequenceFlow>
     <bpmn2:exclusiveGateway id="ExclusiveGateway_3" name="Verifica Approvazione" gatewayDirection="Diverging">
       <bpmn2:incoming>SequenceFlow_9</bpmn2:incoming>

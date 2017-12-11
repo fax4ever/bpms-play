@@ -50,9 +50,6 @@ public class IncassoTest extends JbpmJUnitBaseTestCase {
 
 		runtimeManager.disposeRuntimeEngine(runtimeEngine);
 		runtimeManager.close();
-
-		/*PseudoClockScheduler sessionClock = kieSession.getSessionClock();
-		sessionClock.advanceTime(10, TimeUnit.SECONDS);*/
 		
 	}
 	

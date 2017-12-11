@@ -18,6 +18,7 @@ import org.kie.api.task.TaskService;
 import org.kie.api.task.model.TaskSummary;
 
 import it.workshop.model.SoggettoDebitore;
+import it.workshop.stub.CaricaRataStub;
 
 public class RivalseAccettazioneTest extends JbpmJUnitBaseTestCase {
 	
@@ -53,7 +54,7 @@ public class RivalseAccettazioneTest extends JbpmJUnitBaseTestCase {
 	}
 	
 	@Test
-	public void test_accettazione() {
+	public void test_accettazione_abbandono() {
 		
 		HashMap<String, Object> paramters = new HashMap<>();
 		paramters.put("idPratica", "ID1234567");
@@ -123,6 +124,95 @@ public class RivalseAccettazioneTest extends JbpmJUnitBaseTestCase {
 		
 		assertProcessInstanceCompleted(processInstance.getId());
 		assertNodeTriggered(processInstance.getId(), "recupero / abbandono", "End Abbandono");
+		
+	}
+	
+	@Test
+	public void test_accettazione_incasso() {
+		
+		HashMap<String, Object> paramters = new HashMap<>();
+		paramters.put("idPratica", "ID1234567");
+		
+		ProcessInstance processInstance = kieSession.startProcess("it.workshop.rivalse", paramters);
+		
+		assertProcessInstanceActive(processInstance.getId());
+		assertNodeTriggered(processInstance.getId(), "StartProcess", "Presa In Carico");
+		
+		List<TaskSummary> marcoTasks = taskService.getTasksAssignedAsPotentialOwner("marco", null);
+		assertEquals(1, marcoTasks.size());
+		
+		TaskSummary task = marcoTasks.get(0);
+		
+		taskService.claim(task.getId(), "marco");
+		taskService.start(task.getId(), "marco");
+		
+		ArrayList<Object> soggettiDebitori = new ArrayList<>();
+		soggettiDebitori.add(new SoggettoDebitore("1234567F", "Luigi", "Rossi", 300));
+		
+		paramters.clear();
+		paramters.put("accettazione", true);
+		paramters.put("soggettiDebitori", soggettiDebitori);
+		
+		taskService.complete(task.getId(), "marco", paramters);
+		
+		assertProcessInstanceActive(processInstance.getId());
+		assertNodeTriggered(processInstance.getId(), "accettazione / rifiuto", "Lavorazione Soggetto Debitore", "Start Lavorazione", "Recupero");
+		
+		// inside Recupero
+		
+		List<? extends ProcessInstanceLog> subProcs = auditService.findSubProcessInstances(processInstance.getId());
+		assertEquals(1, subProcs.size());
+		Long subId = subProcs.get(0).getProcessInstanceId();
+		
+		assertProcessInstanceActive(subId);
+		assertNodeTriggered(subId, "Start Recupero", "Restart", "Abbandono / Recupero");
+		
+		marcoTasks = taskService.getTasksAssignedAsPotentialOwner("marco", null);
+		assertEquals(1, marcoTasks.size());
+		task = marcoTasks.get(0);
+		
+		taskService.claim(task.getId(), "marco");
+		taskService.start(task.getId(), "marco");
+		
+		kieSession.getWorkItemManager().registerWorkItemHandler("Rest", new CaricaRataStub(true, 777));
+		
+		paramters.clear();
+		paramters.put("recupero", true);
+		
+		taskService.complete(task.getId(), "marco", paramters);
+		
+		assertProcessInstanceCompleted(subId);
+		assertNodeTriggered(subId, "Verifica Autonomia", "End Autonomo");
+		
+		// end Recupero
+		
+		assertProcessInstanceActive(processInstance.getId());
+		assertNodeTriggered(processInstance.getId(), "recupero / abbandono", "Incasso");
+		
+		// inside Incasso
+		
+		List<? extends ProcessInstanceLog> activeProcessInstances = auditService.findActiveProcessInstances("it.workshop.incasso");
+		assertEquals(1, activeProcessInstances.size());
+		subId = activeProcessInstances.get(0).getProcessInstanceId();
+		
+		assertProcessInstanceActive(subId);
+		assertNodeTriggered(subId, "Start Incasso", "Repeat Carica", "Carica Rata", "Repeat Incasso", "Incasso Rata");
+		
+		List<TaskSummary> taskList = taskService.getTasksAssignedAsPotentialOwner("alessandra", null);
+		assertEquals(1, taskList.size());
+		task = taskList.get(0);
+		
+		taskService.claim(task.getId(), "alessandra");
+		taskService.start(task.getId(), "alessandra");
+		taskService.complete(task.getId(), "alessandra", new HashMap<>());
+		
+		assertProcessInstanceCompleted(subId);
+		assertNodeTriggered(subId, "Verifica Altre Rate", "End Incasso");
+		
+		// end Incasso
+		
+		assertProcessInstanceCompleted(processInstance.getId());
+		assertNodeTriggered(processInstance.getId(), "End Incasso", "End Accettazione");
 		
 	}
 
