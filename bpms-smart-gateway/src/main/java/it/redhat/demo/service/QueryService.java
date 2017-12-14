@@ -1,18 +1,26 @@
 package it.redhat.demo.service;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+
+import org.slf4j.Logger;
+
 import org.kie.server.api.model.definition.QueryFilterSpec;
 import org.kie.server.api.model.instance.ProcessInstance;
 import org.kie.server.api.model.instance.TaskInstance;
 import org.kie.server.api.util.QueryFilterSpecBuilder;
 import org.kie.server.client.QueryServicesClient;
-import org.slf4j.Logger;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import java.util.*;
-import java.util.stream.Collectors;
-
-import static it.redhat.demo.query.QueryProducer.*;
+import static it.redhat.demo.query.QueryProducer.GET_ALL_TASK_INPUT_INSTANCES_WITH_VARIABLES;
+import static it.redhat.demo.query.QueryProducer.NOT_POT_OWNED_TASKS_FOR_WORKED_PROCESS_INSTANCE;
+import static it.redhat.demo.query.QueryProducer.POT_OWNED_TASKS_BY_VARIABLES_AND_PARAMS;
+import static it.redhat.demo.query.QueryProducer.TASKS_BY_VARIABLES_AND_PARAMS;
 import static org.kie.server.client.QueryServicesClient.QUERY_MAP_PI_WITH_VARS;
 import static org.kie.server.client.QueryServicesClient.QUERY_MAP_TASK;
 import static org.kie.server.client.QueryServicesClient.QUERY_MAP_TASK_WITH_VARS;
@@ -92,6 +100,28 @@ public class QueryService {
         log.debug("AQ: notPotOwnedTasksForWorkedProcessInstance - task ids: {}", ids);
 
         return ids;
+    }
+
+    public List<Long> tasksByVariablesAndParams(Map<String, List<String>> paramsMap, Map<String, List<String>> variablesMap) {
+
+        HashMap<String, Object> parameters = new HashMap<>();
+        parameters.put("status", Arrays.asList(POT_OWNED_STATUS));
+
+        if (paramsMap != null) {
+            parameters.put("paramsMap", paramsMap);
+        }
+
+        if (variablesMap != null) {
+            parameters.put("variablesMap", variablesMap);
+        }
+
+        List<TaskInstance> taskWithDuplicates = queryServices.query(TASKS_BY_VARIABLES_AND_PARAMS, QUERY_MAP_TASK, "tasksByVariablesAndParamsFilter", parameters, 0, ARBITRARY_LONG_VALUE, TaskInstance.class);
+        List<Long> ids = taskWithDuplicates.stream().map(taskInstance -> taskInstance.getId()).distinct().collect(Collectors.toList());
+
+        log.debug("AQ: tasksByVariablesAndParams - task ids: {}", ids);
+
+        return ids;
+
     }
 
     public List<TaskInstance> getAllTaskInputInstancesWithVariables(List<Long> taskIds, boolean asc) {

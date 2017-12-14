@@ -1,18 +1,19 @@
 package it.redhat.demo.service;
 
-import it.redhat.demo.model.Page;
-import it.redhat.demo.model.TaskInstanceWithVariables;
-import org.kie.server.api.model.instance.ProcessInstance;
-import org.kie.server.api.model.instance.TaskInstance;
-import org.slf4j.Logger;
-
-import javax.ejb.Stateless;
-import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import javax.ejb.Stateless;
+import javax.inject.Inject;
+
+import org.slf4j.Logger;
+
+import it.redhat.demo.model.Page;
+import it.redhat.demo.model.TaskInstanceWithVariables;
+import org.kie.server.api.model.instance.ProcessInstance;
+import org.kie.server.api.model.instance.TaskInstance;
 
 /**
  * Created by fabio.ercoli@redhat.com on 04/07/2017.
@@ -93,6 +94,26 @@ public class PagedQueryService {
     public Page<TaskInstance> notPotOwnedTasksForWorkedProcessInstance(String user, List<String> groups, Integer page, Integer pageSize, boolean asc) {
 
         List<Long> taskIds = queryService.notPotOwnedTasksForWorkedProcessInstance(user, groups);
+
+        if (taskIds.isEmpty()) {
+            return new Page<>(0, page, pageSize, asc, new ArrayList<>());
+        }
+
+        List<Long> pageIds = pagedService.extractPage(pageSize, page, asc, taskIds);
+
+        if (pageIds.isEmpty()) {
+            return new Page<>(taskIds.size(), page, pageSize, asc, new ArrayList<>());
+        }
+
+        List<TaskInstance> tasksWithParams = queryService.getAllTaskInputInstancesWithVariables(pageIds, asc);
+
+        return new Page<>(taskIds.size(), page, pageSize, asc, tasksWithParams);
+
+    }
+
+    public Page<TaskInstance> tasksByVariablesAndParams(Map<String, List<String>> paramsMap, Map<String, List<String>> variablesMap, Integer page, Integer pageSize, boolean asc) {
+
+        List<Long> taskIds = queryService.tasksByVariablesAndParams(paramsMap, variablesMap);
 
         if (taskIds.isEmpty()) {
             return new Page<>(0, page, pageSize, asc, new ArrayList<>());

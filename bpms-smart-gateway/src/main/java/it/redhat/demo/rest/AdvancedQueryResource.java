@@ -1,9 +1,22 @@
 package it.redhat.demo.rest;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import javax.inject.Inject;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
+
 import it.redhat.demo.exception.QueryDefinitionNotFoundException;
+import it.redhat.demo.model.Page;
 import it.redhat.demo.query.QueryProducer;
 import it.redhat.demo.query.QuerySelector;
-import it.redhat.demo.model.Page;
 import it.redhat.demo.service.PagedQueryService;
 import org.kie.server.api.model.definition.QueryDefinition;
 import org.kie.server.api.model.definition.QueryFilterSpec;
@@ -12,16 +25,17 @@ import org.kie.server.api.model.instance.TaskInstance;
 import org.kie.server.api.util.QueryFilterSpecBuilder;
 import org.kie.server.client.QueryServicesClient;
 
-import javax.inject.Inject;
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-
-import static it.redhat.demo.query.QueryProducer.*;
-import static org.kie.server.client.QueryServicesClient.*;
+import static it.redhat.demo.query.QueryProducer.ACTIVE_TASKS_FOR_GROUP;
+import static it.redhat.demo.query.QueryProducer.ACTIVE_TASKS_FOR_GROUP_INPUT_PARAM_CONTENT_FILTERED;
+import static it.redhat.demo.query.QueryProducer.ACTIVE_TASKS_ON_COMPLETED_TASKS;
+import static it.redhat.demo.query.QueryProducer.ACTIVE_TASKS_ON_COMPLETED_TASKS_WITH_CUSTOM_VARIABLES;
+import static it.redhat.demo.query.QueryProducer.ACTIVE_TASKS_ON_COMPLETED_TASKS_WITH_VARIABLES;
+import static it.redhat.demo.query.QueryProducer.GET_ALL_TASK_INPUT_INSTANCES_WITH_VARIABLES;
+import static it.redhat.demo.query.QueryProducer.POT_OWNED_TASKS_BY_VARIABLES_AND_PARAMS;
+import static it.redhat.demo.query.QueryProducer.WAIT_TASK_FOR_USER_PROCESS_INSTANCE;
+import static org.kie.server.client.QueryServicesClient.QUERY_MAP_TASK;
+import static org.kie.server.client.QueryServicesClient.QUERY_MAP_TASK_WITH_CUSTOM_VARS;
+import static org.kie.server.client.QueryServicesClient.QUERY_MAP_TASK_WITH_VARS;
 
 /**
  * Created by fabio.ercoli@redhat.com on 27/03/17.
@@ -282,6 +296,19 @@ public class AdvancedQueryResource {
         String[] validGroups = {"HR"};
 
         return pagedQueryService.notPotOwnedTasksForWorkedProcessInstance("giacomo", Arrays.asList(validGroups), offset, size, asc);
+
+    }
+
+    @Path("task/{offset}/{size}")
+    @GET
+    public Page task(@PathParam("offset") Integer offset, @PathParam("size") Integer size, @QueryParam("asc") Boolean asc) {
+
+        HashMap<String, List<String>> filterMap = new HashMap<>();
+        ArrayList<String> values = new ArrayList<>();
+        values.add("f731");
+        filterMap.put("curriculum", values);
+
+        return pagedQueryService.tasksByVariablesAndParams(filterMap, filterMap, offset, size, asc);
 
     }
 
