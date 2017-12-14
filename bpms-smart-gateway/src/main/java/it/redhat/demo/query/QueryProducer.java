@@ -1,11 +1,11 @@
 package it.redhat.demo.query;
 
-import org.kie.server.api.model.definition.QueryDefinition;
-import org.kie.server.client.QueryServicesClient;
-
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
 import javax.inject.Named;
+
+import org.kie.server.api.model.definition.QueryDefinition;
+import org.kie.server.client.QueryServicesClient;
 
 /**
  * Created by fabio.ercoli@redhat.com on 30/03/17.
@@ -30,6 +30,7 @@ public class QueryProducer {
     public static final String GET_ALL_TASK_INPUT_INSTANCES_WITH_VARIABLES = "getAllTaskInputInstancesWithVariables";
     public static final String POT_OWNED_TASKS_BY_VARIABLES_AND_PARAMS = "potOwnedTasksByVariablesAndParams";
     public static final String NOT_POT_OWNED_TASKS_FOR_WORKED_PROCESS_INSTANCE = "notPotOwnedTasksForWorkedProcessInstance";
+    public static final String TASKS_BY_VARIABLES_AND_PARAMS = "tasksByVariablesAndParams";
 
     @Produces
     @Named(QueryServicesClient.QUERY_MAP_PI)
@@ -303,6 +304,38 @@ public class QueryProducer {
                 " on task.processinstanceid = other.processinstanceid " +
                 " inner join peopleassignments_potowners pot " +
                 " on pot.task_id = task.taskid ");
+        query.setTarget(CUSTOM);
+
+        return query;
+
+    }
+
+    @Produces
+    @Named(TASKS_BY_VARIABLES_AND_PARAMS)
+    public QueryDefinition tasksByVariablesAndParams() {
+
+        QueryDefinition query = new QueryDefinition();
+        query.setName(TASKS_BY_VARIABLES_AND_PARAMS);
+        query.setSource(SOURCE);
+        query.setExpression(" select task.taskid, task.actualowner, task.status, " +
+                            " param.name paramname, param.value paramvalue, " +
+                            " variable.variableid variablename, variable.value variablevalue " +
+                            " from audittaskimpl task " +
+                            " inner join ( " +
+                            "       select param.taskid, param.name, param.value  " +
+                            "       from taskvariableimpl param  " +
+                            "       where param.type = 0  " +
+                            " ) param " +
+                            " on (param.taskid = task.taskid) " +
+                            " inner join variableinstancelog variable " +
+                            " on (variable.processinstanceid = task.processinstanceid) " +
+                            " inner join ( " +
+                            "       select vil.processinstanceid ,vil.variableid, max(vil.id) maxvilid " +
+                            "       from variableinstancelog vil " +
+                            "       group by vil.processinstanceid, vil.variableid " +
+                            "       order by vil.processinstanceid " +
+                            " ) x " +
+                            " on (variable.variableid = x.variableid and variable.id = x.maxvilid) ");
         query.setTarget(CUSTOM);
 
         return query;
