@@ -3,3 +3,4 @@ it.redhat.demo.queryparam.UserTaskContentFilterFactory
 it.redhat.demo.queryparam.UserTaskMapContentFilterFactory
 it.redhat.demo.queryparam.PotOwnedTasksByVariablesAndParamsFilterFactory
 it.redhat.demo.queryparam.NotPotOwnedTasksForWorkedProcessInstanceFilterFactory
+it.redhat.demo.queryparam.TasksByVariablesAndParamsFilterFactory
