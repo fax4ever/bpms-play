@@ -1,0 +1,49 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>it.redhat.demo</groupId>
+	<artifactId>concurrent-driver</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+
+	<properties>
+
+		<!-- JAVA -->
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven.compiler.source>1.8</maven.compiler.source>
+
+		<!-- BPMS 6.4.2 -->
+		<version.org.brms-bpmsuite>6.4.7.GA-redhat-1</version.org.brms-bpmsuite>
+
+		<version.log4j>2.7</version.log4j>
+
+	</properties>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-api</artifactId>
+			<version>${version.log4j}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>${version.log4j}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-slf4j-impl</artifactId>
+			<version>${version.log4j}</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.jboss.resteasy/resteasy-client -->
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-client</artifactId>
+			<version>3.1.4.Final</version>
+		</dependency>
+
+	</dependencies>
+
+</project>

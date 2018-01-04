@@ -1,0 +1,49 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>it.redhat.demo</groupId>
+	<artifactId>dynamic-rule-solution</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<modules>
+		<module>knowledge-base</module>
+		<module>rule-client-process</module>
+		<module>knowledge-model</module>
+		<module>concurrent-driver</module>
+	</modules>
+
+	<properties>
+
+		<!-- JAVA -->
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven.compiler.source>1.8</maven.compiler.source>
+
+		<!-- BPMS 6.4.2 -->
+		<version.org.brms-bpmsuite>6.4.7.GA-redhat-1</version.org.brms-bpmsuite>
+
+		<version.org.slf4j>1.7.15</version.org.slf4j>
+
+	</properties>
+
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.jboss.bom.brms</groupId>
+				<artifactId>jboss-brms-bpmsuite-platform-bom</artifactId>
+				<type>pom</type>
+				<version>${version.org.brms-bpmsuite}</version>
+				<scope>import</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-simple</artifactId>
+				<version>${version.org.slf4j}</version>
+				<scope>test</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+</project>
