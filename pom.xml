@@ -50,6 +50,7 @@
         <module>bpms-invoke-signal</module>
         <module>bpms-update-timer</module>
         <module>bpms-workshop</module>
+        <module>bpms-timer-listener</module>
     </modules>
 
     <properties>
